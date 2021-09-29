@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Toko Online | Dashboard
+    ARMS | Dashboard
 @endsection
 @section('content')
     <div class="col-lg-12">

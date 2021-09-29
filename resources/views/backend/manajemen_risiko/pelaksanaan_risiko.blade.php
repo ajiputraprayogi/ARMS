@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Toko Online | Dashboard
+    Daftar Pelaksanaan Manajemen Risiko | Dashboard
 @endsection
 @section('content')
     <div class="col-lg-12">
@@ -38,7 +38,7 @@
             <div class="card-body p-0 mt-lg-2 mt-0">
                 <div class="form-group">
                     <div class="text-right">
-                        <a href="{{url('pelaksanaan/create')}}" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Tambah Produk</a>
+                        <a href="{{url('pelaksanaan/create')}}" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Tambah Pelaksanaan Baru</a>
                     </div>
                 </div>
                 <div class="table-responsive rounded mb-3">

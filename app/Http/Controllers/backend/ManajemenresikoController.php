@@ -4,6 +4,8 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\jeniskonteks;
+use App\konteks;
 
 class ManajemenresikoController extends Controller
 {
@@ -24,7 +26,10 @@ class ManajemenresikoController extends Controller
      */
     public function create()
     {
-        return view('backend.manajemen_risiko.add_pelaksanaan_risiko');
+        $jeniskonteks = jeniskonteks::all();
+        $konteks = konteks::leftJoin('jenis_konteks','konteks.id_konteks','=','jenis_konteks.id')
+        ->select('jenis_konteks.id as idjk','jenis_konteks.*','konteks.*')->get();
+        return view('backend.manajemen_risiko.add_pelaksanaan_risiko',['jeniskonteks'=>$jeniskonteks,'konteks'=>$konteks]);
     }
 
     /**

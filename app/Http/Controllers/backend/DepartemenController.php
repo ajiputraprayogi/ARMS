@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\departemen;
 use DataTables;
+use Illuminate\Support\Facades\DB;
 
 class DepartemenController extends Controller
 {
@@ -104,5 +105,16 @@ class DepartemenController extends Controller
     public function destroy($id)
     {
         departemen::destroy($id);
+    }
+
+    public function cari_departemen(Request $request){
+        if($request->has('q')){
+            $cari=$request->q;
+            $data=DB::table('departemen')
+            ->select('id','nama')
+            ->where('nama','like','%'.$cari.'%')
+            ->get();
+            return response()->json($data);
+        }
     }
 }
