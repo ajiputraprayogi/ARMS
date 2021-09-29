@@ -4,7 +4,7 @@
             <i class="ri-menu-line wrapper-menu"></i>
             <a href="backend/index.html" class="header-logo">
                 <img src="{{asset('assets/images/logo.png')}}" class="img-fluid rounded-normal" alt="logo">
-                <h5 class="logo-title ml-3">POSDash</h5>
+                <h5 class="logo-title ml-3">ARMSyst</h5>
 
             </a>
         </div>
@@ -239,8 +239,8 @@
                                             class="rounded profile-img img-fluid avatar-70">
                                     </div>
                                     <div class="p-3">
-                                        <h5 class="mb-1"></h5>
-                                        <p class="mb-0"></p>
+                                        <h5 class="mb-1">{{Auth::user()->email}}</h5>
+                                        <p class="mb-0">{{Auth::user()->level}}</p>
                                         <div class="d-flex align-items-center justify-content-center mt-3">
                                             <a href="{{url('edit-profil')}}" class="btn border mr-2">Profil</a>
                                             <a href="{{ route('logout') }}" onclick="event.preventDefault();

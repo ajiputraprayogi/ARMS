@@ -375,7 +375,24 @@ Index Of Script
     -----------------------------------------------------------------------*/
     if(jQuery('.data-tables').length)
     {
-      $('.data-tables').DataTable();
+      $('.data-tables').DataTable({
+        order: [[0, "asc"]],
+        searching: false, paging: false, info: false,
+        responsive: true,
+        pageLength: 10,
+        lengthMenu: [[5, 10, 20], [5, 10, 20]]
+      });
+    }
+
+    if(jQuery('.data-tables2').length)
+    {
+      $('.data-tables').DataTable({
+        order: [[0, "asc"]],
+        searching: false, paging: false, info: false,
+        responsive: true,
+        pageLength: 10,
+        lengthMenu: [[5, 10, 20], [5, 10, 20]]
+      });
     }
 
   /*---------------------------------------------------------------------

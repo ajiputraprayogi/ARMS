@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Toko Online | Dashboard
+    Daftar Pelaksanaan Manajemen Risiko | Dashboard
 @endsection
 @section('content')
     <div class="col-lg-12">
@@ -38,11 +38,11 @@
             <div class="card-body p-0 mt-lg-2 mt-0">
                 <div class="form-group">
                     <div class="text-right">
-                        <a href="{{url('pelaksanaan/create')}}" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Tambah Produk</a>
+                        <a href="{{url('pelaksanaan/create')}}" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Tambah Pelaksanaan Baru</a>
                     </div>
                 </div>
                 <div class="table-responsive rounded mb-3">
-                    <table id="list-data" class="table mb-0 tbl-server-info">
+                    <table id="" class="table mb-0 tbl-server-info data-tables">
                         <thead class="bg-white text-uppercase">
                             <tr class="ligth ligth-data">
                                 <!-- <th>
@@ -61,9 +61,22 @@
                                 <th>Aksi</th>
                             </tr>
                         </thead>
+                        @foreach($pelaksanaanmanajemenrisiko as $data)
                         <tbody class="ligth-body">
-                            
+                            <th class="text-center">{{$data->nama_departemen}}</th>
+                            <th class="text-center">{{$data->priode_penerapan}}</th>
+                            <th>{{$data->nama}}</th>
+                            <th></th>
+                            <th class="text-center">{{$data->selera_risiko}}</th>
+                            <th></th>
+                            <th></th>
+                            <th class="text-center">
+                                <a class="badge badge-info mr-2" data-toggle="modal" data-target="#showpemangku{{$data->id}}" title="View" data-original-title="View"><i class="ri-eye-line mr-0"></i></a>
+                                <a class="badge bg-success mr-2" data-toggle="modal" data-target="#pemangku{{$data->id}}" title="View" data-original-title="View"><i class="ri-pencil-line mr-0"></i></a>
+                                <a class="badge bg-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="hapusdatapemangku({{$data->id}})"><i class="ri-delete-bin-line mr-0"></i></a>
+                            </th>
                         </tbody>
+                        @endforeach
                     </table>
                 </div>
             </div>

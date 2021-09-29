@@ -63,3 +63,36 @@ function hapusdata(kode){
         }
     })
 }
+$('#cari_departemen').select2({
+    ajax:{
+        url:'/cari_departemen',
+        dataType:'json',
+        delay:250,
+        processResults: function (data){
+            return {
+                results : $.map(data, function (item){
+                    return {
+                        id: item.id,
+                        text: item.nama
+                    }
+
+                })
+            }
+        },
+        cache: true
+    }
+});
+$('#cari_departemen').on('select2:select',function(e){
+    var kode = $(this).val();
+    $.ajax({
+        type: 'GET',
+        url: '/cari_departemen_hasil/'+kode,
+        success:function (data){
+        return {
+            results : $.map(data, function (item){
+                $('#id_departemen').val(item.id);
+            })
+        }
+    },
+    });
+});
