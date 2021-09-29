@@ -46,6 +46,11 @@ Route::get('data-departemen', 'backend\DepartemenController@listdata');
 Route::resource('klasifikasisubunsurspip', 'backend\KlasifikasisubunsurspipController');
 Route::get('data-klasifikasisubunsurspip', 'backend\KlasifikasisubunsurspipController@listdata');
 
+//=======================================RESIKO==============================================
+Route::resource('resiko-teridentifikasi', 'backend\ResikoteridentifikasiController');
+Route::get('data-resikoteridentifikasi', 'backend\ResikoteridentifikasiController@listdata');
+Route::get('/cari-konteks','backend\ResikoteridentifikasiController@carikonteks');
+Route::get('/hasil-cari/{id}','backend\ResikoteridentifikasiController@hasilcari');
 
 Auth::routes();
 

@@ -2,6 +2,9 @@
 @section('title')
     Peta Besaran Risiko | Dashboard
 @endsection
+@section('token')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
 @section('content')
     <div class="col-lg-12">
         <div class="card card-transparent card-block card-stretch card-height border-none">

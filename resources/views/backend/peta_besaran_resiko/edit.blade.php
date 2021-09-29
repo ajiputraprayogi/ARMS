@@ -9,16 +9,20 @@
                 <h3 class="mb-3">Peta Besaran Risiko</h3>
             </div>
             <div class="card-body">
-                <form class="form-horizontal" action="{{url('petabesaranresiko')}}" method="post">
+                @foreach($data as $dataku)
+                <form class="form-horizontal" action="{{url('petabesaranresiko/'.$dataku->id)}}" method="post">
+                
                     @csrf
+                    <input type="hidden" name="_method" value="PUT">
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Kriteria Probabilitas</label>
                         <div class="col-sm-9">
-                            <select class="form-control" name="prob" id="">
-                                <option selected disabled value="">Pilih Kriteria Probabilitas</option>
+                            <select class="form-control" name="probabilitas">
+                                
+                                <option selected value="{{$dataku->id_prob}}">{{$dataku->nilai_probabilitas}} - {{$dataku->nama_probabilitas}}</option>
+                                
                                 @foreach($probabilitas as $data1)
-                                    <option value="{{$data1->nilai}}" > {{$data1->nilai}} - {{$data1->nama}}</option>
-                                    
+                                    <option value="{{$data1->id}}">{{$data1->nilai}} - {{$data1->nama}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -26,10 +30,12 @@
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Kriteria Dampak</label>
                         <div class="col-sm-9">
-                            <select class="form-control" name="dampak" id="">
-                                <option selected disabled value="">Pilih Kriteria Dampak</option>
+                            <select class="form-control" name="dampak">
+                                
+                                <option selected  value="{{$dataku->id_dampak}}">{{$dataku->nilai_damp}} - {{$dataku->nama_damp}}</option>
+                                
                                 @foreach($dampak as $data2)
-                                    <option value="{{$data2->nilai}}">{{$data2->nilai}} - {{$data2->nama}}</option>
+                                    <option value="{{$data2->id}}">{{$data2->nilai}} - {{$data2->nama}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -37,22 +43,23 @@
                     <div class="form-group row">
                         <label class="control-label col-sm-3" for="email">Nilai Besaran Risiko</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control col-sm-2" name="nilai">
+                            <input type="number" class="form-control col-sm-2" name="nilai" value="{{$dataku->nilai_besaran}}">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="control-label col-sm-3" for="email">Kode Warna</label>
                         <div class="col-sm-9">
-                            <input type="color" class="form-control col-sm-1" id="exampleInputcolor" value="#32BDEA" name="warna">
+                            <input type="color" class="form-control col-sm-1" id="exampleInputcolor" value="{{$dataku->kode_warna}}" name="warna">
                         </div>
                     </div>
                     <div class="text-right">
                         <div class="form-group">
-                            <button class="btn btn-primary">Simpan</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
                             <button class="btn btn-danger">Batal</button>
                         </div>
                     </div>
                 </form>
+                @endforeach
             </div>
         </div>
    </div>

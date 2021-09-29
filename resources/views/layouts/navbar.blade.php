@@ -48,7 +48,7 @@
                           </a>
                           <ul id="risiko" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                               <li class="">
-                                  <a href="">
+                                  <a href="{{url('resiko-teridentifikasi')}}">
                                       <i class="las la-minus"></i><span>Risiko Teridentifikasi</span>
                                   </a>
                                   <a href="">

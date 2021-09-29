@@ -73,7 +73,14 @@
 *::before,
 *::after {
   box-sizing: border-box; }
-
+/*  */
+.box1{
+  width:30px;
+  height:30px;
+  background:green;
+  border-radius:10px;
+  }
+/*  */
 html {
   font-family: sans-serif;
   line-height: 1.15;

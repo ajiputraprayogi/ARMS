@@ -2,18 +2,26 @@ $(function(){
     $('#list-data').DataTable({
         order: [[0, "asc"]],
         searching: false, paging: false, info: false,
-        ajax: '',
+        ajax: 'data-petabesaranresiko',
 
         columns:[
             // {data: 'gambar_produk', name: 'gambar_produk'},
-            {data: 'kode_produk', name: 'kode_produk'},
-            {data: 'stok_produk', name: 'stok_produk'},
-            {data: 'kode_produk', name: 'kode_produk'},
-            {data: 'stok_produk', name: 'stok_produk'},
+            {data: 'nilai_probabilitas', name: 'nilai_probabilitas'},
+            {data: 'nilai_dampak', name: 'nilai_dampak'},
+            {data: 'nilai', name: 'nilai'},
             {
                 render: function(data, type, row){
                     // return '<button class="btn btn-danger" onclick="hapusdata('+row['id']+')"><i class="fa fa-trash"></i></button> <a href="/client/'+row['id']+'/edit" class="btn btn-success"><i class="fa fa-wrench"></i></a>'
-                    return '<div class="d-flex align-items-center list-action"><a class="badge bg-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"href="/produk/'+row['id']+'/edit"><i class="ri-pencil-line mr-0"></i></a><a class="badge bg-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="hapusdata('+row['id']+')"><i class="ri-delete-bin-line mr-0"></i></a></div>'
+                    return '<div class="box1" style="background-color: '+row['kode_warna']+';"></div>'
+                },
+                "className": "text-center",
+                "orderable": false,
+                "data": null,
+            },
+            {
+                render: function(data, type, row){
+                    // return '<button class="btn btn-danger" onclick="hapusdata('+row['id']+')"><i class="fa fa-trash"></i></button> <a href="/client/'+row['id']+'/edit" class="btn btn-success"><i class="fa fa-wrench"></i></a>'
+                    return '<div class="d-flex align-items-center list-action"><a class="badge bg-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"href="/petabesaranresiko/'+row['id']+'/edit"><i class="ri-pencil-line mr-0"></i></a><a class="badge bg-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="hapusdata('+row['id']+')"><i class="ri-delete-bin-line mr-0"></i></a></div>'
                 },
                 "className": "text-center",
                 "orderable": false,
@@ -49,7 +57,7 @@ function hapusdata(kode){
             })
             $.ajax({
                 type: 'DELETE',
-                url: 'produk/'+kode,
+                url: 'petabesaranresiko/'+kode,
                 data:{
                     'token':$('input[name=_token]').val(),
                 },
