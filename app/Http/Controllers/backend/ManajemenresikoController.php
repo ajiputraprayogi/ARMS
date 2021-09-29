@@ -8,6 +8,8 @@ use App\jeniskonteks;
 use App\konteks;
 use App\pemangku_kepentingan;
 use DB;
+use App\pelaksanaanmanajemenrisiko;
+use App\departemen;
 
 class ManajemenresikoController extends Controller
 {
@@ -18,7 +20,13 @@ class ManajemenresikoController extends Controller
      */
     public function index()
     {
-        return view('backend.manajemen_risiko.pelaksanaan_risiko');
+        // $konteks = konteks::leftJoin('jenis_konteks','konteks.id_konteks','=','jenis_konteks.id')
+        // ->select('jenis_konteks.id as idjk','jenis_konteks.*','konteks.*')->where('faktur_konteks',$finalkode)->get();
+        $pelaksanaanmanajemenrisiko = pelaksanaanmanajemenrisiko::leftJoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
+        ->leftJoin('konteks','pelaksanaan_manajemen_risiko.faktur','=','konteks.faktur_konteks')
+        ->leftJoin('pemangku_kepentingan','pelaksanaan_manajemen_risiko.faktur','=','pemangku_kepentingan.faktur_pemangku')
+        ->select('departemen.id as idd','departemen.nama as nama_departemen','departemen.*','konteks.id as idk','konteks.*','pemangku_kepentingan.id as idp','pemangku_kepentingan.*','pelaksanaan_manajemen_risiko.*')->get();
+        return view('backend.manajemen_risiko.pelaksanaan_risiko',['pelaksanaanmanajemenrisiko'=>$pelaksanaanmanajemenrisiko]);
     }
 
     /**
@@ -63,8 +71,8 @@ class ManajemenresikoController extends Controller
             'id_departemen'=>'required',
             'nama_pemilik_risiko'=>'required',
             'jabatan_pemilik_risiko'=>'required',
-            'nama_koordinator_pemilik_risiko'=>'required',
-            'jabatan_koordinator_pemilik_risiko'=>'required',
+            'nama_koordinator_pengelola_risiko'=>'required',
+            'jabatan_koordinator_pengelola_risiko'=>'required',
             'priode_penerapan'=>'required',
             'selera_risiko'=>'required',
         ]);
@@ -73,8 +81,8 @@ class ManajemenresikoController extends Controller
             'id_departemen'=>$request->id_departemen,
             'nama_pemilik_risiko'=>$request->nama_pemilik_risiko,
             'jabatan_pemilik_risiko'=>$request->jabatan_pemilik_risiko,
-            'nama_koordinator_pemilik_risiko'=>$request->nama_koordinator_pemilik_risiko,
-            'jabatan_koordinator_pemilik_risiko'=>$request->jabatan_koordinator_pemilik_risiko,
+            'nama_koordinator_pengelola_risiko'=>$request->nama_koordinator_pengelola_risiko,
+            'jabatan_koordinator_pengelola_risiko'=>$request->jabatan_koordinator_pengelola_risiko,
             'priode_penerapan'=>$request->priode_penerapan,
             'selera_risiko'=>$request->selera_risiko,
         ]);

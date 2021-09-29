@@ -15,6 +15,15 @@
             <div class="card-header p-0 mt-lg-2 mt-0">
                 <h3 class="mb-3">Detail Pelaksanaan Manajemen Risiko</h3>
             </div>
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
             <div class="card-body">
                 <form class="form-horizontal" action="{{url('/pelaksanaan')}}" method="post">
                     @csrf
@@ -70,9 +79,9 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" name="priode_penerapan" for="">Periode Penerapan*</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Periode Penerapan*</label>
                         <div class="col-sm-9">
-                            <select class="form-control" name="client" id="">
+                            <select class="form-control" name="priode_penerapan" id="">
                                 <option selected disabled value="">Pilih Tahun</option>
                                 <?php 
                                     $tahun=date('Y'); for ($i=$tahun; $i<=date('Y') +5 ; $i++)
@@ -90,15 +99,6 @@
                             <div class="form-group">
                                 <b>Konteks</b>
                             </div>
-                            @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                            @endif
                             @if (session('statuskonteks'))
                             <div class="alert text-white bg-success" role="alert">
                                 <div class="iq-alert-text"><b>Info!</b> {{ session('statuskonteks') }}</div>
@@ -140,65 +140,6 @@
                                                     <a class="badge bg-warning mr-2" data-toggle="tooltip" data-placement="top" title="Hapus" onclick="hapusdatakonteks({{$data->id}})"><i class="ri-delete-bin-line mr-0"></i></a>
                                                 </div>
                                             </th>
-                                        
-                                        @foreach($konteks as $data)
-                                        <div class="modal fade" id="showkonteks{{$data->id}}" tabindex="-1" role="dialog"  aria-hidden="true">
-                                            <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Lihat Konteks</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form class="form-horizontal" action="" method="post">
-                                                            @csrf
-                                                            <input type="hidden" name="_method" value="PUT">
-                                                            <div class="form-group row">
-                                                                <label class="control-label col-sm-3 align-self-center" for="">Kode Konteks</label>
-                                                                <div class="col-sm-9">
-                                                                    <input type="text" name="kode" class="form-control" value="{{$data->kode}}" id="" readonly required>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label class="control-label col-sm-3 align-self-center" for="">Nama Konteks</label>
-                                                                <div class="col-sm-9">
-                                                                    <input type="text" name="nama" class="form-control" value="{{$data->nama}}" id="" readonly required>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label class="control-label col-sm-3 align-self-center" for="">Jenis Konteks</label>
-                                                                <div class="col-sm-9">
-                                                                    <select class="form-control" name="id_konteks" id="" readonly required>
-                                                                        <option value="{{$data->idjk}}">{{$data->konteks}}</option>
-                                                                        @foreach($jeniskonteks as $datajk)
-                                                                            <option value="{{$datajk->id}}">{{$datajk->konteks}}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label class="control-label col-sm-3" for="">Detail Ancaman</label>
-                                                                <div class="col-sm-9">
-                                                                    <textarea class="form-control" name="detail_ancaman" id="exampleFormControlTextarea1" rows="3" readonly required>{{$data->detail_ancaman}}</textarea>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label class="control-label col-sm-3" for="">Indikator Kinerja Kegiatan</label>
-                                                                <div class="col-sm-9">
-                                                                    <textarea class="form-control" name="indikator_kinerja_kegiatan" id="exampleFormControlTextarea1" rows="3" readonly required>{{$data->indikator_kinerja_kegiatan}}</textarea>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @endforeach
                                     </tbody>
                                     @endforeach
                                 </table>
@@ -206,15 +147,6 @@
                             <div class="form-group">
                                 <b>Pemangku Kepentingan</b>
                             </div>
-                            @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                            @endif
                             @if (session('statuspemangku'))
                             <div class="alert text-white bg-success" role="alert">
                                 <div class="iq-alert-text"><b>Info!</b> {{ session('statuspemangku') }}</div>
@@ -226,56 +158,6 @@
                             <div class="form-group">
                                 <div class="text-right">
                                     <button type="button" class="btn btn-primary add-list" data-toggle="modal" data-target="#pemangku"><i class="las la-plus mr-3"></i>Tambah Pemangku Kepentingan</button>
-                                    <div class="modal fade" id="pemangku" tabindex="-1" role="dialog"  aria-hidden="true">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Tambah Pemangku Kepentingan</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form class="form-horizontal" action="{{url('pemangkukepentingan')}}" method="post">
-                                                        @csrf
-                                                        <div class="form-group row">
-                                                            <label class="control-label col-sm-3 align-self-center" for="">Pemangku Kepentingan</label>
-                                                            <div class="col-sm-9">
-                                                            <!-- Auto Generate Kode -->
-                                                                <input type="hidden" value="<?php 
-                                                                    $tgl=date("Y-m-d");
-                                                                    $min=date("-");
-                                                                    $fk=DB::table("pelaksanaan_manajemen_risiko")
-                                                                    ->select(DB::Raw("MAX(RIGHT(faktur,5)) as kd_max"));
-                                                                    if($fk->count()>0){
-                                                                    // $finalkode="DVN".$tgl."00001";
-                                                                        foreach($fk->get() as $fak){
-                                                                            $tmp=((int)$fak->kd_max)+1;
-                                                                            $finalkode="FK".$tgl.$min.sprintf('%05s',$tmp);
-                                                                        }
-                                                                    }else{
-                                                                        $finalkode="FK".$tgl.$min."00001";
-                                                                    }
-                                                                    echo $finalkode; ?>" 
-                                                                name="faktur_pemangku" id="faktur_pemangku" class="form-group form-control" required readonly>
-                                                                <input type="text" name="pemangku_kepentingan" class="form-control" value="" id="" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="control-label col-sm-3" for="">Keterangan</label>
-                                                            <div class="col-sm-9">
-                                                                <textarea class="form-control" name="keterangan" id="exampleFormControlTextarea1" rows="4" required></textarea>
-                                                            </div>
-                                                        </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Simpan</button>
-                                                </div>
-                                                    </form>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="table-responsive rounded mb-3">
@@ -307,77 +189,6 @@
                                                 <a class="badge bg-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="hapusdatapemangku({{$data->id}})"><i class="ri-delete-bin-line mr-0"></i></a>
                                             </div>
                                         </th>
-                                        @foreach($pemangku_kepentingan as $data)
-                                        <div class="modal fade" id="pemangku{{$data->id}}" tabindex="-1" role="dialog"  aria-hidden="true">
-                                            <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Edit Pemangku Kepentingan</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form class="form-horizontal" action="{{url('pemangkukepentingan/'.$data->id)}}" method="post">
-                                                            @csrf
-                                                            <input type="hidden" name="_method" value="PUT">
-                                                            <div class="form-group row">
-                                                                <label class="control-label col-sm-3 align-self-center" for="">Pemangku Kepentingan</label>
-                                                                <div class="col-sm-9">
-                                                                    <input type="text" name="pemangku_kepentingan" class="form-control" value="{{$data->pemangku_kepentingan}}" id="" required>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label class="control-label col-sm-3" for="">Keterangan</label>
-                                                                <div class="col-sm-9">
-                                                                    <textarea class="form-control" name="keterangan" id="exampleFormControlTextarea1" rows="4" required>{{$data->keterangan}}</textarea>
-                                                                </div>
-                                                            </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Edit</button>
-                                                    </div>
-                                                        </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @endforeach
-                                        @foreach($pemangku_kepentingan as $data)
-                                        <div class="modal fade" id="showpemangku{{$data->id}}" tabindex="-1" role="dialog"  aria-hidden="true">
-                                            <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Edit Pemangku Kepentingan</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form class="form-horizontal" action="" method="post">
-                                                            @csrf
-                                                            <input type="hidden" name="_method" value="PUT">
-                                                            <div class="form-group row">
-                                                                <label class="control-label col-sm-3 align-self-center" for="">Pemangku Kepentingan</label>
-                                                                <div class="col-sm-9">
-                                                                    <input type="text" name="pemangku_kepentingan" class="form-control" value="{{$data->pemangku_kepentingan}}" id="" readonly required>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label class="control-label col-sm-3" for="">Keterangan</label>
-                                                                <div class="col-sm-9">
-                                                                    <textarea class="form-control" name="keterangan" id="exampleFormControlTextarea1" rows="4" readonly required>{{$data->keterangan}}</textarea>
-                                                                </div>
-                                                            </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    </div>
-                                                        </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @endforeach
                                     </tbody>
                                     @endforeach
                                 </table>
@@ -389,7 +200,8 @@
                     </div>
                 </form>
 
-                <!-- Modal Konteks -->
+            <!-- Modal Konteks -->
+                <!-- Tambah Konteks -->
                 <div class="modal fade" id="konteks" tabindex="-1" role="dialog"  aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -463,6 +275,8 @@
                         </div>
                     </div>
                 </div>
+                <!-- End Tambah Konteks -->
+                <!-- Edit Konteks -->
                 @foreach($konteks as $data)
                 <div class="modal fade" id="konteks{{$data->id}}" tabindex="-1" role="dialog"  aria-hidden="true">
                     <div class="modal-dialog modal-lg">
@@ -522,7 +336,197 @@
                     </div>
                 </div>
                 @endforeach
-                <!-- End Modal Konteks -->
+                <!-- End Edit Konteks -->
+                <!-- Show Konteks -->
+                @foreach($konteks as $data)
+                <div class="modal fade" id="showkonteks{{$data->id}}" tabindex="-1" role="dialog"  aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Lihat Konteks</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal" action="" method="post">
+                                    @csrf
+                                    <input type="hidden" name="_method" value="PUT">
+                                    <div class="form-group row">
+                                        <label class="control-label col-sm-3 align-self-center" for="">Kode Konteks</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="kode" class="form-control" value="{{$data->kode}}" id="" readonly required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="control-label col-sm-3 align-self-center" for="">Nama Konteks</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="nama" class="form-control" value="{{$data->nama}}" id="" readonly required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="control-label col-sm-3 align-self-center" for="">Jenis Konteks</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="id_konteks" id="" readonly required>
+                                                <option value="{{$data->idjk}}">{{$data->konteks}}</option>
+                                                @foreach($jeniskonteks as $datajk)
+                                                    <option value="{{$datajk->id}}">{{$datajk->konteks}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="control-label col-sm-3" for="">Detail Ancaman</label>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control" name="detail_ancaman" id="exampleFormControlTextarea1" rows="3" readonly required>{{$data->detail_ancaman}}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="control-label col-sm-3" for="">Indikator Kinerja Kegiatan</label>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control" name="indikator_kinerja_kegiatan" id="exampleFormControlTextarea1" rows="3" readonly required>{{$data->indikator_kinerja_kegiatan}}</textarea>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+                <!-- End Show Konteks -->
+            <!-- End Modal Konteks -->
+            <!-- Modal Pemangku -->
+                <!-- Tambah Pemangku -->
+                    <div class="modal fade" id="pemangku" tabindex="-1" role="dialog"  aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Tambah Pemangku Kepentingan</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal" action="{{url('pemangkukepentingan')}}" method="post">
+                                        @csrf
+                                        <div class="form-group row">
+                                            <label class="control-label col-sm-3 align-self-center" for="">Pemangku Kepentingan</label>
+                                            <div class="col-sm-9">
+                                            <!-- Auto Generate Kode -->
+                                                <input type="hidden" value="<?php 
+                                                    $tgl=date("Y-m-d");
+                                                    $min=date("-");
+                                                    $fk=DB::table("pelaksanaan_manajemen_risiko")
+                                                    ->select(DB::Raw("MAX(RIGHT(faktur,5)) as kd_max"));
+                                                    if($fk->count()>0){
+                                                    // $finalkode="DVN".$tgl."00001";
+                                                        foreach($fk->get() as $fak){
+                                                            $tmp=((int)$fak->kd_max)+1;
+                                                            $finalkode="FK".$tgl.$min.sprintf('%05s',$tmp);
+                                                        }
+                                                    }else{
+                                                        $finalkode="FK".$tgl.$min."00001";
+                                                    }
+                                                    echo $finalkode; ?>" 
+                                                name="faktur_pemangku" id="faktur_pemangku" class="form-group form-control" required readonly>
+                                                <input type="text" name="pemangku_kepentingan" class="form-control" value="" id="" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="control-label col-sm-3" for="">Keterangan</label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control" name="keterangan" id="exampleFormControlTextarea1" rows="4" required></textarea>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                </div>
+                                    </form>
+                            </div>
+                        </div>
+                    </div>
+                <!-- End Tambah Pemangku -->
+                <!-- Edit Pemangku -->
+                    @foreach($pemangku_kepentingan as $data)
+                    <div class="modal fade" id="pemangku{{$data->id}}" tabindex="-1" role="dialog"  aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Edit Pemangku Kepentingan</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal" action="{{url('pemangkukepentingan/'.$data->id)}}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="_method" value="PUT">
+                                        <div class="form-group row">
+                                            <label class="control-label col-sm-3 align-self-center" for="">Pemangku Kepentingan</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" name="pemangku_kepentingan" class="form-control" value="{{$data->pemangku_kepentingan}}" id="" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="control-label col-sm-3" for="">Keterangan</label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control" name="keterangan" id="exampleFormControlTextarea1" rows="4" required>{{$data->keterangan}}</textarea>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Edit</button>
+                                </div>
+                                    </form>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                <!-- End Edit Pemangku -->
+                <!-- Show Pemangku -->
+                    @foreach($pemangku_kepentingan as $data)
+                    <div class="modal fade" id="showpemangku{{$data->id}}" tabindex="-1" role="dialog"  aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Edit Pemangku Kepentingan</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal" action="" method="post">
+                                        @csrf
+                                        <input type="hidden" name="_method" value="PUT">
+                                        <div class="form-group row">
+                                            <label class="control-label col-sm-3 align-self-center" for="">Pemangku Kepentingan</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" name="pemangku_kepentingan" class="form-control" value="{{$data->pemangku_kepentingan}}" id="" readonly required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="control-label col-sm-3" for="">Keterangan</label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control" name="keterangan" id="exampleFormControlTextarea1" rows="4" readonly required>{{$data->keterangan}}</textarea>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                                    </form>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                <!-- End Show Pemangku -->
+            <!-- End Modal Pemangku -->
             </div>
         </div>
    </div>
