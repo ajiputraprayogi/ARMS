@@ -54,6 +54,7 @@ Route::group(['middleware' => ['auth','checkRole:Superadmin']],function(){
     Route::get('cari_departemen', 'backend\DepartemenController@cari_departemen');
     Route::get('cari_departemen_hasil/{id}', 'backend\DepartemenController@cari_departemen_hasil');
 
+
     Route::resource('klasifikasisubunsurspip', 'backend\KlasifikasisubunsurspipController');
     Route::get('data-klasifikasisubunsurspip', 'backend\KlasifikasisubunsurspipController@listdata');
 
@@ -62,6 +63,12 @@ Route::group(['middleware' => ['auth','checkRole:Superadmin']],function(){
     Route::get('data-resikoteridentifikasi', 'backend\ResikoteridentifikasiController@listdata');
     Route::get('/cari-konteks','backend\ResikoteridentifikasiController@carikonteks');
     Route::get('/hasil-cari/{id}','backend\ResikoteridentifikasiController@hasilcari');
+    //----------------------------------analisa risiko-----------------------------------------
+    Route::resource('analisa-risiko', 'backend\AnalisarisikoController');
+    Route::get('data-analisarisiko', 'backend\AnalisarisikoController@listdata');
+    //----------------------------------analisa akar-----------------------------------------
+    Route::resource('analisa-akar-masalah', 'backend\AnalisaakarController');
+    Route::get('data-analisaakarmasalah', 'backend\AnalisaakarController@listdata');
 
 });
 Route::group(['middleware' => ['auth','checkRole:Superadmin']],function(){

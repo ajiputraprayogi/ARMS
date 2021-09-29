@@ -20,10 +20,19 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-md-3">
+                        <label for="">Konteks</label>
+                        <div class="form-group">
+                            <select class="form-control" name="client" id="">
+                                <option selected disabled value="">Pilih Konteks</option>
+                                <option value="">...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
                         <label for="">Tahun</label>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <input type="date" class="form-control" id="dob" name="tanggal1"/>
                                 </div>
