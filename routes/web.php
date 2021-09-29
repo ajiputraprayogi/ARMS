@@ -57,6 +57,12 @@ Route::group(['middleware' => ['auth','checkRole:Superadmin']],function(){
     Route::resource('klasifikasisubunsurspip', 'backend\KlasifikasisubunsurspipController');
     Route::get('data-klasifikasisubunsurspip', 'backend\KlasifikasisubunsurspipController@listdata');
 
+    //=======================================RESIKO==============================================
+    Route::resource('resiko-teridentifikasi', 'backend\ResikoteridentifikasiController');
+    Route::get('data-resikoteridentifikasi', 'backend\ResikoteridentifikasiController@listdata');
+    Route::get('/cari-konteks','backend\ResikoteridentifikasiController@carikonteks');
+    Route::get('/hasil-cari/{id}','backend\ResikoteridentifikasiController@hasilcari');
+
 });
 Route::group(['middleware' => ['auth','checkRole:Superadmin']],function(){
     Route::get('/home', 'HomeController@index')->name('home');
