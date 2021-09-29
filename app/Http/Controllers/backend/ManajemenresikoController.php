@@ -22,7 +22,7 @@ class ManajemenresikoController extends Controller
     {
         // $konteks = konteks::leftJoin('jenis_konteks','konteks.id_konteks','=','jenis_konteks.id')
         // ->select('jenis_konteks.id as idjk','jenis_konteks.*','konteks.*')->where('faktur_konteks',$finalkode)->get();
-        SELECT *, COUNT( * ) AS total FROM comment GROUP BY post_id
+        // SELECT *, COUNT( * ) AS total FROM comment GROUP BY post_id
         $pelaksanaanmanajemenrisiko = pelaksanaanmanajemenrisiko::leftJoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
         // ->leftJoin('konteks','pelaksanaan_manajemen_risiko.faktur','=','konteks.faktur_konteks')
         // ->leftJoin('pemangku_kepentingan','pelaksanaan_manajemen_risiko.faktur','=','pemangku_kepentingan.faktur_pemangku')
