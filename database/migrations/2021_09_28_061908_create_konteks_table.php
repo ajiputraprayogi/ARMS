@@ -15,6 +15,7 @@ class CreateKonteksTable extends Migration
     {
         Schema::create('konteks', function (Blueprint $table) {
             $table->id();
+            $table->string('faktur_konteks');
             $table->string('kode');
             $table->string('nama');
             $table->string('jenis');

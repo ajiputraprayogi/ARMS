@@ -59,7 +59,7 @@ function hapusdatakonteks(kode){
                         'Data Berhasil Dihapus.',
                         'success'
                     )
-                    $('#list-data-konteks').DataTable().ajax.reload();
+                    location.reload();
                 }
             })
         }

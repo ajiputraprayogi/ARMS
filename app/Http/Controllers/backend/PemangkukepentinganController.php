@@ -41,10 +41,12 @@ class PemangkukepentinganController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'faktur_pemangku'=>'required',
             'pemangku_kepentingan'=>'required',
             'keterangan'=>'required',
         ]);
         pemangku_kepentingan::insert([
+            'faktur_pemangku'=>$request->faktur_pemangku,
             'pemangku_kepentingan'=>$request->pemangku_kepentingan,
             'keterangan'=>$request->keterangan,
         ]);
@@ -82,7 +84,15 @@ class PemangkukepentinganController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'pemangku_kepentingan'=>'required',
+            'keterangan'=>'required',
+        ]);
+        pemangku_kepentingan::find($id)->update([
+            'pemangku_kepentingan'=>$request->pemangku_kepentingan,
+            'keterangan'=>$request->keterangan,
+        ]);
+        return redirect('pelaksanaan/create')->with('statuspemangku','Sukses mengubah data');
     }
 
     /**
@@ -93,6 +103,6 @@ class PemangkukepentinganController extends Controller
      */
     public function destroy($id)
     {
-        //
+        pemangku_kepentingan::destroy($id);
     }
 }

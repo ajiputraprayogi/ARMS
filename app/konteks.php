@@ -8,6 +8,6 @@ class konteks extends Model
 {
     protected $table = 'konteks';
     protected $fillable = [
-        'kode','nama','id_konteks','detail_ancaman','indikator_kinerja_kegiatan'
+        'faktur_konteks','kode','nama','id_konteks','detail_ancaman','indikator_kinerja_kegiatan'
     ];
 }

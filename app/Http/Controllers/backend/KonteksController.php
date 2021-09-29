@@ -43,6 +43,7 @@ class KonteksController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'faktur_konteks'=>'required',
             'kode'=>'required',
             'nama'=>'required',
             'id_konteks'=>'required',
@@ -50,6 +51,7 @@ class KonteksController extends Controller
             'indikator_kinerja_kegiatan'=>'required',
         ]);
         konteks::insert([
+            'faktur_konteks'=>$request->faktur_konteks,
             'kode'=>$request->kode,
             'nama'=>$request->nama,
             'id_konteks'=>$request->id_konteks,

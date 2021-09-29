@@ -117,4 +117,11 @@ class DepartemenController extends Controller
             return response()->json($data);
         }
     }
+
+    public function cari_departemen_hasil($id){
+        $data=DB::table('departemen')
+        ->where('id',$id)
+        ->get();
+        return response()->json($data);
+    }
 }

@@ -18,7 +18,14 @@ Route::group(['middleware' => ['auth','checkRole:Superadmin']],function(){
     Route::get('/', function () {
         return view('backend.index');
     });
+    // Basis Data
     Route::resource('/pelaksanaan', 'backend\ManajemenresikoController');
+
+    Route::resource('konteks', 'backend\KonteksController');
+    Route::get('data-konteks', 'backend\KonteksController@listdata');
+    
+    Route::resource('pemangkukepentingan', 'backend\PemangkukepentinganController');
+    Route::get('data-pemangkukepentingan', 'backend\PemangkukepentinganController@listdata');
 
     // Master Data
     Route::resource('probabilitas', 'backend\ProbabilitasController');
@@ -45,16 +52,11 @@ Route::group(['middleware' => ['auth','checkRole:Superadmin']],function(){
     Route::resource('departemen', 'backend\DepartemenController');
     Route::get('data-departemen', 'backend\DepartemenController@listdata');
     Route::get('cari_departemen', 'backend\DepartemenController@cari_departemen');
+    Route::get('cari_departemen_hasil/{id}', 'backend\DepartemenController@cari_departemen_hasil');
 
     Route::resource('klasifikasisubunsurspip', 'backend\KlasifikasisubunsurspipController');
     Route::get('data-klasifikasisubunsurspip', 'backend\KlasifikasisubunsurspipController@listdata');
 
-    // Basis Data
-    Route::resource('konteks', 'backend\KonteksController');
-    Route::get('data-konteks', 'backend\KonteksController@listdata');
-
-    Route::resource('pemangkukepentingan', 'backend\PemangkukepentinganController');
-    Route::get('data-pemangkukepentingan', 'backend\PemangkukepentinganController@listdata');
 });
 Route::group(['middleware' => ['auth','checkRole:Superadmin']],function(){
     Route::get('/home', 'HomeController@index')->name('home');

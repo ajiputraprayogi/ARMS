@@ -82,3 +82,17 @@ $('#cari_departemen').select2({
         cache: true
     }
 });
+$('#cari_departemen').on('select2:select',function(e){
+    var kode = $(this).val();
+    $.ajax({
+        type: 'GET',
+        url: '/cari_departemen_hasil/'+kode,
+        success:function (data){
+        return {
+            results : $.map(data, function (item){
+                $('#id_departemen').val(item.id);
+            })
+        }
+    },
+    });
+});

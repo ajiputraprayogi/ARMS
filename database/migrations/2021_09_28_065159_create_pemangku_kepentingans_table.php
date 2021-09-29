@@ -15,6 +15,7 @@ class CreatePemangkuKepentingansTable extends Migration
     {
         Schema::create('pemangku_kepentingan', function (Blueprint $table) {
             $table->id();
+            $table->string('faktur_pemangku');
             $table->string('pemangku_kepentingan');
             $table->text('keterangan');
             $table->timestamps();
