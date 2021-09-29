@@ -51,10 +51,10 @@
                                   <a href="{{url('resiko-teridentifikasi')}}">
                                       <i class="las la-minus"></i><span>Risiko Teridentifikasi</span>
                                   </a>
-                                  <a href="">
+                                  <a href="{{url('analisa-risiko')}}">
                                       <i class="las la-minus"></i><span>Analisis Risiko</span>
                                   </a>
-                                  <a href="">
+                                  <a href="{{url('analisa-akar-masalah')}}">
                                       <i class="las la-minus"></i><span>Analisis Akar Masalah</span>
                                   </a>
                               </li>
