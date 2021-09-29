@@ -65,7 +65,7 @@
                         <tbody class="ligth-body">
                             <th class="text-center">{{$data->nama_departemen}}</th>
                             <th class="text-center">{{$data->priode_penerapan}}</th>
-                            <th></th>
+                            <th>{{$data->nama}}</th>
                             <th></th>
                             <th class="text-center">{{$data->selera_risiko}}</th>
                             <th></th>

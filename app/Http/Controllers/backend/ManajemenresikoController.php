@@ -22,10 +22,12 @@ class ManajemenresikoController extends Controller
     {
         // $konteks = konteks::leftJoin('jenis_konteks','konteks.id_konteks','=','jenis_konteks.id')
         // ->select('jenis_konteks.id as idjk','jenis_konteks.*','konteks.*')->where('faktur_konteks',$finalkode)->get();
+        SELECT *, COUNT( * ) AS total FROM comment GROUP BY post_id
         $pelaksanaanmanajemenrisiko = pelaksanaanmanajemenrisiko::leftJoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
-        ->leftJoin('konteks','pelaksanaan_manajemen_risiko.faktur','=','konteks.faktur_konteks')
-        ->leftJoin('pemangku_kepentingan','pelaksanaan_manajemen_risiko.faktur','=','pemangku_kepentingan.faktur_pemangku')
-        ->select('departemen.id as idd','departemen.nama as nama_departemen','departemen.*','konteks.id as idk','konteks.*','pemangku_kepentingan.id as idp','pemangku_kepentingan.*','pelaksanaan_manajemen_risiko.*')->get();
+        // ->leftJoin('konteks','pelaksanaan_manajemen_risiko.faktur','=','konteks.faktur_konteks')
+        // ->leftJoin('pemangku_kepentingan','pelaksanaan_manajemen_risiko.faktur','=','pemangku_kepentingan.faktur_pemangku')
+        ->select('departemen.id as idd','departemen.nama as nama_departemen','pelaksanaan_manajemen_risiko.*')->get();
+        // $pelaksanaanmanajemenrisiko = pelaksanaanmanajemenrisiko::all();
         return view('backend.manajemen_risiko.pelaksanaan_risiko',['pelaksanaanmanajemenrisiko'=>$pelaksanaanmanajemenrisiko]);
     }
 
