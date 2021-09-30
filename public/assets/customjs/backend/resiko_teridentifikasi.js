@@ -10,7 +10,7 @@ $(function(){
             {
                 render: function(data, type, row){
                     // return '<button class="btn btn-danger" onclick="hapusdata('+row['id']+')"><i class="fa fa-trash"></i></button> <a href="/client/'+row['id']+'/edit" class="btn btn-success"><i class="fa fa-wrench"></i></a>'
-                    return '<div class="box1"></div>'
+                    return '<div class="box1" style="background-color: '+row['pr']+';"></div>'
                 },
                 "className": "text-center",
                 "orderable": false,
@@ -18,12 +18,12 @@ $(function(){
             },
             {data: 'kode_risiko', name: 'kode_risiko'},
             {data: 'pernyataan_risiko', name: 'pernyataan_risiko'},
-            {data: 'konteks', name: 'konteks'},
+            {data: 'id_konteks', name: 'konteks'},
             {data: 'kategori_risiko', name: 'kategori_risiko'},
             {
                 render: function(data, type, row){
                     // return '<button class="btn btn-danger" onclick="hapusdata('+row['id']+')"><i class="fa fa-trash"></i></button> <a href="/client/'+row['id']+'/edit" class="btn btn-success"><i class="fa fa-wrench"></i></a>'
-                    return '<di><p>23</p></di>'
+                    return '<di><p>'+row['besaran_awal']+'</p></di>'
                 },
                 "className": "text-center",
                 "orderable": false,
@@ -32,7 +32,7 @@ $(function(){
             {
                 render: function(data, type, row){
                     // return '<button class="btn btn-danger" onclick="hapusdata('+row['id']+')"><i class="fa fa-trash"></i></button> <a href="/client/'+row['id']+'/edit" class="btn btn-success"><i class="fa fa-wrench"></i></a>'
-                    return '<di><p>18</p></di>'
+                    return '<di><p>'+row['besaran_akhir']+'</p></di>'
                 },
                 "className": "text-center",
                 "orderable": false,
@@ -41,7 +41,7 @@ $(function(){
             {
                 render: function(data, type, row){
                     // return '<button class="btn btn-danger" onclick="hapusdata('+row['id']+')"><i class="fa fa-trash"></i></button> <a href="/client/'+row['id']+'/edit" class="btn btn-success"><i class="fa fa-wrench"></i></a>'
-                    return '<di><p>Belum memenuhi selera risiko</p></di>'
+                    return '<di><p>'+row['status']+'</p></di>'
                 },
                 "className": "text-center",
                 "orderable": false,
@@ -103,7 +103,55 @@ function hapusdata(kode){
     })
 }
 
-// js cari konteks
+
+// js cari departmen
+$(document).ready(function () {
+	$('#cari_departmen').select2({
+		placeholder: 'Cari Departmen',
+		ajax:{
+			url:'/cari-departmen',
+			dataType:'json',
+			delay:250,
+			processResults: function (data){
+				return {
+					results : $.map(data, function (item){
+						return {
+							id: item.id,
+							text: item.namadep.concat(" - ").concat(item.priode_penerapan)
+						}
+
+					})
+				}
+			},
+			cache: true
+		}
+	});
+	//======================================================
+	$('#cari_departmen').on('select2:select', function (e) {
+        // $('#tahun').empty().trigger("change");
+		var kode = $(this).val();
+        // var newoption = [];
+		$.ajax({
+			type: 'GET',
+			url: '/hasil-cari-departmen/' + kode,
+			success: function (data) {
+				return {
+					results: $.map(data, function (item) {
+							$('#kode').val(item.kode);
+							$('#id').val(item.id);
+                            $('#id_dep').val(item.id_departemen);
+                            $('#kodedep').val(item.kodedep);
+                            $('#namadep').val(item.namadep);
+                            $('#tahun').val(item.priode_penerapan);
+                            $('#cari_konteks').val(item.jk);
+					})
+				}
+                
+			},
+		});
+	});
+})
+// cari konteks
 $(document).ready(function () {
 	$('#cari_konteks').select2({
 		placeholder: 'Cari Konteks',
@@ -116,7 +164,7 @@ $(document).ready(function () {
 					results : $.map(data, function (item){
 						return {
 							id: item.id,
-							text: item.konteks
+							text: item.namakonteks
 						}
 
 					})
@@ -125,17 +173,18 @@ $(document).ready(function () {
 			cache: true
 		}
 	});
-	//======================================================
-	$('#cari_konteks').on('select2:select', function (e) {
+    $('#cari_konteks').on('select2:select', function (e) {
 		var kode = $(this).val();
 		$.ajax({
 			type: 'GET',
-			url: '/hasil-cari/' + kode,
+			url: '/hasil-cari-konteks/' + kode,
 			success: function (data) {
 				return {
 					results: $.map(data, function (item) {
-							$('#konteks').val(item.konteks);
-							$('#kode').val(item.id);
+							$('#id_konteks').val(item.id_konteks);
+                            $('#id_jenis_konteks').val(item.id);
+                            $('#kode_konteks').val(item.kode_konteks);
+                            $('#nama_konteks').val(item.namakonteks);
 					})
 				}
 			},
