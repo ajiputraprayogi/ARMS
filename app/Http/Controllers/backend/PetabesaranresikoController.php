@@ -54,7 +54,7 @@ class PetabesaranresikoController extends Controller
         besaranresiko::insert([
             'kode_warna' => $request->warna,
             'id_prob' => $request->prob,
-            'dampak' => $request->dampak,
+            'id_dampak' => $request->dampak,
             'nilai' => $request->nilai,
         ]);
         return redirect('petabesaranresiko')->with('status','Berhasil menyimpan data');

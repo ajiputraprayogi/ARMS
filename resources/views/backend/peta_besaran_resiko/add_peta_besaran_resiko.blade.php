@@ -49,7 +49,7 @@
                     <div class="text-right">
                         <div class="form-group">
                             <button class="btn btn-primary">Simpan</button>
-                            <button class="btn btn-danger">Batal</button>
+                            <button type="reset" class="btn btn-danger">Batal</button>
                         </div>
                     </div>
                 </form>
