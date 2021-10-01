@@ -50,7 +50,7 @@
             <div class="card-body p-0 mt-lg-2 mt-0">
                 <div class="form-group">
                     <div class="text-right">
-                        <a href="{{url('resiko-teridentifikasi/create')}}" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Tambah Risiko Baru</a>
+                        <a href="{{url('analisa-risiko/create')}}" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Tambah Risiko Baru</a>
                     </div>
                 </div>
                 <div class="table-responsive rounded mb-3">
