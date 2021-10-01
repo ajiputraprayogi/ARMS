@@ -65,6 +65,18 @@ Route::group(['middleware' => ['auth']],function(){
     Route::resource('roles', 'backend\RolesController');
     Route::get('data-roles', 'backend\RolesController@listdata');
 
+    Route::resource('resiko-teridentifikasi', 'backend\ResikoteridentifikasiController');
+    Route::get('data-resikoteridentifikasi', 'backend\ResikoteridentifikasiController@listdata');
+    Route::get('/cari-departmen','backend\ResikoteridentifikasiController@caridepartmen');
+    Route::get('/hasil-cari-departmen/{id}','backend\ResikoteridentifikasiController@hasilcaridepartmen');
+    Route::get('/cari-konteks','backend\ResikoteridentifikasiController@carikonteks');
+    Route::get('/hasil-cari-konteks/{id}','backend\ResikoteridentifikasiController@hasilcarikonteks');
+    //----------------------------------analisa risiko-----------------------------------------
+    Route::resource('analisa-risiko', 'backend\AnalisarisikoController');
+    Route::get('data-analisarisiko', 'backend\AnalisarisikoController@listdata');
+    //----------------------------------analisa akar-----------------------------------------
+    Route::resource('analisa-akar-masalah', 'backend\AnalisaakarController');
+    Route::get('data-analisaakarmasalah', 'backend\AnalisaakarController@listdata');
 });
 Route::group(['middleware' => ['auth']],function(){
     Route::get('/home', 'HomeController@index')->name('home');
