@@ -8,8 +8,8 @@ $(function(){
             // {data: 'gambar_produk', name: 'gambar_produk'},
             
             {data: 'kode_risiko', name: 'kode_risiko'},
-            {data: 'besaran_risiko_melekat', name: 'awal'},
-            {data: 'besaran_risiko_residu', name: 'residu'},
+            {data: 'besaran_melekat', name: 'awal'},
+            {data: 'skor_besaran_residu', name: 'residu'},
             {
                 render: function(data, type, row){
                     // return '<button class="btn btn-danger" onclick="hapusdata('+row['id']+')"><i class="fa fa-trash"></i></button> <a href="/client/'+row['id']+'/edit" class="btn btn-success"><i class="fa fa-wrench"></i></a>'
