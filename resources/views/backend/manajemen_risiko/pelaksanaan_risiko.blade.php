@@ -61,20 +61,17 @@
                                 <th>Aksi</th>
                             </tr>
                         </thead>
-                        @foreach($pelaksanaanmanajemenrisiko as $data)
+                        @foreach($pelaksanaanmanajemenrisiko1 as $data)
                         <tbody class="ligth-body">
-                            <th class="text-center">{{$data->nama_departemen}}</th>
-                            <th class="text-center">{{$data->priode_penerapan}}</th>
-                            <th>{{$data->nama}}</th>
                             <th></th>
-                            <th class="text-center">{{$data->selera_risiko}}</th>
+                            <th class="text-center">{{$data->totalkonteks}}</th>
+                            <th class="text-center"></th>
+                            <th class="text-center"></th>
+                            <th class="text-center"></th>
                             <th></th>
                             <th></th>
                             <th class="text-center">
-                                <a class="badge badge-info mr-2" data-toggle="modal" data-target="#showpemangku{{$data->id}}" title="View" data-original-title="View"><i class="ri-eye-line mr-0"></i></a>
-                                <a class="badge bg-success mr-2" data-toggle="modal" data-target="#pemangku{{$data->id}}" title="View" data-original-title="View"><i class="ri-pencil-line mr-0"></i></a>
-                                <a class="badge bg-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="hapusdatapemangku({{$data->id}})"><i class="ri-delete-bin-line mr-0"></i></a>
-                            </th>
+                                </th>
                         </tbody>
                         @endforeach
                     </table>

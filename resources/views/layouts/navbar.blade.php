@@ -144,12 +144,12 @@
                                   </a>
                               </li>
                               <li class="">
-                                  <a href="">
+                                  <a href="{{url('user')}}">
                                       <i class="las la-minus"></i><span>User</span>
                                   </a>
                               </li>
                               <li class="">
-                                  <a href="">
+                                  <a href="{{url('roles')}}">
                                       <i class="las la-minus"></i><span>Role Dan Akses</span>
                                   </a>
                               </li>

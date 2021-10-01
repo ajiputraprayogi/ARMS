@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Auth::routes();
-Route::group(['middleware' => ['auth','checkRole:Superadmin']],function(){
+Route::group(['middleware' => ['auth']],function(){
     Route::get('/', function () {
         return view('backend.index');
     });
@@ -59,21 +59,13 @@ Route::group(['middleware' => ['auth','checkRole:Superadmin']],function(){
     Route::resource('klasifikasisubunsurspip', 'backend\KlasifikasisubunsurspipController');
     Route::get('data-klasifikasisubunsurspip', 'backend\KlasifikasisubunsurspipController@listdata');
 
-    Route::resource('resiko-teridentifikasi', 'backend\ResikoteridentifikasiController');
-    Route::get('data-resikoteridentifikasi', 'backend\ResikoteridentifikasiController@listdata');
-    Route::get('/cari-departmen','backend\ResikoteridentifikasiController@caridepartmen');
-    Route::get('/hasil-cari-departmen/{id}','backend\ResikoteridentifikasiController@hasilcaridepartmen');
-    Route::get('/cari-konteks','backend\ResikoteridentifikasiController@carikonteks');
-    Route::get('/hasil-cari-konteks/{id}','backend\ResikoteridentifikasiController@hasilcarikonteks');
-    //----------------------------------analisa risiko-----------------------------------------
-    Route::resource('analisa-risiko', 'backend\AnalisarisikoController');
-    Route::get('data-analisarisiko', 'backend\AnalisarisikoController@listdata');
-    //----------------------------------analisa akar-----------------------------------------
-    Route::resource('analisa-akar-masalah', 'backend\AnalisaakarController');
-    Route::get('data-analisaakarmasalah', 'backend\AnalisaakarController@listdata');
+    Route::resource('user', 'backend\UserController');
+    Route::get('data-user', 'backend\UserController@listdata');
 
+    Route::resource('roles', 'backend\RolesController');
+    Route::get('data-roles', 'backend\RolesController@listdata');
 
 });
-Route::group(['middleware' => ['auth','checkRole:Superadmin']],function(){
+Route::group(['middleware' => ['auth']],function(){
     Route::get('/home', 'HomeController@index')->name('home');
 });
