@@ -68,7 +68,7 @@ Route::group(['middleware' => ['auth']],function(){
     Route::resource('resiko-teridentifikasi', 'backend\ResikoteridentifikasiController');
     Route::get('data-resikoteridentifikasi', 'backend\ResikoteridentifikasiController@listdata');
     Route::get('/cari-departmen','backend\ResikoteridentifikasiController@caridepartmen');
-    Route::get('/hasil-cari-departmen/{id}','backend\ResikoteridentifikasiController@hasilcaridepartmen');
+    Route::get('/hasil-cari-departmen/{id}/{id_departemen}','backend\ResikoteridentifikasiController@hasilcaridepartmen');
     Route::get('/cari-konteks','backend\ResikoteridentifikasiController@carikonteks');
     Route::get('/hasil-cari-konteks/{id}','backend\ResikoteridentifikasiController@hasilcarikonteks');
     //----------------------------------analisa risiko-----------------------------------------

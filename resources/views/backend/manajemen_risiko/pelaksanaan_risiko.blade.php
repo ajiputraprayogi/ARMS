@@ -61,17 +61,16 @@
                                 <th>Aksi</th>
                             </tr>
                         </thead>
-                        @foreach($pelaksanaanmanajemenrisiko1 as $data)
+                        @foreach($data as $row)
                         <tbody class="ligth-body">
-                            <th></th>
-                            <th class="text-center">{{$data->totalkonteks}}</th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th></th>
-                            <th></th>
-                            <th class="text-center">
-                                </th>
+                            <th>{{$row->nama}}</th>
+                            <th class="text-center">{{$row->priode_penerapan}}</th>
+                            <th class="text-center">{{$row->totalkonteks}}</th>
+                            <th class="text-center">-</th>
+                            <th class="text-center">-</th>
+                            <th>{{$row->nama_pemilik_risiko}}</th>
+                            <th>-</th>
+                            <th class="text-center">-</th>
                         </tbody>
                         @endforeach
                     </table>

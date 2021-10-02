@@ -33,7 +33,8 @@ Toko Online | Dashboard
                     <label class="control-label col-sm-3 align-self-center" for="email">Departemen Pemilik Reesiko<i
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
-                        <select class="js-example-basic-single text search-input" id="cari_departmen" name="departmen" style="width:100%;">
+                        <select class="js-example-basic-single text search-input" id="cari_departmen" name="departmen"
+                            style="width:100%;">
                         </select>
                     </div>
                 </div>
@@ -56,9 +57,10 @@ Toko Online | Dashboard
                     <label class="control-label col-sm-3 align-self-center" for="email">Konteks<i
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
-                        <select class="js-example-basic-single text search-input" id="cari_konteks" name="konteks" style="width:100%;">
+                        <select class="js-example-basic-single text search-input" id="cari_konteks" name="konteks"
+                            style="width:100%;">
                         </select>
-                        
+
                     </div>
                 </div>
                 <input type="hidden" id="id_jenis_konteks" name="id_jenis_konteks">
@@ -146,7 +148,8 @@ Toko Online | Dashboard
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
                         <div class="md-form md-outline input-with-post-icon datepicker">
-                            <input placeholder="Select date" type="date" id="example" class="form-control" value="{{$hariini}}" name="tanggal_pengajuan">
+                            <input placeholder="Select date" type="date" id="example" class="form-control"
+                                value="{{$hariini}}" name="tanggal_pengajuan">
                         </div>
                     </div>
                 </div>
@@ -162,7 +165,8 @@ Toko Online | Dashboard
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
                         <div class="md-form md-outline input-with-post-icon datepicker">
-                            <input placeholder="Select date" type="date" id="example" class="form-control" name="tanggal_persetujuan">
+                            <input placeholder="Select date" type="date" id="example" class="form-control"
+                                name="tanggal_persetujuan">
                         </div>
                     </div>
                 </div>
@@ -187,11 +191,66 @@ Toko Online | Dashboard
 @endsection
 @push('script')
 <script src="{{asset('phppiechart/assets/js/highcharts.js')}}"></script>
-<script src="{{asset('assets/customjs/backend/resiko_teridentifikasi.js')}}"></script>
+<!-- <script src="{{asset('assets/customjs/backend/resiko_teridentifikasi.js')}}"></script> -->
 <!-- <script>
 $(document).ready(function() {
     $('.js-example-basic-single').select2();
 });
 </script> -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+$(function() {
+    $("#cari_konteks").select2({
+        placeholder: "Pilih Konteks",
+    });
+    $('#cari_departmen').select2({
+        placeholder: 'Cari Departmen',
+        ajax: {
+            url: '/cari-departmen',
+            dataType: 'json',
+            delay: 250,
+            processResults: function(data) {
+                return {
+                    results: $.map(data, function(item) {
+                        return {
+                            id: item.id+'-'+item.id_departemen,
+                            text: item.namadep + " - (" + item.priode_penerapan + ")"
+                        }
+
+                    })
+                }
+            },
+            cache: true
+        }
+    });
+
+    $('#cari_departmen').on('select2:select', function (e) {
+        $('#cari_konteks').empty().trigger("change");
+		var kode = $(this).val();
+        var newkode = kode.split("-");
+		$.ajax({
+			type: 'GET',
+			url: '/hasil-cari-departmen/'+newkode[0]+'/'+newkode[1],
+			success: function (data) {
+                $.each(data.detail,function(key, item){
+                    $('#kode').val(item.kode);
+                    $('#id').val(item.id);
+                    $('#id_dep').val(item.id_departemen);
+                    $('#kodedep').val(item.kodedep);
+                    $('#namadep').val(item.namadep);
+                    $('#tahun').val(item.priode_penerapan);
+                    $('#cari_konteks').val(item.jk);
+                });
+                $.each(data.resiko, function (key, value) {
+                    var newOption = new Option(value.nama+'-'+value.kode,value.id,false, false);
+                    $('#cari_konteks').append(newOption).trigger('change');
+                });
+			},
+            complete: function () {
+                $('#cari_konteks').val(null).trigger('change');
+            }
+		});
+	});
+})
+</script>
 @endpush
