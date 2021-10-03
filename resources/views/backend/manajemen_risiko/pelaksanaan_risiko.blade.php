@@ -57,7 +57,6 @@
                                 <th>Jumlah Risiko</th>
                                 <th>Selera Risiko</th>
                                 <th>PIC</th>
-                                <th>Kondisi</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -67,9 +66,8 @@
                             <th class="text-center">{{$row->priode_penerapan}}</th>
                             <th class="text-center">{{$row->totalkonteks}}</th>
                             <th class="text-center">-</th>
-                            <th class="text-center">-</th>
+                            <th class="text-center">{{$row->selera_risiko}}</th>
                             <th>{{$row->nama_pemilik_risiko}}</th>
-                            <th>-</th>
                             <th class="text-center">-</th>
                         </tbody>
                         @endforeach
