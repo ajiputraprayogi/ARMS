@@ -100,7 +100,20 @@ class ManajemenresikoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $jeniskonteks = jeniskonteks::all();
+        $konteks = konteks::leftJoin('jenis_konteks','konteks.id_konteks','=','jenis_konteks.id')
+        ->select('jenis_konteks.id as idjk','jenis_konteks.*','konteks.*')->where('faktur_konteks',$id)->get();
+        $pemangku_kepentingan = pemangku_kepentingan::all()->where('faktur_pemangku',$id);
+        $data = DB::table('pelaksanaan_manajemen_risiko')
+        ->select(DB::raw('pelaksanaan_manajemen_risiko.*,count(*) as totalkonteks,departemen.nama'))
+        ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+        ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
+        ->orderby('pelaksanaan_manajemen_risiko.id','desc')
+        ->groupby('pelaksanaan_manajemen_risiko.faktur')
+        ->where('pelaksanaan_manajemen_risiko.faktur',$id)
+        ->get();
+        $manajemenrisiko = pelaksanaanmanajemenrisiko::all()->where('faktur',$id);
+        return view('backend.manajemen_risiko.edit_pelaksanaan_risiko',compact('data','konteks','pemangku_kepentingan','jeniskonteks','manajemenrisiko'));
     }
 
     /**
@@ -112,7 +125,27 @@ class ManajemenresikoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'faktur'=>'required',
+            'id_departemen'=>'required',
+            'nama_pemilik_risiko'=>'required',
+            'jabatan_pemilik_risiko'=>'required',
+            'nama_koordinator_pengelola_risiko'=>'required',
+            'jabatan_koordinator_pengelola_risiko'=>'required',
+            'priode_penerapan'=>'required',
+            'selera_risiko'=>'required',
+        ]);
+        pelaksanaanmanajemenrisiko::find($id)->update([
+            'faktur'=>$request->faktur,
+            'id_departemen'=>$request->id_departemen,
+            'nama_pemilik_risiko'=>$request->nama_pemilik_risiko,
+            'jabatan_pemilik_risiko'=>$request->jabatan_pemilik_risiko,
+            'nama_koordinator_pengelola_risiko'=>$request->nama_koordinator_pengelola_risiko,
+            'jabatan_koordinator_pengelola_risiko'=>$request->jabatan_koordinator_pengelola_risiko,
+            'priode_penerapan'=>$request->priode_penerapan,
+            'selera_risiko'=>$request->selera_risiko,
+        ]);
+        return redirect('/pelaksanaan')->with('status','Sukses mengubah data');
     }
 
     /**
@@ -121,8 +154,77 @@ class ManajemenresikoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $faktur = $request->faktur;
+        pelaksanaanmanajemenrisiko::destroy($id);
+        konteks::destroy($faktur);
+        pemangku_kepentingan::destroy($faktur);
+    }
+
+    public function simpaneditkonteks(Request $request, $id){
+        $request->validate([
+            'faktur_konteks'=>'required',
+            'kode'=>'required',
+            'nama'=>'required',
+            'id_konteks'=>'required',
+            'detail_ancaman'=>'required',
+            'indikator_kinerja_kegiatan'=>'required',
+        ]);
+        konteks::insert([
+            'faktur_konteks'=>$request->faktur_konteks,
+            'kode'=>$request->kode,
+            'nama'=>$request->nama,
+            'id_konteks'=>$request->id_konteks,
+            'detail_ancaman'=>$request->detail_ancaman,
+            'indikator_kinerja_kegiatan'=>$request->indikator_kinerja_kegiatan,
+        ]);
+        return redirect('edit-pelaksanaan/'.$id)->with('statuskonteks','Sukses menambah data');
+    }
+
+    public function simpanediteditkonteks(Request $request, $id){
+        $request->validate([
+            'kode'=>'required',
+            'nama'=>'required',
+            'id_konteks'=>'required',
+            'detail_ancaman'=>'required',
+            'indikator_kinerja_kegiatan'=>'required',
+        ]);
+        $faktur = $request->faktur;
+        konteks::find($id)->update([
+            'kode'=>$request->kode,
+            'nama'=>$request->nama,
+            'id_konteks'=>$request->id_konteks,
+            'detail_ancaman'=>$request->detail_ancaman,
+            'indikator_kinerja_kegiatan'=>$request->indikator_kinerja_kegiatan,
+        ]);
+        return redirect('edit-pelaksanaan/'.$faktur)->with('statuskonteks','Sukses mengubah data');
+    }
+
+    public function simpaneditpemangku(Request $request, $id){
+        $request->validate([
+            'faktur_pemangku'=>'required',
+            'pemangku_kepentingan'=>'required',
+            'keterangan'=>'required',
+        ]);
+        pemangku_kepentingan::insert([
+            'faktur_pemangku'=>$request->faktur_pemangku,
+            'pemangku_kepentingan'=>$request->pemangku_kepentingan,
+            'keterangan'=>$request->keterangan,
+        ]);
+        return redirect('edit-pelaksanaan/'.$id)->with('statuspemangku','Sukses mengubah data');
+    }
+
+    public function simpanediteditpemangku(Request $request, $id){
+        $request->validate([
+            'pemangku_kepentingan'=>'required',
+            'keterangan'=>'required',
+        ]);
+        $faktur = $request->faktur;
+        pemangku_kepentingan::find($id)->update([
+            'pemangku_kepentingan'=>$request->pemangku_kepentingan,
+            'keterangan'=>$request->keterangan,
+        ]);
+        return redirect('edit-pelaksanaan/'.$faktur)->with('statuspemangku','Sukses mengubah data');
     }
 }
