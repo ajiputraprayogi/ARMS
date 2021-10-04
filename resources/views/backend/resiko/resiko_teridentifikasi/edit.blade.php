@@ -96,8 +96,8 @@ Toko Online | Dashboard
 
                             <!-- $kodekat = DB::table('kategori_resiko')->where('id', '=', $cari)->get(); -->
                         </select>
-                        <input type="text" id="idkat" name="idkat" value="{{$res->idkat}}">
-                        <input type="text" id="kodekat" name="kodekat" value="{{$res->kodekat}}">
+                        <input type="hidden" id="idkat" name="idkat" value="{{$res->idkat}}">
+                        <input type="hidden" id="kodekat" name="kodekat" value="{{$res->kodekat}}">
                     </div>
                 </div>
                 <div class="form-group row">
