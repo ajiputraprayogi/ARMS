@@ -17,7 +17,7 @@
                             <select class="form-control" name="prob" id="">
                                 <option selected disabled value="">Pilih Kriteria Probabilitas</option>
                                 @foreach($probabilitas as $data1)
-                                    <option value="{{$data1->nilai}}" > {{$data1->nilai}} - {{$data1->nama}}</option>
+                                    <option value="{{$data1->id}}" > {{$data1->nilai}} - {{$data1->nama}}</option>
                                     
                                 @endforeach
                             </select>
@@ -29,7 +29,7 @@
                             <select class="form-control" name="dampak" id="">
                                 <option selected disabled value="">Pilih Kriteria Dampak</option>
                                 @foreach($dampak as $data2)
-                                    <option value="{{$data2->nilai}}">{{$data2->nilai}} - {{$data2->nama}}</option>
+                                    <option value="{{$data2->id}}">{{$data2->nilai}} - {{$data2->nama}}</option>
                                 @endforeach
                             </select>
                         </div>

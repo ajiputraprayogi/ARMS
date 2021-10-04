@@ -231,18 +231,18 @@ class ResikoteridentifikasiController extends Controller
         return response()->json($print);
     }
     //--------------------------------cari data konteks --------------------------------------------
-    public function carikonteks(Request $request){
-        if($request->has('q')){
-            $cari = $request->q;
-            $data = DB::table('konteks')
-                    ->select('konteks.*','jenis_konteks.id as id_konteks','jenis_konteks.konteks as namakonteks')
-                    ->leftjoin('jenis_konteks', 'konteks.id_konteks', '=', 'jenis_konteks.id')
-                    ->where('jenis_konteks.konteks','like','%'.$cari.'%')
-                    ->get();
+    // public function carikonteks(Request $request){
+    //     if($request->has('q')){
+    //         $cari = $request->q;
+    //         $data = DB::table('konteks')
+    //                 ->select('konteks.*','jenis_konteks.id as id_konteks','jenis_konteks.konteks as namakonteks')
+    //                 ->leftjoin('jenis_konteks', 'konteks.id_konteks', '=', 'jenis_konteks.id')
+    //                 ->where('jenis_konteks.konteks','like','%'.$cari.'%')
+    //                 ->get();
             
-            return response()->json($data);
-        }
-    }
+    //         return response()->json($data);
+    //     }
+    // }
     public function hasilcarikonteks($id){
         $data = DB::table('konteks')
                     ->select('konteks.id','konteks.kode as kode_konteks','jenis_konteks.id as id_konteks','jenis_konteks.konteks as namakonteks')

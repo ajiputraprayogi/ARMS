@@ -218,7 +218,7 @@
                                         <label class="control-label col-sm-3 align-self-center" for="">Kode Konteks</label>
                                         <div class="col-sm-9">
                                         <!-- Auto Generate Kode -->
-                                            <input type="hidden" value="<?php 
+                                            <input type="text" value="<?php 
                                                 $tgl=date("Y-m-d");
                                                 $min=date("-");
                                                 $fk=DB::table("pelaksanaan_manajemen_risiko")

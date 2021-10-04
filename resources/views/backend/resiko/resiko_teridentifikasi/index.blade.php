@@ -89,7 +89,7 @@
                                         <form class="form-horizontal" action="{{url('resikoteridentifikasi')}}" method="post">
                                             @csrf
                                             <div class="form-group row">
-                                                <label class="control-label col-sm-3 align-self-center" for="">R</label>
+                                                <label class="control-label col-sm-3 align-self-center" for="">PR</label>
                                                 <div class="col-sm-9">
                                                     <div class="box1"></div>
                                                 </div>
