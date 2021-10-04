@@ -31,7 +31,7 @@ class AnalisaakarController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.resiko.akar_masalah.add');
     }
 
     /**

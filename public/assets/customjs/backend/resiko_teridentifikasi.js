@@ -16,7 +16,7 @@ $(function(){
                 "orderable": false,
                 "data": null,
             },
-            {data: 'kode_risiko', name: 'kode_risiko'},
+            {data: 'full_kode', name: 'kode_risiko'},
             {data: 'pernyataan_risiko', name: 'pernyataan_risiko'},
             {data: 'id_konteks', name: 'konteks'},
             {data: 'kategori_risiko', name: 'kategori_risiko'},

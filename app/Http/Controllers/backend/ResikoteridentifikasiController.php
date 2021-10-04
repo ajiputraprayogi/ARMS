@@ -9,6 +9,8 @@ use App\kategoriresiko;
 use App\metode;
 use DataTables;
 use DB;
+use Auth;
+// use Alfa6661\AutoNumber\AutoNumberTrait;
 
 class ResikoteridentifikasiController extends Controller
 {
@@ -36,8 +38,11 @@ class ResikoteridentifikasiController extends Controller
     {
         $kategori = kategoriresiko::all();
         $spip = metode::all();
-        $hariini = date('Y-m-d'); 
-        return view('backend.resiko.resiko_teridentifikasi.add',['data'=>$kategori, 'data2'=>$spip, 'hariini'=>$hariini]);
+        $hariini = date('Y-m-d');
+        $auth= Auth::user()->id; 
+        $pengaju = DB::table('users')->where('id', '!=', $auth)->get();
+        // dd($pengaju);
+        return view('backend.resiko.resiko_teridentifikasi.add',['data'=>$kategori, 'data2'=>$spip, 'hariini'=>$hariini, 'orang'=>$pengaju]);
     }
 
     /**
@@ -46,6 +51,14 @@ class ResikoteridentifikasiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function carikat($id)
+    {
+        $data = DB::table('kategori_resiko')->select('kategori_resiko.*')
+                    ->where('kategori_resiko.id','=', $id)
+                    ->get();
+            
+            return response()->json($data);
+    }
     public function store(Request $request)
     {
         // $request->validate([
@@ -55,9 +68,24 @@ class ResikoteridentifikasiController extends Controller
         $status= "Belum memenuhi selera risiko";
         $baw = "0";
         $bak = "0";
+        $cari = $request->kategori;
+        // $kodekat = DB::table('kategori_resiko')->select('kode as kodekat')->where('id', '=', $cari)->get();
+        // $ex = explode(":" , $kodekat);
+        // $ex2 = explode("[{}]" , $ex);
+        // foreach ($ex as $key => $dataa) {
+        //     echo $dataa;
+        // }
+        // dd($ex2);
+        $coba = $request->kode_konteks.".".$request->kodedep.".".$request->kodekat;
+        $kode= resikoteridentifikasi::where('kode_risiko', $coba )->max('number')+1;
+        $full_code= $coba.".".$kode;
+        // dd($full_code);
         resikoteridentifikasi::insert([
             
             'pr' => $warna,
+            'kode_risiko'=>$coba,
+            'number'=>$kode,
+            'full_kode'=>$full_code,
             'id_departmen' => $request->id_dep,
             'kode_departemen'=> $request->kodedep,
             'departmen_pemilik_resiko'=> $request->namadep,
@@ -67,7 +95,8 @@ class ResikoteridentifikasiController extends Controller
             'konteks'=> $request->namakonteks,
             'kode_konteks'=> $request->kode_konteks,
             'pernyataan_risiko'=> $request->pernyataan,
-            'kategori_risiko'=> $request->kategori,
+            'id_kategori'=>$request->kategori,
+            'kategori_risiko'=> $request->kodekat,
             'uraian_dampak'=> $request->dampak,
             'metode_spip'=> $request->metode,
             'status_persetujuan'=> $request->pengajuan,
@@ -102,11 +131,11 @@ class ResikoteridentifikasiController extends Controller
      */
     public function edit($id)
     {
-        $kategori = kategoriresiko::all();
+        $kategori = kategoriresiko::get();
         $spip = metode::all();
         $res = DB::table('resiko_teridentifikasi')
-        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as ikat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat')
-        ->leftjoin('kategori_resiko', 'resiko_teridentifikasi.kategori_risiko', '=', 'kategori_resiko.id')
+        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat')
+        ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
         ->where('resiko_teridentifikasi.id','=', $id)->get();
         // dd($res);
         return view('backend.resiko.resiko_teridentifikasi.edit',['data'=>$kategori, 'data2'=>$spip, 'res'=>$res]);
@@ -124,7 +153,18 @@ class ResikoteridentifikasiController extends Controller
         // $request->validate([
         //     'nama' => 'required',
         // ]);
+        $coba = $request->kode_konteks.".".$request->kodedep.".".$request->kodekat;
+        $kode= resikoteridentifikasi::where('kode_risiko', $coba )->max('number')+1;
+        $full_code= $coba.".".$kode;
+        $data2 = DB::table('resiko_teridentifikasi')->where('id', $id)->get();
+        // $data = $request->idkat;
+        // dd($data);
+        $ui="21sadasd";
+        
         resikoteridentifikasi::find($id)->update([
+            'kode_risiko'=>$coba,
+            'number'=>$kode,
+            'full_kode'=>$full_code,
             'id_departmen' => $request->id_dep,
             'kode_departemen'=> $request->kodedep,
             'departmen_pemilik_resiko'=> $request->namadep,
@@ -134,7 +174,8 @@ class ResikoteridentifikasiController extends Controller
             'konteks'=> $request->namakonteks,
             'kode_konteks'=> $request->kode_konteks,
             'pernyataan_risiko'=> $request->pernyataan,
-            'kategori_risiko'=> $request->kategori,
+            'id_kategori'=>$ui,
+            'kategori_risiko'=> $request->kodekat,
             'uraian_dampak'=> $request->dampak,
             'metode_spip'=> $request->metode,
             'status_persetujuan'=> $request->pengajuan,
