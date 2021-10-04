@@ -19,6 +19,7 @@ Route::group(['middleware' => ['auth','checkRole:Superadmin']],function(){
         return view('backend.index');
     });
     // Basis Data
+    // =============== Manajemen Risiko ========================
     Route::resource('/pelaksanaan', 'backend\ManajemenresikoController');
     Route::get('/edit-pelaksanaan/{id}', 'backend\ManajemenresikoController@edit');
     Route::post('/simpan-edit-pelaksanaan/{id}', 'backend\ManajemenresikoController@update');
@@ -27,6 +28,11 @@ Route::group(['middleware' => ['auth','checkRole:Superadmin']],function(){
     Route::post('simpan-edit-edit-pemangku-pelaksanaan/{id}', 'backend\ManajemenresikoController@simpanediteditpemangku');
     Route::post('simpan-edit-konteks-pelaksanaan/{id}', 'backend\ManajemenresikoController@simpaneditkonteks');
     Route::post('simpan-edit-edit-konteks-pelaksanaan/{id}', 'backend\ManajemenresikoController@simpanediteditkonteks');
+    // =============== End Manajemen Risiko ====================
+
+    // =============== Pengendalian Risiko =====================
+    Route::resource('/pengendalian', 'backend\PengendalianrisikoController');
+    // =============== End Pengendalian Risiko =================
 
     Route::resource('konteks', 'backend\KonteksController');
     Route::get('data-konteks', 'backend\KonteksController@listdata');
