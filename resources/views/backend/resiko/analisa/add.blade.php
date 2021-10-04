@@ -96,11 +96,11 @@ legend.scheduler-border {
                         <label class="control-label col-sm-3 align-self-center" for="email">Skor Frekuensi Saat Ini<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
-                            <select class="form-control" name="pengajuan" id="">
+                            <select class="form-control" name="pengajuan" id="cario">
                                 <option selected disabled value="">Status Persetujuan</option>
-                                <option value="diajukan">Diajukan</option>
-                                <option value="disetujui">Disetujui</option>
-                                <option value="ditolak">Ditolak</option>
+                                @foreach($frekuensi as $row)
+                                <option value="{{$row->nilai}}">{{$row->nama}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -108,14 +108,15 @@ legend.scheduler-border {
                         <label class="control-label col-sm-3 align-self-center" for="email">Skor Dampak Saat Ini<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
-                            <select class="form-control" name="pengajuan" id="">
+                            <select class="form-control" name="pengajuan" id="dampakk" class="dampakk">
                                 <option selected disabled value="">Status Persetujuan</option>
-                                <option value="diajukan">Diajukan</option>
-                                <option value="disetujui">Disetujui</option>
-                                <option value="ditolak">Ditolak</option>
+                                @foreach($dampak as $row2)
+                                <option value="{{$row2->nilai}}">{{$row2->nama}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
+                    <input type="text" name="besaran" id="besaran">
                 </fieldset>
                 <div class="form-group">
                     <b>Sudah Ada Pengendalian??</b><span> <input type="checkbox" onclick="hide('my-list')" id="hide"></label></span>
@@ -194,11 +195,28 @@ function hide(id)
 }
 </script>
 <!-- <script src="{{asset('phppiechart/assets/js/highcharts.js')}}"></script> -->
-<script src="{{asset('assets/customjs/backend/analisa_risiko.js')}}"></script>
-<!-- <script>
-$(document).ready(function() {
-    $('.js-example-basic-single').select2();
-});
+<!-- <script src="{{asset('assets/customjs/backend/analisa_risiko.js')}}"></script> -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- <script type="text/javascript">
+// $(document).on('change', function (e) {
+//         // $('#tahun').empty().trigger("change");
+//         // $('#dampakk').empty().trigger("change");
+// 		var frek = $('#cario').val();
+        
+//         $.ajax({
+// 			type: 'GET',
+// 			url: '/hasil-cario/'+frek,
+// 			success: function (data) {
+// 				return {
+// 					results: $.map(data, function (item) {
+// 							$('#dampakk').val(item.nilai);
+// 					})
+// 				}
+// 			},
+// 		});
+// });
+
 </script> -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 @endpush

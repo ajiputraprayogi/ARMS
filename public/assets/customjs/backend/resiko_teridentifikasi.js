@@ -104,74 +104,58 @@ function hapusdata(kode){
 }
 
 
-// js cari departmen
-$(document).ready(function () {
-	$('#cari_departmen').select2({
-		placeholder: 'Cari Departmen',
-		ajax:{
-			url:'/cari-departmen',
-			dataType:'json',
-			delay:250,
-			processResults: function (data){
-				return {
-					results : $.map(data, function (item){
-						return {
-							id: item.id,
-							text: item.namadep.concat(" - ").concat(item.priode_penerapan)
-						}
+$(function() {
+    $("#cari_konteks").select2({
+        placeholder: "Pilih Konteks",
+    });
+    $('#cari_departmen').select2({
+        placeholder: 'Cari Departmen',
+        ajax: {
+            url: '/cari-departmen',
+            dataType: 'json',
+            delay: 250,
+            processResults: function(data) {
+                return {
+                    results: $.map(data, function(item) {
+                        return {
+                            id: item.id+'-'+item.id_departemen,
+                            text: item.namadep + " - (" + item.priode_penerapan + ")"
+                        }
 
-					})
-				}
-			},
-			cache: true
-		}
-	});
-	//======================================================
-	$('#cari_departmen').on('select2:select', function (e) {
-        // $('#tahun').empty().trigger("change");
+                    })
+                }
+            },
+            cache: true
+        }
+    });
+
+    $('#cari_departmen').on('select2:select', function (e) {
+        $('#cari_konteks').empty().trigger("change");
 		var kode = $(this).val();
-        // var newoption = [];
+        // console.log(kode);
+        var newkode = kode.split("-");
 		$.ajax({
 			type: 'GET',
-			url: '/hasil-cari-departmen/' + kode,
+			url: '/hasil-cari-departmen/'+newkode[0]+'/'+newkode[1],
 			success: function (data) {
-				return {
-					results: $.map(data, function (item) {
-							$('#kode').val(item.kode);
-							$('#id').val(item.id);
-                            $('#id_dep').val(item.id_departemen);
-                            $('#kodedep').val(item.kodedep);
-                            $('#namadep').val(item.namadep);
-                            $('#tahun').val(item.priode_penerapan);
-                            $('#cari_konteks').val(item.jk);
-					})
-				}
-                
+                $.each(data.detail,function(key, item){
+                    $('#kode').val(item.kode);
+                    $('#id').val(item.id);
+                    $('#id_dep').val(item.id_departemen);
+                    $('#kodedep').val(item.kodedep);
+                    $('#namadep').val(item.namadep);
+                    $('#tahun').val(item.priode_penerapan);
+                    $('#cari_konteks').val(item.jk);
+                });
+                $.each(data.resiko, function (key, value) {
+                    var newOption = new Option(value.nama+'-'+value.kode,value.id,false, false);
+                    $('#cari_konteks').append(newOption).trigger('change');
+                });
 			},
+            complete: function () {
+                $('#cari_konteks').val(null).trigger('change');
+            }
 		});
-	});
-})
-// cari konteks
-$(document).ready(function () {
-	$('#cari_konteks').select2({
-		placeholder: 'Cari Konteks',
-		ajax:{
-			url:'/cari-konteks',
-			dataType:'json',
-			delay:250,
-			processResults: function (data){
-				return {
-					results : $.map(data, function (item){
-						return {
-							id: item.id,
-							text: item.namakonteks
-						}
-
-					})
-				}
-			},
-			cache: true
-		}
 	});
     $('#cari_konteks').on('select2:select', function (e) {
 		var kode = $(this).val();
@@ -190,4 +174,4 @@ $(document).ready(function () {
 			},
 		});
 	});
-});
+})

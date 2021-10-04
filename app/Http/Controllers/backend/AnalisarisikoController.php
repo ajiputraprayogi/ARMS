@@ -30,7 +30,14 @@ class AnalisarisikoController extends Controller
      */
     public function create()
     {
-        return view('backend.resiko.analisa.add');
+        $frekuensi = DB::table('kriteria_probabilitas')->get();
+        $dampak = DB::table('kriteria_dampak')->get();
+        return view('backend.resiko.analisa.add', ['frekuensi'=>$frekuensi, 'dampak'=>$dampak]);
+    }
+
+    public function cario($frek){
+        $data = DB::table('besaran_resiko')->where('id_prob','=',$frek)->get();
+        return response()->json($data);
     }
 
     /**

@@ -74,6 +74,7 @@ Route::group(['middleware' => ['auth']],function(){
     //----------------------------------analisa risiko-----------------------------------------
     Route::resource('analisa-risiko', 'backend\AnalisarisikoController');
     Route::get('data-analisarisiko', 'backend\AnalisarisikoController@listdata');
+    // Route::get('hasil-cario/{frek}', 'backend\AnalisarisikoController@cario');
     //----------------------------------analisa akar-----------------------------------------
     Route::resource('analisa-akar-masalah', 'backend\AnalisaakarController');
     Route::get('data-analisaakarmasalah', 'backend\AnalisaakarController@listdata');

@@ -38,10 +38,10 @@ Toko Online | Dashboard
                         </select>
                     </div>
                 </div>
-                <input type="hidden" name="id" id="id">
-                <input type="hidden" name="id_dep" id="id_dep">
-                <input type="hidden" name="kodedep" id="kodedep">
-                <input type="hidden" name="namadep" id="namadep">
+                <input type="text" name="id" id="id">
+                <input type="text" name="id_dep" id="id_dep">
+                <input type="text" name="kodedep" id="kodedep">
+                <input type="text" name="namadep" id="namadep">
                 <div class="form-group row">
                     <label class="control-label col-sm-3 align-self-center" for="email">Periode Penerapan<i
                             class="bintang">*</i></label>
@@ -63,10 +63,10 @@ Toko Online | Dashboard
 
                     </div>
                 </div>
-                <input type="hidden" id="id_jenis_konteks" name="id_jenis_konteks">
-                <input type="hidden" id="id_konteks" name="id_konteks">
-                <input type="hidden" name="kode_konteks" id="kode_konteks">
-                <input type="hidden" name="namakonteks" id="nama_konteks">
+                <input type="text" id="id_jenis_konteks" name="id_jenis_konteks">
+                <input type="text" id="id_konteks" name="id_konteks">
+                <input type="text" name="kode_konteks" id="kode_konteks">
+                <input type="text" name="namakonteks" id="nama_konteks">
                 <div class="form-group row">
                     <label class="control-label col-sm-3 align-self-center" for="email">Kode Risiko</label>
                     <div class="col-sm-9">
@@ -191,66 +191,14 @@ Toko Online | Dashboard
 @endsection
 @push('script')
 <script src="{{asset('phppiechart/assets/js/highcharts.js')}}"></script>
-<!-- <script src="{{asset('assets/customjs/backend/resiko_teridentifikasi.js')}}"></script> -->
+<script src="{{asset('assets/customjs/backend/resiko_teridentifikasi.js')}}"></script>
 <!-- <script>
 $(document).ready(function() {
     $('.js-example-basic-single').select2();
 });
 </script> -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script>
-$(function() {
-    $("#cari_konteks").select2({
-        placeholder: "Pilih Konteks",
-    });
-    $('#cari_departmen').select2({
-        placeholder: 'Cari Departmen',
-        ajax: {
-            url: '/cari-departmen',
-            dataType: 'json',
-            delay: 250,
-            processResults: function(data) {
-                return {
-                    results: $.map(data, function(item) {
-                        return {
-                            id: item.id+'-'+item.id_departemen,
-                            text: item.namadep + " - (" + item.priode_penerapan + ")"
-                        }
+<!-- <script>
 
-                    })
-                }
-            },
-            cache: true
-        }
-    });
-
-    $('#cari_departmen').on('select2:select', function (e) {
-        $('#cari_konteks').empty().trigger("change");
-		var kode = $(this).val();
-        var newkode = kode.split("-");
-		$.ajax({
-			type: 'GET',
-			url: '/hasil-cari-departmen/'+newkode[0]+'/'+newkode[1],
-			success: function (data) {
-                $.each(data.detail,function(key, item){
-                    $('#kode').val(item.kode);
-                    $('#id').val(item.id);
-                    $('#id_dep').val(item.id_departemen);
-                    $('#kodedep').val(item.kodedep);
-                    $('#namadep').val(item.namadep);
-                    $('#tahun').val(item.priode_penerapan);
-                    $('#cari_konteks').val(item.jk);
-                });
-                $.each(data.resiko, function (key, value) {
-                    var newOption = new Option(value.nama+'-'+value.kode,value.id,false, false);
-                    $('#cari_konteks').append(newOption).trigger('change');
-                });
-			},
-            complete: function () {
-                $('#cari_konteks').val(null).trigger('change');
-            }
-		});
-	});
-})
-</script>
+</script> -->
 @endpush
