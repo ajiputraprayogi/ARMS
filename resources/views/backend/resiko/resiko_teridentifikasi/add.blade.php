@@ -38,10 +38,10 @@ Toko Online | Dashboard
                         </select>
                     </div>
                 </div>
-                <input type="text" name="id" id="id">
-                <input type="text" name="id_dep" id="id_dep">
-                <input type="text" name="kodedep" id="kodedep">
-                <input type="text" name="namadep" id="namadep">
+                <input type="hidden" name="id" id="id">
+                <input type="hidden" name="id_dep" id="id_dep">
+                <input type="hidden" name="kodedep" id="kodedep">
+                <input type="hidden" name="namadep" id="namadep">
                 <div class="form-group row">
                     <label class="control-label col-sm-3 align-self-center" for="email">Periode Penerapan<i
                             class="bintang">*</i></label>
@@ -63,10 +63,10 @@ Toko Online | Dashboard
 
                     </div>
                 </div>
-                <input type="text" id="id_jenis_konteks" name="id_jenis_konteks">
-                <input type="text" id="id_konteks" name="id_konteks">
-                <input type="text" name="kode_konteks" id="kode_konteks">
-                <input type="text" name="namakonteks" id="nama_konteks">
+                <input type="hidden" id="id_jenis_konteks" name="id_jenis_konteks">
+                <input type="hidden" id="id_konteks" name="id_konteks">
+                <input type="hidden" name="kode_konteks" id="kode_konteks">
+                <input type="hidden" name="namakonteks" id="nama_konteks">
                 <div class="form-group row">
                     <label class="control-label col-sm-3 align-self-center" for="email">Kode Risiko</label>
                     <div class="col-sm-9">
@@ -85,12 +85,15 @@ Toko Online | Dashboard
                     <label class="control-label col-sm-3 align-self-center" for="email">Kategori Risiko<i
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
-                        <select class="form-control" name="kategori" id="">
+                        <select class="form-control" name="kategori" id="carikat">
                             <option selected value="">Kategori Risiko</option>
                             @foreach($data as $kategori)
                             <option value="{{$kategori->id}}">{{$kategori->resiko}}</option>
                             @endforeach
+                            
+                            <!-- $kodekat = DB::table('kategori_resiko')->where('id', '=', $cari)->get(); -->
                         </select>
+                        <input type="hidden" id="kodekat" name="kodekat">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -139,8 +142,16 @@ Toko Online | Dashboard
                 <div class="form-group row">
                     <label class="control-label col-sm-3 align-self-center" for="email">Diajukan Oleh<i
                             class="bintang">*</i></label>
-                    <div class="col-sm-9">
+                    <!-- <div class="col-sm-9">
                         <input type="text" class="form-control" name="diajukan">
+                    </div> -->
+                    <div class="col-sm-9">
+                        <select class="form-control" name="diajukan" id="">
+                            <option selected value="{{Auth::user()->name}}">{{Auth::user()->name}}</option>
+                            @foreach($orang as $pengaju)
+                            <option value="{{$pengaju->name}}">{{$pengaju->name}}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -198,7 +209,23 @@ $(document).ready(function() {
 });
 </script> -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<!-- <script>
-
-</script> -->
+<script>
+    $('#carikat').on('change', function () {
+        // $('#tahun').empty().trigger("change");
+		var kode = $(this).val();
+        console.log(kode);
+		$.ajax({
+			type: 'GET',
+			url: '/hasil-cari-kat/' + kode,
+			success: function (data) {
+				return {
+					results: $.map(data, function (item) {
+							$('#kodekat').val(item.kode);
+					})
+				}
+                
+			},
+		});
+	});
+</script>
 @endpush
