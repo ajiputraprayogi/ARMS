@@ -2,6 +2,9 @@
 @section('title')
     Daftar Pelaksanaan Manajemen Risiko | Dashboard
 @endsection
+@section('token')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
 @section('content')
     <div class="col-lg-12">
         <div class="card card-transparent card-block card-stretch card-height border-none">
@@ -57,7 +60,6 @@
                                 <th>Jumlah Risiko</th>
                                 <th>Selera Risiko</th>
                                 <th>PIC</th>
-                                <th>Kondisi</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -67,10 +69,14 @@
                             <th class="text-center">{{$row->priode_penerapan}}</th>
                             <th class="text-center">{{$row->totalkonteks}}</th>
                             <th class="text-center">-</th>
-                            <th class="text-center">-</th>
+                            <th class="text-center">{{$row->selera_risiko}}</th>
                             <th>{{$row->nama_pemilik_risiko}}</th>
-                            <th>-</th>
-                            <th class="text-center">-</th>
+                            <th class="text-center">
+                                <a class="badge badge-info mr-2" data-toggle="modal" data-target="#showpemangku{{$row->id}}" title="View" data-original-title="View"><i class="ri-eye-line mr-0"></i></a>
+                                <a class="badge bg-success mr-2" href="{{url('edit-pelaksanaan/'.$row->faktur)}}" title="View" data-original-title="View"><i class="ri-pencil-line mr-0"></i></a>
+                                <a class="badge bg-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="hapusdatamanajemenrisiko({{$row->id}})"><i class="ri-delete-bin-line mr-0"></i><input type="hidden" name="faktur" value="{{$row->faktur}}"></a>
+                                <!-- <a class="badge bg-warning mr-2" data-original-title="Delete" href="{{''}}"><i class="ri-delete-bin-line mr-0"></i></a> -->
+                            </th>
                         </tbody>
                         @endforeach
                     </table>
@@ -81,6 +87,6 @@
 @endsection
 @push('script')
     <script src="{{asset('phppiechart/assets/js/highcharts.js')}}"></script>
-    <script src="{{asset('assets/customjs/backend/pelaksanaan_manajemen.js')}}"></script>
+    <script src="{{asset('assets/customjs/backend/manajemen_risiko.js')}}"></script>
 @endpush
 
