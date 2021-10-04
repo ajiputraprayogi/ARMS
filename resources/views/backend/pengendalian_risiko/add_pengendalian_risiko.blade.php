@@ -78,124 +78,83 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Nama Pemilik Risiko*</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Pernyataan Risiko*</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="nama_pemilik_risiko" id="">
+                            <!-- <input type="text" class="form-control" name="nama_pemilik_risiko" id=""> -->
+                            <label for="">test</label>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Jabatan Pemilik Risiko*</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Risiko*</label>
                         <div class="col-sm-9">
-                            <input type="" class="form-control" name="jabatan_pemilik_risiko" id="">
+                            <!-- Auto Kode Generate -->
+                            <input type="hidden" value="" name="faktur" id="faktur" class="form-group form-control" required readonly>
+                            <!-- Select2 -->
+                            <select name="departemen" class="form" id="cari_departemen" style="width: 100%;" data-placeholder="Search ...">
+                            </select>
+                            <input type="hidden" name="id_departemen" id="id_departemen">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Nama Koordinator Pengelola Risiko*</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Kode Tindak Pengendalian*</label>
                         <div class="col-sm-9">
-                            <input type="" class="form-control" name="nama_koordinator_pengelola_risiko" value="{{Auth::user()->name}}" id="">
+                            <input type="" class="form-control" name="nama_koordinator_pengelola_risiko" value="{{Auth::user()->name}}" readonly id="">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Jabatan Koordinator Pengelola Risiko*</label>
+                        <label class="control-label col-sm-3" for="">Respons Risiko *</label>
                         <div class="col-sm-9">
-                            <input type="" class="form-control" name="jabatan_koordinator_pengelola_risiko" value="{{Auth::user()->level}}" id="">
+                            <input type="checkbox" class="checkbox-input" id="checkbox1">
+                            <label for="checkbox1">Mengurangi Frekuensi</label><br>
+                            <input type="checkbox" class="checkbox-input" id="checkbox2">
+                            <label for="checkbox2">Mengurangi Dampak</label>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Selera Risiko*</label>
-                        <div class="col-sm-2">
-                            <input type="number" min="1" max="25" class="form-control" name="selera_risiko" id="">
+                        <label class="control-label col-sm-3" for="">Akar Penyebab*</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" name="keterangan" id="exampleFormControlTextarea1" rows="5" required></textarea>
                         </div>
                     </div>
-                            <div class="form-group">
-                                <b>Konteks</b>
-                            </div>
-                            @if (session('statuskonteks'))
-                            <div class="alert text-white bg-success" role="alert">
-                                <div class="iq-alert-text"><b>Info!</b> {{ session('statuskonteks') }}</div>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <i class="ri-close-line"></i>
-                                </button>
-                            </div>
-                            @endif
-                            <div class="form-group">
-                                <div class="text-right">
-                                    <button type="button" class="btn btn-primary add-list" data-toggle="modal" data-target="#konteks"><i class="las la-plus mr-3"></i>Tambah Konteks</button>
-                                </div>
-                            </div>
-                            <div class="table-responsive rounded mb-3">
-                                <table id="" class="table mb-0 tbl-server-info data-tables">
-                                    <thead class="bg-white text-uppercase">
-                                        <tr class="ligth ligth-data">
-                                            <!-- <th>
-                                                <div class="checkbox d-inline-block">
-                                                    <input type="checkbox" class="checkbox-input" id="checkbox1">
-                                                    <label for="checkbox1" class="mb-0"></label>
-                                                </div>
-                                            </th> -->
-                                            <th>Kode Konteks</th>
-                                            <th>Nama Konteks</th>
-                                            <th>Jenis Konteks </th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="ligth-body">
-                                            <th class="text-center"></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th class="text-center">
-                                                <div class="d-flex align-items-center list-action">
-                                                    -
-                                                </div>
-                                            </th>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="form-group">
-                                <b>Pemangku Kepentingan</b>
-                            </div>
-                            @if (session('statuspemangku'))
-                            <div class="alert text-white bg-success" role="alert">
-                                <div class="iq-alert-text"><b>Info!</b> {{ session('statuspemangku') }}</div>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <i class="ri-close-line"></i>
-                                </button>
-                            </div>
-                            @endif
-                            <div class="form-group">
-                                <div class="text-right">
-                                    <button type="button" class="btn btn-primary add-list" data-toggle="modal" data-target="#pemangku"><i class="las la-plus mr-3"></i>Tambah Pemangku Kepentingan</button>
-                                </div>
-                            </div>
-                            <div class="table-responsive rounded mb-3">
-                                <table id="" class="table mb-0 tbl-server-info data-tables">
-                                    <thead class="bg-white text-uppercase">
-                                        <tr class="ligth ligth-data">
-                                            <!-- <th>
-                                                <div class="checkbox d-inline-block">
-                                                    <input type="checkbox" class="checkbox-input" id="checkbox1">
-                                                    <label for="checkbox1" class="mb-0"></label>
-                                                </div>
-                                            </th> -->
-                                            <th>No</th>
-                                            <th>Nama Pemangku kepentingan</th>
-                                            <th>Keterangan</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <?php $no=1; ?>
-                                    <tbody class="ligth-body">
-                                        <th class="text-center"></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th>
-                                            <div class="d-flex align-items-center list-action">
-                                                -
-                                            </div>
-                                        </th>
-                                    </tbody>
-                                </table>
-                            </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3" for="">Kegiatan Pengendalian*</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" name="keterangan" id="exampleFormControlTextarea1" rows="5" required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3" for="">Klasifikasi Sub Unsur SPIP*</label>
+                        <div class="col-sm-9">
+                        <select class="form-control" name="id_konteks" id="" required>
+                            <option selected disabled value="">Pilih Klasifikasi Sub Unsur SPIP</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3 align-self-center" for="">Penanggung Jawab*</label>
+                        <div class="col-sm-9">
+                            <input type="" class="form-control" name="nama_koordinator_pengelola_risiko" value="" id="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3 align-self-center" for="">Indikator Keluaran*</label>
+                        <div class="col-sm-9">
+                            <input type="" class="form-control" name="nama_koordinator_pengelola_risiko" value="" id="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3 align-self-center" for="">Target Waktu*</label>
+                        <div class="col-sm-9">
+                        <input type="date" class="form-control" id="dob" name="tanggal1"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3" for="">Status Pelaksanaan*</label>
+                        <div class="col-sm-9">
+                        <select class="form-control" name="id_konteks" id="" required>
+                            <option selected disabled value="">Pilih Status Pelaksanaan</option>
+                        </select>
+                        </div>
                     </div>
                     <div class="text-right">
                         <button type="submit" class="btn btn-primary btn-lg">Simpan</button>
