@@ -35,8 +35,9 @@ class AnalisarisikoController extends Controller
         return view('backend.resiko.analisa.add', ['frekuensi'=>$frekuensi, 'dampak'=>$dampak]);
     }
 
-    public function cario($frek){
-        $data = DB::table('besaran_resiko')->where('id_prob','=',$frek)->get();
+    public function cario($frek, $dampak){
+        $data = DB::table('besaran_resiko')
+        ->where([['id_prob',$frek],['id_dampak', $dampak]])->get();
         return response()->json($data);
     }
 
