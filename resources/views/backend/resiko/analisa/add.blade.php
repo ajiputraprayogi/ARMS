@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-Toko Online | Dashboard
+Toko Online | Analisa Risiko
 @endsection
 @section('css')
 <style>
@@ -96,10 +96,10 @@ legend.scheduler-border {
                         <label class="control-label col-sm-3 align-self-center" for="email">Skor Frekuensi Saat Ini<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
-                            <select class="form-control" name="pengajuan" id="cario">
-                                <option selected disabled value="">Status Persetujuan</option>
+                            <select class="form-control" name="frekkini" id="cario">
+                                <option selected disabled value="">Skor Frekuensi Saat Ini</option>
                                 @foreach($frekuensi as $row)
-                                <option value="{{$row->nilai}}">{{$row->nama}}</option>
+                                <option value="{{$row->id}}">{{$row->nilai}} - {{$row->nama}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -108,10 +108,10 @@ legend.scheduler-border {
                         <label class="control-label col-sm-3 align-self-center" for="email">Skor Dampak Saat Ini<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
-                            <select class="form-control" name="pengajuan" id="dampakk" class="dampakk">
-                                <option selected disabled value="">Status Persetujuan</option>
+                            <select class="form-control" name="dampakini" id="dampakk" class="dampakk">
+                                <option selected disabled value="">Skor Dampak Saat Ini</option>
                                 @foreach($dampak as $row2)
-                                <option value="{{$row2->nilai}}">{{$row2->nama}}</option>
+                                <option value="{{$row2->id}}">{{$row2->nilai}} - {{$row2->nama}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -198,25 +198,48 @@ function hide(id)
 <!-- <script src="{{asset('assets/customjs/backend/analisa_risiko.js')}}"></script> -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-<!-- <script type="text/javascript">
-// $(document).on('change', function (e) {
-//         // $('#tahun').empty().trigger("change");
-//         // $('#dampakk').empty().trigger("change");
-// 		var frek = $('#cario').val();
-        
-//         $.ajax({
-// 			type: 'GET',
-// 			url: '/hasil-cario/'+frek,
-// 			success: function (data) {
-// 				return {
-// 					results: $.map(data, function (item) {
-// 							$('#dampakk').val(item.nilai);
-// 					})
-// 				}
-// 			},
-// 		});
-// });
+<script type="text/javascript">
+$(document).on('change', function (e) {
+        // $('#tahun').empty().trigger("change");
+        // $('#dampakk').empty().trigger("change");
+		var frek = $('#cario').val();
+        console.log(frek);
+        var damp = $('#dampakk').val();
+                console.log(damp);
+        $.ajax({
+			type: 'GET',    
+			url: '/hasil-cario/'+frek+'/'+damp,
+			success: function (data) {
+				return {
+					results: $.map(data, function (item) {
+                        // $('#besaran').append('<option>' + data.nilai + '</option>')
+					    $('#besaran').val(item.nilai);
+                        $('#besaran').empty().trigger("change");
+					})
+				}
+                
+			},
+		});
+});
+        // $(document).ready(function(){
+		// 	$("#cario").change(function(){
+		// 		var aid = $("#cario").val();
+        //         console.log(aid);
+		// 		$.ajax({
+		// 			url: 'cario',
+		// 			method: 'post',
+		// 			data: 'aid=' + aid
+		// 		}).done(function(books){
+		// 			console.log(books);
+		// 			books = JSON.parse(books);
+		// 			$('#books').empty();
+		// 			books.forEach(function(book){
+		// 				$('#books').append('<option>' + book.name + '</option>')
+		// 			})
+		// 		})
+		// 	})
+		// })
 
-</script> -->
+</script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 @endpush
