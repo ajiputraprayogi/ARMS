@@ -89,6 +89,10 @@ Route::group(['middleware' => ['auth']],function(){
     Route::resource('analisa-risiko', 'backend\AnalisarisikoController');
     Route::get('data-analisarisiko', 'backend\AnalisarisikoController@listdata');
     Route::get('hasil-cario/{frek}/{damp}', 'backend\AnalisarisikoController@cario');
+    Route::get('hasil-cari-residu/{frek}/{damp}', 'backend\AnalisarisikoController@cariresidu');
+    Route::get('/cari-analisa-departmen','backend\AnalisarisikoController@caridepartmen');
+    Route::get('/hasil-cari-analisa departmen/{id}/{id_departemen}','backend\AnalisarisikoController@hasilcaridepartmen');
+    Route::get('/hasil-cari-kode/{id}','backend\AnalisarisikoController@hasilcarikode');
     // Route::get('hasil-cari-kat/{id}', 'backend\AnalisarisikoController@carikat');
     //----------------------------------analisa akar-----------------------------------------
     Route::resource('analisa-akar-masalah', 'backend\AnalisaakarController');

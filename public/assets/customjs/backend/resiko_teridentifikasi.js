@@ -145,10 +145,10 @@ $(function() {
                     $('#kodedep').val(item.kodedep);
                     $('#namadep').val(item.namadep);
                     $('#tahun').val(item.priode_penerapan);
-                    $('#cari_konteks').val(item.jk);
+                    // $('#cari_konteks').val(item.jk);
                 });
                 $.each(data.resiko, function (key, value) {
-                    var newOption = new Option(value.nama+'-'+value.kode,value.id,false, false);
+                    var newOption = new Option(value.kode+' - '+value.nama,value.id,false, false);
                     $('#cari_konteks').append(newOption).trigger('change');
                 });
 			},

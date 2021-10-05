@@ -44,7 +44,7 @@ legend.scheduler-border {
         </div>
         @endif
         <div class="card-body">
-            <form class="form-horizontal" action="{{url('resiko-teridentifikasi')}}" method="post">
+            <form class="form-horizontal" action="{{url('analisa-risiko')}}" method="post">
                 @csrf
                 <div class="form-group row">
                     <label class="control-label col-sm-3 align-self-center" for="email">Departemen Pemilik Reesiko<i
@@ -80,14 +80,11 @@ legend.scheduler-border {
 
                     </div>
                 </div>
-                <input type="hidden" id="id_jenis_konteks" name="id_jenis_konteks">
-                <input type="hidden" id="id_konteks" name="id_konteks">
-                <input type="hidden" name="kode_konteks" id="kode_konteks">
-                <input type="hidden" name="namakonteks" id="nama_konteks">
+                <input type="hidden" name="full_kode" id="full_kode">
                 <div class="form-group row">
                     <label class="control-label col-sm-3 align-self-center" for="email">Pernyataan Risiko</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="" name="pernyataan">
+                        <input type="text" class="form-control" id="pernyataan" name="pernyataan">
                     </div>
                 </div>
                 <fieldset class="scheduler-border">
@@ -116,12 +113,27 @@ legend.scheduler-border {
                             </select>
                         </div>
                     </div>
-                    <input type="text" name="besaran" id="besaran">
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3 align-self-center" for="email">Skor Besaran Saat Ini<i
+                                class="bintang">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" name="besaran" id="besaran" class="box1" readonly>
+                        </div>
+                    </div>
+                    <!-- <div class="box1" style="background-color: '+data['kode_warna']+';"></div> -->
+                    <input type="hidden" name="warna" id="warna">
+                    <input type="hidden" name="nilpro" id="nilpro">
+                    <input type="hidden" name="nildam" id="nildam">
+                    <input type="hidden" name="nampro" id="nampro">
+                    <input type="hidden" name="namdam" id="namdam">
+                    <input type="hidden" name="idpro" id="idpro">
+                    <input type="hidden" name="iddam" id="iddam">
                 </fieldset>
                 <div class="form-group">
-                    <b>Sudah Ada Pengendalian??</b><span> <input type="checkbox" onclick="hide('my-list')" id="hide"></label></span>
+                    <b>Sudah Ada Pengendalian??</b><span> <input type="checkbox" onclick="hide('my-list')"
+                            id="hide"></label></span>
                 </div>
-                <fieldset class="scheduler-border" id="my-list">
+                <!-- <fieldset class="scheduler-border" id="my-list">
                     <legend class="scheduler-border">Skor yang melekat</legend>
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Uraian Pengendaliank<i
@@ -141,18 +153,18 @@ legend.scheduler-border {
                             </select>
                         </div>
                     </div>
-                </fieldset>
-                <fieldset class="scheduler-border">
+                </fieldset> -->
+                <!-- <fieldset class="scheduler-border">
                     <legend class="scheduler-border">Skor Residu Setelah Pengendalian</legend>
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Skor Frekuensi Saat Ini<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
-                            <select class="form-control" name="pengajuan" id="">
-                                <option selected disabled value="">Status Persetujuan</option>
-                                <option value="diajukan">Diajukan</option>
-                                <option value="disetujui">Disetujui</option>
-                                <option value="ditolak">Ditolak</option>
+                            <select class="form-control" name="frekkini" id="fresidu">
+                                <option selected disabled value="">Skor Frekuensi Saat Ini</option>
+                                @foreach($frekuensi as $row)
+                                <option value="{{$row->id}}">{{$row->nilai}} - {{$row->nama}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -160,14 +172,65 @@ legend.scheduler-border {
                         <label class="control-label col-sm-3 align-self-center" for="email">Skor Dampak Saat Ini<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
-                            <select class="form-control" name="pengajuan" id="">
-                                <option selected disabled value="">Status Persetujuan</option>
-                                <option value="diajukan">Diajukan</option>
-                                <option value="disetujui">Disetujui</option>
-                                <option value="ditolak">Ditolak</option>
+                            <select class="form-control" name="dampakini" id="dresidu" class="dampakk">
+                                <option selected disabled value="">Skor Dampak Saat Ini</option>
+                                @foreach($dampak as $row2)
+                                <option value="{{$row2->id}}">{{$row2->nilai}} - {{$row2->nama}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3 align-self-center" for="email">Skor Besaran Saat Ini<i
+                                class="bintang">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" name="besaran" id="besaran_residu" class="box1" readonly>
+                        </div>
+                    </div>
+                    <input type="hidden" name="warna_residu" id="warna_residu">
+                    <input type="hidden" name="nilpro2" id="nilpro2">
+                    <input type="hidden" name="nildam2" id="nildam2">
+                    <input type="hidden" name="nampro2" id="nampro2">
+                    <input type="hidden" name="namdam2" id="namdam">
+                </fieldset> -->
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">Skor Residu Setelah Pengendalian</legend>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3 align-self-center" for="email">Skor Frekuensi Saat Ini<i
+                                class="bintang">*</i></label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="frekkini" id="fresidu" readonly>
+                                <option selected disabled value="">Skor Frekuensi Saat Ini</option>
+                                @foreach($frekuensi as $row)
+                                <option value="{{$row->id}}">{{$row->nilai}} - {{$row->nama}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3 align-self-center" for="email">Skor Dampak Saat Ini<i
+                                class="bintang">*</i></label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="dampakini" id="dresidu" class="dampakk" readonly>
+                                <option selected disabled value="">Skor Dampak Saat Ini</option>
+                                @foreach($dampak as $row2)
+                                <option value="{{$row2->id}}">{{$row2->nilai}} - {{$row2->nama}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3 align-self-center" for="email">Skor Besaran Saat Ini<i
+                                class="bintang">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" name="besaran" id="besaran_residu" class="box1" readonly>
+                        </div>
+                    </div>
+                    <!-- <input type="text" name="warna_residu" id="warna_residu">
+                    <input type="text" name="nilpro2" id="nilpro2">
+                    <input type="text" name="nildam2" id="nildam2">
+                    <input type="text" name="nampro2" id="nampro2">
+                    <input type="text" name="namdam2" id="namdam"> -->
                 </fieldset>
                 <div class="text-right">
                     <div class="form-group">
@@ -182,64 +245,106 @@ legend.scheduler-border {
 @endsection
 @push('script')
 <script type="text/javascript">
-function hide(id)
-{
-  if (hide == true) {
-    document.getElementById(id).style.display = 'block';
-    is_hide = false;
-  }
-  else {
-    document.getElementById(id).style.display = 'none';
-    hide = true;
-  }
+function hide(id) {
+    if (hide == true) {
+        document.getElementById(id).style.display = 'block';
+        is_hide = false;
+    } else {
+        document.getElementById(id).style.display = 'none';
+        hide = true;
+    }
 }
 </script>
 <!-- <script src="{{asset('phppiechart/assets/js/highcharts.js')}}"></script> -->
-<!-- <script src="{{asset('assets/customjs/backend/analisa_risiko.js')}}"></script> -->
+<script src="{{asset('assets/customjs/backend/analisa_risiko.js')}}"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <script type="text/javascript">
-$(document).on('change', function (e) {
-        // $('#tahun').empty().trigger("change");
-        // $('#dampakk').empty().trigger("change");
-		var frek = $('#cario').val();
-        console.log(frek);
-        var damp = $('#dampakk').val();
-                console.log(damp);
-        $.ajax({
-			type: 'GET',    
-			url: '/hasil-cario/'+frek+'/'+damp,
-			success: function (data) {
-				return {
-					results: $.map(data, function (item) {
-                        // $('#besaran').append('<option>' + data.nilai + '</option>')
-					    $('#besaran').val(item.nilai);
-                        $('#besaran').empty().trigger("change");
-					})
-				}
-                
-			},
-		});
-});
-        // $(document).ready(function(){
-		// 	$("#cario").change(function(){
-		// 		var aid = $("#cario").val();
-        //         console.log(aid);
-		// 		$.ajax({
-		// 			url: 'cario',
-		// 			method: 'post',
-		// 			data: 'aid=' + aid
-		// 		}).done(function(books){
-		// 			console.log(books);
-		// 			books = JSON.parse(books);
-		// 			$('#books').empty();
-		// 			books.forEach(function(book){
-		// 				$('#books').append('<option>' + book.name + '</option>')
-		// 			})
-		// 		})
-		// 	})
-		// })
+$(document).on('change', function(e) {
+    // $('#tahun').empty().trigger("change");
+    // $('#dampakk').empty().trigger("change");
 
+    var frek = $('#cario').val();
+    console.log(frek);
+    var damp = $('#dampakk').val();
+    console.log(damp);
+    $.ajax({
+        type: 'GET',
+        url: '/hasil-cario/' + frek + '/' + damp,
+        success: function(data) {
+            return {
+                results: $.map(data, function(item) {
+                    // $('#besaran').append('<option>' + data.nilai + '</option>')
+                    $('#besaran').val(item.nilai)
+                    $('#warna').val(item.kode_warna)
+                    $('#idpro').val(item.idpro)
+                    $('#iddam').val(item.iddam)
+                    $('#nilpro').val(item.nilpro)
+                    $('#nildam').val(item.nildam)
+                    $('#nampro').val(item.nampro)
+                    $('#namdam').val(item.namdam)
+                    $('#fresidu').val(item.idpro)
+                    $('#dresidu').val(item.iddam)
+                    $('#besaran_residu').val(item.nilai);
+
+                })
+                // $('#besaran').empty().trigger("change");
+            }
+
+        },
+
+    });
+
+});
+
+// $(document).on('change', function(e) {
+//     // $('#tahun').empty().trigger("change");
+//     // $('#dampakk').empty().trigger("change");
+
+//     var frek = $('#fresidu').val();
+//     console.log(frek);
+//     var damp = $('#dresidu').val();
+//     console.log(damp);
+//     $.ajax({
+//         type: 'GET',
+//         url: '/hasil-cari-residu/' + frek + '/' + damp,
+//         success: function(data) {
+//             return {
+//                 results: $.map(data, function(item) {
+//                     // $('#besaran').append('<option>' + data.nilai + '</option>')
+//                     $('#besaran_residu').val(item.nilai);
+//                     $('#warna_residu').val(item.kode_warna)
+//                     $('#nilpro2').val(item.nilpro)
+//                     $('#nildam2').val(item.nildam)
+//                     $('#nampro2').val(item.nampro)
+//                     $('#namdam2').val(item.namdam)
+//                 })
+//                 // $('#besaran').empty().trigger("change");
+//             }
+
+//         },
+
+//     });
+
+// });
+// $(document).ready(function(){
+// 	$("#cario").change(function(){
+// 		var aid = $("#cario").val();
+//         console.log(aid);
+// 		$.ajax({
+// 			url: 'cario',
+// 			method: 'post',
+// 			data: 'aid=' + aid
+// 		}).done(function(books){
+// 			console.log(books);
+// 			books = JSON.parse(books);
+// 			$('#books').empty();
+// 			books.forEach(function(book){
+// 				$('#books').append('<option>' + book.name + '</option>')
+// 			})
+// 		})
+// 	})
+// })
 </script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 @endpush

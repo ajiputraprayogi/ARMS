@@ -37,6 +37,18 @@ class AnalisarisikoController extends Controller
 
     public function cario($frek, $dampak){
         $data = DB::table('besaran_resiko')
+        ->select('besaran_resiko.*', 'kriteria_probabilitas.nilai as nilpro', 'kriteria_dampak.nilai as nildam', 'kriteria_probabilitas.nama as nampro', 'kriteria_dampak.nama as namdam', 'kriteria_probabilitas.id as idpro', 'kriteria_dampak.id as iddam')
+        ->leftjoin('kriteria_probabilitas', 'besaran_resiko.id_prob', '=', 'kriteria_probabilitas.id')
+        ->leftjoin('kriteria_dampak', 'besaran_resiko.id_dampak', '=', 'kriteria_dampak.id')
+        ->where([['id_prob',$frek],['id_dampak', $dampak]])->get();
+        return response()->json($data);
+    }
+
+    public function cariresidu($frek, $dampak){
+        $data = DB::table('besaran_resiko')
+        ->select('besaran_resiko.*', 'kriteria_probabilitas.nilai as nilpro', 'kriteria_dampak.nilai as nildam', 'kriteria_probabilitas.nama as nampro', 'kriteria_dampak.nama as namdam')
+        ->leftjoin('kriteria_probabilitas', 'besaran_resiko.id_prob', '=', 'kriteria_probabilitas.id')
+        ->leftjoin('kriteria_dampak', 'besaran_resiko.id_dampak', '=', 'kriteria_dampak.id')
         ->where([['id_prob',$frek],['id_dampak', $dampak]])->get();
         return response()->json($data);
     }
@@ -49,7 +61,33 @@ class AnalisarisikoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $sts = 'belum';
+        analisarisiko::insert([
+            'pr'=>$request->warna,
+            'pr_residu'=>$request->warna,
+            'id_departmen'=>$request->id_dep,
+            'kode_departmen'=>$request->kodedep,
+            'departmen_pemilik'=>$request->namadep,
+            'kode_risiko'=>$request->full_kode,
+            'pernyataan'=>$request->pernyataan,
+            'id_prob'=>$request->idpro,
+            'id_dampak'=>$request->iddam,
+            'id_prob_residu'=>$request->idpro,
+            'id_dampak_residu'=>$request->iddam,
+            'frekuensi_melekat'=>$request->nilpro,
+            'dampak_melekat'=>$request->nildam,
+            'besaran_melekat'=>$request->besaran,
+            'frekuensi_residu'=>$request->nilpro,
+            'skor_dampak_residu'=>$request->nildam,
+            'skor_besaran_residu'=>$request->besaran,
+            'sudah_ada_pengendalian'=>$sts,
+        ]);
+        $up = DB::table('resiko_teridentifikasi')->where('full_kode', '=', $request->full_kode)->update([
+            'besaran_awal'=>$request->besaran,
+            'besaran_akhir'=>$request->besaran,
+            'pr'=>$request->warna,
+        ]);
+        return redirect('analisa-risiko')->with('status','Berhasil menyimpan data');
     }
 
     /**
@@ -94,6 +132,56 @@ class AnalisarisikoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        analisarisiko::destroy($id);
+    }
+
+    public function caridepartmen(Request $request){
+        if($request->has('q')){
+            $cari = $request->q;
+            $data = DB::table('pelaksanaan_manajemen_risiko')
+                    ->select('pelaksanaan_manajemen_risiko.id', 'pelaksanaan_manajemen_risiko.id_departemen', 'pelaksanaan_manajemen_risiko.priode_penerapan','departemen.kode as kodedep','departemen.nama as namadep')
+                    ->leftjoin('departemen', 'pelaksanaan_manajemen_risiko.id_departemen', '=', 'departemen.id')
+                    ->where('departemen.kode','like','%'.$cari.'%')
+                    ->orwhere('departemen.nama','like','%'.$cari.'%')
+                    ->get();
+            
+            return response()->json($data);
+        }
+    }
+    public function hasilcaridepartmen($id,$iddepartemen){
+        $data = DB::table('pelaksanaan_manajemen_risiko')
+        ->select('pelaksanaan_manajemen_risiko.id', 'pelaksanaan_manajemen_risiko.id_departemen', 'pelaksanaan_manajemen_risiko.priode_penerapan','departemen.kode as kodedep','departemen.nama as namadep')
+        ->leftjoin('departemen', 'pelaksanaan_manajemen_risiko.id_departemen', '=', 'departemen.id')
+        ->where('pelaksanaan_manajemen_risiko.id',$id)
+        ->get();
+
+        $resiko = DB::table('resiko_teridentifikasi')
+        ->where('id_departmen',$iddepartemen)
+        ->get();
+        $print=[
+            'detail'=>$data,
+            'resiko'=>$resiko
+        ];
+        return response()->json($print);
+    }
+    //--------------------------------cari data konteks --------------------------------------------
+    // public function carikonteks(Request $request){
+    //     if($request->has('q')){
+    //         $cari = $request->q;
+    //         $data = DB::table('konteks')
+    //                 ->select('konteks.*','jenis_konteks.id as id_konteks','jenis_konteks.konteks as namakonteks')
+    //                 ->leftjoin('jenis_konteks', 'konteks.id_konteks', '=', 'jenis_konteks.id')
+    //                 ->where('jenis_konteks.konteks','like','%'.$cari.'%')
+    //                 ->get();
+            
+    //         return response()->json($data);
+    //     }
+    // }
+    public function hasilcarikode($id){
+        $data = DB::table('resiko_teridentifikasi')
+                    ->where('id','=', $id)
+                    ->get();
+            
+            return response()->json($data);
     }
 }

@@ -148,6 +148,9 @@ class ManajemenresikoController extends Controller
             'priode_penerapan'=>$request->priode_penerapan,
             'selera_risiko'=>$request->selera_risiko,
         ]);
+        $up = DB::table('konteks')->where('faktur_konteks', '=', $request->faktur)->update([
+            'id_departemen'=>$request->id_departemen,
+        ]);
         return redirect('/pelaksanaan')->with('status','Sukses mengubah data');
     }
 

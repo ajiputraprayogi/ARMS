@@ -88,12 +88,12 @@
                                     <div class="modal-body">
                                         <form class="form-horizontal" action="{{url('resikoteridentifikasi')}}" method="post">
                                             @csrf
-                                            <div class="form-group row">
+                                            <!-- <div class="form-group row">
                                                 <label class="control-label col-sm-3 align-self-center" for="">PR</label>
                                                 <div class="col-sm-9">
                                                     <div class="box1"></div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="form-group row">
                                                 <label class="control-label col-sm-3 align-self-center" for="">Kode Risiko</label>
                                                 <div class="col-sm-9">
