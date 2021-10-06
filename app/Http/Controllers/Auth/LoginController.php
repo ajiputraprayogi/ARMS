@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Auth;
+use Captcha;
 
 class LoginController extends Controller
 {
@@ -38,6 +39,19 @@ class LoginController extends Controller
     public function logout(Request $request) {
         Auth::logout();
         return redirect('/login');
+    }
+
+    public function reloadCaptcha() {
+        return response()->json(['captcha'=> captcha_img()]);
+    }
+
+    protected function validateLogin(Request $request)
+    {
+        $this->validate($request, [
+        $this->username() => 'required|string',
+        'password' => 'required|string',
+        'captcha' => 'required|captcha',
+        ]);
     }
     // public function __construct()
     // {

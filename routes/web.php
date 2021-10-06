@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+Route::get('/reload-captcha', '\App\Http\Controllers\Auth\LoginController@reloadCaptcha');
 Auth::routes();
 Route::group(['middleware' => ['auth']],function(){
     Route::get('/', function () {
