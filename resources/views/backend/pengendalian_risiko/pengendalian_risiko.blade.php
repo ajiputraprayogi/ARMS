@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="table-responsive rounded mb-3">
-                    <table id="" class="table mb-0 tbl-server-info data-tables">
+                    <table id="" class="table table-bordered mb-0 tbl-server-info data-tables">
                         <thead class="bg-white text-uppercase">
                             <tr class="ligth ligth-data">
                                 <!-- <th>
@@ -63,15 +63,17 @@
                                 <th>Aksi</th>
                             </tr>
                         </thead>
+                        @foreach($data as $item)
                         <tbody class="ligth-body">
-                            <th></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center">-</th>
-                            <th class="text-center"></th>
-                            <th></th>
-                            <th class="text-center">-</th>
+                            <th class="text-center">{{$item->kode_tindak_pengendalian}}</th>
+                            <th>{{$item->respons_risiko}}</th>
+                            <th>{{$item->kegiatan_pengendalian}}</th>
+                            <th>{{$item->penanggung_jawab}}</th>
+                            <th>{{$item->target_waktu}}</th>
+                            <th>{{$item->status_pelaksanaan}}</th>
+                            <th>-</th>
                         </tbody>
+                        @endforeach
                     </table>
                 </div>
             </div>
