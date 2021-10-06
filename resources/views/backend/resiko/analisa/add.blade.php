@@ -196,7 +196,7 @@ legend.scheduler-border {
                 <fieldset class="scheduler-border">
                     <legend class="scheduler-border">Skor Residu Setelah Pengendalian</legend>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="email">Skor Frekuensi Saat Ini<i
+                        <label class="control-label col-sm-3 align-self-center" for="email">Skor Frekuensi Residu<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <select class="form-control" name="frekkini" id="fresidu" readonly>
@@ -208,7 +208,7 @@ legend.scheduler-border {
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="email">Skor Dampak Saat Ini<i
+                        <label class="control-label col-sm-3 align-self-center" for="email">Skor Dampak Residu<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <select class="form-control" name="dampakini" id="dresidu" class="dampakk" readonly>
@@ -220,7 +220,7 @@ legend.scheduler-border {
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="email">Skor Besaran Saat Ini<i
+                        <label class="control-label col-sm-3 align-self-center" for="email">Skor Besaran Residu<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <input type="text" name="besaran" id="besaran_residu" class="box1" readonly>

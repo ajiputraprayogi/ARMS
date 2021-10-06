@@ -63,7 +63,7 @@ Toko Online | Dashboard
 
                     </div>
                 </div>
-                <input type="hidden" id="id_jenis_konteks" name="id_jenis_konteks">
+                <input type="text" id="id_jenis_konteks" name="id_jenis_konteks">
                 <input type="hidden" id="id_konteks" name="id_konteks">
                 <input type="hidden" name="kode_konteks" id="kode_konteks">
                 <input type="hidden" name="namakonteks" id="nama_konteks">
@@ -118,7 +118,7 @@ Toko Online | Dashboard
                         <select class="form-control" name="metode" id="">
                             <option selected value="">Metode Pencapaian</option>
                             @foreach($data2 as $spip)
-                            <option value="{{$spip->metode}}">{{$spip->metode}}</option>
+                            <option value="{{$spip->id}}">{{$spip->metode}}</option>
                             @endforeach
                         </select>
                     </div>

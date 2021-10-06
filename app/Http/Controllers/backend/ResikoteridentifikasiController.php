@@ -134,8 +134,9 @@ class ResikoteridentifikasiController extends Controller
         $kategori = kategoriresiko::get();
         $spip = metode::all();
         $res = DB::table('resiko_teridentifikasi')
-        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat')
+        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod')
         ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
+        ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
         ->where('resiko_teridentifikasi.id','=', $id)->get();
         // dd($res);
         return view('backend.resiko.resiko_teridentifikasi.edit',['data'=>$kategori, 'data2'=>$spip, 'res'=>$res]);
@@ -158,8 +159,8 @@ class ResikoteridentifikasiController extends Controller
         $full_code= $coba.".".$kode;
         $data2 = DB::table('resiko_teridentifikasi')->where('id', $id)->get();
         // $data = $request->idkat;
-        // dd($data);
-        $ui="21sadasd";
+        // dd($full_code);
+        // $ui="21sadasd";
         
         resikoteridentifikasi::find($id)->update([
             'kode_risiko'=>$coba,
@@ -174,7 +175,7 @@ class ResikoteridentifikasiController extends Controller
             'konteks'=> $request->namakonteks,
             'kode_konteks'=> $request->kode_konteks,
             'pernyataan_risiko'=> $request->pernyataan,
-            'id_kategori'=>$ui,
+            'id_kategori'=>$request->kategori,
             'kategori_risiko'=> $request->kodekat,
             'uraian_dampak'=> $request->dampak,
             'metode_spip'=> $request->metode,
