@@ -119,8 +119,8 @@ Toko Online | Dashboard
                     <label class="control-label col-sm-3 align-self-center" for="email">Metode Pencapaian SPIP<i
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
-                        <select class="form-control" name="metode" id="">
-                            <option selected value="{{$res->id}}">{{$res->metode_spip}}</option>
+                        <select class="form-control" name="metode" >
+                            <option selected value="{{$res->idmet}}">{{$res->metod}}</option>
                             @foreach($data2 as $spip)
                             <option value="{{$spip->id}}">{{$spip->metode}}</option>
                             @endforeach
