@@ -14,7 +14,7 @@ Edit Detail Pelaksanaan Manajemen Risiko | Dashboard
 <div class="col-md-12">
     <div class="card card-transparent card-block card-stretch card-height border-none">
         <div class="card-header p-0 mt-lg-2 mt-0">
-            <h3 class="mb-3">Edit Detail Pelaksanaan Manajemen Risiko</h3>
+            <h3 class="mb-3">Edit Data Pelaksanaan Manajemen Risiko</h3>
         </div>
         @if ($errors->any())
         <div class="alert alert-danger">

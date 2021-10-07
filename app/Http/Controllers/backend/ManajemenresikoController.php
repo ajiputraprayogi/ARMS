@@ -18,24 +18,85 @@ class ManajemenresikoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = DB::table('pelaksanaan_manajemen_risiko')
-        ->select(DB::raw('pelaksanaan_manajemen_risiko.*,count(konteks.faktur_konteks) as totalkonteks,count(resiko_teridentifikasi.kode_konteks) as totalrisiko,departemen.nama'))
+        $infosearch ='';
+        $active_departemen = 'Semua Departemen';
+        $active_tahun = 'Semua Tahun';
+
+        if($request->has('departemen')){
+            if($request->departemen!='Semua Departemen'){
+                $active_departemen = $request->departemen;
+            }else{
+                $active_departemen = 'Semua Departemen';
+            }
+        }
+
+        if($request->has('tahun')){
+            if($request->tahun!='Semua Tahun'){
+                $active_tahun = $request->tahun;
+            }else{
+                $active_tahun = 'Semua Tahun';
+            }
+        }
+        $departemen = DB::table('pelaksanaan_manajemen_risiko')
+        ->select(DB::raw('pelaksanaan_manajemen_risiko.faktur,departemen.nama,departemen.id'))
         ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
-        ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
-        ->leftjoin('resiko_teridentifikasi', 'resiko_teridentifikasi.kode_konteks','=','konteks.kode')
-        ->orderby('pelaksanaan_manajemen_risiko.id','desc')
-        ->groupby('pelaksanaan_manajemen_risiko.faktur')
+        ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
         ->get();
-        // $pelaksanaanmanajemenrisiko1 = DB::table('pelaksanaan_manajemen_risiko')
-        // ->join('konteks', 'pelaksanaan_manajemen_risiko.faktur', '=', 'konteks.faktur_konteks')
-        // ->select([
-        //     'pelaksanaan_manajemen_risiko.faktur', 
-        //     DB::raw("count(konteks.faktur_konteks) as count")
-        //     ])->groupBy('pelaksanaan_manajemen_risiko.faktur')
-        // ->get();
-        return view('backend.manajemen_risiko.pelaksanaan_risiko',compact('data'));
+
+        $tahun = DB::table('pelaksanaan_manajemen_risiko')
+        ->groupby('priode_penerapan')
+        ->get();
+
+        if($active_departemen!='Semua Departemen'){
+            if($active_tahun!='Semua Tahun'){
+                $data = DB::table('pelaksanaan_manajemen_risiko')
+                ->select(DB::raw('pelaksanaan_manajemen_risiko.*,count(konteks.faktur_konteks) as totalkonteks,count(resiko_teridentifikasi.kode_konteks) as totalrisiko,departemen.nama'))
+                ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+                ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
+                ->leftjoin('resiko_teridentifikasi', 'resiko_teridentifikasi.kode_konteks','=','konteks.kode')
+                ->where([['departemen.id','=',$active_departemen],['priode_penerapan','=',$active_tahun]])
+                ->orderby('pelaksanaan_manajemen_risiko.id','desc')
+                ->groupby('pelaksanaan_manajemen_risiko.faktur')
+                ->paginate(50);
+               // dd($data);
+            }else{
+                $data = DB::table('pelaksanaan_manajemen_risiko')
+                ->select(DB::raw('pelaksanaan_manajemen_risiko.*,count(konteks.faktur_konteks) as totalkonteks,count(resiko_teridentifikasi.kode_konteks) as totalrisiko,departemen.nama'))
+                ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+                ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
+                ->leftjoin('resiko_teridentifikasi', 'resiko_teridentifikasi.kode_konteks','=','konteks.kode')
+                ->where('pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen)
+                ->orderby('pelaksanaan_manajemen_risiko.id','desc')
+                ->groupby('pelaksanaan_manajemen_risiko.faktur')
+                ->paginate(50);
+            }
+        }else{
+            if($active_tahun!='Semua Tahun'){
+                $data = DB::table('pelaksanaan_manajemen_risiko')
+                ->select(DB::raw('pelaksanaan_manajemen_risiko.*,count(konteks.faktur_konteks) as totalkonteks,count(resiko_teridentifikasi.kode_konteks) as totalrisiko,departemen.nama'))
+                ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+                ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
+                ->leftjoin('resiko_teridentifikasi', 'resiko_teridentifikasi.kode_konteks','=','konteks.kode')
+                ->where('pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun)
+                ->orderby('pelaksanaan_manajemen_risiko.id','desc')
+                ->groupby('pelaksanaan_manajemen_risiko.faktur')
+                ->paginate(50);
+            }else{
+                $data = DB::table('pelaksanaan_manajemen_risiko')
+                ->select(DB::raw('pelaksanaan_manajemen_risiko.*,count(konteks.faktur_konteks) as totalkonteks,count(resiko_teridentifikasi.kode_konteks) as totalrisiko,departemen.nama'))
+                ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+                ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
+                ->leftjoin('resiko_teridentifikasi', 'resiko_teridentifikasi.kode_konteks','=','konteks.kode')
+                ->orderby('pelaksanaan_manajemen_risiko.id','desc')
+                ->groupby('pelaksanaan_manajemen_risiko.faktur')
+                ->paginate(50);
+            }
+        }
+
+        
+        return view('backend.manajemen_risiko.pelaksanaan_risiko',compact('data','departemen','tahun','active_departemen','active_tahun'));
     }
 
     /**
