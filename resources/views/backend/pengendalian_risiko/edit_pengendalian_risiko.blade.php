@@ -44,8 +44,9 @@
             @endif
             <div class="card-body">
                 @foreach($data as $row)
-                    <form class="form-horizontal" action="{{url('/pengendalian/'.$row->id)}}" method="post">
+                    <form class="form-horizontal" action="{{url('pengendalian/'.$row->id)}}" method="post">
                         @csrf
+                        <input type="hidden" name="_method" value="PUT">
                         <div class="form-group">
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Departemen Pemilik Risiko*</label>
@@ -69,7 +70,7 @@
                                 <!-- Select2 -->
                                 <select name="risiko" class="form" id="cari_risiko" style="width: 100%;">
                                 </select>
-                                <input type="" value="{{$row->id_risiko}}" name="id_risiko" id="id_risiko">
+                                <input type="hidden" value="{{$row->id_risiko}}" name="id_risiko" id="id_risiko">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -87,7 +88,7 @@
                                 <!-- Select2 -->
                                 <select name="departemen" class="form" id="cari_departemen" style="width: 100%;" data-placeholder="Search ...">
                                 </select>
-                                <input type="hidden" name="id_departemen" id="id_departemen">
+                                <!-- <input type="hidden" name="id_departemen" id="id_departemen"> -->
                             </div>
                         </div>
                         <div class="form-group row">
@@ -99,8 +100,13 @@
                         <div class="form-group row">
                             <label class="control-label col-sm-3" for="">Respons Risiko *</label>
                             <div class="col-sm-9">
-                                <label for="checkbox1"><input type="checkbox" class="checkbox-input" name="respons_risiko[]" value="Mengurangi Frekuensi" id="checkbox1"> Mengurangi Frekuensi</label><br>
-                                <label for="checkbox2"><input type="checkbox" class="checkbox-input" name="respons_risiko[]" value="Mengurangi Dampak" id="checkbox2"> Mengurangi Dampak</label>
+                                @php
+                                    //data hobi dari tabel siswa 
+                                    $newpic =', '.$row->respons_risiko;
+                                    $datahobi=explode(', ',$newpic);
+                                @endphp
+                                <label for="checkbox1"><input type="checkbox" class="checkbox-input" name="respons_risiko[]" value="Mengurangi Frekuensi" id="checkbox1" @php if (in_array("Mengurangi Frekuensi", $datahobi)) echo "checked";@endphp > Mengurangi Frekuensi</label><br>
+                                <label for="checkbox2"><input type="checkbox" class="checkbox-input" name="respons_risiko[]" value="Mengurangi Dampak" id="checkbox2" @php if (in_array("Mengurangi Dampak", $datahobi)) echo "checked";@endphp > Mengurangi Dampak</label>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -112,14 +118,14 @@
                         <div class="form-group row">
                             <label class="control-label col-sm-3" for="">Kegiatan Pengendalian*</label>
                             <div class="col-sm-9">
-                                <textarea class="form-control" name="kegiatan_pengendalian" id="exampleFormControlTextarea1" rows="5" required></textarea>
+                                <textarea class="form-control" name="kegiatan_pengendalian" id="exampleFormControlTextarea1" rows="5" required>{{$row->kegiatan_pengendalian}}</textarea>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-sm-3" for="">Klasifikasi Sub Unsur SPIP*</label>
                             <div class="col-sm-9">
                             <select class="form-control" name="klasifikasi_sub_unsur_spip" id="" required>
-                                <option selected disabled value="">Pilih Klasifikasi Sub Unsur SPIP</option>
+                                <option selected value="{{$row->id_klasifikasi_sub_unsur_spip}}">{{$row->klasifikasi_sub_unsur_spip}}</option>
                                 @foreach($klasifikasi as $item)
                                 <option value="{{$item->id}}">{{$item->klasifikasi_sub_unsur_spip}}</option>
                                 @endforeach
@@ -129,29 +135,29 @@
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Penanggung Jawab*</label>
                             <div class="col-sm-9">
-                                <input type="" class="form-control" name="penanggung_jawab" value="" id="">
+                                <input type="" class="form-control" name="penanggung_jawab" value="{{$row->penanggung_jawab}}" id="">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Indikator Keluaran*</label>
                             <div class="col-sm-9">
-                                <input type="" class="form-control" name="indikator_keluaran" value="" id="">
+                                <input type="" class="form-control" name="indikator_keluaran" value="{{$row->indikator_keluaran}}" id="">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Target Waktu*</label>
                             <div class="col-sm-9">
-                            <input type="date" class="form-control" id="dob" name="target_waktu"/>
+                            <input type="date" class="form-control" id="dob" value="{{$row->target_waktu}}" name="target_waktu"/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-sm-3" for="">Status Pelaksanaan*</label>
                             <div class="col-sm-9">
-                            <select class="form-control" name="status_pelaksanaan" id="" required readonly>
-                                <option selected value="Belum Dilaksanakan" selected>Belum Dilaksanakan</option>
-                                <!-- <option value="Dalam Proses Pelaksanaan">Dalam Proses Pelaksanaan</option>
+                            <select class="form-control" name="status_pelaksanaan" id="" required>
+                                <option selected value="{{$row->status_pelaksanaan}}">{{$row->status_pelaksanaan}}</option>
+                                <option value="Dalam Proses Pelaksanaan">Dalam Proses Pelaksanaan</option>
                                 <option value="Selesai Dilaksanakan">Selesai Dilaksanakan</option>
-                                <option value="Belum Terealisasi">Belum Terealisasi</option> -->
+                                <option value="Belum Terealisasi">Belum Terealisasi</option>
                             </select>
                             </div>
                         </div>

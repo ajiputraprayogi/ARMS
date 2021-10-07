@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use DataTables;
 use App\analisaakar;
 use DB;
+use App\penyebab;
 
 class AnalisaakarController extends Controller
 {
@@ -31,7 +32,8 @@ class AnalisaakarController extends Controller
      */
     public function create()
     {
-        return view('backend.resiko.akar_masalah.add');
+        $data = penyebab::all();
+        return view('backend.resiko.akar_masalah.add',compact('data'));
     }
 
     /**
@@ -88,5 +90,44 @@ class AnalisaakarController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function caridepartmen(Request $request)
+    {
+        if($request->has('q')){
+            $cari = $request->q;
+            $data = DB::table('pelaksanaan_manajemen_risiko')
+                    ->select('pelaksanaan_manajemen_risiko.id', 'pelaksanaan_manajemen_risiko.id_departemen', 'pelaksanaan_manajemen_risiko.priode_penerapan','departemen.kode as kodedep','departemen.nama as namadep')
+                    ->leftjoin('departemen', 'pelaksanaan_manajemen_risiko.id_departemen', '=', 'departemen.id')
+                    ->where('departemen.kode','like','%'.$cari.'%')
+                    ->orwhere('departemen.nama','like','%'.$cari.'%')
+                    ->get();
+            
+            return response()->json($data);
+        }
+    }
+    public function hasilcaridepartmen($id,$iddepartemen)
+    {
+        $data = DB::table('pelaksanaan_manajemen_risiko')
+        ->select('pelaksanaan_manajemen_risiko.id', 'pelaksanaan_manajemen_risiko.id_departemen', 'pelaksanaan_manajemen_risiko.priode_penerapan','departemen.kode as kodedep','departemen.nama as namadep')
+        ->leftjoin('departemen', 'pelaksanaan_manajemen_risiko.id_departemen', '=', 'departemen.id')
+        ->where('pelaksanaan_manajemen_risiko.id',$id)
+        ->get();
+
+        $resiko = DB::table('resiko_teridentifikasi')
+        ->where('id_departmen',$iddepartemen)
+        ->get();
+        $print=[
+            'detail'=>$data,
+            'resiko'=>$resiko
+        ];
+        return response()->json($print);
+    }
+    public function hasilcarikode($id)
+    {
+        $data = DB::table('resiko_teridentifikasi')
+                    ->where('id','=', $id)
+                    ->get();
+            
+            return response()->json($data);
     }
 }
