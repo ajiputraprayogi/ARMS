@@ -34,9 +34,10 @@ Route::group(['middleware' => ['auth']],function(){
     // =============== Pengendalian Risiko =====================
     Route::resource('/pengendalian', 'backend\PengendalianrisikoController');
     Route::get('cari_departemen_manajemen', 'backend\PengendalianrisikoController@cari_departemen_manajemen');
-    Route::get('cari_departemen_manajemen_hasil/{id}', 'backend\PengendalianrisikoController@cari_departemen_manajemen_hasil');
+    Route::get('cari_departemen_manajemen_hasil/{id}/{id_departemen}', 'backend\PengendalianrisikoController@cari_departemen_manajemen_hasil');
     Route::get('cari_risiko', 'backend\PengendalianrisikoController@cari_risiko');
     Route::get('cari_risiko_hasil/{id}', 'backend\PengendalianrisikoController@cari_risiko_hasil');
+
     // =============== End Pengendalian Risiko =================
 
     Route::resource('konteks', 'backend\KonteksController');

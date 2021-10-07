@@ -151,14 +151,21 @@ class PengendalianrisikoController extends Controller
             return response()->json($data);
         }
     }
-    public function cari_departemen_manajemen_hasil($id)
+    public function cari_departemen_manajemen_hasil($id,$iddepartemen)
     {
         $data = DB::table('pelaksanaan_manajemen_risiko')
         ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
         ->select('pelaksanaan_manajemen_risiko.*','departemen.id as idd','departemen.nama')
         ->where('pelaksanaan_manajemen_risiko.id',$id)
         ->get();
-        return response()->json($data);
+        $resiko = DB::table('resiko_teridentifikasi')
+        ->where('id_departmen',$iddepartemen)
+        ->get();
+        $print=[
+            'detail'=>$data,
+            'resiko'=>$resiko
+        ];
+        return response()->json($print);
     }
     public function cari_risiko(Request $request)
     {
