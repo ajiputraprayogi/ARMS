@@ -51,7 +51,7 @@ class PengendalianrisikoController extends Controller
         $frekuensiterakhir = DB::table('kriteria_probabilitas')->select('kriteria_probabilitas.*')->orderby('kriteria_probabilitas.id','desc')->paginate(1);
         $dampakterakhir = DB::table('kriteria_dampak')->select('kriteria_dampak.*')->orderby('kriteria_dampak.id','desc')->paginate(1);
         $risikoterakhir = DB::table('resiko_teridentifikasi')->select('resiko_teridentifikasi.*')->orderby('resiko_teridentifikasi.id','desc')->paginate(1);
-        return view('backend.pengendalian_risiko.add_pengendalian_risiko', compact('klasifikasi','frekuensiterakhir','dampakterakhir','risikoterakhir','skorrisiko'));
+        return view('backend.pengendalian_risiko.add_pengendalian_risiko', compact('risikoterakhir','dampakterakhir','frekuensiterakhir','klasifikasi','skorrisiko'));
     }
 
     /**
@@ -64,6 +64,7 @@ class PengendalianrisikoController extends Controller
     {
         $request->validate([
             'departemen'=>'required',
+            'id_departemen'=>'required',
             'id_manajemen'=>'required',
             'priode_penerapan'=>'required',
             'risiko'=>'required',
@@ -79,6 +80,7 @@ class PengendalianrisikoController extends Controller
         $respons_risiko = implode(", ", $request->respons_risiko);
         DB::table('pengendalian_risiko')->insert([
             'id_manajemen'=>$request->id_manajemen,
+            'id_departemen'=>$request->id_departemen,
             'id_risiko'=>$request->id_risiko,
             'respons_risiko'=>$respons_risiko,
             'kegiatan_pengendalian'=>$request->kegiatan_pengendalian,
@@ -111,7 +113,39 @@ class PengendalianrisikoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $klasifikasi = DB::table('klasifikasi_sub_unsur_spip')
+        ->select('klasifikasi_sub_unsur_spip.*')
+        ->get();
+        $skorrisiko = DB::table('besaran_resiko')
+        ->select([
+            'besaran_resiko.id as idb',
+            'besaran_resiko.nilai as nilaib',
+            'besaran_resiko.*',
+            'kriteria_probabilitas.id as idp',
+            'kriteria_probabilitas.nilai as nilaip',
+            'kriteria_probabilitas.nama as namap',
+            'kriteria_probabilitas.*',
+            'kriteria_dampak.id as idd',
+            'kriteria_dampak.nilai as nilaid',
+            'kriteria_dampak.nama as namad',
+            'kriteria_dampak.*'])
+        ->leftJoin('kriteria_probabilitas','kriteria_probabilitas.id','=','besaran_resiko.id_prob')
+        ->leftJoin('kriteria_dampak','kriteria_dampak.id','=','besaran_resiko.id_dampak')
+        ->orderby('besaran_resiko.id','desc')
+        ->paginate(1);
+        $frekuensiterakhir = DB::table('kriteria_probabilitas')->select('kriteria_probabilitas.*')->orderby('kriteria_probabilitas.id','desc')->paginate(1);
+        $dampakterakhir = DB::table('kriteria_dampak')->select('kriteria_dampak.*')->orderby('kriteria_dampak.id','desc')->paginate(1);
+        $risikoterakhir = DB::table('resiko_teridentifikasi')->select('resiko_teridentifikasi.*')->orderby('resiko_teridentifikasi.id','desc')->paginate(1);
+        $data = DB::table('pengendalian_risiko')
+        ->select('pengendalian_risiko.*','pelaksanaan_manajemen_risiko.*','resiko_teridentifikasi.pernyataan_risiko')
+        ->leftJoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pengendalian_risiko.id_manajemen')
+        ->leftJoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+        ->where('pengendalian_risiko.id','=',$id)->get();
+        $responsid = DB::table('pengendalian_risiko')
+        ->select('pengendalian_risiko.*')
+        ->where('pengendalian_risiko.id','=',$id)->get();
+        $respons_risiko = DB::table('pengendalian_risiko')->select('pengendalian_risiko.*','implode(", ", "respons_risiko")');
+        return view('backend.pengendalian_risiko.edit_pengendalian_risiko', compact('risikoterakhir','dampakterakhir','frekuensiterakhir','klasifikasi','skorrisiko','data','respons_risiko'));
     }
 
     /**
