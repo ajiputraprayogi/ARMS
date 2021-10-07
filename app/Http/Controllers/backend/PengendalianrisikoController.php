@@ -137,15 +137,12 @@ class PengendalianrisikoController extends Controller
         $dampakterakhir = DB::table('kriteria_dampak')->select('kriteria_dampak.*')->orderby('kriteria_dampak.id','desc')->paginate(1);
         $risikoterakhir = DB::table('resiko_teridentifikasi')->select('resiko_teridentifikasi.*')->orderby('resiko_teridentifikasi.id','desc')->paginate(1);
         $data = DB::table('pengendalian_risiko')
-        ->select('pengendalian_risiko.*','pelaksanaan_manajemen_risiko.*','resiko_teridentifikasi.pernyataan_risiko')
+        ->select('pengendalian_risiko.*','pelaksanaan_manajemen_risiko.*','resiko_teridentifikasi.pernyataan_risiko','klasifikasi_sub_unsur_spip.klasifikasi_sub_unsur_spip')
         ->leftJoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pengendalian_risiko.id_manajemen')
         ->leftJoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+        ->leftJoin('klasifikasi_sub_unsur_spip','klasifikasi_sub_unsur_spip.id','=','pengendalian_risiko.id_klasifikasi_sub_unsur_spip')
         ->where('pengendalian_risiko.id','=',$id)->get();
-        $responsid = DB::table('pengendalian_risiko')
-        ->select('pengendalian_risiko.*')
-        ->where('pengendalian_risiko.id','=',$id)->get();
-        $respons_risiko = DB::table('pengendalian_risiko')->select('pengendalian_risiko.*','implode(", ", "respons_risiko")');
-        return view('backend.pengendalian_risiko.edit_pengendalian_risiko', compact('risikoterakhir','dampakterakhir','frekuensiterakhir','klasifikasi','skorrisiko','data','respons_risiko'));
+        return view('backend.pengendalian_risiko.edit_pengendalian_risiko', compact('risikoterakhir','dampakterakhir','frekuensiterakhir','klasifikasi','skorrisiko','data'));
     }
 
     /**
@@ -157,7 +154,38 @@ class PengendalianrisikoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            // 'departemen'=>'required',
+            'id_departemen'=>'required',
+            'id_manajemen'=>'required',
+            'priode_penerapan'=>'required',
+            // 'risiko'=>'required',
+            'id_risiko'=>'required',
+            'kegiatan_pengendalian'=>'required',
+            'klasifikasi_sub_unsur_spip'=>'required',
+            'penanggung_jawab'=>'required',
+            'indikator_keluaran'=>'required',
+            'target_waktu'=>'required',
+            'status_pelaksanaan'=>'required',
+            'id_peta_besaran_risiko'=>'required',
+        ]);
+        $respons_risiko = implode(", ", $request->respons_risiko);
+        DB::table('pengendalian_risiko')
+        ->where('id',$id)
+        ->update([
+            'id_manajemen'=>$request->id_manajemen,
+            'id_departemen'=>$request->id_departemen,
+            'id_risiko'=>$request->id_risiko,
+            'respons_risiko'=>$respons_risiko,
+            'kegiatan_pengendalian'=>$request->kegiatan_pengendalian,
+            'id_klasifikasi_sub_unsur_spip'=>$request->klasifikasi_sub_unsur_spip,
+            'penanggung_jawab'=>$request->penanggung_jawab,
+            'indikator_keluaran'=>$request->indikator_keluaran,
+            'target_waktu'=>$request->target_waktu,
+            'status_pelaksanaan'=>'Belum Dilaksanakan',
+            'id_peta_besaran_risiko'=>$request->id_peta_besaran_risiko,
+        ]);
+        return redirect('pengendalian')->with('status','Berhasil mengubah data');
     }
 
     /**

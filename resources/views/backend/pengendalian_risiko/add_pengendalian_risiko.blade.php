@@ -86,7 +86,7 @@
                             <!-- Select2 -->
                             <select name="departemen" class="form" id="cari_departemen" style="width: 100%;" data-placeholder="Search ...">
                             </select>
-                            <input type="hidden" name="id_departemen" id="id_departemen">
+                            <!-- <input type="hidden" name="id_departemen" id="id_departemen"> -->
                         </div>
                     </div>
                     <div class="form-group row">
