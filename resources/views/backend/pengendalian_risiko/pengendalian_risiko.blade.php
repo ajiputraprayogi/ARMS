@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="table-responsive rounded mb-3">
-                    <table id="" class="table table-bordered mb-0 tbl-server-info data-tables">
+                    <table id="" class="table mb-0 tbl-server-info data-tables">
                         <thead class="bg-white text-uppercase">
                             <tr class="ligth ligth-data">
                                 <!-- <th>
