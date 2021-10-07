@@ -44,19 +44,19 @@ class KonteksController extends Controller
     {
         $request->validate([
             'faktur_konteks'=>'required',
-            'kode'=>'required',
-            'nama'=>'required',
-            'id_konteks'=>'required',
-            'detail_ancaman'=>'required',
-            'indikator_kinerja_kegiatan'=>'required',
+            'kode_konteks'=>'required',
+            'nama_konteks'=>'required',
+            'id_jenis_konteks'=>'required',
+            'detail_ancaman_konteks'=>'required',
+            'indikator_kinerja_kegiatan_konteks'=>'required',
         ]);
         konteks::insert([
             'faktur_konteks'=>$request->faktur_konteks,
-            'kode'=>$request->kode,
-            'nama'=>$request->nama,
-            'id_konteks'=>$request->id_konteks,
-            'detail_ancaman'=>$request->detail_ancaman,
-            'indikator_kinerja_kegiatan'=>$request->indikator_kinerja_kegiatan,
+            'kode'=>$request->kode_konteks,
+            'nama'=>$request->nama_konteks,
+            'id_konteks'=>$request->id_jenis_konteks,
+            'detail_ancaman'=>$request->detail_ancaman_konteks,
+            'indikator_kinerja_kegiatan'=>$request->indikator_kinerja_kegiatan_konteks,
         ]);
         return redirect('pelaksanaan/create')->with('statuskonteks','Sukses menambah data');
     }

@@ -64,7 +64,7 @@ class ManajemenresikoController extends Controller
         $pemangku_kepentingan = pemangku_kepentingan::all()->where('faktur_pemangku',$finalkode);
         // $data = konteks::leftJoin('jenis_konteks','konteks.id_konteks','=','jenis_konteks.id')
         // ->select('jenis_konteks.id as idjk','jenis_konteks.*','konteks.*')->where('faktur_konteks',$finalkode)->get();
-        return view('backend.manajemen_risiko.add_pelaksanaan_risiko',['jeniskonteks'=>$jeniskonteks,'konteks'=>$konteks,'pemangku_kepentingan'=>$pemangku_kepentingan]);
+        return view('backend.manajemen_risiko.add_pelaksanaan_risiko',['finalkode'=>$finalkode,'jeniskonteks'=>$jeniskonteks,'konteks'=>$konteks,'pemangku_kepentingan'=>$pemangku_kepentingan]);
     }
 
     /**
@@ -240,5 +240,12 @@ class ManajemenresikoController extends Controller
             'keterangan'=>$request->keterangan,
         ]);
         return redirect('edit-pelaksanaan/'.$faktur)->with('statuspemangku','Sukses mengubah data');
+    }
+
+    //===========================================================================================================
+    public function carikonteks($kode){
+        $data = konteks::leftJoin('jenis_konteks','konteks.id_konteks','=','jenis_konteks.id')
+        ->select('jenis_konteks.id as idjk','jenis_konteks.*','konteks.*')->where('faktur_konteks',$kode)->get();
+        return response()->json($data);
     }
 }
