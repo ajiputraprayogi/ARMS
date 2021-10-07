@@ -61,7 +61,7 @@
      *
      * Has no effect if a custom overlay is defined
      */
-    theme: 'dark',
+    theme: 'light',
 
     /**
      * Class(es) to be applied to the overlay element when the loading state is started

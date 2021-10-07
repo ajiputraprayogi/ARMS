@@ -248,4 +248,10 @@ class ManajemenresikoController extends Controller
         ->select('jenis_konteks.id as idjk','jenis_konteks.*','konteks.*')->where('faktur_konteks',$kode)->get();
         return response()->json($data);
     }
+
+    //===========================================================================================================
+    public function caridetailkonteks($kode){
+        $data = konteks::where('id',$kode)->get();
+        return response()->json($data);
+    }
 }
