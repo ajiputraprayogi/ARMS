@@ -71,7 +71,11 @@
                             <th>{{$item->penanggung_jawab}}</th>
                             <th>{{$item->target_waktu}}</th>
                             <th>{{$item->status_pelaksanaan}}</th>
-                            <th>-</th>
+                            <th>
+                                <a class="badge badge-info mr-2" data-toggle="modal" data-target="#showpemangku{{$item->id}}" title="View" data-original-title="View"><i class="ri-eye-line mr-0"></i></a>
+                                <a class="badge bg-success mr-2" href="{{url('pengendalian/'.$item->id.'/edit')}}" title="View" data-original-title="View"><i class="ri-pencil-line mr-0"></i></a>
+                                <a class="badge bg-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="hapusdatamanajemenrisiko({{$item->id}})"><i class="ri-delete-bin-line mr-0"></i><input type="hidden" name="faktur" value="{{$item->id}}"></a>
+                            </th>
                         </tbody>
                         @endforeach
                     </table>

@@ -50,7 +50,7 @@
                         <label class="control-label col-sm-3 align-self-center" for="">Departemen Pemilik Risiko*</label>
                         <div class="col-sm-9">
                             <!-- Select2 -->
-                            <select name="departemen" class="form" id="cari_departemen_manajemen" style="width: 100%;" data-placeholder="Search ...">
+                            <select name="departemen" class="form" id="cari_departemen_manajemen" style="width: 100%;">
                             </select>
                             <input type="hidden" name="id_manajemen" id="id_manajemen">
                             <input type="hidden" name="id_departemen" id="id_departemen">
@@ -66,7 +66,7 @@
                         <label class="control-label col-sm-3 align-self-center" for="">Risiko*</label>
                         <div class="col-sm-9">
                             <!-- Select2 -->
-                            <select name="risiko" class="form" id="cari_risiko" style="width: 100%;" data-placeholder="Search ...">
+                            <select name="risiko" class="form" id="cari_risiko" style="width: 100%;">
                             </select>
                             <input type="hidden" name="id_risiko" id="id_risiko">
                         </div>
