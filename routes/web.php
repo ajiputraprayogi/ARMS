@@ -107,6 +107,9 @@ Route::group(['middleware' => ['auth']],function(){
     //----------------------------------analisa akar-----------------------------------------
     Route::resource('analisa-akar-masalah', 'backend\AnalisaakarController');
     Route::get('data-analisaakarmasalah', 'backend\AnalisaakarController@listdata');
+    Route::get('/cari-analisa-akar-departmen','backend\AnalisaakarController@caridepartmen');
+    Route::get('/hasil-cari-analisa-akar-departmen/{id}/{id_departemen}','backend\AnalisaakarController@hasilcaridepartmen');
+    Route::get('/hasil-cari-akar-kode/{id}','backend\AnalisaakarController@hasilcarikode');
 });
 Route::group(['middleware' => ['auth']],function(){
     Route::get('/home', 'HomeController@index')->name('home');

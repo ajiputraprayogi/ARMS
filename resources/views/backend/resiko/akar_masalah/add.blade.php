@@ -38,10 +38,10 @@ Toko Online | Analisa Risiko
                         </select>
                     </div>
                 </div>
-                <input type="hidden" name="id" id="id">
-                <input type="hidden" name="id_dep" id="id_dep">
-                <input type="hidden" name="kodedep" id="kodedep">
-                <input type="hidden" name="namadep" id="namadep">
+                <input type="" name="id" id="id">
+                <input type="" name="id_dep" id="id_dep">
+                <input type="" name="kodedep" id="kodedep">
+                <input type="" name="namadep" id="namadep">
                 <div class="form-group row">
                     <label class="control-label col-sm-3 align-self-center" for="email">Tahun<i
                             class="bintang">*</i></label>
@@ -57,16 +57,17 @@ Toko Online | Analisa Risiko
                     <label class="control-label col-sm-3 align-self-center" for="email">Risiko<i
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
-                        <select class="js-example-basic-single text search-input" id="cari_konteks" name="konteks"
+                        <select class="js-example-basic-single text search-input" id="cari_risiko" name="cari_risiko"
                             style="width:100%;">
                         </select>
 
                     </div>
                 </div>
-                <input type="hidden" id="id_jenis_konteks" name="id_jenis_konteks">
-                <input type="hidden" id="id_konteks" name="id_konteks">
-                <input type="hidden" name="kode_konteks" id="kode_konteks">
-                <input type="hidden" name="namakonteks" id="nama_konteks">
+                <input type="" id="full_kode" name="full_kode">
+                <!-- <input type="" id="id_jenis_konteks" name="id_jenis_konteks">
+                <input type="" id="id_konteks" name="id_konteks">
+                <input type="" name="kode_konteks" id="kode_konteks">
+                <input type="" name="namakonteks" id="nama_konteks"> -->
                 <div class="form-group row">
                     <label class="control-label col-sm-3 align-self-center" for="email">Pernyataan Risiko</label>
                     <div class="col-sm-9">
@@ -130,10 +131,12 @@ Toko Online | Analisa Risiko
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
                         <select class="form-control" name="kategori" id="carikat">
-                            <option selected value="">MY-Dana(Money)</option>
+                    @foreach($data as $item)
+                            <option selected value="{{$item->id}}">{{$item->kode}} - {{$item->penyebab}}</option>
                             
                             
                             <!-- $kodekat = DB::table('kategori_resiko')->where('id', '=', $cari)->get(); -->
+                    @endforeach
                         </select>
                         <input type="hidden" id="kodekat" name="kodekat">
                     </div>
@@ -159,7 +162,7 @@ Toko Online | Analisa Risiko
 @endsection
 @push('script')
 <script src="{{asset('phppiechart/assets/js/highcharts.js')}}"></script>
-<script src="{{asset('assets/customjs/backend/resiko_teridentifikasi.js')}}"></script>
+<script src="{{asset('assets/customjs/backend/analisa_akar.js')}}"></script>
 <!-- <script>
 $(document).ready(function() {
     $('.js-example-basic-single').select2();

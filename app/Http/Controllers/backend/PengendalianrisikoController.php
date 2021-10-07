@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
+use App\pengendalian_risiko;
 
 class PengendalianrisikoController extends Controller
 {
@@ -170,9 +171,7 @@ class PengendalianrisikoController extends Controller
             'id_peta_besaran_risiko'=>'required',
         ]);
         $respons_risiko = implode(", ", $request->respons_risiko);
-        DB::table('pengendalian_risiko')
-        ->where('id',$id)
-        ->update([
+        pengendalian_risiko::find($id)->update([
             'id_manajemen'=>$request->id_manajemen,
             'id_departemen'=>$request->id_departemen,
             'id_risiko'=>$request->id_risiko,

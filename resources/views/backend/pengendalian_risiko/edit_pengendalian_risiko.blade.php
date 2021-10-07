@@ -44,7 +44,7 @@
             @endif
             <div class="card-body">
                 @foreach($data as $row)
-                    <form class="form-horizontal" action="{{url('/pengendalian/'.$row->id)}}" method="post">
+                    <form class="form-horizontal" action="{{url('pengendalian/'.$row->id)}}" method="post">
                         @csrf
                         <input type="hidden" name="_method" value="PUT">
                         <div class="form-group">
