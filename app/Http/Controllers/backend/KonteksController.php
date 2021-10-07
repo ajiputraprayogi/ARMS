@@ -58,7 +58,7 @@ class KonteksController extends Controller
             'detail_ancaman'=>$request->detail_ancaman_konteks,
             'indikator_kinerja_kegiatan'=>$request->indikator_kinerja_kegiatan_konteks,
         ]);
-        return redirect('pelaksanaan/create')->with('statuskonteks','Sukses menambah data');
+        //return redirect('pelaksanaan/create')->with('statuskonteks','Sukses menambah data');
     }
 
     /**
@@ -93,20 +93,20 @@ class KonteksController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'kode'=>'required',
-            'nama'=>'required',
-            'id_konteks'=>'required',
-            'detail_ancaman'=>'required',
-            'indikator_kinerja_kegiatan'=>'required',
+            'edit_kode_konteks'=>'required',
+            'edit_nama_konteks'=>'required',
+            'edit_id_jenis_konteks'=>'required',
+            'edit_detail_ancaman_konteks'=>'required',
+            'edit_indikator_kinerja_kegiatan_konteks'=>'required',
         ]);
         konteks::find($id)->update([
-            'kode'=>$request->kode,
-            'nama'=>$request->nama,
-            'id_konteks'=>$request->id_konteks,
-            'detail_ancaman'=>$request->detail_ancaman,
-            'indikator_kinerja_kegiatan'=>$request->indikator_kinerja_kegiatan,
+            'kode'=>$request->edit_kode_konteks,
+            'nama'=>$request->edit_nama_konteks,
+            'id_konteks'=>$request->edit_id_jenis_konteks,
+            'detail_ancaman'=>$request->edit_detail_ancaman_konteks,
+            'indikator_kinerja_kegiatan'=>$request->edit_indikator_kinerja_kegiatan_konteks,
         ]);
-        return redirect('pelaksanaan/create')->with('statuskonteks','Sukses mengubah data');
+        //return redirect('pelaksanaan/create')->with('statuskonteks','Sukses mengubah data');
     }
 
     /**

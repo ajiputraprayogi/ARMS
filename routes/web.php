@@ -22,6 +22,7 @@ Route::group(['middleware' => ['auth']],function(){
     // Basis Data
     // =============== Manajemen Risiko ========================
     Route::get('/cari-data-konteks/{kode}', 'backend\ManajemenresikoController@carikonteks');
+    Route::get('/cari-data-konteks/{kode}/edit', 'backend\ManajemenresikoController@caridetailkonteks');
     Route::resource('/pelaksanaan', 'backend\ManajemenresikoController');
     Route::get('/edit-pelaksanaan/{id}', 'backend\ManajemenresikoController@edit');
     Route::post('/simpan-edit-pelaksanaan/{id}', 'backend\ManajemenresikoController@update');
@@ -44,6 +45,8 @@ Route::group(['middleware' => ['auth']],function(){
     Route::resource('konteks', 'backend\KonteksController');
     Route::get('data-konteks', 'backend\KonteksController@listdata');
     
+    Route::get('/cari-data-pemangku/{kode}', 'backend\PemangkukepentinganController@caripemangku');
+    Route::get('/cari-data-pemangku/{kode}/edit', 'backend\PemangkukepentinganController@caridetailpemangku');
     Route::resource('pemangkukepentingan', 'backend\PemangkukepentinganController');
     Route::get('data-pemangkukepentingan', 'backend\PemangkukepentinganController@listdata');
 

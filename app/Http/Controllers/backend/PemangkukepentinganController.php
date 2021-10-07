@@ -50,7 +50,7 @@ class PemangkukepentinganController extends Controller
             'pemangku_kepentingan'=>$request->pemangku_kepentingan,
             'keterangan'=>$request->keterangan,
         ]);
-        return redirect('pelaksanaan/create')->with('statuspemangku','Sukses menambahkan data');
+        //return redirect('pelaksanaan/create')->with('statuspemangku','Sukses menambahkan data');
     }
 
     /**
@@ -85,14 +85,14 @@ class PemangkukepentinganController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'pemangku_kepentingan'=>'required',
-            'keterangan'=>'required',
+            'edit_pemangku_kepentingan'=>'required',
+            'edit_keterangan'=>'required',
         ]);
         pemangku_kepentingan::find($id)->update([
-            'pemangku_kepentingan'=>$request->pemangku_kepentingan,
-            'keterangan'=>$request->keterangan,
+            'pemangku_kepentingan'=>$request->edit_pemangku_kepentingan,
+            'keterangan'=>$request->edit_keterangan,
         ]);
-        return redirect('pelaksanaan/create')->with('statuspemangku','Sukses mengubah data');
+        //return redirect('pelaksanaan/create')->with('statuspemangku','Sukses mengubah data');
     }
 
     /**
@@ -104,5 +104,17 @@ class PemangkukepentinganController extends Controller
     public function destroy($id)
     {
         pemangku_kepentingan::destroy($id);
+    }
+
+    //===========================================================================================================
+    public function caripemangku($kode){
+        $data = pemangku_kepentingan::where('faktur_pemangku',$kode)->get();
+        return response()->json($data);
+    }
+
+    //===========================================================================================================
+    public function caridetailpemangku($kode){
+        $data = pemangku_kepentingan::where('id',$kode)->get();
+        return response()->json($data);
     }
 }
