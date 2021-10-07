@@ -57,12 +57,9 @@ $(function() {
 			url: '/cari_departemen_manajemen_hasil/'+newkode[0]+'/'+newkode[1],
 			success: function (data) {
                 $.each(data.detail,function(key, item){
-                    $('#kode').val(item.kode);
-                    $('#id').val(item.id);
-                    $('#id_dep').val(item.id_departemen);
-                    $('#kodedep').val(item.kodedep);
-                    $('#namadep').val(item.namadep);
-                    $('#tahun').val(item.priode_penerapan);
+                    $('#id_manajemen').val(item.id)
+                    $('#id_departemen').val(item.id_departemen)
+                    $('#priode_penerapan').val(item.priode_penerapan)
 
                     // $('#cari_kode').val(item.jk);
                 });
@@ -84,8 +81,10 @@ $(function() {
 			success: function (data) {
 				return {
 					results: $.map(data, function (item) {
-							$('#pernyataan').val(item.pernyataan_risiko);
+                            $('#id_risiko').val(item.id)
+                            $('#pernyataan_risiko').val(item.pernyataan_risiko)
                             $('#full_kode').val(item.full_kode);
+							// $('#pernyataan').val(item.pernyataan_risiko);
                             // $('#id_jenis_konteks').val(item.id);
                             // $('#kode_konteks').val(item.kode_konteks);
                             // $('#nama_konteks').val(item.namakonteks);
