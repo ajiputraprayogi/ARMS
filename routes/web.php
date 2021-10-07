@@ -21,6 +21,7 @@ Route::group(['middleware' => ['auth']],function(){
     });
     // Basis Data
     // =============== Manajemen Risiko ========================
+    Route::get('/cari-data-konteks/{kode}', 'backend\ManajemenresikoController@carikonteks');
     Route::resource('/pelaksanaan', 'backend\ManajemenresikoController');
     Route::get('/edit-pelaksanaan/{id}', 'backend\ManajemenresikoController@edit');
     Route::post('/simpan-edit-pelaksanaan/{id}', 'backend\ManajemenresikoController@update');
