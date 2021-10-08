@@ -53,11 +53,19 @@ class ResikoteridentifikasiController extends Controller
      */
     public function carikat($id)
     {
-        $data = DB::table('kategori_resiko')->select('kategori_resiko.*')
-                    ->where('kategori_resiko.id','=', $id)
-                    ->get();
-            
-            return response()->json($data);
+        $carikode = DB::table('resiko_teridentifikasi')
+        ->where('full_kode','like','%'.$id.'-%')
+        ->max('full_kode');
+
+        if(!$carikode){
+            $finalkode = $id.'.1';
+        }else{
+            $getnumber = explode('.',$carikode);
+            $jumlah = count($getnumber);
+            $newno = $getnumber[$jumlah]+1;
+            $finalkode = $id.'.'.$newno;
+        }
+        return response()->json($finalkode);
     }
     public function store(Request $request)
     {

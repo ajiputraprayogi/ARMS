@@ -38,10 +38,10 @@ Toko Online | Analisa Risiko
                         </select>
                     </div>
                 </div>
-                <input type="" name="id" id="id">
-                <input type="" name="id_dep" id="id_dep">
-                <input type="" name="kodedep" id="kodedep">
-                <input type="" name="namadep" id="namadep">
+                <input type="hidden" name="id" id="id">
+                <input type="hidden" name="id_dep" id="id_dep">
+                <input type="hidden" name="kodedep" id="kodedep">
+                <input type="hidden" name="namadep" id="namadep">
                 <div class="form-group row">
                     <label class="control-label col-sm-3 align-self-center" for="email">Tahun<i
                             class="bintang">*</i></label>
@@ -63,7 +63,7 @@ Toko Online | Analisa Risiko
 
                     </div>
                 </div>
-                <input type="" id="full_kode" name="full_kode">
+                <input type="hidden" id="full_kode" name="full_kode">
                 <!-- <input type="" id="id_jenis_konteks" name="id_jenis_konteks">
                 <input type="" id="id_konteks" name="id_konteks">
                 <input type="" name="kode_konteks" id="kode_konteks">
@@ -71,7 +71,7 @@ Toko Online | Analisa Risiko
                 <div class="form-group row">
                     <label class="control-label col-sm-3 align-self-center" for="email">Pernyataan Risiko</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="pernyataan" name="pernyataan" >
+                        <input type="text" class="form-control" id="pernyataan" name="pernyataan">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -81,43 +81,44 @@ Toko Online | Analisa Risiko
                     </div>
                 </div>
                 <div class="form-group">
-                                <b>Why?</b>
-                            </div>
-                            
-                            <div class="form-group">
-                                <div class="text-right">
-                                    <button type="button" class="btn btn-primary add-list" data-toggle="modal" data-target=""><i class="las la-plus mr-3"></i>Tambah Why</button>
-                                </div>
-                            </div>
-                            <div class="table-responsive rounded mb-3">
-                                <table id="" class="table mb-0 tbl-server-info data-tables">
-                                    <thead class="bg-white text-uppercase">
-                                        <tr class="ligth ligth-data">
-                                            <!-- <th>
+                    <b>Why?</b>
+                </div>
+
+                <div class="form-group">
+                    <div class="text-right">
+                        <button type="button" class="btn btn-primary add-list" data-toggle="modal" data-target=""><i
+                                class="las la-plus mr-3"></i>Tambah Why</button>
+                    </div>
+                </div>
+                <div class="table-responsive rounded mb-3">
+                    <table id="" class="table mb-0 tbl-server-info data-tables">
+                        <thead class="bg-white text-uppercase">
+                            <tr class="ligth ligth-data">
+                                <!-- <th>
                                                 <div class="checkbox d-inline-block">
                                                     <input type="checkbox" class="checkbox-input" id="checkbox1">
                                                     <label for="checkbox1" class="mb-0"></label>
                                                 </div>
                                             </th> -->
-                                            <th>Urutan</th>
-                                            <th>Uraian Why</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    
-                                    <tbody class="ligth-body">
-                                            <th class="text-center"></th>
-                                            <th></th>
-                                            <!-- <th class="text-center">
+                                <th>Urutan</th>
+                                <th>Uraian Why</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="ligth-body">
+                            <th class="text-center"></th>
+                            <th></th>
+                            <!-- <th class="text-center">
                                                 <div class="d-flex align-items-center list-action">
                                                     <a class="badge badge-info mr-2" data-toggle="modal" data-target="#showkonteks" title="View" data-original-title="View"><i class="ri-eye-line mr-0"></i></a>
                                                     <a class="badge bg-success mr-2" data-toggle="modal" data-target="#konteks" title="Edit" data-original-title="View"><i class="ri-pencil-line mr-0"></i></a>
                                                     <a class="badge bg-warning mr-2" data-toggle="tooltip" data-placement="top" title="Hapus" onclick="hapusdatakonteks()"><i class="ri-delete-bin-line mr-0"></i></a>
                                                 </div>
                                             </th> -->
-                                    </tbody>
-                                </table>
-                            </div>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="form-group row">
                     <label class="control-label col-sm-3 align-self-center" for="email">Akar Penyebab<i
                             class="bintang">*</i></label>
@@ -130,13 +131,14 @@ Toko Online | Analisa Risiko
                     <label class="control-label col-sm-3 align-self-center" for="email">Kode Penyebab<i
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
-                        <select class="form-control" name="kategori" id="carikat">
-                    @foreach($data as $item)
+                        <select class="form-control" name="kategori" onchange="generatekode()" id="carikat">
+                        <option selected disabled hidden>Pilih Penyebab</option>
+                            @foreach($data as $item)
                             <option selected value="{{$item->id}}">{{$item->kode}} - {{$item->penyebab}}</option>
-                            
-                            
+
+
                             <!-- $kodekat = DB::table('kategori_resiko')->where('id', '=', $cari)->get(); -->
-                    @endforeach
+                            @endforeach
                         </select>
                         <input type="hidden" id="kodekat" name="kodekat">
                     </div>
@@ -161,31 +163,31 @@ Toko Online | Analisa Risiko
 </div>
 @endsection
 @push('script')
-<script src="{{asset('phppiechart/assets/js/highcharts.js')}}"></script>
+<!-- <script src="{{asset('phppiechart/assets/js/highcharts.js')}}"></script> -->
 <script src="{{asset('assets/customjs/backend/analisa_akar.js')}}"></script>
-<!-- <script>
-$(document).ready(function() {
-    $('.js-example-basic-single').select2();
-});
-</script> -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
-    $('#carikat').on('change', function () {
-        // $('#tahun').empty().trigger("change");
-		var kode = $(this).val();
-        console.log(kode);
-		$.ajax({
-			type: 'GET',
-			url: '/hasil-cari-kat/' + kode,
-			success: function (data) {
-				return {
-					results: $.map(data, function (item) {
-							$('#kodekat').val(item.kode);
-					})
-				}
-                
-			},
-		});
-	});
+
+//--------------------------------------------------------------------------------------------
+function generatekode() {
+    $('#kode_analisis').val('');
+    var getkategori = $("#carikat option:selected").text();
+    newgetkategori = getkategori.split(" - ");
+
+    var newresiko =$('#cari_risiko').find(':selected').text();
+    var newkode = newresiko+'.'+newgetkategori[0];
+    
+    console.log(newresiko);
+    console.log(newgetkategori[0]);
+    console.log(newkode);
+    $.ajax({
+        type: 'GET',
+        url: '/hasil-cari-kat/' + newkode,
+        success: function(data) {
+            $('#kode_analisis').val(data);
+
+        },
+    });
+}
 </script>
 @endpush
