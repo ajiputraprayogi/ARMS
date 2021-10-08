@@ -54,10 +54,10 @@ class ManajemenresikoController extends Controller
         // $finalkode="DVN".$tgl."00001";
             foreach($fk->get() as $fak){
                 $tmp=((int)$fak->kd_max)+1;
-                $finalkode="FK".$tgl.$min.sprintf('%05s',$tmp);
+                $finalkode=sprintf('%00s',$tmp);
             }
         }else{
-            $finalkode="FK".$tgl.$min."00001";
+            $finalkode="1";
         }
         $konteks = konteks::leftJoin('jenis_konteks','konteks.id_konteks','=','jenis_konteks.id')
         ->select('jenis_konteks.id as idjk','jenis_konteks.*','konteks.*')->where('faktur_konteks',$finalkode)->get();

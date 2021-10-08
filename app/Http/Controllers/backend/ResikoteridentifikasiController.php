@@ -206,8 +206,9 @@ class ResikoteridentifikasiController extends Controller
         if($request->has('q')){
             $cari = $request->q;
             $data = DB::table('pelaksanaan_manajemen_risiko')
-                    ->select('pelaksanaan_manajemen_risiko.id', 'pelaksanaan_manajemen_risiko.id_departemen', 'pelaksanaan_manajemen_risiko.priode_penerapan','departemen.kode as kodedep','departemen.nama as namadep')
+                    ->select('pelaksanaan_manajemen_risiko.id','pelaksanaan_manajemen_risiko.faktur', 'pelaksanaan_manajemen_risiko.id_departemen', 'pelaksanaan_manajemen_risiko.priode_penerapan','departemen.kode as kodedep','departemen.nama as namadep')
                     ->leftjoin('departemen', 'pelaksanaan_manajemen_risiko.id_departemen', '=', 'departemen.id')
+                    // ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
                     ->where('departemen.kode','like','%'.$cari.'%')
                     ->orwhere('departemen.nama','like','%'.$cari.'%')
                     ->get();
@@ -216,14 +217,20 @@ class ResikoteridentifikasiController extends Controller
         }
     }
     public function hasilcaridepartmen($id,$iddepartemen){
-        $data = DB::table('pelaksanaan_manajemen_risiko')
-        ->select('pelaksanaan_manajemen_risiko.id', 'pelaksanaan_manajemen_risiko.id_departemen', 'pelaksanaan_manajemen_risiko.priode_penerapan','departemen.kode as kodedep','departemen.nama as namadep')
+        // $datad = DB::table('pelaksanaan_manajemen_risiko')
+        // ->select('pelaksanaan_manajemen_risiko.id', 'pelaksanaan_manajemen_risiko.id_departemen', 'pelaksanaan_manajemen_risiko.priode_penerapan','departemen.kode as kodedep','departemen.nama as namadep')
+        // ->leftjoin('departemen', 'pelaksanaan_manajemen_risiko.id_departemen', '=', 'departemen.id')
+        // ->where('pelaksanaan_manajemen_risiko.id',$id)
+        // ->get();
+        $data =  DB::table('pelaksanaan_manajemen_risiko')
+        ->select('pelaksanaan_manajemen_risiko.id','pelaksanaan_manajemen_risiko.faktur', 'pelaksanaan_manajemen_risiko.id_departemen', 'pelaksanaan_manajemen_risiko.priode_penerapan','departemen.kode as kodedep','departemen.nama as namadep','konteks.id as idk','konteks.kode as kodek')
         ->leftjoin('departemen', 'pelaksanaan_manajemen_risiko.id_departemen', '=', 'departemen.id')
+        ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
         ->where('pelaksanaan_manajemen_risiko.id',$id)
         ->get();
 
         $resiko = DB::table('konteks')
-        ->where('id_departemen',$iddepartemen)
+        ->where('faktur_konteks',$iddepartemen)
         ->get();
         $print=[
             'detail'=>$data,

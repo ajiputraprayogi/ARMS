@@ -118,7 +118,7 @@ $(function() {
                 return {
                     results: $.map(data, function(item) {
                         return {
-                            id: item.id+'-'+item.id_departemen,
+                            id: item.id+'-'+item.faktur,
                             text: item.namadep + " - (" + item.priode_penerapan + ")"
                         }
 
@@ -141,6 +141,7 @@ $(function() {
                 $.each(data.detail,function(key, item){
                     $('#kode').val(item.kode);
                     $('#id').val(item.id);
+                    $('#faktur').val(item.faktur);
                     $('#id_dep').val(item.id_departemen);
                     $('#kodedep').val(item.kodedep);
                     $('#namadep').val(item.namadep);

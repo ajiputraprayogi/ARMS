@@ -35,7 +35,7 @@ Detail Pelaksanaan Manajemen Risiko | Dashboard
                                 Risiko*</label>
                             <div class="col-sm-9">
                                 <!-- Auto Kode Generate -->
-                                <input type="hidden" value="{{$finalkode}}" name="faktur" id="faktur"
+                                <input type="" value="{{$finalkode}}" name="faktur" id="faktur"
                                     class="form-group form-control" required readonly>
                                 <!-- Select2 -->
                                 <select name="departemen" class="form-control" id="cari_departemen" style="width: 100%;"

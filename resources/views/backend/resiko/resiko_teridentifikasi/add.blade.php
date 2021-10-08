@@ -38,10 +38,11 @@ Toko Online | Dashboard
                         </select>
                     </div>
                 </div>
-                <input type="hidden" name="id" id="id">
-                <input type="hidden" name="id_dep" id="id_dep">
-                <input type="hidden" name="kodedep" id="kodedep">
-                <input type="hidden" name="namadep" id="namadep">
+                <input type="" name="id" id="id">
+                <input type="" name="faktur" id="faktur">
+                <input type="" name="id_dep" id="id_dep">
+                <input type="" name="kodedep" id="kodedep">
+                <input type="" name="namadep" id="namadep">
                 <div class="form-group row">
                     <label class="control-label col-sm-3 align-self-center" for="email">Periode Penerapan<i
                             class="bintang">*</i></label>
