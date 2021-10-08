@@ -16,9 +16,7 @@ class PengendalianrisikoController extends Controller
      */
     public function index()
     {
-        $data = DB::table('pengendalian_risiko')
-        ->select('pengendalian_risiko.*')
-        ->get();
+        $data = DB::table('pengendalian_risiko')->get();
         return view('backend.pengendalian_risiko.pengendalian_risiko',compact('data'));
     }
 
