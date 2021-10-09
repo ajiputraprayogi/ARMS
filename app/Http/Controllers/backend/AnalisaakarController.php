@@ -13,17 +13,14 @@ use Auth;
 
 class AnalisaakarController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //=============================================================================================
     public function index()
     {
         $data = analisaakar::orderby('id','desc')->get();
         return view('backend.resiko.akar_masalah.index',compact('data'));
     }
 
+    //=============================================================================================
     public function create()
     {
         DB::table('akar_masalah_why_thumb')->where('pembuat','=',Auth::user()->id)->delete();
@@ -31,61 +28,111 @@ class AnalisaakarController extends Controller
         return view('backend.resiko.akar_masalah.add',compact('data'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    //=============================================================================================
     public function store(Request $request)
     {
-        //
+        $data=[];
+        $datawhy = DB::table('akar_masalah_why_thumb')->where('pembuat',Auth::user()->id)->get();
+        foreach ($datawhy as $row) {
+            $data[]=[
+                'kode_analisis'=>$request->kode_analisis,
+                'uraian'=>$row->uraian,
+            ];
+        }
+        DB::table('akar_masalah_why')->insert($data);
+        DB::table('analisa_masalah')
+        ->insert([
+            'kode_analisis'=>$request->kode_analisis,
+            'kode_risiko'=>$request->cari_risiko,
+            'kategori_penyebab'=>$request->kategori,
+            'akar_masalah'=>$request->penyebab,
+            'tindakan_pengendalian'=>$request->pengendalian,
+        ]);
+        DB::table('akar_masalah_why_thumb')->where('pembuat','=',Auth::user()->id)->delete();
+        return redirect('analisa-akar-masalah')->with('status','Data berhasil disimpan');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //=============================================================================================
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //=============================================================================================
+    public function carikode($kode)
+    {
+        $carikode = DB::table('analisa_masalah')
+        ->where('kode_analisis','like','%'.$kode.'%')
+        ->max('kode_analisis');
+        //dd($carikode);
+        if(!$carikode){
+            $finalkode = $kode.'.1';
+        }else{
+            $getnumber = explode('.',$carikode);
+            $jumlah = count($getnumber);
+            $newno = $getnumber[$jumlah-1]+1;
+            $finalkode = $kode.'.'.$newno;
+        }
+        return response()->json($finalkode);
+    }
+
+    //=============================================================================================
     public function edit($id)
     {
-        //
+        $datanya = [];
+        DB::table('akar_masalah_why_thumb')->where('pembuat','=',Auth::user()->id)->delete();
+        $datadetail = DB::table('analisa_masalah')->where('id',$id)->get();
+        foreach($datadetail as $row){
+            $datawhy = DB::table('akar_masalah_why')->where('kode_analisis','=',$row->kode_analisis)->get();
+            foreach ($datawhy as $rowwhy) {
+                $datanya[]=[
+                    'uraian'=>$rowwhy->uraian,
+                    'pembuat'=>Auth::user()->id,
+                ];
+            }
+        }
+        $data = penyebab::all();
+        DB::table('akar_masalah_why_thumb')->insert($datanya);
+        return view('backend.resiko.akar_masalah.edit',compact('data','datadetail'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //=============================================================================================
     public function update(Request $request, $id)
     {
-        //
+        $data=[];
+        DB::table('akar_masalah_why')->where('kode_analisis','=',$request->kode_analisis)->delete();
+        $datawhy = DB::table('akar_masalah_why_thumb')->where('pembuat',Auth::user()->id)->get();
+        foreach ($datawhy as $row) {
+            $data[]=[
+                'kode_analisis'=>$request->kode_analisis,
+                'uraian'=>$row->uraian,
+            ];
+        }
+        DB::table('akar_masalah_why')->insert($data);
+        DB::table('analisa_masalah')
+        ->where('id',$id)
+        ->update([
+            'kode_analisis'=>$request->kode_analisis,
+            'kode_risiko'=>$request->cari_risiko,
+            'kategori_penyebab'=>$request->kategori,
+            'akar_masalah'=>$request->penyebab,
+            'tindakan_pengendalian'=>$request->pengendalian,
+        ]);
+        DB::table('akar_masalah_why_thumb')->where('pembuat','=',Auth::user()->id)->delete();
+        return redirect('analisa-akar-masalah')->with('status','Data berhasil diupdate');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //=============================================================================================
     public function destroy($id)
     {
-        //
+        $datadetail = DB::table('analisa_masalah')->where('id',$id)->get();
+        foreach($datadetail as $row){
+            $datawhy = DB::table('akar_masalah_why')->where('kode_analisis','=',$row->kode_analisis)->delete();
+        }
+        DB::table('analisa_masalah')->where('id',$id)->delete();
     }
+
+    //=============================================================================================
     public function caridepartmen(Request $request)
     {
         if($request->has('q')){
@@ -100,6 +147,8 @@ class AnalisaakarController extends Controller
             return response()->json($data);
         }
     }
+
+    //=============================================================================================
     public function hasilcaridepartmen($id,$iddepartemen)
     {
         $data = DB::table('pelaksanaan_manajemen_risiko')
@@ -117,6 +166,8 @@ class AnalisaakarController extends Controller
         ];
         return response()->json($print);
     }
+
+    //=============================================================================================
     public function hasilcarikode($id)
     {
         $data = DB::table('resiko_teridentifikasi')

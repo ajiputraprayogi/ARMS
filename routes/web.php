@@ -105,6 +105,7 @@ Route::group(['middleware' => ['auth']],function(){
     Route::get('/hasil-cari-kode/{id}','backend\AnalisarisikoController@hasilcarikode');
     // Route::get('hasil-cari-kat/{id}', 'backend\AnalisarisikoController@carikat');
     //----------------------------------analisa akar-----------------------------------------
+    Route::get('analisa-akar-masalah/carikode/{kode}', 'backend\AnalisaakarController@carikode');
     Route::post('analisa-akar-masalah/tambah-why', 'backend\AnalisaakarController@storewhy');
     Route::post('analisa-akar-masalah/update-why', 'backend\AnalisaakarController@updatewhy');
     Route::get('analisa-akar-masalah/data-why', 'backend\AnalisaakarController@listwhy');

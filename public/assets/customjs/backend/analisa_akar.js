@@ -56,7 +56,7 @@ $('#cari_departmen').on('select2:select', function (e) {
                 $('#tahun').val(item.priode_penerapan);
             });
             $.each(data.resiko, function (key, value) {
-                var newOption = new Option(value.full_kode, value.id, false, false);
+                var newOption = new Option(value.full_kode,value.full_kode, false, false);
                 $('#cari_risiko').append(newOption).trigger('change');
             });
         },
@@ -101,7 +101,7 @@ function generatekode() {
     var newkode = newresiko + '.' + newgetkategori[0];
     $.ajax({
         type: 'GET',
-        url: '/hasil-cari-kat/' + newkode,
+        url: '/analisa-akar-masalah/carikode/' + newkode,
         success: function (data) {
             $('#kode_analisis').val(data);
 

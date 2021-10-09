@@ -2,6 +2,9 @@
 @section('title')
 Toko Online | Analisa Risiko
 @endsection
+@section('token')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
 @section('css')
 <style>
 .bintang {
@@ -11,14 +14,11 @@ Toko Online | Analisa Risiko
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="{{asset('assets/customjs/backend/loading.css')}}">
 @endsection
-@section('token')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
 @section('content')
 <div class="col-md-12">
     <div class="card card-transparent card-block card-stretch card-height border-none">
         <div class="card-header p-0 mt-lg-2 mt-0">
-            <h3 class="mb-3">Tambah Analisis Akar Masalah</h3>
+            <h3 class="mb-3">Edit Analisis Akar Masalah</h3>
         </div>
         @if ($errors->any())
         <div class="alert alert-danger">
@@ -31,14 +31,33 @@ Toko Online | Analisa Risiko
         @endif
         <div class="card-body">
             <div class="loading-div" id="panel">
-                <form class="form-horizontal" action="{{url('analisa-akar-masalah')}}" method="post">
+                @foreach($datadetail as $rowdtl)
+                @php
+                $dataresiko = DB::table('resiko_teridentifikasi')
+                ->where('full_kode',$rowdtl->kode_risiko)
+                ->get();
+                @endphp
+                <form class="form-horizontal" action="{{url('analisa-akar-masalah/'.$rowdtl->id)}}" method="post">
                     @csrf
+                    <input type="hidden" name="_method" value="put">
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Departemen Pemilik Resiko<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <select class="js-example-basic-single text search-input" id="cari_departmen"
                                 name="cari_departmen" style="width:100%;">
+                                @foreach($dataresiko as $dtr)
+                                @php 
+                                $data_manajemen_risiko = DB::table('pelaksanaan_manajemen_risiko')
+                                ->select(DB::raw('pelaksanaan_manajemen_risiko.*,departemen.nama'))
+                                ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+                                ->where([['id_departemen',$dtr->id_departmen],['priode_penerapan',$dtr->periode_penerapan]])
+                                ->get();
+                                @endphp
+                                @foreach($data_manajemen_risiko as $dmr)
+                                <option value="{{$dmr->id}}-{{$dmr->id_departemen}}">{{$dmr->nama}} - ({{$dmr->priode_penerapan}})</option>
+                                @endforeach
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -50,7 +69,7 @@ Toko Online | Analisa Risiko
                         <label class="control-label col-sm-3 align-self-center" for="email">Tahun<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="tahun" name="tahun" readonly>
+                            <input type="text" class="form-control" id="tahun" name="tahun" @foreach($dataresiko as $dtr) value="{{$dtr->periode_penerapan }}" @endforeach readonly>
                             </select>
                         </div>
                     </div>
@@ -60,6 +79,9 @@ Toko Online | Analisa Risiko
                         <div class="col-sm-9">
                             <select class="js-example-basic-single text search-input" id="cari_risiko"
                                 name="cari_risiko" style="width:100%;">
+                                @foreach($dataresiko as $dtr)
+                                <option value="{{$dtr->full_kode}}">{{$dtr->full_kode}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -67,13 +89,17 @@ Toko Online | Analisa Risiko
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Pernyataan Risiko</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="pernyataan" name="pernyataan">
+                            <input type="text" class="form-control" id="pernyataan" name="pernyataan"
+                            @foreach($dataresiko as $dtr)
+                                value="{{$dtr->pernyataan_risiko}}"
+                                @endforeach>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Kode Analisis</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="kode_analisis" name="kode_analisis" required readonly>
+                            <input type="text" class="form-control" id="kode_analisis" name="kode_analisis" value="{{$rowdtl->kode_analisis}}" required
+                                readonly>
                         </div>
                     </div>
                     <div class="form-group">
@@ -102,7 +128,7 @@ Toko Online | Analisa Risiko
                         <label class="control-label col-sm-3 align-self-center" for="email">Akar Penyebab<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
-                            <textarea id="w3review" name="penyebab" rows="4" cols="50" class="form-control"></textarea>
+                            <textarea id="w3review" name="penyebab" rows="4" cols="50" class="form-control">{{$rowdtl->akar_masalah}}</textarea>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -111,7 +137,7 @@ Toko Online | Analisa Risiko
                         <div class="col-sm-9">
                             <select class="form-control" name="kategori" onchange="generatekode()" id="carikat">
                                 @foreach($data as $item)
-                                <option value="{{$item->kode}}">{{$item->kode}} - {{$item->penyebab}}</option>
+                                <option value="{{$item->kode}}" @if($rowdtl->kategori_penyebab==$item->kode) selected @endif>{{$item->kode}} - {{$item->penyebab}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -121,7 +147,7 @@ Toko Online | Analisa Risiko
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <textarea id="w3review" name="pengendalian" rows="4" cols="50"
-                                class="form-control"></textarea>
+                                class="form-control">{{$rowdtl->tindakan_pengendalian}}</textarea>
                         </div>
                     </div>
                     <div class="text-right">
@@ -131,6 +157,7 @@ Toko Online | Analisa Risiko
                         </div>
                     </div>
                 </form>
+                @endforeach
             </div>
         </div>
     </div>
@@ -174,9 +201,9 @@ Toko Online | Analisa Risiko
                     @csrf
                     <div class="form-group">
                         <label>Akar Penyebab</label>
-                        <input type="hidden" name="kode_why" id="kode_why"
-                            required readonly>
-                        <textarea name="edit_akar_penyebab" id="edit_akar_penyebab" class="form-control" rows="6"></textarea>
+                        <input type="hidden" name="kode_why" id="kode_why" required readonly>
+                        <textarea name="edit_akar_penyebab" id="edit_akar_penyebab" class="form-control"
+                            rows="6"></textarea>
                     </div>
             </div>
             <div class="modal-footer">
