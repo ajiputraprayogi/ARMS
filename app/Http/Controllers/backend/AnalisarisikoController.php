@@ -63,32 +63,32 @@ class AnalisarisikoController extends Controller
     {
         // $sts = 'belum';
         analisarisiko::insert([
-            'pr'=>$request->warna,
-            'pr_residu'=>$request->warna,
+            'pr_melekat'=>$request->warna,
+            'pr_residu'=>$request->warnar,
             'id_departmen'=>$request->id_dep,
             'kode_departmen'=>$request->kodedep,
             'departmen_pemilik'=>$request->namadep,
             'kode_risiko'=>$request->full_kode,
             'pernyataan'=>$request->pernyataan,
-            'id_prob'=>$request->idpro,
-            'id_dampak'=>$request->iddam,
-            'id_prob_residu'=>$request->idpro,
-            'id_dampak_residu'=>$request->iddam,
+            'id_prob_melekat'=>$request->idpro,
+            'id_dampak_melekat'=>$request->iddam,
             'frekuensi_melekat'=>$request->nilpro,
             'dampak_melekat'=>$request->nildam,
             'besaran_melekat'=>$request->besaran,
-            'frekuensi_residu'=>$request->nilpro,
-            'skor_dampak_residu'=>$request->nildam,
-            'skor_besaran_residu'=>$request->besaran,
+            'id_prob_residu'=>$request->idpror,
+            'id_dampak_residu'=>$request->iddamr,
+            'frekuensi_residu'=>$request->nilpror,
+            'dampak_residu'=>$request->nildamr,
+            'besaran_residu'=>$request->besarankini,
             'sudah_ada_pengendalian'=>$request->sudah_ada_pengendalian,
             'uraian_pengendalian'=>$request->uraian_pengendalian,
             'apakah_memadai'=>$request->apakah_memadai,
-            
+
         ]);
         $up = DB::table('resiko_teridentifikasi')->where('full_kode', '=', $request->full_kode)->update([
             'besaran_awal'=>$request->besaran,
-            'besaran_akhir'=>$request->besaran,
-            'pr'=>$request->warna,
+            'besaran_akhir'=>$request->besarankini,
+            'pr'=>$request->warnar,
         ]);
         return redirect('analisa-risiko')->with('status','Berhasil menyimpan data');
     }
