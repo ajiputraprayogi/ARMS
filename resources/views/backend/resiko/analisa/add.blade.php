@@ -241,15 +241,15 @@ legend.scheduler-border {
                         <label class="control-label col-sm-3 align-self-center" for="email">Skor Besaran Residu<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
-                            <input type="text" name="besarankini" id="" class="box1" readonly>
+                            <input type="text" name="besarankini" id="besarankini" class="box1" readonly>
                         </div>
-                        <input type="" name="warna" id="warnar">
-                        <input type="" name="nilpro" id="nilpror">
-                        <input type="" name="nildam" id="nildamr">
-                        <input type="" name="nampro" id="nampror">
-                        <input type="" name="namdam" id="namdamr">
-                        <input type="" name="idpro" id="idpror">
-                        <input type="" name="iddam" id="iddamr">
+                        <input type="hidden" name="warnar" id="warnar">
+                        <input type="hidden" name="nilpror" id="nilpror">
+                        <input type="hidden" name="nildamr" id="nildamr">
+                        <input type="hidden" name="nampror" id="nampror">
+                        <input type="hidden" name="namdamr" id="namdamr">
+                        <input type="hidden" name="idpror" id="idpror">
+                        <input type="hidden" name="iddamr" id="iddamr">
                     </div>
                 </fieldset>
                 <div class="text-right">
