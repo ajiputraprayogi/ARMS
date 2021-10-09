@@ -150,7 +150,7 @@ $('#editkonteksbtn').on('click', function (e) {
 function getdatakonteks() {
     $('#panel').loading('toggle');
     var kode = $('#faktur').val();
-    $('#tubuhnya').html('');
+    $('#bodykonteks').html('');
     $.ajax({
         type: 'GET',
         url: '/cari-data-konteks/' + kode,
@@ -177,7 +177,7 @@ function getdatakonteks() {
 function getdatapemangku() {
     $('#panel').loading('toggle');
     var kode = $('#faktur').val();
-    $('#tubuhnya').html('');
+    $('#bodypemangku').html('');
     $.ajax({
         type: 'GET',
         url: '/cari-data-pemangku/' + kode,
@@ -431,7 +431,7 @@ $('#addpemangkubtn').on('click', function (e) {
                     $('#pemangku_kepentingan').val('');
                     $('#keterangan').val('');
                     $('#pemangku').modal('hide');
-                    $('#panel').loading('hide');
+                    $('#panel').loading('stop');
                     getdatapemangku()
                 }
             });

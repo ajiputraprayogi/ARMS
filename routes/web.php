@@ -105,6 +105,11 @@ Route::group(['middleware' => ['auth']],function(){
     Route::get('/hasil-cari-kode/{id}','backend\AnalisarisikoController@hasilcarikode');
     // Route::get('hasil-cari-kat/{id}', 'backend\AnalisarisikoController@carikat');
     //----------------------------------analisa akar-----------------------------------------
+    Route::post('analisa-akar-masalah/tambah-why', 'backend\AnalisaakarController@storewhy');
+    Route::post('analisa-akar-masalah/update-why', 'backend\AnalisaakarController@updatewhy');
+    Route::get('analisa-akar-masalah/data-why', 'backend\AnalisaakarController@listwhy');
+    Route::delete('analisa-akar-masalah/hapus-why/{kode}', 'backend\AnalisaakarController@hapuswhy');
+    Route::get('analisa-akar-masalah/show-why/{kode}', 'backend\AnalisaakarController@showwhy');
     Route::resource('analisa-akar-masalah', 'backend\AnalisaakarController');
     Route::get('data-analisaakarmasalah', 'backend\AnalisaakarController@listdata');
     Route::get('/cari-analisa-akar-departmen','backend\AnalisaakarController@caridepartmen');

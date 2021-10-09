@@ -20,15 +20,6 @@
                             </select>
                         </div>
                     </div>
-                    <!-- <div class="col-md-3">
-                        <label for="">Konteks</label>
-                        <div class="form-group">
-                            <select class="form-control" name="client" id="">
-                                <option selected disabled value="">Pilih Konteks</option>
-                                <option value="">...</option>
-                            </select>
-                        </div>
-                    </div> -->
                     <div class="col-md-9">
                         <label for="">Tahun</label>
                         <div class="row">
@@ -54,23 +45,24 @@
                     </div>
                 </div>
                 <div class="table-responsive rounded mb-3">
-                    <table id="list-data" class="table mb-0 tbl-server-info">
+                    <table id="list-data" class="table">
                         <thead class="bg-white text-uppercase">
                             <tr class="ligth ligth-data">
-                                <!-- <th>
-                                    <div class="checkbox d-inline-block">
-                                        <input type="checkbox" class="checkbox-input" id="checkbox1">
-                                        <label for="checkbox1" class="mb-0"></label>
-                                    </div>
-                                </th> -->
                                 <th>Kode Risiko</th>
                                 <th>Kategori Penyebab</th>
                                 <th>Akar Permasalahann</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="ligth-body">
-                        
+                        <tbody>
+                        @foreach($data as $row)
+                        <tr>
+                            <td>{{$row->kode_risiko}}</td>
+                            <td>{{$row->kategori_penyebab}}</td>
+                            <td>{{$row->akar_masalah}}</td>
+                            <td>-</td>
+                        </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -79,7 +71,5 @@
     </div>
 @endsection
 @push('script')
-    <script src="{{asset('phppiechart/assets/js/highcharts.js')}}"></script>
-    <script src="{{asset('assets/customjs/backend/analisa_akar.js')}}"></script>
 @endpush
 
