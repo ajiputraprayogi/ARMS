@@ -9,11 +9,11 @@ $(function(){
             
             {data: 'kode_risiko', name: 'kode_risiko'},
             {data: 'besaran_melekat', name: 'awal'},
-            {data: 'skor_besaran_residu', name: 'residu'},
+            {data: 'besaran_residu', name: 'residu'},
             {
                 render: function(data, type, row){
                     // return '<button class="btn btn-danger" onclick="hapusdata('+row['id']+')"><i class="fa fa-trash"></i></button> <a href="/client/'+row['id']+'/edit" class="btn btn-success"><i class="fa fa-wrench"></i></a>'
-                   if(row['sudah_ada_pengendalian'] = 'belum'){
+                   if(row['sudah_ada_pengendalian'] = 'Belum'){
                     return '<di><p class="fa fa-times"></p></p></di>'
                    }else{
                     return '<di><p class="fa fa-check"></p></p></di>'
