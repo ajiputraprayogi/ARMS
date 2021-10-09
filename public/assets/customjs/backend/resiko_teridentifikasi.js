@@ -166,8 +166,8 @@ $(function() {
 			success: function (data) {
 				return {
 					results: $.map(data, function (item) {
-							$('#id_konteks').val(item.id_konteks);
-                            $('#id_jenis_konteks').val(item.id);
+							$('#id_konteks').val(item.idk);
+                            $('#id_jenis_konteks').val(item.id_konteks);
                             $('#kode_konteks').val(item.kode_konteks);
                             $('#nama_konteks').val(item.namakonteks);
 					})

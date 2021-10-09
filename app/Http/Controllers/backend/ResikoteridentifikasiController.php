@@ -84,12 +84,12 @@ class ResikoteridentifikasiController extends Controller
         //     echo $dataa;
         // }
         // dd($ex2);
-        $coba = $request->kode_konteks.".".$request->kodedep.".".$request->kodekat;
+        $coba = $request->kode_konteks.".".$request->kodedep.".".$request->kategori;
         $kode= resikoteridentifikasi::where('kode_risiko', $coba )->max('number')+1;
         $full_code= $coba.".".$kode;
         // dd($full_code);
         resikoteridentifikasi::insert([
-            
+            'faktur'=>$request->faktur,
             'pr' => $warna,
             'kode_risiko'=>$coba,
             'number'=>$kode,
@@ -104,7 +104,7 @@ class ResikoteridentifikasiController extends Controller
             'kode_konteks'=> $request->kode_konteks,
             'pernyataan_risiko'=> $request->pernyataan,
             'id_kategori'=>$request->kategori,
-            'kategori_risiko'=> $request->kodekat,
+            'kategori_risiko'=> $request->kategori,
             'uraian_dampak'=> $request->dampak,
             'metode_spip'=> $request->metode,
             'status_persetujuan'=> $request->pengajuan,
@@ -171,6 +171,7 @@ class ResikoteridentifikasiController extends Controller
         // $ui="21sadasd";
         
         resikoteridentifikasi::find($id)->update([
+            'faktur'=>$request->faktur,
             'kode_risiko'=>$coba,
             'number'=>$kode,
             'full_kode'=>$full_code,
@@ -262,7 +263,7 @@ class ResikoteridentifikasiController extends Controller
     }
     public function hasilcarikonteks($id){
         $data = DB::table('konteks')
-                    ->select('konteks.id','konteks.kode as kode_konteks','jenis_konteks.id as id_konteks','jenis_konteks.konteks as namakonteks')
+                    ->select('konteks.id as idk','konteks.kode as kode_konteks','jenis_konteks.id as id_konteks','jenis_konteks.konteks as namakonteks')
                     ->leftjoin('jenis_konteks', 'konteks.id_konteks', '=', 'jenis_konteks.id')
                     ->where('konteks.id','=', $id)
                     ->get();

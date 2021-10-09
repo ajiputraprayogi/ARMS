@@ -64,10 +64,10 @@ Toko Online | Dashboard
 
                     </div>
                 </div>
+                <input type="" id="id_konteks" name="id_konteks">
                 <input type="text" id="id_jenis_konteks" name="id_jenis_konteks">
-                <input type="hidden" id="id_konteks" name="id_konteks">
-                <input type="hidden" name="kode_konteks" id="kode_konteks">
-                <input type="hidden" name="namakonteks" id="nama_konteks">
+                <input type="" name="kode_konteks" id="kode_konteks">
+                <input type="" name="namakonteks" id="nama_konteks">
                 <div class="form-group row">
                     <label class="control-label col-sm-3 align-self-center" for="email">Kode Risiko</label>
                     <div class="col-sm-9">

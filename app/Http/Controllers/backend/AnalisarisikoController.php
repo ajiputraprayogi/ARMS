@@ -61,7 +61,7 @@ class AnalisarisikoController extends Controller
      */
     public function store(Request $request)
     {
-        $sts = 'belum';
+        // $sts = 'belum';
         analisarisiko::insert([
             'pr'=>$request->warna,
             'pr_residu'=>$request->warna,
@@ -80,7 +80,9 @@ class AnalisarisikoController extends Controller
             'frekuensi_residu'=>$request->nilpro,
             'skor_dampak_residu'=>$request->nildam,
             'skor_besaran_residu'=>$request->besaran,
-            'sudah_ada_pengendalian'=>$sts,
+            'sudah_ada_pengendalian'=>$request->sudah_ada_pengendalian,
+            'uraian_pengendalian'=>$request->uraian_pengendalian,
+            'apakah_memadai'=>$request->apakah_memadai,
         ]);
         $up = DB::table('resiko_teridentifikasi')->where('full_kode', '=', $request->full_kode)->update([
             'besaran_awal'=>$request->besaran,

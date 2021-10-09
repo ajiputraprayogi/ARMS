@@ -121,16 +121,16 @@ legend.scheduler-border {
                         </div>
                     </div>
                     <!-- <div class="box1" style="background-color: '+data['kode_warna']+';"></div> -->
-                    <input type="hidden" name="warna" id="warna">
-                    <input type="hidden" name="nilpro" id="nilpro">
-                    <input type="hidden" name="nildam" id="nildam">
-                    <input type="hidden" name="nampro" id="nampro">
-                    <input type="hidden" name="namdam" id="namdam">
-                    <input type="hidden" name="idpro" id="idpro">
-                    <input type="hidden" name="iddam" id="iddam">
+                    <input type="" name="warna" id="warna">
+                    <input type="" name="nilpro" id="nilpro">
+                    <input type="" name="nildam" id="nildam">
+                    <input type="" name="nampro" id="nampro">
+                    <input type="" name="namdam" id="namdam">
+                    <input type="" name="idpro" id="idpro">
+                    <input type="" name="iddam" id="iddam">
                 </fieldset>
                 <div class="form-group">
-                    <b>Sudah Ada Pengendalian??</b><span> <input type="checkbox" onclick="hide('my-list')"
+                    <b>Sudah Ada Pengendalian??</b><span> <input value="Sudah" name="sudah_ada_pengendalian" type="checkbox" onclick="hide('my-list')"
                             id="hide"></label></span>
                 </div>
                 <!-- <fieldset class="scheduler-border" id="my-list">
@@ -154,6 +154,24 @@ legend.scheduler-border {
                         </div>
                     </div>
                 </fieldset> -->
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">Pengendalian Yang Ada</legend>
+                        <div class="form-group row">
+                            <label class="control-label col-sm-3" for="email">Uraian Pengendalian</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" name="uraian_pengendalian" id="uraian_pengendalian" rows="4" required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label col-sm-3" for="email">Apakah Memadai</label>
+                            <div class="col-sm-9">
+                                <select name="apakah_memadai" class="form-control" id="apakah_memadai">
+                                    <option value="Memadai">Memadai</option>
+                                    <option value="Belum Memadai">Belum Memadai</option>
+                                </select>
+                            </div>
+                        </div>
+                </fieldset>
                 <!-- <fieldset class="scheduler-border">
                     <legend class="scheduler-border">Skor Residu Setelah Pengendalian</legend>
                     <div class="form-group row">
@@ -196,22 +214,22 @@ legend.scheduler-border {
                 <fieldset class="scheduler-border">
                     <legend class="scheduler-border">Skor Residu Setelah Pengendalian</legend>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="email">Skor Frekuensi Residu<i
-                                class="bintang">*</i></label>
+                        <label class="control-label col-sm-3 align-self-center" for="email">Skor Frekuensi Residu<i class="bintang">*</i></label>
                         <div class="col-sm-9">
-                            <select class="form-control" name="frekkini" id="fresidu" readonly>
+                            <select class="form-control" name="frekkini" id="carir">
                                 <option selected disabled value="">Skor Frekuensi Saat Ini</option>
                                 @foreach($frekuensi as $row)
                                 <option value="{{$row->id}}">{{$row->nilai}} - {{$row->nama}}</option>
                                 @endforeach
                             </select>
                         </div>
+                        
                     </div>
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Skor Dampak Residu<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
-                            <select class="form-control" name="dampakini" id="dresidu" class="dampakk" readonly>
+                            <select class="form-control" name="dampakini" id="dampakkr">
                                 <option selected disabled value="">Skor Dampak Saat Ini</option>
                                 @foreach($dampak as $row2)
                                 <option value="{{$row2->id}}">{{$row2->nilai}} - {{$row2->nama}}</option>
@@ -223,14 +241,16 @@ legend.scheduler-border {
                         <label class="control-label col-sm-3 align-self-center" for="email">Skor Besaran Residu<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
-                            <input type="text" name="besaran" id="besaran_residu" class="box1" readonly>
+                            <input type="text" name="besarankini" id="" class="box1" readonly>
                         </div>
+                        <input type="" name="warna" id="warnar">
+                        <input type="" name="nilpro" id="nilpror">
+                        <input type="" name="nildam" id="nildamr">
+                        <input type="" name="nampro" id="nampror">
+                        <input type="" name="namdam" id="namdamr">
+                        <input type="" name="idpro" id="idpror">
+                        <input type="" name="iddam" id="iddamr">
                     </div>
-                    <!-- <input type="text" name="warna_residu" id="warna_residu">
-                    <input type="text" name="nilpro2" id="nilpro2">
-                    <input type="text" name="nildam2" id="nildam2">
-                    <input type="text" name="nampro2" id="nampro2">
-                    <input type="text" name="namdam2" id="namdam"> -->
                 </fieldset>
                 <div class="text-right">
                     <div class="form-group">
@@ -286,6 +306,42 @@ $(document).on('change', function(e) {
                     $('#fresidu').val(item.idpro)
                     $('#dresidu').val(item.iddam)
                     $('#besaran_residu').val(item.nilai);
+
+                })
+                // $('#besaran').empty().trigger("change");
+            }
+
+        },
+
+    });
+
+});
+$(document).on('change', function(e) {
+    // $('#tahun').empty().trigger("change");
+    // $('#dampakk').empty().trigger("change");
+
+    var frek = $('#carir').val();
+    console.log(frek);
+    var damp = $('#dampakkr').val();
+    console.log(damp);
+    $.ajax({
+        type: 'GET',
+        url: '/hasil-cari-residu/' + frek + '/' + damp,
+        success: function(data) {
+            return {
+                results: $.map(data, function(item) {
+                    // $('#besaran').append('<option>' + data.nilai + '</option>')
+                    $('#besarankini').val(item.nilai)
+                    $('#warnar').val(item.kode_warna)
+                    $('#idpror').val(item.idpro)
+                    $('#iddamr').val(item.iddam)
+                    $('#nilpror').val(item.nilpro)
+                    $('#nildamr').val(item.nildam)
+                    $('#nampror').val(item.nampro)
+                    $('#namdamr').val(item.namdam)
+                    $('#fresidur').val(item.idpro)
+                    $('#dresidur').val(item.iddam)
+                    $('#besaran_residur').val(item.nilai);
 
                 })
                 // $('#besaran').empty().trigger("change");
