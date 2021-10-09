@@ -9,6 +9,7 @@ use DataTables;
 use App\analisaakar;
 use DB;
 use App\penyebab;
+use Auth;
 
 class AnalisaakarController extends Controller
 {
@@ -19,19 +20,13 @@ class AnalisaakarController extends Controller
      */
     public function index()
     {
-        return view('backend.resiko.akar_masalah.index');
-    }
-    public function listdata(){
-        return Datatables::of(analisaakar::all())->make(true);
+        $data = analisaakar::orderby('id','desc')->get();
+        return view('backend.resiko.akar_masalah.index',compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
+        DB::table('akar_masalah_why_thumb')->where('pembuat','=',Auth::user()->id)->delete();
         $data = penyebab::all();
         return view('backend.resiko.akar_masalah.add',compact('data'));
     }
@@ -129,5 +124,46 @@ class AnalisaakarController extends Controller
                     ->get();
             
             return response()->json($data);
+    }
+
+    //=============================================================================================
+    public function storewhy(Request $request){
+        DB::table('akar_masalah_why_thumb')
+        ->insert([
+            'uraian'=>$request->akar_penyebab,
+            'pembuat'=>Auth::user()->id
+        ]);
+    }
+
+    //=============================================================================================
+    public function listwhy(){
+        $data = DB::table('akar_masalah_why_thumb')
+        ->where('pembuat',Auth::user()->id)
+        ->get();
+        return response()->json($data);
+    }
+
+    //=============================================================================================
+    public function hapuswhy($id){
+        DB::table('akar_masalah_why_thumb')
+        ->where('id',$id)
+        ->delete();
+    }
+
+    //=============================================================================================
+    public function showwhy($id){
+        $data = DB::table('akar_masalah_why_thumb')
+        ->where('id',$id)
+        ->get();
+        return response()->json($data);
+    }
+
+    //=============================================================================================
+    public function updatewhy(Request $request){
+        $data = DB::table('akar_masalah_why_thumb')
+        ->where('id',$request->kode_why)
+        ->update([
+            'uraian'=>$request->edit_akar_penyebab,
+        ]);
     }
 }

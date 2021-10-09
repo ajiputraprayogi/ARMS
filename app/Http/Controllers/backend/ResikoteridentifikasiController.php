@@ -225,7 +225,7 @@ class ResikoteridentifikasiController extends Controller
             return response()->json($data);
         }
     }
-    public function hasilcaridepartmen($id,$iddepartemen){
+    public function hasilcaridepartmen($id,$faktur){
         // $datad = DB::table('pelaksanaan_manajemen_risiko')
         // ->select('pelaksanaan_manajemen_risiko.id', 'pelaksanaan_manajemen_risiko.id_departemen', 'pelaksanaan_manajemen_risiko.priode_penerapan','departemen.kode as kodedep','departemen.nama as namadep')
         // ->leftjoin('departemen', 'pelaksanaan_manajemen_risiko.id_departemen', '=', 'departemen.id')
@@ -239,7 +239,7 @@ class ResikoteridentifikasiController extends Controller
         ->get();
 
         $resiko = DB::table('konteks')
-        ->where('faktur_konteks',$iddepartemen)
+        ->where('faktur_konteks',$faktur)
         ->get();
         $print=[
             'detail'=>$data,
