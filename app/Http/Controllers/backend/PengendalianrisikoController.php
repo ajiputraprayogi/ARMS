@@ -244,7 +244,12 @@ class PengendalianrisikoController extends Controller
     public function cari_risiko_hasil($id,$kode_risiko)
     {
         $data = DB::table('resiko_teridentifikasi')
-        ->where('id',$id)
+        ->select('resiko_teridentifikasi.*','besaran_resiko.id as idbes','besaran_resiko.nilai as nilaibes','besaran_resiko.kode_warna','kriteria_probabilitas.nilai as nilpro', 'kriteria_dampak.nilai as nildam', 'kriteria_probabilitas.nama as nampro', 'kriteria_dampak.nama as namdam', 'kriteria_probabilitas.id as idpro', 'kriteria_dampak.id as iddam')
+        ->leftjoin('analisa_risiko','resiko_teridentifikasi.full_kode','=','analisa_risiko.kode_risiko')
+        ->leftjoin('besaran_resiko','analisa_risiko.id_besaran_residu','=','besaran_resiko.id')
+        ->leftjoin('kriteria_probabilitas', 'besaran_resiko.id_prob', '=', 'kriteria_probabilitas.id')
+        ->leftjoin('kriteria_dampak', 'besaran_resiko.id_dampak', '=', 'kriteria_dampak.id')
+        ->where('resiko_teridentifikasi.id',$id)
         ->get();
         $akarmasalah = DB::table('analisa_masalah')
         ->where('kode_risiko',$kode_risiko)
@@ -264,5 +269,13 @@ class PengendalianrisikoController extends Controller
             'akarmasalah'=>$akarmasalah,
         ];
         return response()->json($print);
+    }
+    public function cario($frek, $dampak){
+        $data = DB::table('besaran_resiko')
+        ->select('besaran_resiko.*', 'kriteria_probabilitas.nilai as nilpro', 'kriteria_dampak.nilai as nildam', 'kriteria_probabilitas.nama as nampro', 'kriteria_dampak.nama as namdam', 'kriteria_probabilitas.id as idpro', 'kriteria_dampak.id as iddam')
+        ->leftjoin('kriteria_probabilitas', 'besaran_resiko.id_prob', '=', 'kriteria_probabilitas.id')
+        ->leftjoin('kriteria_dampak', 'besaran_resiko.id_dampak', '=', 'kriteria_dampak.id')
+        ->where([['id_prob',$frek],['id_dampak', $dampak]])->get();
+        return response()->json($data);
     }
 }

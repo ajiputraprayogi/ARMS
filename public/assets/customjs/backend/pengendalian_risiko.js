@@ -94,6 +94,11 @@ $(function() {
                             $('#id_konteks').val(item.id_konteks)
                             $('#pernyataan_risiko').val(item.pernyataan_risiko)
                             $('#full_kode').val(item.full_kode);
+                            $('#cario').append('<option value="'+item.idpro+'">'+item.nilpro +' '+'-' +' '+ item.nampro+'</option>');
+                            $('#dampakk').append('<option value="'+item.iddam+'">'+item.nildam +' '+'-' +' '+ item.namdam+'</option>');
+                            $('#besaran').val(item.nilaibes);
+                            $('#besaran').css("background-color",item.kode_warna);
+                            $('#id_peta_besaran_risiko').val(item.idbes)
 							// $('#pernyataan').val(item.pernyataan_risiko);
                             // $('#id_jenis_konteks').val(item.id);
                             // $('#kode_konteks').val(item.kode_konteks);
@@ -124,6 +129,38 @@ $(function() {
 		});
 	});
 })
+function caribesaran() {
+    $('#carir').val($('#cario').val());
+    $('#dampakkr').val($('#dampakk').val());
+    var frek = $('#cario').val();
+    var damp = $('#dampakk').val();
+    $.ajax({
+        type: 'GET',
+        url: '/hasil-besaran-pengendalian/' + frek + '/' + damp,
+        success: function (data) {
+            return {
+                results: $.map(data, function (item) {
+                    $('#besaran').val(item.nilai)
+                    $('#warna').val(item.kode_warna)
+                    $('#idpro').val(item.idpro)
+                    $('#iddam').val(item.iddam)
+                    $('#nilpro').val(item.nilpro)
+                    $('#nildam').val(item.nildam)
+                    $('#nampro').val(item.nampro)
+                    $('#namdam').val(item.namdam)
+                    $('#fresidu').val(item.idpro)
+                    $('#dresidu').val(item.iddam)
+                    $('#besaran_residu').val(item.nilai);
+                    $('#besaran').css("background-color", item.kode_warna);
+                })
+            }
+        },
+    });
+    if($('#sudah_ada_pengendalian').is(':checked')){
+    }else{
+        cariresiduotomatis();
+    }
+}
 // $('#cari_departemen_manajemen').select2({
 //     ajax:{
 //         url:'/cari_departemen_manajemen',
