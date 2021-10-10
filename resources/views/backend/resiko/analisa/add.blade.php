@@ -63,9 +63,6 @@ legend.scheduler-border {
                     <label class="control-label col-sm-3 align-self-center" for="email">Tahun<i
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
-                        <!-- <select class="form-control" name="client" id="">
-                            <option selected disabled value="">Pilih Tahun</option>
-                        </select> -->
                         <input type="text" class="form-control" id="tahun" name="tahun" readonly>
                         </select>
                     </div>
@@ -93,8 +90,8 @@ legend.scheduler-border {
                         <label class="control-label col-sm-3 align-self-center" for="email">Skor Frekuensi Saat Ini<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
-                            <select class="form-control" name="frekkini" id="cario">
-                                <option selected disabled value="">Skor Frekuensi Saat Ini</option>
+                            <select class="form-control" name="frekkini" id="cario" onchange="caribesaran()">
+                                <option selected disabled hidden>Skor Frekuensi Saat Ini</option>
                                 @foreach($frekuensi as $row)
                                 <option value="{{$row->id}}">{{$row->nilai}} - {{$row->nama}}</option>
                                 @endforeach
@@ -105,8 +102,8 @@ legend.scheduler-border {
                         <label class="control-label col-sm-3 align-self-center" for="email">Skor Dampak Saat Ini<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
-                            <select class="form-control" name="dampakini" id="dampakk" class="dampakk">
-                                <option selected disabled value="">Skor Dampak Saat Ini</option>
+                            <select class="form-control" name="dampakini" id="dampakk" onchange="caribesaran()" class="dampakk">
+                                <option selected disabled hidden>Skor Dampak Saat Ini</option>
                                 @foreach($dampak as $row2)
                                 <option value="{{$row2->id}}">{{$row2->nilai}} - {{$row2->nama}}</option>
                                 @endforeach
@@ -120,117 +117,58 @@ legend.scheduler-border {
                             <input type="text" name="besaran" id="besaran" class="box1" readonly>
                         </div>
                     </div>
-                    <!-- <div class="box1" style="background-color: '+data['kode_warna']+';"></div> -->
-                    <input type="" name="warna" id="warna">
-                    <input type="" name="nilpro" id="nilpro">
-                    <input type="" name="nildam" id="nildam">
-                    <input type="" name="nampro" id="nampro">
-                    <input type="" name="namdam" id="namdam">
-                    <input type="" name="idpro" id="idpro">
-                    <input type="" name="iddam" id="iddam">
+                    <input type="hidden" name="warna" id="warna">
+                    <input type="hidden" name="nilpro" id="nilpro">
+                    <input type="hidden" name="nildam" id="nildam">
+                    <input type="hidden" name="nampro" id="nampro">
+                    <input type="hidden" name="namdam" id="namdam">
+                    <input type="hidden" name="idpro" id="idpro">
+                    <input type="hidden" name="iddam" id="iddam">
                 </fieldset>
                 <div class="form-group">
-                    <b>Sudah Ada Pengendalian??</b><span> <input value="Sudah" name="sudah_ada_pengendalian" type="checkbox" onclick="hide('my-list')"
-                            id="hide"></label></span>
+                    <b>Sudah Ada Pengendalian??</b><span> <input value="Sudah" name="sudah_ada_pengendalian" id="sudah_ada_pengendalian"
+                            type="checkbox"></label></span>
                 </div>
-                <!-- <fieldset class="scheduler-border" id="my-list">
-                    <legend class="scheduler-border">Skor yang melekat</legend>
-                    <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="email">Uraian Pengendaliank<i
-                                class="bintang">*</i></label>
-                        <div class="col-sm-9">
-                            <textarea id="w3review" name="urpen" rows="4" cols="50" class="form-control">
-                        </textarea>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="email">Apakah Memadai ??<i
-                                class="bintang">*</i></label>
-                        <div class="col-sm-9">
-                            <select class="form-control" name="pengajuan" id="">
-                                <option value="diajukan">Memadai</option>
-                                <option value="diajukan">Belum Memadai</option>
-                            </select>
-                        </div>
-                    </div>
-                </fieldset> -->
-                <fieldset class="scheduler-border">
+                <fieldset class="scheduler-border" id="input_pengendalian_div" style="display:none;">
                     <legend class="scheduler-border">Pengendalian Yang Ada</legend>
-                        <div class="form-group row">
-                            <label class="control-label col-sm-3" for="email">Uraian Pengendalian</label>
-                            <div class="col-sm-9">
-                                <textarea class="form-control" name="uraian_pengendalian" id="uraian_pengendalian" rows="4" required></textarea>
-                            </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3" for="email">Uraian Pengendalian</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" name="uraian_pengendalian" id="uraian_pengendalian" rows="4"
+                                required></textarea>
                         </div>
-                        <div class="form-group row">
-                            <label class="control-label col-sm-3" for="email">Apakah Memadai</label>
-                            <div class="col-sm-9">
-                                <select name="apakah_memadai" class="form-control" id="apakah_memadai">
-                                    <option value="Memadai">Memadai</option>
-                                    <option value="Belum Memadai">Belum Memadai</option>
-                                </select>
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3" for="email">Apakah Memadai</label>
+                        <div class="col-sm-9">
+                            <select name="apakah_memadai" class="form-control" id="apakah_memadai">
+                                <option value="Memadai">Memadai</option>
+                                <option value="Belum Memadai">Belum Memadai</option>
+                            </select>
                         </div>
+                    </div>
                 </fieldset>
-                <!-- <fieldset class="scheduler-border">
-                    <legend class="scheduler-border">Skor Residu Setelah Pengendalian</legend>
-                    <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="email">Skor Frekuensi Saat Ini<i
-                                class="bintang">*</i></label>
-                        <div class="col-sm-9">
-                            <select class="form-control" name="frekkini" id="fresidu">
-                                <option selected disabled value="">Skor Frekuensi Saat Ini</option>
-                                @foreach($frekuensi as $row)
-                                <option value="{{$row->id}}">{{$row->nilai}} - {{$row->nama}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="email">Skor Dampak Saat Ini<i
-                                class="bintang">*</i></label>
-                        <div class="col-sm-9">
-                            <select class="form-control" name="dampakini" id="dresidu" class="dampakk">
-                                <option selected disabled value="">Skor Dampak Saat Ini</option>
-                                @foreach($dampak as $row2)
-                                <option value="{{$row2->id}}">{{$row2->nilai}} - {{$row2->nama}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="email">Skor Besaran Saat Ini<i
-                                class="bintang">*</i></label>
-                        <div class="col-sm-9">
-                            <input type="text" name="besaran" id="besaran_residu" class="box1" readonly>
-                        </div>
-                    </div>
-                    <input type="hidden" name="warna_residu" id="warna_residu">
-                    <input type="hidden" name="nilpro2" id="nilpro2">
-                    <input type="hidden" name="nildam2" id="nildam2">
-                    <input type="hidden" name="nampro2" id="nampro2">
-                    <input type="hidden" name="namdam2" id="namdam">
-                </fieldset> -->
                 <fieldset class="scheduler-border">
                     <legend class="scheduler-border">Skor Residu Setelah Pengendalian</legend>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="email">Skor Frekuensi Residu<i class="bintang">*</i></label>
+                        <label class="control-label col-sm-3 align-self-center" for="email">Skor Frekuensi Residu<i
+                                class="bintang">*</i></label>
                         <div class="col-sm-9">
-                            <select class="form-control" name="frekkini" id="carir">
-                                <option selected disabled value="">Skor Frekuensi Saat Ini</option>
+                            <select class="form-control" name="frekkini" id="carir" readonly onchange="cariresiduotomatis()">
+                                <option selected disabled hidden>Skor Frekuensi Saat Ini</option>
                                 @foreach($frekuensi as $row)
                                 <option value="{{$row->id}}">{{$row->nilai}} - {{$row->nama}}</option>
                                 @endforeach
                             </select>
                         </div>
-                        
+
                     </div>
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Skor Dampak Residu<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
-                            <select class="form-control" name="dampakini" id="dampakkr">
-                                <option selected disabled value="">Skor Dampak Saat Ini</option>
+                            <select class="form-control" name="dampakini" id="dampakkr" onchange="cariresiduotomatis()" readonly>
+                                <option selected disabled hidden>Skor Dampak Saat Ini</option>
                                 @foreach($dampak as $row2)
                                 <option value="{{$row2->id}}">{{$row2->nilai}} - {{$row2->nama}}</option>
                                 @endforeach
@@ -264,143 +202,9 @@ legend.scheduler-border {
 </div>
 @endsection
 @push('script')
-<script type="text/javascript">
-function hide(id) {
-    if (hide == true) {
-        document.getElementById(id).style.display = 'block';
-        is_hide = false;
-    } else {
-        document.getElementById(id).style.display = 'none';
-        hide = true;
-    }
-}
-</script>
-<!-- <script src="{{asset('phppiechart/assets/js/highcharts.js')}}"></script> -->
-<script src="{{asset('assets/customjs/backend/analisa_risiko.js')}}"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-<script type="text/javascript">
-$(document).on('change', function(e) {
-    // $('#tahun').empty().trigger("change");
-    // $('#dampakk').empty().trigger("change");
-
-    var frek = $('#cario').val();
-    console.log(frek);
-    var damp = $('#dampakk').val();
-    console.log(damp);
-    $.ajax({
-        type: 'GET',
-        url: '/hasil-cario/' + frek + '/' + damp,
-        success: function(data) {
-            return {
-                results: $.map(data, function(item) {
-                    // $('#besaran').append('<option>' + data.nilai + '</option>')
-                    $('#besaran').val(item.nilai)
-                    $('#warna').val(item.kode_warna)
-                    $('#idpro').val(item.idpro)
-                    $('#iddam').val(item.iddam)
-                    $('#nilpro').val(item.nilpro)
-                    $('#nildam').val(item.nildam)
-                    $('#nampro').val(item.nampro)
-                    $('#namdam').val(item.namdam)
-                    $('#fresidu').val(item.idpro)
-                    $('#dresidu').val(item.iddam)
-                    $('#besaran_residu').val(item.nilai);
-
-                })
-                // $('#besaran').empty().trigger("change");
-            }
-
-        },
-
-    });
-
-});
-$(document).on('change', function(e) {
-    // $('#tahun').empty().trigger("change");
-    // $('#dampakk').empty().trigger("change");
-
-    var frek = $('#carir').val();
-    console.log(frek);
-    var damp = $('#dampakkr').val();
-    console.log(damp);
-    $.ajax({
-        type: 'GET',
-        url: '/hasil-cari-residu/' + frek + '/' + damp,
-        success: function(data) {
-            return {
-                results: $.map(data, function(item) {
-                    // $('#besaran').append('<option>' + data.nilai + '</option>')
-                    $('#besarankini').val(item.nilai)
-                    $('#warnar').val(item.kode_warna)
-                    $('#idpror').val(item.idpro)
-                    $('#iddamr').val(item.iddam)
-                    $('#nilpror').val(item.nilpro)
-                    $('#nildamr').val(item.nildam)
-                    $('#nampror').val(item.nampro)
-                    $('#namdamr').val(item.namdam)
-                    $('#fresidur').val(item.idpro)
-                    $('#dresidur').val(item.iddam)
-                    $('#besaran_residur').val(item.nilai);
-
-                })
-                // $('#besaran').empty().trigger("change");
-            }
-
-        },
-
-    });
-
-});
-
-// $(document).on('change', function(e) {
-//     // $('#tahun').empty().trigger("change");
-//     // $('#dampakk').empty().trigger("change");
-
-//     var frek = $('#fresidu').val();
-//     console.log(frek);
-//     var damp = $('#dresidu').val();
-//     console.log(damp);
-//     $.ajax({
-//         type: 'GET',
-//         url: '/hasil-cari-residu/' + frek + '/' + damp,
-//         success: function(data) {
-//             return {
-//                 results: $.map(data, function(item) {
-//                     // $('#besaran').append('<option>' + data.nilai + '</option>')
-//                     $('#besaran_residu').val(item.nilai);
-//                     $('#warna_residu').val(item.kode_warna)
-//                     $('#nilpro2').val(item.nilpro)
-//                     $('#nildam2').val(item.nildam)
-//                     $('#nampro2').val(item.nampro)
-//                     $('#namdam2').val(item.namdam)
-//                 })
-//                 // $('#besaran').empty().trigger("change");
-//             }
-
-//         },
-
-//     });
-
-// });
-// $(document).ready(function(){
-// 	$("#cario").change(function(){
-// 		var aid = $("#cario").val();
-//         console.log(aid);
-// 		$.ajax({
-// 			url: 'cario',
-// 			method: 'post',
-// 			data: 'aid=' + aid
-// 		}).done(function(books){
-// 			console.log(books);
-// 			books = JSON.parse(books);
-// 			$('#books').empty();
-// 			books.forEach(function(book){
-// 				$('#books').append('<option>' + book.name + '</option>')
-// 			})
-// 		})
-// 	})
-// })
-</script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="{{asset('assets/customjs/backend/analisa_risiko.js')}}"></script>
+
+
 @endpush
