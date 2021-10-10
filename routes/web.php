@@ -40,7 +40,7 @@ Route::group(['middleware' => ['auth']],function(){
     Route::get('cari_risiko', 'backend\PengendalianrisikoController@cari_risiko');
     Route::get('cari_risiko_hasil/{id}/{kode_risiko}', 'backend\PengendalianrisikoController@cari_risiko_hasil');
     Route::get('cari_akar_masalah_hasil/{id}', 'backend\PengendalianrisikoController@cari_akar_masalah_hasil');
-
+    Route::get('hasil-besaran-pengendalian/{frek}/{damp}', 'backend\PengendalianrisikoController@cario');
     // =============== End Pengendalian Risiko =================
 
     Route::resource('konteks', 'backend\KonteksController');

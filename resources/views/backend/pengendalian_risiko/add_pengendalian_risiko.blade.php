@@ -157,16 +157,16 @@
                         </select>
                         </div>
                     </div>
-                    <!-- <fieldset class="scheduler-border">
+                    <fieldset class="scheduler-border">
                         <legend class="scheduler-border">Skor yang melekat</legend>
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="email">Skor Frekuensi Saat Ini<i
                                     class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <select class="form-control" disabled name="frekkini" id="cario" onchange="caribesaran()">
-                                    <option selected disabled hidden>Skor Frekuensi Saat Ini</option>
+                                    <!-- <option selected disabled hidden>Skor Frekuensi Saat Ini</option>
                                     
-                                    <option value=""></option>
+                                    <option value=""></option> -->
                                     
                                 </select>
                             </div>
@@ -176,9 +176,9 @@
                                     class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <select class="form-control" disabled name="dampakini" id="dampakk" onchange="caribesaran()" class="dampakk">
-                                    <option selected disabled hidden>Skor Dampak Saat Ini</option>
+                                    <!-- <option selected disabled hidden>Skor Dampak Saat Ini</option>
                                     
-                                    <option value=""></option>
+                                    <option value=""></option> -->
                                     
                                 </select>
                             </div>
@@ -188,6 +188,7 @@
                                     class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <input type="text" name="besaran" id="besaran" class="box1" readonly>
+                                <input type="hidden" name="id_peta_besaran_risiko" id="id_peta_besaran_risiko">
                             </div>
                         </div>
                         <input type="hidden" name="warna" id="warna">
@@ -197,8 +198,8 @@
                         <input type="hidden" name="namdam" id="namdam">
                         <input type="hidden" name="idpro" id="idpro">
                         <input type="hidden" name="iddam" id="iddam">
-                    </fieldset> -->
-                    @foreach($skorrisiko as $item)
+                    </fieldset>
+                    <!-- @foreach($skorrisiko as $item)
                         <fieldset class="scheduler-border">
                             <legend class="scheduler-border">Skor Risiko Yang direspons</legend>
                             <div class="form-group row">
@@ -227,7 +228,7 @@
                                 </div>
                             </div>
                         </fieldset>
-                    @endforeach
+                    @endforeach -->
                     <div class="text-right">
                         <button type="submit" class="btn btn-primary btn-lg">Simpan</button>
                         <button type="reset" onclick="history.go(-1)" class="btn btn-danger  btn-lg">Batal</button>

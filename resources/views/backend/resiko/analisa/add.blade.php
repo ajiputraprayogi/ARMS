@@ -114,6 +114,7 @@ legend.scheduler-border {
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <input type="text" name="besaran" id="besaran" class="box1" readonly>
+                            <input type="" name="idbesaranmelekat" id="idbesaranmelekat">
                         </div>
                     </div>
                     <input type="hidden" name="warna" id="warna">
@@ -178,6 +179,7 @@ legend.scheduler-border {
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <input type="text" name="besarankini" id="besarankini" class="box1" readonly>
+                            <input type="" name="idbesaranresidu" id="idbesaranresidu">
                         </div>
                         <input type="hidden" name="warnar" id="warnar">
                         <input type="hidden" name="nilpror" id="nilpror">

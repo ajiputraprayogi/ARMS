@@ -79,6 +79,7 @@ function caribesaran() {
         success: function (data) {
             return {
                 results: $.map(data, function (item) {
+                    $('#idbesaranmelekat').val(item.idbesaran)
                     $('#besaran').val(item.nilai)
                     $('#warna').val(item.kode_warna)
                     $('#idpro').val(item.idpro)
@@ -115,6 +116,7 @@ function cariresiduotomatis() {
         success: function(data) {
             return {
                 results: $.map(data, function(item) {
+                    $('#idbesaranresidu').val(item.idbesaran)
                     $('#besarankini').val(item.nilai)
                     $('#warnar').val(item.kode_warna)
                     $('#idpror').val(item.idpro)

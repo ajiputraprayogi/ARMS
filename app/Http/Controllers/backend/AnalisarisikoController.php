@@ -33,7 +33,7 @@ class AnalisarisikoController extends Controller
     //====================================================================================
     public function cario($frek, $dampak){
         $data = DB::table('besaran_resiko')
-        ->select('besaran_resiko.*', 'kriteria_probabilitas.nilai as nilpro', 'kriteria_dampak.nilai as nildam', 'kriteria_probabilitas.nama as nampro', 'kriteria_dampak.nama as namdam', 'kriteria_probabilitas.id as idpro', 'kriteria_dampak.id as iddam')
+        ->select('besaran_resiko.*','besaran_resiko.id as idbesaran', 'kriteria_probabilitas.nilai as nilpro', 'kriteria_dampak.nilai as nildam', 'kriteria_probabilitas.nama as nampro', 'kriteria_dampak.nama as namdam', 'kriteria_probabilitas.id as idpro', 'kriteria_dampak.id as iddam')
         ->leftjoin('kriteria_probabilitas', 'besaran_resiko.id_prob', '=', 'kriteria_probabilitas.id')
         ->leftjoin('kriteria_dampak', 'besaran_resiko.id_dampak', '=', 'kriteria_dampak.id')
         ->where([['id_prob',$frek],['id_dampak', $dampak]])->get();
@@ -43,7 +43,7 @@ class AnalisarisikoController extends Controller
     //====================================================================================
     public function cariresidu($frek, $dampak){
         $data = DB::table('besaran_resiko')
-        ->select('besaran_resiko.*', 'kriteria_probabilitas.nilai as nilpro', 'kriteria_dampak.nilai as nildam', 'kriteria_probabilitas.nama as nampro', 'kriteria_dampak.nama as namdam', 'kriteria_probabilitas.id as idpro', 'kriteria_dampak.id as iddam')
+        ->select('besaran_resiko.*','besaran_resiko.id as idbesaran', 'kriteria_probabilitas.nilai as nilpro', 'kriteria_dampak.nilai as nildam', 'kriteria_probabilitas.nama as nampro', 'kriteria_dampak.nama as namdam', 'kriteria_probabilitas.id as idpro', 'kriteria_dampak.id as iddam')
         ->leftjoin('kriteria_probabilitas', 'besaran_resiko.id_prob', '=', 'kriteria_probabilitas.id')
         ->leftjoin('kriteria_dampak', 'besaran_resiko.id_dampak', '=', 'kriteria_dampak.id')
         ->where([['id_prob',$frek],['id_dampak', $dampak]])->get();
@@ -62,6 +62,7 @@ class AnalisarisikoController extends Controller
             'frekuensi_melekat'=>$request->nilpro.' - '.$request->nampro,
             'dampak_melekat'=>$request->nildam.' - '.$request->namdam,
             'besaran_melekat'=>$request->besaran,
+            'id_besaran_residu'=>$request->idbesaranresidu,
             'id_prob_residu'=>$request->idpror,
             'id_dampak_residu'=>$request->iddamr,
             'pr_residu'=>$request->warnar,
