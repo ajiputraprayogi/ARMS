@@ -26,6 +26,9 @@ $(function() {
     $("#cari_risiko").select2({
         placeholder: "Pilih Kode Risiko",
     });
+    $('#cari_akar_masalah').select2({
+        placeholder: "Pilih Akar Masalah",
+    });
     $('#cari_departemen_manajemen').select2({
         placeholder: 'Cari Departmen',
         ajax: {
@@ -36,7 +39,7 @@ $(function() {
                 return {
                     results: $.map(data, function(item) {
                         return {
-                            id: item.id+'-'+item.id_departemen,
+                            id: item.id+'-'+item.faktur,
                             text: item.nama + " - (" + item.priode_penerapan + ")"
                         }
 
@@ -49,6 +52,8 @@ $(function() {
 
     $('#cari_departemen_manajemen').on('select2:select', function (e) {
         $('#cari_risiko').empty().trigger("change");
+        $('#cari_akar_masalah').empty().trigger("change");
+        $('kode_analisis').empty().trigger("change");
 		var kode = $(this).val();
         // console.log(kode);
         var newkode = kode.split("-");
@@ -58,38 +63,63 @@ $(function() {
 			success: function (data) {
                 $.each(data.detail,function(key, item){
                     $('#id_manajemen').val(item.id)
+                    $('#faktur').val(item.faktur)
                     $('#id_departemen').val(item.id_departemen)
                     $('#priode_penerapan').val(item.priode_penerapan)
 
                     // $('#cari_kode').val(item.jk);
                 });
+                
                 $.each(data.resiko, function (key, value) {
-                    var newOption = new Option(value.full_kode,value.id,false, false);
+                    var newOption = new Option(value.full_kode, value.id+'-'+value.full_kode, false, false);
                     $('#cari_risiko').append(newOption).trigger('change');
                 });
 			},
             complete: function () {
                 $('#cari_risiko').val(null).trigger('change');
+                $('#kode_analisis').val(null).trigger('change');
             }
 		});
 	});
     $('#cari_risiko').on('select2:select', function (e) {
-		var kode = $(this).val();
+        $('#cari_akar_masalah').empty().trigger("change");
+        var kode = $(this).val();
+        var newkode = kode.split("-");
 		$.ajax({
 			type: 'GET',
-			url: '/cari_risiko_hasil/' + kode,
+			url: '/cari_risiko_hasil/' +newkode[0]+'/'+newkode[1],
 			success: function (data) {
-				return {
-					results: $.map(data, function (item) {
+                $.each(data.detail,function(key, item){
                             $('#id_risiko').val(item.id)
+                            $('#id_konteks').val(item.id_konteks)
                             $('#pernyataan_risiko').val(item.pernyataan_risiko)
                             $('#full_kode').val(item.full_kode);
 							// $('#pernyataan').val(item.pernyataan_risiko);
                             // $('#id_jenis_konteks').val(item.id);
                             // $('#kode_konteks').val(item.kode_konteks);
                             // $('#nama_konteks').val(item.namakonteks);
-					})
-				}
+                });
+                $.each(data.akarmasalah, function (key, value) {
+                    var newOption = new Option(value.kode_analisis,value.id,false, false);
+                    $('#cari_akar_masalah').append(newOption).trigger('change');
+                });
+			},
+            complete: function () {
+                $('#cari_akar_masalah').val(null).trigger('change');
+                $('#kode_analisis').val(null).trigger('change');
+            }
+		});
+    });
+    $('#cari_akar_masalah').on('select2:select', function (e) {
+        var kode = $(this).val();
+		$.ajax({
+			type: 'GET',
+			url: '/cari_akar_masalah_hasil/' + kode,
+			success: function (data) {
+                $.each(data.akarmasalah,function(key, item){
+                    $('#id_akar_masalah').val(item.id);
+                    $('#kode_analisis').val('PG.'+item.kode_analisis);
+                });
 			},
 		});
 	});

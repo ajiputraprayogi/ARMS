@@ -68,6 +68,8 @@ class PengendalianrisikoController extends Controller
             'priode_penerapan'=>'required',
             'risiko'=>'required',
             'id_risiko'=>'required',
+            'id_akar_masalah'=>'required',
+            'kode_tindak_pengendalian'=>'required',
             'kegiatan_pengendalian'=>'required',
             'klasifikasi_sub_unsur_spip'=>'required',
             'penanggung_jawab'=>'required',
@@ -81,6 +83,8 @@ class PengendalianrisikoController extends Controller
             'id_manajemen'=>$request->id_manajemen,
             'id_departemen'=>$request->id_departemen,
             'id_risiko'=>$request->id_risiko,
+            'id_akar_masalah'=>$request->id_akar_masalah,
+            'kode_tindak_pengendalian'=>$request->kode_tindak_pengendalian,
             'respons_risiko'=>$respons_risiko,
             'kegiatan_pengendalian'=>$request->kegiatan_pengendalian,
             'id_klasifikasi_sub_unsur_spip'=>$request->klasifikasi_sub_unsur_spip,
@@ -204,13 +208,13 @@ class PengendalianrisikoController extends Controller
             ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
             ->select('pelaksanaan_manajemen_risiko.*','departemen.id as idd','departemen.nama')
             ->where('nama','like','%'.$cari.'%')
-            ->orderby('pelaksanaan_manajemen_risiko.priode_penerapan','asc')
+            ->orderby('departemen.nama','asc')
             ->groupby('pelaksanaan_manajemen_risiko.faktur')
             ->get();
             return response()->json($data);
         }
     }
-    public function cari_departemen_manajemen_hasil($id,$iddepartemen)
+    public function cari_departemen_manajemen_hasil($id,$faktur)
     {
         $data = DB::table('pelaksanaan_manajemen_risiko')
         ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
@@ -218,7 +222,7 @@ class PengendalianrisikoController extends Controller
         ->where('pelaksanaan_manajemen_risiko.id',$id)
         ->get();
         $resiko = DB::table('resiko_teridentifikasi')
-        ->where('id_departmen',$iddepartemen)
+        ->where('faktur',$faktur)
         ->get();
         $print=[
             'detail'=>$data,
@@ -237,11 +241,28 @@ class PengendalianrisikoController extends Controller
             return response()->json($data);
         }
     }
-    public function cari_risiko_hasil($id)
+    public function cari_risiko_hasil($id,$kode_risiko)
     {
         $data = DB::table('resiko_teridentifikasi')
         ->where('id',$id)
         ->get();
-        return response()->json($data);
+        $akarmasalah = DB::table('analisa_masalah')
+        ->where('kode_risiko',$kode_risiko)
+        ->get();
+        $print=[
+            'detail'=>$data,
+            'akarmasalah'=>$akarmasalah,
+        ];
+        return response()->json($print);
+    }
+    public function cari_akar_masalah_hasil($id)
+    {
+        $akarmasalah = DB::table('analisa_masalah')
+        ->where('id',$id)
+        ->get();
+        $print=[
+            'akarmasalah'=>$akarmasalah,
+        ];
+        return response()->json($print);
     }
 }
