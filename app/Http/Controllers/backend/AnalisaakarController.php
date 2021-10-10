@@ -171,7 +171,7 @@ class AnalisaakarController extends Controller
     public function hasilcarikode($id)
     {
         $data = DB::table('resiko_teridentifikasi')
-                    ->where('id','=', $id)
+                    ->where('full_kode','=', $id)
                     ->get();
             
             return response()->json($data);

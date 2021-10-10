@@ -47,7 +47,7 @@ Toko Online | Analisa Risiko
                             <select class="js-example-basic-single text search-input" id="cari_departmen"
                                 name="cari_departmen" style="width:100%;">
                                 @foreach($dataresiko as $dtr)
-                                @php 
+                                @php
                                 $data_manajemen_risiko = DB::table('pelaksanaan_manajemen_risiko')
                                 ->select(DB::raw('pelaksanaan_manajemen_risiko.*,departemen.nama'))
                                 ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
@@ -55,7 +55,8 @@ Toko Online | Analisa Risiko
                                 ->get();
                                 @endphp
                                 @foreach($data_manajemen_risiko as $dmr)
-                                <option value="{{$dmr->id}}-{{$dmr->id_departemen}}">{{$dmr->nama}} - ({{$dmr->priode_penerapan}})</option>
+                                <option value="{{$dmr->id}}-{{$dmr->id_departemen}}">{{$dmr->nama}} -
+                                    ({{$dmr->priode_penerapan}})</option>
                                 @endforeach
                                 @endforeach
                             </select>
@@ -69,7 +70,8 @@ Toko Online | Analisa Risiko
                         <label class="control-label col-sm-3 align-self-center" for="email">Tahun<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="tahun" name="tahun" @foreach($dataresiko as $dtr) value="{{$dtr->periode_penerapan }}" @endforeach readonly>
+                            <input type="text" class="form-control" id="tahun" name="tahun" @foreach($dataresiko as
+                                $dtr) value="{{$dtr->periode_penerapan }}" @endforeach readonly>
                             </select>
                         </div>
                     </div>
@@ -79,8 +81,17 @@ Toko Online | Analisa Risiko
                         <div class="col-sm-9">
                             <select class="js-example-basic-single text search-input" id="cari_risiko"
                                 name="cari_risiko" style="width:100%;">
+                                @foreach($data_manajemen_risiko as $dmr)
+                                @php
+                                $dataresiko = DB::table('resiko_teridentifikasi')
+                                ->where([['id_departmen',$dmr->id_departemen],['periode_penerapan',$dmr->priode_penerapan]])
+                                ->get();
+                                @endphp
+
                                 @foreach($dataresiko as $dtr)
-                                <option value="{{$dtr->full_kode}}">{{$dtr->full_kode}}</option>
+                                <option value="{{$dtr->full_kode}}" @if($dtr->full_kode==$rowdtl->kode_risiko) selected
+                                    @endif>{{$dtr->full_kode}}</option>
+                                @endforeach
                                 @endforeach
                             </select>
                         </div>
@@ -89,17 +100,15 @@ Toko Online | Analisa Risiko
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Pernyataan Risiko</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="pernyataan" name="pernyataan"
-                            @foreach($dataresiko as $dtr)
-                                value="{{$dtr->pernyataan_risiko}}"
-                                @endforeach>
+                            <textarea class="form-control" id="pernyataan" name="pernyataan" col="3"
+                                readonly>@foreach($dataresiko as $dtr) {{$dtr->pernyataan_risiko}} @endforeach</textarea>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Kode Analisis</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="kode_analisis" name="kode_analisis" value="{{$rowdtl->kode_analisis}}" required
-                                readonly>
+                            <input type="text" class="form-control" id="kode_analisis" name="kode_analisis"
+                                value="{{$rowdtl->kode_analisis}}" required readonly>
                         </div>
                     </div>
                     <div class="form-group">
@@ -128,7 +137,8 @@ Toko Online | Analisa Risiko
                         <label class="control-label col-sm-3 align-self-center" for="email">Akar Penyebab<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
-                            <textarea id="w3review" name="penyebab" rows="4" cols="50" class="form-control">{{$rowdtl->akar_masalah}}</textarea>
+                            <textarea id="w3review" name="penyebab" rows="4" cols="50"
+                                class="form-control">{{$rowdtl->akar_masalah}}</textarea>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -137,7 +147,8 @@ Toko Online | Analisa Risiko
                         <div class="col-sm-9">
                             <select class="form-control" name="kategori" onchange="generatekode()" id="carikat">
                                 @foreach($data as $item)
-                                <option value="{{$item->kode}}" @if($rowdtl->kategori_penyebab==$item->kode) selected @endif>{{$item->kode}} - {{$item->penyebab}}</option>
+                                <option value="{{$item->kode}}" @if($rowdtl->kategori_penyebab==$item->kode) selected
+                                    @endif>{{$item->kode}} - {{$item->penyebab}}</option>
                                 @endforeach
                             </select>
                         </div>

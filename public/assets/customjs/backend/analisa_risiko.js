@@ -87,9 +87,6 @@ function caribesaran() {
                     $('#nildam').val(item.nildam)
                     $('#nampro').val(item.nampro)
                     $('#namdam').val(item.namdam)
-                    $('#fresidu').val(item.idpro)
-                    $('#dresidu').val(item.iddam)
-                    $('#besaran_residu').val(item.nilai);
                     $('#besaran').css("background-color", item.kode_warna);
                 })
             }
@@ -126,9 +123,6 @@ function cariresiduotomatis() {
                     $('#nildamr').val(item.nildam)
                     $('#nampror').val(item.nampro)
                     $('#namdamr').val(item.namdam)
-                    $('#fresidur').val(item.idpro)
-                    $('#dresidur').val(item.iddam)
-                    $('#besaran_residur').val(item.nilai);
                     $('#besarankini').css("background-color", item.kode_warna);
 
                 })
@@ -149,5 +143,6 @@ $("#sudah_ada_pengendalian").on('click',function() {
         $('#input_pengendalian_div').hide();
         $('#carir').attr('readonly',true);
         $('#dampakkr').attr('readonly',true);
+        cariresiduotomatis();
     }
 });
