@@ -62,7 +62,6 @@ class AnalisarisikoController extends Controller
             'frekuensi_melekat'=>$request->nilpro.' - '.$request->nampro,
             'dampak_melekat'=>$request->nildam.' - '.$request->namdam,
             'besaran_melekat'=>$request->besaran,
-            'id_besaran_residu'=>$request->idbesaranresidu,
             'id_prob_residu'=>$request->idpror,
             'id_dampak_residu'=>$request->iddamr,
             'pr_residu'=>$request->warnar,
@@ -73,6 +72,7 @@ class AnalisarisikoController extends Controller
             'uraian_pengendalian'=>$request->uraian_pengendalian,
             'apakah_memadai'=>$request->apakah_memadai,
         ]);
+        
         $up = DB::table('resiko_teridentifikasi')->where('full_kode', '=', $request->full_kode)->update([
             'pr'=>$request->warna,
             'besaran_awal'=>$request->besaran,
