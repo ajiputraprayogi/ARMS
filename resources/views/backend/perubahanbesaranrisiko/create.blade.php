@@ -28,11 +28,14 @@ legend.scheduler-border {
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="{{asset('assets/customjs/backend/loading.css')}}">
 @endsection
+@section('token')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
 @section('content')
 <div class="col-md-12">
     <div class="card card-transparent card-block card-stretch card-height border-none">
         <div class="card-header p-0 mt-lg-2 mt-0">
-            <h3 class="mb-3">Tambah Analisis Risiko</h3>
+            <h3 class="mb-3">Tambah Analisis Akar Masalah</h3>
         </div>
         @if ($errors->any())
         <div class="alert alert-danger">
@@ -45,113 +48,72 @@ legend.scheduler-border {
         @endif
         <div class="card-body">
             <div class="loading-div" id="panel">
-                <form class="form-horizontal" action="{{url('analisa-risiko')}}" method="post">
+                <form class="form-horizontal" action="{{url('analisa-akar-masalah')}}" method="post">
                     @csrf
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="email">Departemen Pemilik Risiko<i
+                        <label class="control-label col-sm-3 align-self-center" for="email">Departemen Pemilik Resiko<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <select class="js-example-basic-single text search-input" id="cari_departmen"
-                                name="departmen" style="width:100%;">
+                                name="cari_departmen" style="width:100%;">
                             </select>
                         </div>
                     </div>
                     <input type="hidden" name="id" id="id">
-                    <input type="hidden" name="id_dep" id="id_dep">
-                    <input type="hidden" name="kodedep" id="kodedep">
-                    <input type="hidden" name="namadep" id="namadep">
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Tahun<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="tahun" name="tahun" readonly>
-                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="email">Kode Risiko<i
+                        <label class="control-label col-sm-3 align-self-center" for="email">Risiko<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
-                            <select class="js-example-basic-single text search-input" id="cari_kode" name="kode"
-                                style="width:100%;">
+                            <select class="js-example-basic-single text search-input" id="cari_risiko"
+                                name="cari_risiko" style="width:100%;">
                             </select>
-                            <input type="hidden" name="id_analisis" id="id_risiko">
                         </div>
                     </div>
-                    <input type="hidden" name="full_kode" id="full_kode">
+                    <input type="hidden" id="full_kode" name="full_kode">
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Pernyataan Risiko</label>
                         <div class="col-sm-9">
-                            <textarea class="form-control" id="pernyataan" name="pernyataan" readonly
-                                row="3"></textarea>
+                            <textarea class="form-control" id="pernyataan" name="pernyataan" col="3"
+                                readonly></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3 align-self-center" for="email">Selera Risiko</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="selera_risiko" name="selera_risiko" readonly>
                         </div>
                     </div>
                     <fieldset class="scheduler-border">
-                        <legend class="scheduler-border">Skor yang melekat</legend>
+                        <legend class="scheduler-border">Resiko Yang Direspons</legend>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="email">Skor Frekuensi Saat
-                                Ini<i class="bintang">*</i></label>
+                            <label class="control-label col-sm-3 align-self-center" for="email">Skor Frekuensi Saat Ini</label>
                             <div class="col-sm-9">
-                                <select class="form-control" name="frekkini" id="cario" onchange="caribesaran()">
-                                    <option selected disabled hidden>Skor Frekuensi Saat Ini</option>
-                                    @foreach($frekuensi as $row)
-                                    <option value="{{$row->id}}">{{$row->nilai}} - {{$row->nama}}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control" id="frekuensi_saat_ini" name="frekuensi_saat_ini" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="email">Skor Dampak Saat Ini<i
+                            <label class="control-label col-sm-3 align-self-center" for="email">Skor Dampak Saat Ini</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="dampak_saat_ini" name="dampak_saat_ini"
+                                    readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label col-sm-3 align-self-center" for="email">Besaran Risiko Saat Ini <i
                                     class="bintang">*</i></label>
                             <div class="col-sm-9">
-                                <select class="form-control" name="dampakini" id="dampakk" onchange="caribesaran()"
-                                    class="dampakk">
-                                    <option selected disabled hidden>Skor Dampak Saat Ini</option>
-                                    @foreach($dampak as $row2)
-                                    <option value="{{$row2->id}}">{{$row2->nilai}} - {{$row2->nama}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="email">Skor Besaran Saat Ini<i
-                                    class="bintang">*</i></label>
-                            <div class="col-sm-9">
-                                <input type="text" name="besaran" id="besaran" class="box1" readonly>
-                                <input type="hidden" name="idbesaranmelekat" id="idbesaranmelekat">
-                            </div>
-                        </div>
-                        <input type="hidden" name="warna" id="warna">
-                        <input type="hidden" name="nilpro" id="nilpro">
-                        <input type="hidden" name="nildam" id="nildam">
-                        <input type="hidden" name="nampro" id="nampro">
-                        <input type="hidden" name="namdam" id="namdam">
-                        <input type="hidden" name="idpro" id="idpro">
-                        <input type="hidden" name="iddam" id="iddam">
-                    </fieldset>
-                    <div class="form-group">
-                        <b>Sudah Ada Pengendalian??</b><span> <input value="Sudah" name="sudah_ada_pengendalian"
-                                id="sudah_ada_pengendalian" type="checkbox"></label></span>
-                    </div>
-                    <fieldset class="scheduler-border" id="input_pengendalian_div" style="display:none;">
-                        <legend class="scheduler-border">Pengendalian Yang Ada</legend>
-                        <div class="form-group row">
-                            <label class="control-label col-sm-3" for="email">Uraian Pengendalian</label>
-                            <div class="col-sm-9">
-                                <textarea class="form-control" name="uraian_pengendalian" id="uraian_pengendalian"
-                                    rows="4" required></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="control-label col-sm-3" for="email">Apakah Memadai</label>
-                            <div class="col-sm-9">
-                                <select name="apakah_memadai" class="form-control" id="apakah_memadai">
-                                    <option value="Memadai">Memadai</option>
-                                    <option value="Belum Memadai">Belum Memadai</option>
-                                </select>
+                                <input type="text" name="besaran_saat_ini" id="besaran_saat_ini" class="box1" readonly>
                             </div>
                         </div>
                     </fieldset>
+                    
                     <fieldset class="scheduler-border">
                         <legend class="scheduler-border">Skor Residu Setelah Pengendalian</legend>
                         <div class="form-group row">
@@ -185,20 +147,12 @@ legend.scheduler-border {
                                     class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <input type="text" name="besarankini" id="besarankini" class="box1" readonly>
-                                <input type="hidden" name="idbesaranresidu" id="idbesaranresidu">
                             </div>
-                            <input type="hidden" name="warnar" id="warnar">
-                            <input type="hidden" name="nilpror" id="nilpror">
-                            <input type="hidden" name="nildamr" id="nildamr">
-                            <input type="hidden" name="nampror" id="nampror">
-                            <input type="hidden" name="namdamr" id="namdamr">
-                            <input type="hidden" name="idpror" id="idpror">
-                            <input type="hidden" name="iddamr" id="iddamr">
                         </div>
                     </fieldset>
                     <div class="text-right">
                         <div class="form-group">
-                            <button class="btn btn-primary">Simpan</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
                             <button type="reset" onclick="history.go(-1)" class="btn btn-danger">Batal</button>
                         </div>
                     </div>
@@ -209,8 +163,9 @@ legend.scheduler-border {
 </div>
 @endsection
 @push('script')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- <script src="{{asset('phppiechart/assets/js/highcharts.js')}}"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="{{asset('assets/customjs/backend/loading.js')}}"></script>
-<script src="{{asset('assets/customjs/backend/analisa_risiko.js')}}"></script>
+<script src="{{asset('assets/customjs/backend/perubahan_besaran_risiko.js')}}"></script>
+<!-- s -->
 @endpush
