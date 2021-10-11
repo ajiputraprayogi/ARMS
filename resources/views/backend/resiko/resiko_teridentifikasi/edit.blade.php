@@ -61,6 +61,7 @@ Toko Online | Dashboard
                     </div>
                 </div>
                 <input type="hidden" name="id" id="id" value="{{$res->id_departmen}}">
+                <input type="hidden" name="faktur" id="faktur" value="{{$res->faktur}}">
                 <input type="hidden" name="id_dep" id="id_dep" value="{{$res->id_departmen}}">
                 <input type="hidden" name="kodedep" id="kodedep" value="{{$res->kode_departemen}}">
                 <input type="hidden" name="namadep" id="namadep" value="{{$res->departmen_pemilik_resiko}}">

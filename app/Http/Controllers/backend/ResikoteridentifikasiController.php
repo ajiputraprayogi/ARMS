@@ -175,6 +175,7 @@ class ResikoteridentifikasiController extends Controller
         // $ui="21sadasd";
         
         resikoteridentifikasi::find($id)->update([
+            'faktur'=>$request->faktur,
             'kode_risiko'=>$coba,
             'number'=>$kode,
             'full_kode'=>$full_code,
