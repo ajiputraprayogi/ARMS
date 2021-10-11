@@ -31,7 +31,7 @@ legend.scheduler-border {
 <div class="col-md-12">
     <div class="card card-transparent card-block card-stretch card-height border-none">
         <div class="card-header p-0 mt-lg-2 mt-0">
-            <h3 class="mb-3">Tambah Risiko Baru</h3>
+            <h3 class="mb-3">Tambah Analisis Risiko</h3>
         </div>
         <!-- <hr style="height:1px; box-shadow: 0px 10px 10px -10px #8c8c8c inset"> -->
         @if ($errors->any())
@@ -47,7 +47,7 @@ legend.scheduler-border {
             <form class="form-horizontal" action="{{url('analisa-risiko')}}" method="post">
                 @csrf
                 <div class="form-group row">
-                    <label class="control-label col-sm-3 align-self-center" for="email">Departemen Pemilik Reesiko<i
+                    <label class="control-label col-sm-3 align-self-center" for="email">Departemen Pemilik Risiko<i
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
                         <select class="js-example-basic-single text search-input" id="cari_departmen" name="departmen"
@@ -202,7 +202,7 @@ legend.scheduler-border {
 </div>
 @endsection
 @push('script')
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="{{asset('assets/customjs/backend/analisa_risiko.js')}}"></script>
 

@@ -9,7 +9,7 @@ ARMS | Analisa Risiko
 <div class="col-lg-12">
     <div class="card card-transparent card-block card-stretch card-height border-none">
         <div class="card-header p-0 mt-lg-2 mt-0">
-            <h3 class="mb-3">Daftar Analisa Risiko</h3>
+            <h3 class="mb-3">Daftar Analisis Risiko</h3>
             <div class="row">
                 <div class="col-md-3">
                     <label for="">Departemen</label>
@@ -59,19 +59,13 @@ ARMS | Analisa Risiko
             <div class="form-group">
                 <div class="text-right">
                     <a href="{{url('analisa-risiko/create')}}" class="btn btn-primary add-list"><i
-                            class="las la-plus mr-3"></i>Tambah Risiko Baru</a>
+                            class="las la-plus mr-3"></i>Tambah Analisis Risiko Baru</a>
                 </div>
             </div>
             <div class="table-responsive rounded mb-3">
                 <table id="list-data" class="table mb-0 tbl-server-info">
                     <thead class="bg-white text-uppercase">
                         <tr class="ligth ligth-data">
-                            <!-- <th>
-                                    <div class="checkbox d-inline-block">
-                                        <input type="checkbox" class="checkbox-input" id="checkbox1">
-                                        <label for="checkbox1" class="mb-0"></label>
-                                    </div>
-                                </th> -->
                             <th>Kode Risiko</th>
                             <th>Besaran Melekat</th>
                             <th>Beseran risiko Residu</th>
