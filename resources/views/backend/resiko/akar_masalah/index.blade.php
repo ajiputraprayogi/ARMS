@@ -42,7 +42,7 @@ ARMS | Analisa Risiko
             <div class="form-group">
                 <div class="text-right">
                     <a href="{{url('analisa-akar-masalah/create')}}" class="btn btn-primary add-list"><i
-                            class="las la-plus mr-3"></i>Tambah Risiko Baru</a>
+                            class="las la-plus mr-3"></i>Tambah Analisa Akar Masalah</a>
                 </div>
             </div>
             <div class="table-responsive rounded mb-3">
