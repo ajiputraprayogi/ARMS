@@ -163,32 +163,34 @@
                             <label class="control-label col-sm-3 align-self-center" for="email">Skor Frekuensi Saat Ini<i
                                     class="bintang">*</i></label>
                             <div class="col-sm-9">
-                                <select class="form-control" disabled name="frekkini" id="cario" onchange="caribesaran()">
+                                <select class="form-control" disabled name="" id="cario" onchange="caribesaran()">
                                     <!-- <option selected disabled hidden>Skor Frekuensi Saat Ini</option>
                                     
                                     <option value=""></option> -->
                                     
                                 </select>
+                                <input type="hidden" name="frekuensi_saat_ini" id="frekuensi_saat_ini">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="email">Skor Dampak Saat Ini<i
                                     class="bintang">*</i></label>
                             <div class="col-sm-9">
-                                <select class="form-control" disabled name="dampakini" id="dampakk" onchange="caribesaran()" class="dampakk">
+                                <select class="form-control" disabled name="dampak_saat_ini" id="dampakk" onchange="caribesaran()" class="dampakk">
                                     <!-- <option selected disabled hidden>Skor Dampak Saat Ini</option>
                                     
                                     <option value=""></option> -->
                                     
                                 </select>
+                                <input type="hidden" name="dampak_saat_ini" id="dampak_saat_ini">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="email">Skor Besaran Saat Ini<i
                                     class="bintang">*</i></label>
                             <div class="col-sm-9">
-                                <input type="text" name="besaran" id="besaran" class="box1" readonly>
-                                <input type="hidden" name="id_peta_besaran_risiko" id="id_peta_besaran_risiko">
+                                <input type="text" name="besaran_saat_ini" id="besaran" class="box1" readonly>
+                                <input type="hidden" name="pr_saat_ini" id="pr_saat_ini">
                             </div>
                         </div>
                         <input type="hidden" name="warna" id="warna">

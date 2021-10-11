@@ -76,7 +76,10 @@ class PengendalianrisikoController extends Controller
             'indikator_keluaran'=>'required',
             'target_waktu'=>'required',
             'status_pelaksanaan'=>'required',
-            'id_peta_besaran_risiko'=>'required',
+            'frekuensi_saat_ini'=>'required',
+            'dampak_saat_ini'=>'required',
+            'pr_saat_ini'=>'required',
+            'besaran_saat_ini'=>'required',
         ]);
         $respons_risiko = implode(", ", $request->respons_risiko);
         DB::table('pengendalian_risiko')->insert([
@@ -92,7 +95,10 @@ class PengendalianrisikoController extends Controller
             'indikator_keluaran'=>$request->indikator_keluaran,
             'target_waktu'=>$request->target_waktu,
             'status_pelaksanaan'=>'Belum Dilaksanakan',
-            'id_peta_besaran_risiko'=>$request->id_peta_besaran_risiko,
+            'frekuensi_saat_ini'=>$request->frekuensi_saat_ini,
+            'dampak_saat_ini'=>$request->dampak_saat_ini,
+            'pr_saat_ini'=>$request->pr_saat_ini,
+            'besaran_saat_ini'=>$request->besaran_saat_ini,
         ]);
         return redirect('pengendalian')->with('status','Berhasil menambah data');
     }
@@ -244,11 +250,11 @@ class PengendalianrisikoController extends Controller
     public function cari_risiko_hasil($id,$kode_risiko)
     {
         $data = DB::table('resiko_teridentifikasi')
-        ->select('resiko_teridentifikasi.*','besaran_resiko.id as idbes','besaran_resiko.nilai as nilaibes','besaran_resiko.kode_warna','kriteria_probabilitas.nilai as nilpro', 'kriteria_dampak.nilai as nildam', 'kriteria_probabilitas.nama as nampro', 'kriteria_dampak.nama as namdam', 'kriteria_probabilitas.id as idpro', 'kriteria_dampak.id as iddam')
-        ->leftjoin('analisa_risiko','resiko_teridentifikasi.full_kode','=','analisa_risiko.kode_risiko')
-        ->leftjoin('besaran_resiko','analisa_risiko.id_besaran_residu','=','besaran_resiko.id')
-        ->leftjoin('kriteria_probabilitas', 'besaran_resiko.id_prob', '=', 'kriteria_probabilitas.id')
-        ->leftjoin('kriteria_dampak', 'besaran_resiko.id_dampak', '=', 'kriteria_dampak.id')
+        // ->select('resiko_teridentifikasi.*','besaran_resiko.id as idbes','besaran_resiko.nilai as nilaibes','besaran_resiko.kode_warna','kriteria_probabilitas.nilai as nilpro', 'kriteria_dampak.nilai as nildam', 'kriteria_probabilitas.nama as nampro', 'kriteria_dampak.nama as namdam', 'kriteria_probabilitas.id as idpro', 'kriteria_dampak.id as iddam')
+        // ->leftjoin('analisa_risiko','resiko_teridentifikasi.full_kode','=','analisa_risiko.kode_risiko')
+        // ->leftjoin('besaran_resiko','analisa_risiko.id_besaran_residu','=','besaran_resiko.id')
+        // ->leftjoin('kriteria_probabilitas', 'besaran_resiko.id_prob', '=', 'kriteria_probabilitas.id')
+        // ->leftjoin('kriteria_dampak', 'besaran_resiko.id_dampak', '=', 'kriteria_dampak.id')
         ->where('resiko_teridentifikasi.id',$id)
         ->get();
         $akarmasalah = DB::table('analisa_masalah')

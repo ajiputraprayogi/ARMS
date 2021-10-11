@@ -8,6 +8,24 @@ Toko Online | Dashboard
     color: red;
 }
 </style>
+<style>
+        fieldset.scheduler-border {
+            border: 1px groove #ddd !important;
+            padding: 0 1.4em 1.4em 1.4em !important;
+            margin: 0 0 1.5em 0 !important;
+            -webkit-box-shadow: 0px 0px 0px 0px #000;
+            box-shadow: 0px 0px 0px 0px #000;
+        }
+
+        legend.scheduler-border {
+            width: inherit;
+            /* Or auto */
+            padding: 0 10px;
+            /* To give a bit of padding on the left and right */
+            border-bottom: none;
+            font-size: 15px;
+        }
+    </style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
 @section('content')
@@ -37,6 +55,8 @@ Toko Online | Dashboard
                     <div class="col-sm-9">
                         <select class="js-example-basic-single text search-input" id="cari_departmen" name="departmen"
                             style="width:100%;">
+                            <option value="{{$res->faktur}}-{{$res->id_departemen}}">{{$res->namadep}} -
+                                    ({{$res->priode_penerapan}})</option>
                         </select>
                     </div>
                 </div>
@@ -62,6 +82,8 @@ Toko Online | Dashboard
                     <div class="col-sm-9">
                         <select class="js-example-basic-single text search-input" id="cari_konteks" name="konteks"
                             style="width:100%;">
+                            <option value="{{$res->idkonteks}}">{{$res->kodekonteks}} -
+                                    {{$res->namakonteks}}</option>
                         </select>
 
                     </div>
@@ -73,7 +95,7 @@ Toko Online | Dashboard
                 <div class="form-group row">
                     <label class="control-label col-sm-3 align-self-center" for="email">Kode Risiko</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="" name="kode_risiko" readonly>
+                        <input type="text" class="form-control" value="{{$res->full_kode}}" id="kode_risiko" name="kode_risiko" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -138,7 +160,97 @@ Toko Online | Dashboard
                         </select>
                     </div>
                 </div>
-                <hr>
+                @if($res->id_analisis == '')
+                @else
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">Skor Awal</legend>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3 align-self-center" for="email">Skor Frekuensi Awal<i
+                                class="bintang">*</i></label>
+                        <div class="col-sm-9">
+                            <select class="form-control" disabled name="" id="cario" onchange="caribesaran()">
+                                <option selected disabled value="{{$res->frekuensi_awal}}">{{$res->frekuensi_awal}}</option>
+                                
+                                <option value=""></option>
+                                
+                            </select>
+                            <input type="hidden" name="frekuensi_saat_ini" id="frekuensi_saat_ini">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3 align-self-center" for="email">Skor Dampak Awal <i
+                                class="bintang">*</i></label>
+                        <div class="col-sm-9">
+                            <select class="form-control" disabled name="dampak_saat_ini" id="dampakk" onchange="caribesaran()" class="dampakk">
+                                <option selected disabled value="{{$res->dampak_awal}}">{{$res->dampak_awal}}</option>
+                                
+                                <option value=""></option>
+                                
+                            </select>
+                            <input type="hidden" name="dampak_saat_ini" id="dampak_saat_ini">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3 align-self-center" for="email">Besaran Risiko Awal <i
+                                class="bintang">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" name="besaran_saat_ini" id="besaran" style="background-color : {{$res->pr}}; " class="box1" value="{{$res->besaran_awal}}" readonly>
+                            <input type="hidden" name="pr_saat_ini" id="pr_saat_ini">
+                        </div>
+                    </div>
+                    <input type="hidden" name="warna" id="warna">
+                    <input type="hidden" name="nilpro" id="nilpro">
+                    <input type="hidden" name="nildam" id="nildam">
+                    <input type="hidden" name="nampro" id="nampro">
+                    <input type="hidden" name="namdam" id="namdam">
+                    <input type="hidden" name="idpro" id="idpro">
+                    <input type="hidden" name="iddam" id="iddam">
+                </fieldset>
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">Skor residu setelah pengendalian</legend>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3 align-self-center" for="email">Skor Frekuensi Aktual<i
+                                class="bintang">*</i></label>
+                        <div class="col-sm-9">
+                            <select class="form-control" disabled name="" id="cario" onchange="caribesaran()">
+                                <option selected disabled value="{{$res->frekuensi_akhir}}">{{$res->frekuensi_akhir}}</option>
+                                
+                                <option value=""></option>
+                                
+                            </select>
+                            <input type="hidden" name="frekuensi_saat_ini" id="frekuensi_saat_ini">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3 align-self-center" for="email">Skor Dampak Aktual<i
+                                class="bintang">*</i></label>
+                        <div class="col-sm-9">
+                            <select class="form-control" disabled name="dampak_saat_ini" id="dampakk" onchange="caribesaran()" class="dampakk">
+                                <option selected disabled value="{{$res->dampak_akhir}}">{{$res->dampak_akhir}}</option>
+                                
+                                <option value=""></option>
+                                
+                            </select>
+                            <input type="hidden" name="dampak_saat_ini" id="dampak_saat_ini">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3 align-self-center" for="email">Besaran risiko Aktual<i
+                                class="bintang">*</i></label>
+                        <div class="col-sm-9">
+                        <input type="text" name="besaran_saat_ini" id="besaran" style="background-color : {{$res->pr_akhir}}; " class="box1" value="{{$res->besaran_akhir}}" readonly>
+                            <input type="hidden" name="pr_saat_ini" id="pr_saat_ini">
+                        </div>
+                    </div>
+                    <input type="hidden" name="warna" id="warna">
+                    <input type="hidden" name="nilpro" id="nilpro">
+                    <input type="hidden" name="nildam" id="nildam">
+                    <input type="hidden" name="nampro" id="nampro">
+                    <input type="hidden" name="namdam" id="namdam">
+                    <input type="hidden" name="idpro" id="idpro">
+                    <input type="hidden" name="iddam" id="iddam">
+                </fieldset>
+                @endif
                 <div class="form-group" align="center">
                     <b>Pengajuan dan Persetujuan</b>
                 </div>

@@ -94,11 +94,14 @@ $(function() {
                             $('#id_konteks').val(item.id_konteks)
                             $('#pernyataan_risiko').val(item.pernyataan_risiko)
                             $('#full_kode').val(item.full_kode);
-                            $('#cario').append('<option value="'+item.idpro+'">'+item.nilpro +' '+'-' +' '+ item.nampro+'</option>');
-                            $('#dampakk').append('<option value="'+item.iddam+'">'+item.nildam +' '+'-' +' '+ item.namdam+'</option>');
-                            $('#besaran').val(item.nilaibes);
-                            $('#besaran').css("background-color",item.kode_warna);
-                            $('#id_peta_besaran_risiko').val(item.idbes)
+                            $('#cario').append('<option value="">'+item.frekuensi_akhir+'</option>');
+                            $('#frekuensi_saat_ini').val(item.frekuensi_akhir);
+                            $('#dampakk').append('<option value="">'+item.dampak_akhir+'</option>');
+                            $('#dampak_saat_ini').val(item.dampak_akhir);
+                            $('#besaran').val(item.besaran_akhir);
+                            $('#besaran').css("background-color",item.pr_akhir);
+                            $('#pr_saat_ini').val(item.pr_akhir);
+                            // $('#id_peta_besaran_risiko').val(item.idbes)
 							// $('#pernyataan').val(item.pernyataan_risiko);
                             // $('#id_jenis_konteks').val(item.id);
                             // $('#kode_konteks').val(item.kode_konteks);

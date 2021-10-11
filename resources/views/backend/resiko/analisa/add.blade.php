@@ -73,7 +73,7 @@ legend.scheduler-border {
                         <select class="js-example-basic-single text search-input" id="cari_kode" name="kode"
                             style="width:100%;">
                         </select>
-
+                        <input type="" name="id_analisis" id="id_risiko">
                     </div>
                 </div>
                 <input type="hidden" name="full_kode" id="full_kode">

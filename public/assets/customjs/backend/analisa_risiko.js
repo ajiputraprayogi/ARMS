@@ -61,6 +61,7 @@ $('#cari_kode').on('select2:select', function (e) {
         success: function (data) {
             return {
                 results: $.map(data, function (item) {
+                    $('#id_risiko').val(item.id);
                     $('#pernyataan').val(item.pernyataan_risiko);
                     $('#full_kode').val(item.full_kode);
                 })

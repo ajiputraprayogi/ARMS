@@ -74,6 +74,7 @@ class AnalisarisikoController extends Controller
         ]);
         
         $up = DB::table('resiko_teridentifikasi')->where('full_kode', '=', $request->full_kode)->update([
+            'id_analisis'=>$request->id_analisis,
             'pr'=>$request->warna,
             'besaran_awal'=>$request->besaran,
             'frekuensi_awal'=>$request->nilpro.' - '.$request->nampro,

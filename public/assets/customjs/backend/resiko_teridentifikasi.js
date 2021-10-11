@@ -10,7 +10,7 @@ $(function(){
             {
                 render: function(data, type, row){
                     // return '<button class="btn btn-danger" onclick="hapusdata('+row['id']+')"><i class="fa fa-trash"></i></button> <a href="/client/'+row['id']+'/edit" class="btn btn-success"><i class="fa fa-wrench"></i></a>'
-                    return '<div class="box1" style="background-color: '+row['pr']+';"></div>'
+                    return '<div class="box1" style="background-color: '+row['pr_akhir']+';"></div>'
                 },
                 "className": "text-center",
                 "orderable": false,
@@ -166,6 +166,7 @@ $(function() {
 			success: function (data) {
 				return {
 					results: $.map(data, function (item) {
+                            $('#kode_risiko').val(item.full_kode);
 							$('#id_konteks').val(item.idk);
                             $('#id_jenis_konteks').val(item.id_konteks);
                             $('#kode_konteks').val(item.kode_konteks);

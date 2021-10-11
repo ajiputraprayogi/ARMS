@@ -91,6 +91,7 @@ class ResikoteridentifikasiController extends Controller
         resikoteridentifikasi::insert([
             'faktur'=>$request->faktur,
             'pr' => $warna,
+            'pr_akhir' => $warna,
             'kode_risiko'=>$coba,
             'number'=>$kode,
             'full_kode'=>$full_code,
@@ -142,7 +143,10 @@ class ResikoteridentifikasiController extends Controller
         $kategori = kategoriresiko::get();
         $spip = metode::all();
         $res = DB::table('resiko_teridentifikasi')
-        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod')
+        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
+        ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
+        ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
+        ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
         ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
         ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
         ->where('resiko_teridentifikasi.id','=', $id)->get();
@@ -171,7 +175,6 @@ class ResikoteridentifikasiController extends Controller
         // $ui="21sadasd";
         
         resikoteridentifikasi::find($id)->update([
-            'faktur'=>$request->faktur,
             'kode_risiko'=>$coba,
             'number'=>$kode,
             'full_kode'=>$full_code,
@@ -263,7 +266,8 @@ class ResikoteridentifikasiController extends Controller
     }
     public function hasilcarikonteks($id){
         $data = DB::table('konteks')
-                    ->select('konteks.id as idk','konteks.kode as kode_konteks','jenis_konteks.id as id_konteks','jenis_konteks.konteks as namakonteks')
+                    ->leftjoin('resiko_teridentifikasi','konteks.id','=','resiko_teridentifikasi.id_konteks')
+                    ->select('resiko_teridentifikasi.full_kode','konteks.id as idk','konteks.kode as kode_konteks','jenis_konteks.id as id_konteks','jenis_konteks.konteks as namakonteks')
                     ->leftjoin('jenis_konteks', 'konteks.id_konteks', '=', 'jenis_konteks.id')
                     ->where('konteks.id','=', $id)
                     ->get();
