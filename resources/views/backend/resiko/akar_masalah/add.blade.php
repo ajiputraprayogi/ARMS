@@ -67,7 +67,7 @@ Toko Online | Analisa Risiko
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Pernyataan Risiko</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="pernyataan" name="pernyataan">
+                            <textarea class="form-control" id="pernyataan" name="pernyataan" col="3" readonly></textarea>
                         </div>
                     </div>
                     <div class="form-group row">

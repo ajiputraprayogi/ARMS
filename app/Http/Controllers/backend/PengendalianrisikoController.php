@@ -68,19 +68,26 @@ class PengendalianrisikoController extends Controller
             'priode_penerapan'=>'required',
             'risiko'=>'required',
             'id_risiko'=>'required',
+            'id_akar_masalah'=>'required',
+            'kode_tindak_pengendalian'=>'required',
             'kegiatan_pengendalian'=>'required',
             'klasifikasi_sub_unsur_spip'=>'required',
             'penanggung_jawab'=>'required',
             'indikator_keluaran'=>'required',
             'target_waktu'=>'required',
             'status_pelaksanaan'=>'required',
-            'id_peta_besaran_risiko'=>'required',
+            'frekuensi_saat_ini'=>'required',
+            'dampak_saat_ini'=>'required',
+            'pr_saat_ini'=>'required',
+            'besaran_saat_ini'=>'required',
         ]);
         $respons_risiko = implode(", ", $request->respons_risiko);
         DB::table('pengendalian_risiko')->insert([
             'id_manajemen'=>$request->id_manajemen,
             'id_departemen'=>$request->id_departemen,
             'id_risiko'=>$request->id_risiko,
+            'id_akar_masalah'=>$request->id_akar_masalah,
+            'kode_tindak_pengendalian'=>$request->kode_tindak_pengendalian,
             'respons_risiko'=>$respons_risiko,
             'kegiatan_pengendalian'=>$request->kegiatan_pengendalian,
             'id_klasifikasi_sub_unsur_spip'=>$request->klasifikasi_sub_unsur_spip,
@@ -88,7 +95,10 @@ class PengendalianrisikoController extends Controller
             'indikator_keluaran'=>$request->indikator_keluaran,
             'target_waktu'=>$request->target_waktu,
             'status_pelaksanaan'=>'Belum Dilaksanakan',
-            'id_peta_besaran_risiko'=>$request->id_peta_besaran_risiko,
+            'frekuensi_saat_ini'=>$request->frekuensi_saat_ini,
+            'dampak_saat_ini'=>$request->dampak_saat_ini,
+            'pr_saat_ini'=>$request->pr_saat_ini,
+            'besaran_saat_ini'=>$request->besaran_saat_ini,
         ]);
         return redirect('pengendalian')->with('status','Berhasil menambah data');
     }
@@ -204,13 +214,13 @@ class PengendalianrisikoController extends Controller
             ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
             ->select('pelaksanaan_manajemen_risiko.*','departemen.id as idd','departemen.nama')
             ->where('nama','like','%'.$cari.'%')
-            ->orderby('pelaksanaan_manajemen_risiko.priode_penerapan','asc')
+            ->orderby('departemen.nama','asc')
             ->groupby('pelaksanaan_manajemen_risiko.faktur')
             ->get();
             return response()->json($data);
         }
     }
-    public function cari_departemen_manajemen_hasil($id,$iddepartemen)
+    public function cari_departemen_manajemen_hasil($id,$faktur)
     {
         $data = DB::table('pelaksanaan_manajemen_risiko')
         ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
@@ -218,7 +228,7 @@ class PengendalianrisikoController extends Controller
         ->where('pelaksanaan_manajemen_risiko.id',$id)
         ->get();
         $resiko = DB::table('resiko_teridentifikasi')
-        ->where('id_departmen',$iddepartemen)
+        ->where('faktur',$faktur)
         ->get();
         $print=[
             'detail'=>$data,
@@ -237,11 +247,41 @@ class PengendalianrisikoController extends Controller
             return response()->json($data);
         }
     }
-    public function cari_risiko_hasil($id)
+    public function cari_risiko_hasil($id,$kode_risiko)
     {
         $data = DB::table('resiko_teridentifikasi')
+        // ->select('resiko_teridentifikasi.*','besaran_resiko.id as idbes','besaran_resiko.nilai as nilaibes','besaran_resiko.kode_warna','kriteria_probabilitas.nilai as nilpro', 'kriteria_dampak.nilai as nildam', 'kriteria_probabilitas.nama as nampro', 'kriteria_dampak.nama as namdam', 'kriteria_probabilitas.id as idpro', 'kriteria_dampak.id as iddam')
+        // ->leftjoin('analisa_risiko','resiko_teridentifikasi.full_kode','=','analisa_risiko.kode_risiko')
+        // ->leftjoin('besaran_resiko','analisa_risiko.id_besaran_residu','=','besaran_resiko.id')
+        // ->leftjoin('kriteria_probabilitas', 'besaran_resiko.id_prob', '=', 'kriteria_probabilitas.id')
+        // ->leftjoin('kriteria_dampak', 'besaran_resiko.id_dampak', '=', 'kriteria_dampak.id')
+        ->where('resiko_teridentifikasi.id',$id)
+        ->get();
+        $akarmasalah = DB::table('analisa_masalah')
+        ->where('kode_risiko',$kode_risiko)
+        ->get();
+        $print=[
+            'detail'=>$data,
+            'akarmasalah'=>$akarmasalah,
+        ];
+        return response()->json($print);
+    }
+    public function cari_akar_masalah_hasil($id)
+    {
+        $akarmasalah = DB::table('analisa_masalah')
         ->where('id',$id)
         ->get();
+        $print=[
+            'akarmasalah'=>$akarmasalah,
+        ];
+        return response()->json($print);
+    }
+    public function cario($frek, $dampak){
+        $data = DB::table('besaran_resiko')
+        ->select('besaran_resiko.*', 'kriteria_probabilitas.nilai as nilpro', 'kriteria_dampak.nilai as nildam', 'kriteria_probabilitas.nama as nampro', 'kriteria_dampak.nama as namdam', 'kriteria_probabilitas.id as idpro', 'kriteria_dampak.id as iddam')
+        ->leftjoin('kriteria_probabilitas', 'besaran_resiko.id_prob', '=', 'kriteria_probabilitas.id')
+        ->leftjoin('kriteria_dampak', 'besaran_resiko.id_dampak', '=', 'kriteria_dampak.id')
+        ->where([['id_prob',$frek],['id_dampak', $dampak]])->get();
         return response()->json($data);
     }
 }

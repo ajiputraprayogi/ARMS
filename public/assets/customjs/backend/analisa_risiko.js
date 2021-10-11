@@ -61,6 +61,7 @@ $('#cari_kode').on('select2:select', function (e) {
         success: function (data) {
             return {
                 results: $.map(data, function (item) {
+                    $('#id_risiko').val(item.id);
                     $('#pernyataan').val(item.pernyataan_risiko);
                     $('#full_kode').val(item.full_kode);
                 })
@@ -79,6 +80,7 @@ function caribesaran() {
         success: function (data) {
             return {
                 results: $.map(data, function (item) {
+                    $('#idbesaranmelekat').val(item.idbesaran)
                     $('#besaran').val(item.nilai)
                     $('#warna').val(item.kode_warna)
                     $('#idpro').val(item.idpro)
@@ -87,9 +89,6 @@ function caribesaran() {
                     $('#nildam').val(item.nildam)
                     $('#nampro').val(item.nampro)
                     $('#namdam').val(item.namdam)
-                    $('#fresidu').val(item.idpro)
-                    $('#dresidu').val(item.iddam)
-                    $('#besaran_residu').val(item.nilai);
                     $('#besaran').css("background-color", item.kode_warna);
                 })
             }
@@ -118,6 +117,7 @@ function cariresiduotomatis() {
         success: function(data) {
             return {
                 results: $.map(data, function(item) {
+                    $('#idbesaranresidu').val(item.idbesaran)
                     $('#besarankini').val(item.nilai)
                     $('#warnar').val(item.kode_warna)
                     $('#idpror').val(item.idpro)
@@ -126,9 +126,6 @@ function cariresiduotomatis() {
                     $('#nildamr').val(item.nildam)
                     $('#nampror').val(item.nampro)
                     $('#namdamr').val(item.namdam)
-                    $('#fresidur').val(item.idpro)
-                    $('#dresidur').val(item.iddam)
-                    $('#besaran_residur').val(item.nilai);
                     $('#besarankini').css("background-color", item.kode_warna);
 
                 })
@@ -149,5 +146,6 @@ $("#sudah_ada_pengendalian").on('click',function() {
         $('#input_pengendalian_div').hide();
         $('#carir').attr('readonly',true);
         $('#dampakkr').attr('readonly',true);
+        cariresiduotomatis();
     }
 });

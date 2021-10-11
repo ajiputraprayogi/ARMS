@@ -59,7 +59,7 @@ ARMS | Analisa Risiko
             <div class="form-group">
                 <div class="text-right">
                     <a href="{{url('analisa-risiko/create')}}" class="btn btn-primary add-list"><i
-                            class="las la-plus mr-3"></i>Tambah Analisis Risiko Baru</a>
+                            class="las la-plus mr-3"></i>Tambah Analisis Risiko</a>
                 </div>
             </div>
             <div class="table-responsive rounded mb-3">
@@ -74,7 +74,24 @@ ARMS | Analisa Risiko
                         </tr>
                     </thead>
                     <tbody class="ligth-body">
-
+                        @foreach($data as $row)
+                        <tr>
+                            <td class="text-center">{{$row->kode_risiko}}</td>
+                            <td class="text-center">{{$row->besaran_melekat}}</td>
+                            <td class="text-center">{{$row->besaran_residu}}</td>
+                            <td class="text-center">{{$row->sudah_ada_pengendalian}}</td>
+                            <td class="text-center">
+                                <a class="btn btn-success btn-sm m-1"
+                                    href="{{url('/analisa-risiko/'.$row->id.'/edit')}}">
+                                    <i class="ri-pencil-line mr-0"></i>
+                                </a>
+                                <button class="btn btn-sm btn-danger m-1" data-toggle="tooltip" data-placement="top"
+                                    title="" data-original-title="Delete"
+                                    onclick="hapusdatamanajemenrisiko({{$row->id}})"><i
+                                        class="ri-delete-bin-line mr-0"></i></button>
+                            </td>
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -83,6 +100,47 @@ ARMS | Analisa Risiko
 </div>
 @endsection
 @push('script')
-<script src="{{asset('phppiechart/assets/js/highcharts.js')}}"></script>
-<script src="{{asset('assets/customjs/backend/analisa_risiko.js')}}"></script>
+<script>
+function hapusdatamanajemenrisiko(kode) {
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger',
+        },
+        buttonsStyling: true
+    })
+    swalWithBootstrapButtons.fire({
+        title: 'Hapus Data ?',
+        text: "Data tidak dapat dipulihkan kembali!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, Hapus!',
+        cancelButtonText: 'Tidak',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.value) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            })
+            $.ajax({
+                type: 'DELETE',
+                url: '/analisa-risiko/' + kode,
+                data: {
+                    'token': $('input[name=_token]').val(),
+                },
+                success: function() {
+                    swalWithBootstrapButtons.fire(
+                        'Deleted!',
+                        'Data Berhasil Dihapus.',
+                        'success'
+                    )
+                    location.reload();
+                }
+            })
+        }
+    })
+}
+</script>
 @endpush
