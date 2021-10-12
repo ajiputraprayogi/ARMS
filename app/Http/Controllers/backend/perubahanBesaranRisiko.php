@@ -41,6 +41,26 @@ class perubahanBesaranRisiko extends Controller
             'warna_aktual'=>$request->warnabesarankini,
             'rekomendasi'=>$request->rekomendasi,
         ]);
+        $frekuensi = DB::table('kriteria_probabilitas')->where('id',$request->frekkini)->get();
+        $dampak = DB::table('kriteria_dampak')->where('id',$request->dampakini)->get();
+
+        $label_pro='';
+        $label_dam='';
+        foreach($frekuensi as $frek){
+            $label_pro=$frek->nilai.' - '.$frek->nama;
+        }
+
+        foreach($dampak as $dam){
+            $label_dam=$dam->nilai.' - '.$dam->nama;
+        }
+
+        $up = DB::table('resiko_teridentifikasi')->where('full_kode', '=', $request->full_kode)
+        ->update([
+            'pr_akhir'=>$request->warnabesarankini,
+            'besaran_akhir'=>$request->besarankini,
+            'frekuensi_akhir'=>$label_pro,
+            'dampak_akhir'=>$label_dam,
+        ]);
         return redirect('perubahan-besaran-risiko')->with('status','Berhasil menyimpan data');
     }
 
@@ -73,6 +93,26 @@ class perubahanBesaranRisiko extends Controller
             'deviasi'=>$request->deviasi,
             'warna_aktual'=>$request->warnabesarankini,
             'rekomendasi'=>$request->rekomendasi,
+        ]);
+        $frekuensi = DB::table('kriteria_probabilitas')->where('id',$request->frekkini)->get();
+        $dampak = DB::table('kriteria_dampak')->where('id',$request->dampakini)->get();
+
+        $label_pro='';
+        $label_dam='';
+        foreach($frekuensi as $frek){
+            $label_pro=$frek->nilai.' - '.$frek->nama;
+        }
+
+        foreach($dampak as $dam){
+            $label_dam=$dam->nilai.' - '.$dam->nama;
+        }
+
+        $up = DB::table('resiko_teridentifikasi')->where('full_kode', '=', $request->full_kode)
+        ->update([
+            'pr_akhir'=>$request->warnabesarankini,
+            'besaran_akhir'=>$request->besarankini,
+            'frekuensi_akhir'=>$label_pro,
+            'dampak_akhir'=>$label_dam,
         ]);
         return redirect('perubahan-besaran-risiko')->with('status','Berhasil memperbarui data');
     }
