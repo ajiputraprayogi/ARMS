@@ -161,67 +161,50 @@
                             </select>
                             </div>
                         </div>
-                        @foreach($skorrisiko as $item)
                         <fieldset class="scheduler-border">
-                            <legend class="scheduler-border">Skor Risiko Yang direspons</legend>
-                            <div class="form-group row">
-                                <label class="control-label col-sm-3" for="">Skor Frekuensi Saat Ini </label>
-                                <input type="hidden" name="id_peta_besaran_risiko" value="{{$item->idb}}">
-                                <div class="col-sm-9">
-                                    <select class="form-control" name="skor_frekuensi_saat_ini" id="" disabled required>
-                                            <option value="{{$item->idp}}">{{$item->nilaip}} - {{$item->namap}}</option>
-                                    </select>
-                                </div>
+                        <legend class="scheduler-border">Skor yang melekat</legend>
+                        <div class="form-group row">
+                            <label class="control-label col-sm-3 align-self-center" for="email">Skor Frekuensi Saat Ini<i
+                                    class="bintang">*</i></label>
+                            <div class="col-sm-9">
+                                <select class="form-control" disabled name="" id="cario" onchange="caribesaran()">
+                                    <!-- <option selected disabled hidden>Skor Frekuensi Saat Ini</option>
+                                    
+                                    <option value=""></option> -->
+                                    
+                                </select>
+                                <input type="hidden" name="frekuensi_saat_ini" id="frekuensi_saat_ini">
                             </div>
-                            <div class="form-group row">
-                                <label class="control-label col-sm-3" for="">Skor Dampak Saat Ini</label>
-                                <div class="col-sm-9">
-                                    <select class="form-control" name="skor_dampak_saat_ini" id="" disabled required>
-                                            <option value="{{$item->idd}}">{{$item->nilaid}} - {{$item->namad}}</option>
-                                    </select>
-                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label col-sm-3 align-self-center" for="email">Skor Dampak Saat Ini<i
+                                    class="bintang">*</i></label>
+                            <div class="col-sm-9">
+                                <select class="form-control" disabled name="dampak_saat_ini" id="dampakk" onchange="caribesaran()" class="dampakk">
+                                    <!-- <option selected disabled hidden>Skor Dampak Saat Ini</option>
+                                    
+                                    <option value=""></option> -->
+                                    
+                                </select>
+                                <input type="hidden" name="dampak_saat_ini" id="dampak_saat_ini">
                             </div>
-                            <div class="form-group row">
-                                <label class="control-label col-sm-3" for="">Besaran risiko Saat Ini</label>
-                                <div class="col-sm-1">
-                                    <div style="border: 0; padding: 10px; background-color: {{$item->kode_warna}}; text-align: center;">{{$item->nilaib}}</div>
-                                    <input type="hidden" name="pr" value="{{$item->kode_warna}}">
-                                    <input type="hidden" name="besaran_akhir" value="{{$item->nilaib}}">
-                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label col-sm-3 align-self-center" for="email">Skor Besaran Saat Ini<i
+                                    class="bintang">*</i></label>
+                            <div class="col-sm-9">
+                                <input type="text" name="besaran_saat_ini" id="besaran" class="box1" readonly>
+                                <input type="hidden" name="pr_saat_ini" id="pr_saat_ini">
                             </div>
-                            <!-- <legend class="scheduler-border">Skor Risiko Yang direspons</legend>
-                            <div class="form-group row">
-                                <label class="control-label col-sm-3" for="">Skor Frekuensi Saat Ini </label>
-                                <div class="col-sm-9">
-                                    <select class="form-control" name="skor_frekuensi_saat_ini" id="" disabled required>
-                                        @foreach($frekuensiterakhir as $item)
-                                            <option value="{{$item->id}}">{{$item->nilai}} - {{$item->nama}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="control-label col-sm-3" for="">Skor Dampak Saat Ini</label>
-                                <div class="col-sm-9">
-                                    <select class="form-control" name="skor_dampak_saat_ini" id="" disabled required>
-                                        @foreach($dampakterakhir as $item)
-                                            <option value="{{$item->id}}">{{$item->nilai}} - {{$item->nama}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="control-label col-sm-3" for="">Status Pelaksanaan*</label>
-                                <div class="col-sm-1">
-                                    @foreach($risikoterakhir as $item)
-                                        <div style="border: 0; padding: 10px; background-color: {{$item->pr}}; text-align: center;">{{$item->besaran_akhir}}</div>
-                                        <input type="hidden" name="pr" value="{{$item->pr}}">
-                                        <input type="hidden" name="besaran_akhir" value="{{$item->besaran_akhir}}">
-                                    @endforeach
-                                </div>
-                            </div> -->
-                        </fieldset>
-                        @endforeach
+                        </div>
+                        <input type="hidden" name="warna" id="warna">
+                        <input type="hidden" name="nilpro" id="nilpro">
+                        <input type="hidden" name="nildam" id="nildam">
+                        <input type="hidden" name="nampro" id="nampro">
+                        <input type="hidden" name="namdam" id="namdam">
+                        <input type="hidden" name="idpro" id="idpro">
+                        <input type="hidden" name="iddam" id="iddam">
+                    </fieldset>
                         <div class="text-right">
                             <button type="submit" class="btn btn-primary btn-lg">Simpan</button>
                             <button type="reset" onclick="history.go(-1)" class="btn btn-danger  btn-lg">Batal</button>
