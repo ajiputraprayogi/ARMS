@@ -35,20 +35,24 @@ legend.scheduler-border {
 <div class="col-md-12">
     <div class="card card-transparent card-block card-stretch card-height border-none">
         <div class="card-header p-0 mt-lg-2 mt-0">
-            <h3 class="mb-3">Tambah Analisis Akar Masalah</h3>
+            <h3 class="mb-3">Edit Analisis Akar Masalah</h3>
         </div>
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
         <div class="card-body">
             <div class="loading-div" id="panel">
-                <form class="form-horizontal" action="{{url('perubahan-besaran-risiko')}}" method="post">
+                @foreach($datadetail as $dtl)
+                @php
+                $data_manajemen_risiko = DB::table('pelaksanaan_manajemen_risiko')
+                ->select(DB::raw('pelaksanaan_manajemen_risiko.*,departemen.nama'))
+                ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+                ->where('pelaksanaan_manajemen_risiko.id',$dtl->id_pelaksanaan_manajemen_risiko)
+                ->get();
+
+                $dataresiko = DB::table('resiko_teridentifikasi')
+                ->where('full_kode',$dtl->kode_resiko_teridentifikasi)
+                ->get();
+                @endphp
+                <form class="form-horizontal" action="{{url('perubahan-besaran-risiko/'.$dtl->id)}}" method="post">
+                <input type="hidden" name="_method" value="put">
                     @csrf
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Departemen Pemilik Resiko<i
@@ -56,15 +60,19 @@ legend.scheduler-border {
                         <div class="col-sm-9">
                             <select class="js-example-basic-single text search-input" id="cari_departmen"
                                 name="cari_departmen" style="width:100%;">
+                                @foreach($data_manajemen_risiko as $dmr)
+                            <option value="{{$dmr->id}}-{{$dmr->id_departemen}}">{{$dmr->nama}} -
+                                ({{$dmr->priode_penerapan}})</option>
+                            @endforeach
                             </select>
                         </div>
                     </div>
-                    <input type="hidden" name="id" id="id">
+                    <input type="hidden" name="id" id="id" @foreach($data_manajemen_risiko as $dmr) value="{{$dmr->id}}" @endforeach>
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Tahun<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="tahun" name="tahun" readonly>
+                            <input type="text" class="form-control" id="tahun" name="tahun" @foreach($data_manajemen_risiko as $dmr) value="{{$dmr->priode_penerapan}}" @endforeach readonly>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -73,21 +81,32 @@ legend.scheduler-border {
                         <div class="col-sm-9">
                             <select class="js-example-basic-single text search-input" id="cari_risiko"
                                 name="cari_risiko" style="width:100%;">
+                                @foreach($data_manajemen_risiko as $dmr)
+                            @php
+                            $dataresikoo = DB::table('resiko_teridentifikasi')
+                            ->where([['id_departmen',$dmr->id_departemen],['periode_penerapan',$dmr->priode_penerapan]])
+                            ->get();
+                            @endphp
+                            @foreach($dataresiko as $dtrs)
+                            <option value="{{$dtrs->id}}" @if($dtrs->full_kode==$dtl->kode_resiko_teridentifikasi) selected
+                                @endif>{{$dtrs->full_kode}}</option>
+                            @endforeach
+                            @endforeach
                             </select>
                         </div>
                     </div>
-                    <input type="hidden" id="full_kode" name="full_kode">
+                    <input type="hidden" id="full_kode" name="full_kode" value="{{$dtl->kode_resiko_teridentifikasi}}">
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Pernyataan Risiko</label>
                         <div class="col-sm-9">
                             <textarea class="form-control" id="pernyataan" name="pernyataan" col="3"
-                                readonly></textarea>
+                                readonly>@foreach($dataresiko as $dtr) {{$dtr->pernyataan_risiko}} @endforeach</textarea>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Selera Risiko</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="selera_risiko" name="selera_risiko" readonly>
+                            <input type="text" class="form-control" id="selera_risiko" name="selera_risiko" @foreach($data_manajemen_risiko as $dmr) value="{{$dmr->selera_risiko}}" @endforeach readonly>
                         </div>
                     </div>
                     <fieldset class="scheduler-border">
@@ -97,14 +116,14 @@ legend.scheduler-border {
                                 Ini</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="frekuensi_saat_ini"
-                                    name="frekuensi_saat_ini" readonly>
+                                    name="frekuensi_saat_ini" @foreach($dataresiko as $dtr) value="{{$dtr->frekuensi_akhir}}" @endforeach readonly>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="email">Skor Dampak Saat
                                 Ini</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="dampak_saat_ini" name="dampak_saat_ini"
+                                <input type="text" class="form-control" id="dampak_saat_ini" @foreach($dataresiko as $dtr) value="{{$dtr->dampak_akhir}}" @endforeach name="dampak_saat_ini"
                                     readonly>
                             </div>
                         </div>
@@ -112,57 +131,57 @@ legend.scheduler-border {
                             <label class="control-label col-sm-3 align-self-center" for="email">Besaran Risiko Saat Ini
                                 <i class="bintang">*</i></label>
                             <div class="col-sm-9">
-                                <input type="text" name="besaran_saat_ini" id="besaran_saat_ini" class="box1" readonly>
+                                <input type="text" name="besaran_saat_ini" id="besaran_saat_ini" class="box1" @foreach($dataresiko as $dtr) style="background-color:{{$dtr->pr_akhir}};" value="{{$dtr->besaran_akhir}}" @endforeach readonly>
                             </div>
                         </div>
                     </fieldset>
                     <fieldset class="scheduler-border">
                         <legend class="scheduler-border">Level Risiko Aktual</legend>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="email">Skor Frekuensi Residu<i
+                            <label class="control-label col-sm-3 align-self-center" for="email">Skor Frekuensi<i
                                     class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <select class="form-control" name="frekkini" id="carir" onchange="cariresiduotomatis()">
-                                    <option selected disabled hidden>Skor Frekuensi Saat Ini</option>
+                                    <option selected disabled hidden>Pilih Skor</option>
                                     @foreach($frekuensi as $row)
-                                    <option value="{{$row->id}}">{{$row->nilai}} - {{$row->nama}}</option>
+                                    <option value="{{$row->id}}" @if($row->id==$dtl->id_frekuensi_aktual) selected @endif>{{$row->nilai}} - {{$row->nama}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="email">Skor Dampak Residu<i
+                            <label class="control-label col-sm-3 align-self-center" for="email">Skor Dampak<i
                                     class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <select class="form-control" name="dampakini" id="dampakkr"
                                     onchange="cariresiduotomatis()">
-                                    <option selected disabled hidden>Skor Dampak Saat Ini</option>
+                                    <option selected disabled hidden>Pilih Skor</option>
                                     @foreach($dampak as $row2)
-                                    <option value="{{$row2->id}}">{{$row2->nilai}} - {{$row2->nama}}</option>
+                                    <option value="{{$row2->id}}" @if($row2->id==$dtl->id_dampak_aktual) selected @endif>{{$row2->nilai}} - {{$row2->nama}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="email">Skor Besaran Residu<i
+                            <label class="control-label col-sm-3 align-self-center" for="email">Skor Besaran<i
                                     class="bintang">*</i></label>
                             <div class="col-sm-9">
-                                <input type="text" name="besarankini" id="besarankini" class="box1" readonly>
-                                <input type="hidden" name="warnabesarankini" id="warnabesarankini" readonly>
+                                <input type="text" name="besarankini" id="besarankini" value="{{$dtl->besaran_aktual}}" style="background-color:{{$dtl->warna_aktual}}" class="box1" readonly>
+                                <input type="hidden" name="warnabesarankini" id="warnabesarankini" value="{{$dtl->warna_aktual}}" readonly>
                             </div>
                         </div>
                     </fieldset>
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Deviasi</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" style="width: 10%!important;" id="deviasi" name="deviasi"
+                            <input type="text" class="form-control" style="width: 10%!important;" value="{{$dtl->deviasi}}" id="deviasi" name="deviasi"
                                 readonly>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Rekomendasi</label>
                         <div class="col-sm-9">
-                            <textarea class="form-control" id="rekomendasi" name="rekomendasi" col="4"></textarea>
+                            <textarea class="form-control" id="rekomendasi" name="rekomendasi" col="4">{{$dtl->rekomendasi}}</textarea>
                         </div>
                     </div>
                     <div class="text-right">
@@ -172,6 +191,7 @@ legend.scheduler-border {
                         </div>
                     </div>
                 </form>
+                @endforeach
             </div>
         </div>
     </div>

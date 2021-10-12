@@ -88,7 +88,39 @@ $('#cari_risiko').on('select2:select', function (e) {
             }
         },
         complete: function () {
+            hitungdevisiasi();
             $('#panel').loading('stop');
         }
     });
 });
+
+//====================================================================================================
+function cariresiduotomatis() {
+    var frek = $('#carir').val();
+    var damp = $('#dampakkr').val();
+    $('#panel').loading('toggle');
+    $.ajax({
+        type: 'GET',
+        url: '/hasil-cari-residu/' + frek + '/' + damp,
+        success: function(data) {
+            return {
+                results: $.map(data, function(item) {
+                    $('#besarankini').val(item.nilai)
+                    $('#besarankini').css("background-color", item.kode_warna);
+                    $('#warnabesarankini').val(item.kode_warna);
+                })
+            }
+        },
+        complete: function () {
+            hitungdevisiasi();
+            $('#panel').loading('stop');
+        }
+    });
+}
+
+//====================================================================================================
+function hitungdevisiasi(){
+    if($('#besarankini').val()!='' && $('#besaran_saat_ini').val()!=''){
+        $('#deviasi').val(parseInt($('#besaran_saat_ini').val())-parseInt($('#besarankini').val()));
+    }
+}

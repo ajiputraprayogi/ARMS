@@ -66,14 +66,31 @@ ARMS | Analisa Risiko
                 <table id="list-data" class="table mb-0 tbl-server-info">
                     <thead class="bg-white text-uppercase">
                         <tr class="ligth ligth-data">
-                            <th>Kode Risiko</th>
-                            <th>Besaran Melekat</th>
-                            <th>Beseran risiko Residu</th>
-                            <th>Sudah Ada Pengendalian</th>
-                            <th>Aksi</th>
+                            <th class="text-left">Kode Risiko</th>
+                            <th class="text-center">Besaran Risiko Yang Di Respons</th>
+                            <th class="text-center">Beseran Risiko Aktual</th>
+                            <th class="text-center">Deviasi</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="ligth-body">
+                        @foreach($data as $row)
+                        <tr>
+                            <td class="text-left">{{$row->kode_resiko_teridentifikasi}}</td>
+                            <td class="text-center">{{$row->besaran_akhir}}</td>
+                            <td class="text-center">{{$row->besaran_aktual}}</td>
+                            <td class="text-center">{{$row->deviasi}}</td>
+                            <td class="text-center">
+                                <a class="btn btn-success btn-sm m-1"
+                                    href="{{url('/perubahan-besaran-risiko/'.$row->id.'/edit')}}">
+                                    <i class="ri-pencil-line mr-0"></i>
+                                </a>
+                                <button class="btn btn-sm btn-danger m-1" data-toggle="tooltip" data-placement="top"
+                                    title="" data-original-title="Delete" onclick="hapusdata({{$row->id}})"><i
+                                        class="ri-delete-bin-line mr-0"></i></button>
+                            </td>
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -83,7 +100,7 @@ ARMS | Analisa Risiko
 @endsection
 @push('script')
 <script>
-function hapusdatamanajemenrisiko(kode) {
+function hapusdata(kode) {
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
             confirmButton: 'btn btn-success',
@@ -108,7 +125,7 @@ function hapusdatamanajemenrisiko(kode) {
             })
             $.ajax({
                 type: 'DELETE',
-                url: '/analisa-risiko/' + kode,
+                url: '/perubahan-besaran-risiko/' + kode,
                 data: {
                     'token': $('input[name=_token]').val(),
                 },

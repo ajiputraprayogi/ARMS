@@ -11,64 +11,75 @@ class perubahanBesaranRisiko extends Controller
     //=========================================================================================
     public function index()
     {
-        return view('backend.perubahanbesaranrisiko.index');
+        $data = DB::table('perubahan_besaran_risiko')
+        ->select(DB::raw('perubahan_besaran_risiko.*,resiko_teridentifikasi.besaran_akhir'))
+        ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','perubahan_besaran_risiko.kode_resiko_teridentifikasi')
+        ->orderby('perubahan_besaran_risiko.id','desc')
+        ->get();
+        return view('backend.perubahanbesaranrisiko.index',compact('data'));
     }
 
     //=========================================================================================
     public function create()
     {
-        $data = penyebab::all();
-        return view('backend.perubahanbesaranrisiko.create',compact('data'));
+        $frekuensi = DB::table('kriteria_probabilitas')->get();
+        $dampak = DB::table('kriteria_dampak')->get();
+        return view('backend.perubahanbesaranrisiko.create',compact('frekuensi','dampak'));
     }
 
     //=========================================================================================
     public function store(Request $request)
     {
-        //
+        DB::table('perubahan_besaran_risiko')
+        ->insert([
+            'id_pelaksanaan_manajemen_risiko'=>$request->id,
+            'id_frekuensi_aktual'=>$request->frekkini,
+            'id_dampak_aktual'=>$request->dampakini,
+            'kode_resiko_teridentifikasi'=>$request->full_kode,
+            'besaran_aktual'=>$request->besarankini,
+            'deviasi'=>$request->deviasi,
+            'warna_aktual'=>$request->warnabesarankini,
+            'rekomendasi'=>$request->rekomendasi,
+        ]);
+        return redirect('perubahan-besaran-risiko')->with('status','Berhasil menyimpan data');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //=========================================================================================
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //=========================================================================================
     public function edit($id)
     {
-        //
+        $frekuensi = DB::table('kriteria_probabilitas')->get();
+        $dampak = DB::table('kriteria_dampak')->get();
+        $datadetail = DB::table('perubahan_besaran_risiko')->where('id',$id)->get();
+        return view('backend.perubahanbesaranrisiko.edit',compact('frekuensi','dampak','datadetail'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //=========================================================================================
     public function update(Request $request, $id)
     {
-        //
+        DB::table('perubahan_besaran_risiko')
+        ->where('id',$id)
+        ->update([
+            'id_pelaksanaan_manajemen_risiko'=>$request->id,
+            'id_frekuensi_aktual'=>$request->frekkini,
+            'id_dampak_aktual'=>$request->dampakini,
+            'kode_resiko_teridentifikasi'=>$request->full_kode,
+            'besaran_aktual'=>$request->besarankini,
+            'deviasi'=>$request->deviasi,
+            'warna_aktual'=>$request->warnabesarankini,
+            'rekomendasi'=>$request->rekomendasi,
+        ]);
+        return redirect('perubahan-besaran-risiko')->with('status','Berhasil memperbarui data');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //=========================================================================================
     public function destroy($id)
     {
-        //
+        DB::table('perubahan_besaran_risiko')->where('id',$id)->delete();
     }
 }
