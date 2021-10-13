@@ -152,7 +152,7 @@ class AnalisaakarController extends Controller
     public function hasilcaridepartmen($id,$iddepartemen)
     {
         $data = DB::table('pelaksanaan_manajemen_risiko')
-        ->select('pelaksanaan_manajemen_risiko.id', 'pelaksanaan_manajemen_risiko.id_departemen', 'pelaksanaan_manajemen_risiko.priode_penerapan','departemen.kode as kodedep','departemen.nama as namadep')
+        ->select('pelaksanaan_manajemen_risiko.id','pelaksanaan_manajemen_risiko.selera_risiko', 'pelaksanaan_manajemen_risiko.id_departemen', 'pelaksanaan_manajemen_risiko.priode_penerapan','departemen.kode as kodedep','departemen.nama as namadep')
         ->leftjoin('departemen', 'pelaksanaan_manajemen_risiko.id_departemen', '=', 'departemen.id')
         ->where('pelaksanaan_manajemen_risiko.id',$id)
         ->get();

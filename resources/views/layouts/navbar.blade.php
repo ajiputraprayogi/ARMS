@@ -81,7 +81,7 @@
                                   <a href="" title="Pencatatan Peristiwa Risiko">
                                       <i class="las la-minus"></i><span>Pencatatan Peristiwa Risiko</span>
                                   </a>
-                                  <a href="">
+                                  <a href="{{url('perubahan-besaran-risiko')}}">
                                       <i class="las la-minus"></i><span>Perubahan Besaran Risiko</span>
                                   </a>
                               </li>

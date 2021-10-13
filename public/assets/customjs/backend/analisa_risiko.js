@@ -29,6 +29,7 @@ $('#cari_departmen').on('select2:select', function (e) {
     $('#cari_kode').empty().trigger("change");
     var kode = $(this).val();
     var newkode = kode.split("-");
+    $('#panel').loading('toggle');
     $.ajax({
         type: 'GET',
         url: '/hasil-cari-analisa departmen/' + newkode[0] + '/' + newkode[1],
@@ -47,6 +48,7 @@ $('#cari_departmen').on('select2:select', function (e) {
             });
         },
         complete: function () {
+            $('#panel').loading('stop');
             $('#cari_kode').val(null).trigger('change');
         }
     });
@@ -55,6 +57,7 @@ $('#cari_departmen').on('select2:select', function (e) {
 //====================================================================================================
 $('#cari_kode').on('select2:select', function (e) {
     var kode = $(this).val();
+    $('#panel').loading('toggle');
     $.ajax({
         type: 'GET',
         url: '/hasil-cari-kode/' + kode,
@@ -67,6 +70,9 @@ $('#cari_kode').on('select2:select', function (e) {
                 })
             }
         },
+        complete: function () {
+            $('#panel').loading('stop');
+        }
     });
 });
 
@@ -74,6 +80,7 @@ $('#cari_kode').on('select2:select', function (e) {
 function caribesaran() {
     var frek = $('#cario').val();
     var damp = $('#dampakk').val();
+    $('#panel').loading('toggle');
     $.ajax({
         type: 'GET',
         url: '/hasil-cario/' + frek + '/' + damp,
@@ -93,6 +100,9 @@ function caribesaran() {
                 })
             }
         },
+        complete: function () {
+            $('#panel').loading('stop');
+        }
     });
     if($('#sudah_ada_pengendalian').is(':checked')){
     }else{
@@ -111,6 +121,7 @@ function cariresiduotomatis() {
         var frek = $('#cario').val();
         var damp = $('#dampakk').val();
     }
+    $('#panel').loading('toggle');
     $.ajax({
         type: 'GET',
         url: '/hasil-cari-residu/' + frek + '/' + damp,
@@ -130,9 +141,10 @@ function cariresiduotomatis() {
 
                 })
             }
-
         },
-
+        complete: function () {
+            $('#panel').loading('stop');
+        }
     });
 }
 
