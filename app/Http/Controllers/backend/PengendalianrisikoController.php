@@ -83,6 +83,7 @@ class PengendalianrisikoController extends Controller
         ]);
         $respons_risiko = implode(", ", $request->respons_risiko);
         DB::table('pengendalian_risiko')->insert([
+            'faktur'=>$request->faktur,
             'id_manajemen'=>$request->id_manajemen,
             'id_departemen'=>$request->id_departemen,
             'id_risiko'=>$request->id_risiko,

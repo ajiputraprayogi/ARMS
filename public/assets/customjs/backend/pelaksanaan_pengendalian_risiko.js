@@ -27,7 +27,7 @@ $(function() {
         placeholder: "Pilih Kode Risiko",
     });
     $('#cari_akar_masalah').select2({
-        placeholder: "Pilih Akar Masalah",
+        placeholder: "Pilih Kode Pengendalian",
     });
     $('#cari_departemen_manajemen').select2({
         placeholder: 'Cari Departmen',
