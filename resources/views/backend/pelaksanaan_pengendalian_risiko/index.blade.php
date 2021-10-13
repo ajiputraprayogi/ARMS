@@ -9,7 +9,7 @@
     <div class="col-lg-12">
         <div class="card card-transparent card-block card-stretch card-height border-none">
             <div class="card-header p-0 mt-lg-2 mt-0">
-                <h3 class="mb-3">Daftar Pelaksanaan Manajemen Risiko</h3>
+                <h3 class="mb-3">Daftar Tindak Pengendalian Risiko</h3>
                 <div class="row">
                     <div class="col-md-3">
                         <label for="">Departemen</label>
@@ -49,7 +49,7 @@
             <div class="card-body p-0 mt-lg-2 mt-0">
                 <div class="form-group">
                     <div class="text-right">
-                        <a href="{{url('pelaksanaan-pengendalian/create')}}" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Tambah Tindakan Pengendalian</a>
+                        <a href="{{url('pelaksanaan-pengendalian/create')}}" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Tambah Pelaksanaan Pengendalian</a>
                     </div>
                 </div>
                 <div class="table-responsive rounded mb-3">

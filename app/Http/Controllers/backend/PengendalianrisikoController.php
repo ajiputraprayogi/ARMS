@@ -203,7 +203,7 @@ class PengendalianrisikoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('pengendalian_risiko')->where('id',$id)->delete();
     }
 
     public function cari_departemen_manajemen(Request $request)
