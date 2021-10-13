@@ -4,7 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Roles;
+use App\roles;
 use DataTables;
 
 class RolesController extends Controller
@@ -16,12 +16,12 @@ class RolesController extends Controller
      */
     public function index()
     {   
-        $data = Roles::all();
+        $data = roles::all();
         return view('backend.roles.index',['data'=>$data]);
     }
 
     public function listdata(){
-        return Datatables::of(Roles::all())->make(true);
+        return Datatables::of(roles::all())->make(true);
     }
     /**
      * Show the form for creating a new resource.
@@ -44,7 +44,7 @@ class RolesController extends Controller
         $request->validate([
             'role'=>'required',
         ]);
-        Roles::insert([
+        roles::insert([
             'role'=>$request->role,
         ]);
         return redirect('roles')->with('status','Sukses menyimpan data');
