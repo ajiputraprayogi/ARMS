@@ -23,7 +23,7 @@ function hapusdatamanajemenrisiko(kode){
              })
              $.ajax({
                  type: 'DELETE',
-                 url: '/pelaksanaan/'+kode,
+                 url: '/pengendalian/'+kode,
                  data:{
                      'token':$('input[name=_token]').val(),
                  },

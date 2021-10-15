@@ -9,7 +9,7 @@
     <div class="col-lg-12">
         <div class="card card-transparent card-block card-stretch card-height border-none">
             <div class="card-header p-0 mt-lg-2 mt-0">
-                <h3 class="mb-3">Daftar Pelaksanaan Manajemen Risiko</h3>
+                <h3 class="mb-3">Daftar Tindak Pengendalian</h3>
                 <div class="row">
                     <div class="col-md-3">
                         <label for="">Departemen</label>
