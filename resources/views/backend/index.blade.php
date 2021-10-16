@@ -50,7 +50,7 @@ ARMS | Dashboard
                             <div class="d-flex align-items-center mb-4 card-total-sale">
                                 <div>
                                     <p class="mb-2">Populasi Risiko</p>
-                                    <h3>40</h3>
+                                    <h3>{{$populasi_risiko}}</h3>
                                 </div>
                             </div>
                         </div>
@@ -62,7 +62,7 @@ ARMS | Dashboard
                             <div class="d-flex align-items-center mb-4 card-total-sale">
                                 <div>
                                     <p class="mb-2">Usulan Risiko Baru</p>
-                                    <h3>5</h3>
+                                    <h3>{{$usulan_risiko_baru}}</h3>
                                 </div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@ ARMS | Dashboard
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Card title</h4>
+                        <h4 class="card-title">Sebaran Besaran Risiko</h4>
                     </div>
                     <div class="card-body">
                         <canvas id="myChart" width="400" height="400"></canvas>
@@ -95,42 +95,108 @@ ARMS | Dashboard
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h5>Kegiatan Pengendalian</h5>
+            </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Realisasi Pengendalian</h4>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="myChart_realisasi_pengendalian" width="400" height="500"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h4 class="card-title">Presentase Penurunan Besaran Risiko</h4>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="myChart_penurunan_risiko" width="400" height="200"></canvas>
+                    </div>
+                </div>
+                <div class="card card-block card-stretch">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center card-total-sale">
+                            <div>
+                                <p class="mb-2">Rencana Pengendaalian</p>
+                                <h3>{{$rencana_pengendalian}}</h3>
+                                <span>Tindakan</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-block card-stretch">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center card-total-sale">
+                            <div>
+                                <p class="mb-2">Peristiwa Risiko</p>
+                                <h3>-</h3>
+                                <span>Peristiwa</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @php
-$risiko_terkendali = DB::table('resiko_teridentifikasi')
-->select(DB::raw('count(pengendalian_risiko.id) as jumlah_pengendalian'))
-->leftjoin('pengendalian_risiko','pengendalian_risiko.id_risiko','=','resiko_teridentifikasi.id')
-->having('jumlah_pengendalian', '>' , 0)
-->groupby('resiko_teridentifikasi.id')
-->get();
-
-$risiko_tidak_terkendali = DB::table('resiko_teridentifikasi')
-->select(DB::raw('count(pengendalian_risiko.id) as jumlah_pengendalian'))
-->leftjoin('pengendalian_risiko','pengendalian_risiko.id_risiko','=','resiko_teridentifikasi.id')
-->having('jumlah_pengendalian', '=' , 0)
-->groupby('resiko_teridentifikasi.id')
-->get();
+$label_populasi_risiko = '';
+$data_populasi_risiko = '';
+$warna_populasi_risiko = '';
 @endphp
+
+@foreach($sebaran_risiko as $row_sebaran_risiko)
+@php
+$label_populasi_risiko = $label_populasi_risiko.",'".$row_sebaran_risiko->level."'";
+$data_populasi_risiko = $data_populasi_risiko.",".$row_sebaran_risiko->total;
+$warna_populasi_risiko = $warna_populasi_risiko.",'".$row_sebaran_risiko->kode_warna."'";
+@endphp
+@endforeach
+
+@php
+$value_belum_dilaksanakan=0;
+$value_dalam_proses_pelaksanaan =0;
+$value_selesai_dilaksanakan=0;
+$value_belum_terealisasi=0;
+@endphp
+@foreach($realisasi_pengendalian as $row_realisasi_pengendalian)
+@php
+if($row_realisasi_pengendalian->status_pelaksanaan=='Belum Dilaksanakan'){
+$value_belum_dilaksanakan=$row_realisasi_pengendalian->total;
+}elseif($row_realisasi_pengendalian->status_pelaksanaan=='Dalam Proses Pelaksanaan'){
+$value_dalam_proses_pelaksanaan=$row_realisasi_pengendalian->total;
+}elseif($row_realisasi_pengendalian->status_pelaksanaan=='Selesai Dilaksanakan'){
+$value_selesai_dilaksanakan=$row_realisasi_pengendalian->total;
+}elseif($row_realisasi_pengendalian->status_pelaksanaan=='Belum Terealisasi'){
+$value_belum_terealisasi=$row_realisasi_pengendalian->total;
+}
+@endphp
+@endforeach
 
 @endsection
 @push('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.js"></script>
 <script>
+//=============================================================================================================
 var ctx_pie = document.getElementById('myChart_pie').getContext('2d');
 var myChart_pie = new Chart(ctx_pie, {
     type: 'pie',
     data: {
-        labels: ['Tidak Terkontrol','Terkontrol'],
+        labels: ['Tidak Terkontrol', 'Terkontrol'],
         datasets: [{
             data: [{{count($risiko_tidak_terkendali)}}, {{count($risiko_terkendali)}}],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
+                '#d5659a',
+                '#78C091',
             ],
             borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
+                '#d5659a',
+                '#78C091',
             ],
             borderWidth: 1
         }]
@@ -143,34 +209,69 @@ var myChart_pie = new Chart(ctx_pie, {
         }
     }
 });
+
+//=============================================================================================================
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: [{!!substr($label_populasi_risiko, 1)!!}],
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            label: '',
+            data: [{!!substr($data_populasi_risiko, 1) !!}],
+            backgroundColor: [{!!substr($warna_populasi_risiko, 1)!!}],
+            borderColor: [{!!substr($warna_populasi_risiko, 1)!!}],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+//=============================================================================================================
+var ctx_realisasi_pengendalian = document.getElementById('myChart_realisasi_pengendalian').getContext('2d');
+var myChart = new Chart(ctx_realisasi_pengendalian, {
+    type: 'bar',
+    data: {
+        labels: ['Belum Dilaksanakan', 'Dalam Proses Pelaksanaan', 'Selesai Dilaksanakan', 'Belum Rerealisasi'],
+        datasets: [{
+            label: '',
+            data: [{{$value_belum_dilaksanakan}},{{$value_dalam_proses_pelaksanaan}},{{$value_selesai_dilaksanakan}},{{$value_belum_terealisasi}}],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+                '#dc3545',
+                '#ffc107',
+                '#17a2b8',
+                '#28a745'
             ],
             borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
+                '#dc3545',
+                '#ffc107',
+                '#17a2b8',
+                '#28a745'
             ],
             borderWidth: 1
         }]
     },
     options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
         scales: {
             y: {
                 beginAtZero: true

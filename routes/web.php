@@ -16,9 +16,7 @@ Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('/reload-captcha', '\App\Http\Controllers\Auth\LoginController@reloadCaptcha');
 Auth::routes();
 Route::group(['middleware' => ['auth']],function(){
-    Route::get('/', function () {
-        return view('backend.index');
-    });
+    Route::get('/', 'backend\dashboardController@index');
     // Basis Data
     // =============== Manajemen Risiko ========================
     Route::get('/cari-data-konteks/{kode}', 'backend\ManajemenresikoController@carikonteks');

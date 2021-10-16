@@ -38,11 +38,11 @@ Toko Online | Dashboard
                         </select>
                     </div>
                 </div>
-                <input type="" name="id" id="id">
-                <input type="" name="faktur" id="faktur">
-                <input type="" name="id_dep" id="id_dep">
-                <input type="" name="kodedep" id="kodedep">
-                <input type="" name="namadep" id="namadep">
+                <input type="hidden" name="id" id="id">
+                <input type="hidden" name="faktur" id="faktur">
+                <input type="hidden" name="id_dep" id="id_dep">
+                <input type="hidden" name="kodedep" id="kodedep">
+                <input type="hidden" name="namadep" id="namadep">
                 <div class="form-group row">
                     <label class="control-label col-sm-3 align-self-center" for="email">Periode Penerapan<i
                             class="bintang">*</i></label>
@@ -64,10 +64,10 @@ Toko Online | Dashboard
 
                     </div>
                 </div>
-                <input type="" id="id_konteks" name="id_konteks">
-                <input type="text" id="id_jenis_konteks" name="id_jenis_konteks">
-                <input type="" name="kode_konteks" id="kode_konteks">
-                <input type="" name="namakonteks" id="nama_konteks">
+                <input type="hidden" id="id_konteks" name="id_konteks">
+                <input type="hidden" id="id_jenis_konteks" name="id_jenis_konteks">
+                <input type="hidden" name="kode_konteks" id="kode_konteks">
+                <input type="hidden" name="namakonteks" id="nama_konteks">
                 <div class="form-group row">
                     <label class="control-label col-sm-3 align-self-center" for="email">Kode Risiko</label>
                     <div class="col-sm-9">
