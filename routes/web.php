@@ -127,9 +127,10 @@ Route::group(['middleware' => ['auth']],function(){
     //----------------------------------perubahan besaran risiko-----------------------------------------
     Route::resource('perubahan-besaran-risiko', 'backend\perubahanBesaranRisiko');
 
-      // =============== Pencatatan Peristiwa =================
+      // =============== Pencatatan Peristiwa =================?depID=4
       Route::resource('pencatatan-peristiwa', 'backend\PencatatanperistiwaController');
       Route::post('pencatatan-peristiwa-cari', 'backend\PencatatanperistiwaController@cari');
+      Route::get('cari_pencatatan_manajemen', 'backend\PencatatanperistiwaController@cari_pencatatan_manajemen');
 });
 Route::group(['middleware' => ['auth']],function(){
     Route::get('/home', 'HomeController@index')->name('home');

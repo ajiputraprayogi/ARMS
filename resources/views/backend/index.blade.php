@@ -134,7 +134,7 @@ ARMS | Dashboard
                         <div class="d-flex align-items-center card-total-sale">
                             <div>
                                 <p class="mb-2">Peristiwa Risiko</p>
-                                <h3>-</h3>
+                                <h3>{{$pencatatan_peristiwa_resiko}}</h3>
                                 <span>Peristiwa</span>
                             </div>
                         </div>

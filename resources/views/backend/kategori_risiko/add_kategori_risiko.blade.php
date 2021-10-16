@@ -44,7 +44,6 @@
    </div>
 @endsection
 @push('script')
-    <script src="{{asset('phppiechart/assets/js/highcharts.js')}}"></script>
     <script src="{{asset('assets/customjs/backend/konteks.js')}}"></script>
     <script src="{{asset('assets/customjs/backend/pemangku_kepentingan.js')}}"></script>
 @endpush

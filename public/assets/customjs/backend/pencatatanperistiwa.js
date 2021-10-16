@@ -1,14 +1,15 @@
 
 $(function() {
     $(".select").select2();
-    $('#cari_departemen_manajemen').change(function(){
+    $('#cari_departemen_manajemen').on('change',function(e){
+        $("#cari_risiko").empty().trigger("change");
         var depID = $(this).val();
         if(depID){
             $.ajax({
             type:"GET",
             url:"/cari_pencatatan_manajemen?depID="+depID,
             success:function(res){
-                $("#cari_resiko").empty().trigger("change") ;
+                $("#cari_risiko").empty().trigger("change") ;
                 $("#priode_penerapan").empty();
                 $("#pernyataan_risiko").empty();
                 $("#cari_resiko").append('<option>---Pilih Risiko---</option>');

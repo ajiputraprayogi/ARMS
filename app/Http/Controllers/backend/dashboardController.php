@@ -48,6 +48,8 @@ class dashboardController extends Controller
         ->select(DB::raw('resiko_teridentifikasi.*,pelaksanaan_manajemen_risiko.selera_risiko'))
         ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
         ->get();
-        return view('backend.index',compact('penurunan_besaran_risiko','rencana_pengendalian','realisasi_pengendalian','sebaran_risiko','risiko_terkendali','risiko_tidak_terkendali','populasi_risiko','usulan_risiko_baru'));
+
+        $pencatatan_peristiwa_resiko = DB::table('pencatatan_peristiwa_resiko')->count();
+        return view('backend.index',compact('pencatatan_peristiwa_resiko','penurunan_besaran_risiko','rencana_pengendalian','realisasi_pengendalian','sebaran_risiko','risiko_terkendali','risiko_tidak_terkendali','populasi_risiko','usulan_risiko_baru'));
     }
 }
