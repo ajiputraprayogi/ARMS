@@ -127,7 +127,7 @@ class PengendalianrisikoController extends Controller
         $dampakterakhir = DB::table('kriteria_dampak')->select('kriteria_dampak.*')->orderby('kriteria_dampak.id','desc')->paginate(1);
         $risikoterakhir = DB::table('resiko_teridentifikasi')->select('resiko_teridentifikasi.*')->orderby('resiko_teridentifikasi.id','desc')->paginate(1);
         $data = DB::table('pengendalian_risiko')
-        ->select('pengendalian_risiko.*','pelaksanaan_manajemen_risiko.*','resiko_teridentifikasi.pernyataan_risiko','klasifikasi_sub_unsur_spip.klasifikasi_sub_unsur_spip')
+        ->select(DB::raw('pengendalian_risiko.*,resiko_teridentifikasi.pernyataan_risiko,klasifikasi_sub_unsur_spip.klasifikasi_sub_unsur_spip'))
         ->leftJoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pengendalian_risiko.id_manajemen')
         ->leftJoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
         ->leftJoin('klasifikasi_sub_unsur_spip','klasifikasi_sub_unsur_spip.id','=','pengendalian_risiko.id_klasifikasi_sub_unsur_spip')
@@ -152,7 +152,6 @@ class PengendalianrisikoController extends Controller
             'indikator_keluaran'=>'required',
             'target_waktu'=>'required',
             'status_pelaksanaan'=>'required',
-            'id_peta_besaran_risiko'=>'required',
         ]);
         $respons_risiko = implode(", ", $request->respons_risiko);
         pengendalian_risiko::find($id)->update([
@@ -166,7 +165,6 @@ class PengendalianrisikoController extends Controller
             'indikator_keluaran'=>$request->indikator_keluaran,
             'target_waktu'=>$request->target_waktu,
             'status_pelaksanaan'=>'Belum Dilaksanakan',
-            'id_peta_besaran_risiko'=>$request->id_peta_besaran_risiko,
         ]);
         return redirect('pengendalian')->with('status','Berhasil mengubah data');
     }

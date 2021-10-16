@@ -178,6 +178,19 @@ $value_belum_terealisasi=$row_realisasi_pengendalian->total;
 @endphp
 @endforeach
 
+@php
+$value_penurunanrisiko_memenuhi=0;
+$value_penurunanrisiko_tidak_memenuhi=0;
+@endphp
+@foreach($penurunan_besaran_risiko as $penurunanrisiko)
+    @php
+    if($penurunanrisiko->besaran_akhir>$penurunanrisiko->selera_risiko){
+        $value_penurunanrisiko_tidak_memenuhi++;
+    }else{
+        $value_penurunanrisiko_memenuhi++;
+    }
+    @endphp
+@endforeach
 @endsection
 @push('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.js"></script>
@@ -191,12 +204,40 @@ var myChart_pie = new Chart(ctx_pie, {
         datasets: [{
             data: [{{count($risiko_tidak_terkendali)}}, {{count($risiko_terkendali)}}],
             backgroundColor: [
-                '#d5659a',
-                '#78C091',
+                '#dc3545',
+                '#28a745',
             ],
             borderColor: [
-                '#d5659a',
-                '#78C091',
+                '#dc3545',
+                '#28a745',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+//=============================================================================================================
+var ctx_pie = document.getElementById('myChart_penurunan_risiko').getContext('2d');
+var myChart_pie = new Chart(ctx_pie, {
+    type: 'pie',
+    data: {
+        labels: ['Belum Memenuhi', 'Memenuhi'],
+        datasets: [{
+            data: [{{$value_penurunanrisiko_tidak_memenuhi}}, {{$value_penurunanrisiko_memenuhi}}],
+            backgroundColor: [
+                '#dc3545',
+                '#28a745',
+            ],
+            borderColor: [
+                '#dc3545',
+                '#28a745',
             ],
             borderWidth: 1
         }]

@@ -127,7 +127,6 @@ legend.scheduler-border {
                             <label class="control-label col-sm-3" for="">Klasifikasi Sub Unsur SPIP*</label>
                             <div class="col-sm-9">
                                 <select class="form-control" name="klasifikasi_sub_unsur_spip" id="" required>
-                                    <option selected disabled value="">Pilih Klasifikasi Sub Unsur SPIP</option>
                                     @foreach($klasifikasi as $item)
                                     <option value="{{$item->id}}">{{$item->klasifikasi_sub_unsur_spip}}</option>
                                     @endforeach
@@ -189,13 +188,6 @@ legend.scheduler-border {
                                     <input type="hidden" name="pr_saat_ini" id="pr_saat_ini">
                                 </div>
                             </div>
-                            <input type="hidden" name="warna" id="warna">
-                            <input type="hidden" name="nilpro" id="nilpro">
-                            <input type="hidden" name="nildam" id="nildam">
-                            <input type="hidden" name="nampro" id="nampro">
-                            <input type="hidden" name="namdam" id="namdam">
-                            <input type="hidden" name="idpro" id="idpro">
-                            <input type="hidden" name="iddam" id="iddam">
                         </fieldset>
                         <div class="text-right">
                             <button type="submit" class="btn btn-primary btn-lg">Simpan</button>

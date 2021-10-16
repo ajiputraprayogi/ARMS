@@ -117,6 +117,10 @@ Route::group(['middleware' => ['auth']],function(){
     Route::get('/hasil-cari-akar-kode/{id}','backend\AnalisaakarController@hasilcarikode');
     //----------------------------------perubahan besaran risiko-----------------------------------------
     Route::resource('perubahan-besaran-risiko', 'backend\perubahanBesaranRisiko');
+
+      // =============== Pencatatan Peristiwa =================
+      Route::resource('pencatatan-peristiwa', 'backend\PencatatanperistiwaController');
+      Route::post('pencatatan-peristiwa-cari', 'backend\PencatatanperistiwaController@cari');
 });
 Route::group(['middleware' => ['auth']],function(){
     Route::get('/home', 'HomeController@index')->name('home');

@@ -43,6 +43,11 @@ class dashboardController extends Controller
         ->get();
 
         $rencana_pengendalian = DB::table('pengendalian_risiko')->count();
-        return view('backend.index',compact('rencana_pengendalian','realisasi_pengendalian','sebaran_risiko','risiko_terkendali','risiko_tidak_terkendali','populasi_risiko','usulan_risiko_baru'));
+
+        $penurunan_besaran_risiko = DB::table('resiko_teridentifikasi')
+        ->select(DB::raw('resiko_teridentifikasi.*,pelaksanaan_manajemen_risiko.selera_risiko'))
+        ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+        ->get();
+        return view('backend.index',compact('penurunan_besaran_risiko','rencana_pengendalian','realisasi_pengendalian','sebaran_risiko','risiko_terkendali','risiko_tidak_terkendali','populasi_risiko','usulan_risiko_baru'));
     }
 }
