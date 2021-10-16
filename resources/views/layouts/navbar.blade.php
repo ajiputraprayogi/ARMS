@@ -78,7 +78,7 @@
                                   <a href="{{url('pelaksanaan-pengendalian')}}" title="Pelaksanaan Tindak Pengendalian">
                                       <i class="las la-minus"></i><span>Pelaksanaan Tindak Pengendalian</span>
                                   </a>
-                                  <a href="" title="Pencatatan Peristiwa Risiko">
+                                  <a href="{{url('pencatatan-peristiwa')}}" title="Pencatatan Peristiwa Risiko">
                                       <i class="las la-minus"></i><span>Pencatatan Peristiwa Risiko</span>
                                   </a>
                                   <a href="{{url('perubahan-besaran-risiko')}}">

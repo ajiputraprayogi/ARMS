@@ -9,22 +9,15 @@ use App\pengendalian_risiko;
 
 class PengendalianrisikoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //=======================================================================
     public function index()
     {
         $data = DB::table('pengendalian_risiko')->get();
         return view('backend.pengendalian_risiko.pengendalian_risiko',compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    //=======================================================================
     public function create()
     {
         $klasifikasi = DB::table('klasifikasi_sub_unsur_spip')
@@ -53,12 +46,8 @@ class PengendalianrisikoController extends Controller
         return view('backend.pengendalian_risiko.add_pengendalian_risiko', compact('risikoterakhir','dampakterakhir','frekuensiterakhir','klasifikasi','skorrisiko'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
+    //=======================================================================
     public function store(Request $request)
     {
         $request->validate([
@@ -104,23 +93,15 @@ class PengendalianrisikoController extends Controller
         return redirect('pengendalian')->with('status','Berhasil menambah data');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
+    //=======================================================================
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
+    //=======================================================================
     public function edit($id)
     {
         $klasifikasi = DB::table('klasifikasi_sub_unsur_spip')
@@ -147,7 +128,7 @@ class PengendalianrisikoController extends Controller
         $dampakterakhir = DB::table('kriteria_dampak')->select('kriteria_dampak.*')->orderby('kriteria_dampak.id','desc')->paginate(1);
         $risikoterakhir = DB::table('resiko_teridentifikasi')->select('resiko_teridentifikasi.*')->orderby('resiko_teridentifikasi.id','desc')->paginate(1);
         $data = DB::table('pengendalian_risiko')
-        ->select('pengendalian_risiko.*','pelaksanaan_manajemen_risiko.*','resiko_teridentifikasi.pernyataan_risiko','klasifikasi_sub_unsur_spip.klasifikasi_sub_unsur_spip')
+        ->select(DB::raw('pengendalian_risiko.*,resiko_teridentifikasi.pernyataan_risiko,klasifikasi_sub_unsur_spip.klasifikasi_sub_unsur_spip'))
         ->leftJoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pengendalian_risiko.id_manajemen')
         ->leftJoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
         ->leftJoin('klasifikasi_sub_unsur_spip','klasifikasi_sub_unsur_spip.id','=','pengendalian_risiko.id_klasifikasi_sub_unsur_spip')
@@ -155,13 +136,8 @@ class PengendalianrisikoController extends Controller
         return view('backend.pengendalian_risiko.edit_pengendalian_risiko', compact('risikoterakhir','dampakterakhir','frekuensiterakhir','klasifikasi','skorrisiko','data'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
+    //=======================================================================
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -177,7 +153,6 @@ class PengendalianrisikoController extends Controller
             'indikator_keluaran'=>'required',
             'target_waktu'=>'required',
             'status_pelaksanaan'=>'required',
-            'id_peta_besaran_risiko'=>'required',
         ]);
         $respons_risiko = implode(", ", $request->respons_risiko);
         pengendalian_risiko::find($id)->update([
@@ -191,17 +166,12 @@ class PengendalianrisikoController extends Controller
             'indikator_keluaran'=>$request->indikator_keluaran,
             'target_waktu'=>$request->target_waktu,
             'status_pelaksanaan'=>'Belum Dilaksanakan',
-            'id_peta_besaran_risiko'=>$request->id_peta_besaran_risiko,
         ]);
         return redirect('pengendalian')->with('status','Berhasil mengubah data');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
+    //=======================================================================
     public function destroy($id)
     {
         DB::table('pengendalian_risiko')->where('id',$id)->delete();
