@@ -223,7 +223,6 @@ legend.scheduler-border {
                                 </select>
                             </div>
                         </div>
-
                         @foreach($skorrisiko as $item)
                                 <input type="hidden" name="id_peta_besaran_risiko" value="{{$item->idb}}">
                         <fieldset class="scheduler-border">

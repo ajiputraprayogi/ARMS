@@ -41,6 +41,15 @@ Route::group(['middleware' => ['auth']],function(){
     Route::get('hasil-besaran-pengendalian/{frek}/{damp}', 'backend\PengendalianrisikoController@cario');
     // =============== End Pengendalian Risiko =================
 
+    // =============== Pelaksanaan Pengendalian Risiko =========
+    Route::resource('pelaksanaan-pengendalian','backend\PelaksanaanpengendalianrisikoController');
+    Route::get('cari_departemen_manajemen_pelaksanaan','backend\PelaksanaanpengendalianrisikoController@cari_departemen_manajemen_pelaksanaan');
+    Route::get('cari_departemen_manajemen_pelaksanaan_hasil/{id}/{id_departemen}','backend\PelaksanaanpengendalianrisikoController@cari_departemen_manajemen_pelaksanaan_hasil');
+    Route::get('cari_risiko_pelaksanaan','backend\PelaksanaanpengendalianrisikoController@cari_risiko_pelaksanaan');
+    Route::get('cari_risiko_pelaksanaan_hasil/{id}/{kode_risiko}','backend\PelaksanaanpengendalianrisikoController@cari_risiko_pelaksanaan_hasil');
+    Route::get('cari_pengendalian_hasil/{id}','backend\PelaksanaanpengendalianrisikoController@cari_pengendalian_hasil');
+    // =============== Pelaksanaan Pengendalian Risiko =========
+
     Route::resource('konteks', 'backend\KonteksController');
     Route::get('data-konteks', 'backend\KonteksController@listdata');
     

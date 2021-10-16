@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\User;
 use DataTables;
 use Hash;
-use App\Roles;
+use App\roles;
 
 class UserController extends Controller
 {
@@ -32,7 +32,7 @@ class UserController extends Controller
      */
     public function create()
     {   
-        $data = Roles::all();
+        $data = roles::all();
         return view('backend.user.add_user',['data'=>$data]);
     }
 

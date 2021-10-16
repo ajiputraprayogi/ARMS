@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Daftar Pelaksanaan Manajemen Risiko | Dashboard
+    Daftar Pengendalian Risiko | Dashboard
 @endsection
 @section('token')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -72,9 +72,14 @@
                             <th>{{$item->target_waktu}}</th>
                             <th>{{$item->status_pelaksanaan}}</th>
                             <th>
-                                <a class="badge badge-info mr-2" data-toggle="modal" data-target="#showpemangku{{$item->id}}" title="View" data-original-title="View"><i class="ri-eye-line mr-0"></i></a>
-                                <a class="badge bg-success mr-2" href="{{url('pengendalian/'.$item->id.'/edit')}}" title="View" data-original-title="View"><i class="ri-pencil-line mr-0"></i></a>
-                                <a class="badge bg-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="hapusdatamanajemenrisiko({{$item->id}})"><i class="ri-delete-bin-line mr-0"></i><input type="hidden" name="faktur" value="{{$item->id}}"></a>
+                            <a class="btn btn-success btn-sm m-1"
+                                    href="{{url('/pengendalian/'.$item->id.'/edit')}}">
+                                    <i class="ri-pencil-line mr-0"></i>
+                                </a>
+                                <button class="btn btn-sm btn-danger m-1" data-toggle="tooltip" data-placement="top"
+                                    title="" data-original-title="Delete"
+                                    onclick="hapusdatamanajemenrisiko({{$item->id}})"><i
+                                        class="ri-delete-bin-line mr-0"></i></button>
                             </th>
                         </tbody>
                         @endforeach
@@ -86,6 +91,49 @@
 @endsection
 @push('script')
     <script src="{{asset('phppiechart/assets/js/highcharts.js')}}"></script>
-    <script src="{{asset('assets/customjs/backend/manajemen_risiko.js')}}"></script>
+    <!-- <script src="{{asset('assets/customjs/backend/manajemen_risiko.js')}}"></script> -->
+    <script>
+        function hapusdatamanajemenrisiko(kode) {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger',
+                },
+                buttonsStyling: true
+            })
+            swalWithBootstrapButtons.fire({
+                title: 'Hapus Data ?',
+                text: "Data tidak dapat dipulihkan kembali!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Tidak',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    })
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/pengendalian/' + kode,
+                        data: {
+                            'token': $('input[name=_token]').val(),
+                        },
+                        success: function() {
+                            swalWithBootstrapButtons.fire(
+                                'Deleted!',
+                                'Data Berhasil Dihapus.',
+                                'success'
+                            )
+                            location.reload();
+                        }
+                    })
+                }
+            })
+        }
+    </script>
 @endpush
 
