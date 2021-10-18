@@ -96,6 +96,32 @@ ARMS | Dashboard
             </div>
         </div>
         <div class="row">
+            <div class="col-md-4">
+                <div class="card card-block card-stretch">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center card-total-sale">
+                            <div>
+                                <p class="mb-2">Rencana Pengendaalian</p>
+                                <h3>{{$rencana_pengendalian}}</h3>
+                                <span>Tindakan</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-block card-stretch">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center card-total-sale">
+                            <div>
+                                <p class="mb-2">Peristiwa Risiko</p>
+                                <h3>{{$pencatatan_peristiwa_resiko}}</h3>
+                                <span>Peristiwa</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-12">
                 <h5>Kegiatan Pengendalian</h5>
             </div>
@@ -116,28 +142,6 @@ ARMS | Dashboard
                     </div>
                     <div class="card-body">
                         <canvas id="myChart_penurunan_risiko" width="400" height="200"></canvas>
-                    </div>
-                </div>
-                <div class="card card-block card-stretch">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center card-total-sale">
-                            <div>
-                                <p class="mb-2">Rencana Pengendaalian</p>
-                                <h3>{{$rencana_pengendalian}}</h3>
-                                <span>Tindakan</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card card-block card-stretch">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center card-total-sale">
-                            <div>
-                                <p class="mb-2">Peristiwa Risiko</p>
-                                <h3>{{$pencatatan_peristiwa_resiko}}</h3>
-                                <span>Peristiwa</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -183,13 +187,13 @@ $value_penurunanrisiko_memenuhi=0;
 $value_penurunanrisiko_tidak_memenuhi=0;
 @endphp
 @foreach($penurunan_besaran_risiko as $penurunanrisiko)
-    @php
-    if($penurunanrisiko->besaran_akhir>$penurunanrisiko->selera_risiko){
-        $value_penurunanrisiko_tidak_memenuhi++;
-    }else{
-        $value_penurunanrisiko_memenuhi++;
-    }
-    @endphp
+@php
+if($penurunanrisiko->besaran_akhir>$penurunanrisiko->selera_risiko){
+$value_penurunanrisiko_tidak_memenuhi++;
+}else{
+$value_penurunanrisiko_memenuhi++;
+}
+@endphp
 @endforeach
 @endsection
 @push('script')
@@ -202,7 +206,15 @@ var myChart_pie = new Chart(ctx_pie, {
     data: {
         labels: ['Tidak Terkontrol', 'Terkontrol'],
         datasets: [{
-            data: [{{count($risiko_tidak_terkendali)}}, {{count($risiko_terkendali)}}],
+            data: [{
+                {
+                    count($risiko_tidak_terkendali)
+                }
+            }, {
+                {
+                    count($risiko_terkendali)
+                }
+            }],
             backgroundColor: [
                 '#dc3545',
                 '#28a745',
@@ -230,7 +242,15 @@ var myChart_pie = new Chart(ctx_pie, {
     data: {
         labels: ['Belum Memenuhi', 'Memenuhi'],
         datasets: [{
-            data: [{{$value_penurunanrisiko_tidak_memenuhi}}, {{$value_penurunanrisiko_memenuhi}}],
+            data: [{
+                {
+                    $value_penurunanrisiko_tidak_memenuhi
+                }
+            }, {
+                {
+                    $value_penurunanrisiko_memenuhi
+                }
+            }],
             backgroundColor: [
                 '#dc3545',
                 '#28a745',
@@ -256,12 +276,20 @@ var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: [{!!substr($label_populasi_risiko, 1)!!}],
+        labels: [{
+            !!substr($label_populasi_risiko, 1) !!
+        }],
         datasets: [{
             label: '',
-            data: [{!!substr($data_populasi_risiko, 1) !!}],
-            backgroundColor: [{!!substr($warna_populasi_risiko, 1)!!}],
-            borderColor: [{!!substr($warna_populasi_risiko, 1)!!}],
+            data: [{
+                !!substr($data_populasi_risiko, 1) !!
+            }],
+            backgroundColor: [{
+                !!substr($warna_populasi_risiko, 1) !!
+            }],
+            borderColor: [{
+                !!substr($warna_populasi_risiko, 1) !!
+            }],
             borderWidth: 1
         }]
     },
@@ -289,7 +317,23 @@ var myChart = new Chart(ctx_realisasi_pengendalian, {
         labels: ['Belum Dilaksanakan', 'Dalam Proses Pelaksanaan', 'Selesai Dilaksanakan', 'Belum Rerealisasi'],
         datasets: [{
             label: '',
-            data: [{{$value_belum_dilaksanakan}},{{$value_dalam_proses_pelaksanaan}},{{$value_selesai_dilaksanakan}},{{$value_belum_terealisasi}}],
+            data: [{
+                {
+                    $value_belum_dilaksanakan
+                }
+            }, {
+                {
+                    $value_dalam_proses_pelaksanaan
+                }
+            }, {
+                {
+                    $value_selesai_dilaksanakan
+                }
+            }, {
+                {
+                    $value_belum_terealisasi
+                }
+            }],
             backgroundColor: [
                 '#dc3545',
                 '#ffc107',

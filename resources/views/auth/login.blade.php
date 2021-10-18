@@ -39,12 +39,12 @@
                                                 @csrf
                                                 <div class="row">
                                                     <div class="col-lg-12">
-                                                        <div class="floating-label form-group">
+                                                        <div class="form-group">
+                                                            <label class="mb-0s">Email</label>
                                                             <input id="email"
-                                                                class="floating-input form-control @error('email') is-invalid @enderror"
+                                                                class="form-control @error('email') is-invalid @enderror"
                                                                 type="email" placeholder=" " name="email" required
                                                                 autocomplete="new-email">
-                                                            <label>Email</label>
                                                             @error('email')
                                                             <span class="invalid-feedback" role="alert">
                                                                 <strong>{{ $message }}</strong>
@@ -53,12 +53,12 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12">
-                                                        <div class="floating-label form-group">
+                                                        <div class="form-group">
+                                                            <label>Password</label>
                                                             <input id="password"
-                                                                class="floating-input form-control @error('password') is-invalid @enderror"
+                                                                class="form-control @error('password') is-invalid @enderror"
                                                                 type="password" placeholder=" " name="password" required
                                                                 autocomplete="new-password">
-                                                            <label>Password</label>
                                                             @error('password')
                                                             <span class="invalid-feedback" role="alert">
                                                                 <strong>{{ $message }}</strong>
@@ -75,12 +75,12 @@
                                                     </div>
 
                                                     <div class="col-lg-12">
-                                                        <div class="floating-label form-group">
+                                                        <div class="form-group">
+                                                            <label>Enter
+                                                                Captcha</label>
                                                             <input id="captcha" type="text"
                                                                 class="floating-input form-control" name="captcha"
                                                                 required>
-                                                            <label>Enter
-                                                                Captcha</label>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12">
