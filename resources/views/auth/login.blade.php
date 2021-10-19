@@ -5,33 +5,37 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Login</title>
-
-    <!-- Favicon -->
     <link rel="shortcut icon" href="../assets/images/favicon.ico" />
     <link rel="stylesheet" href="../assets/css/backend-plugin.min.css">
     <link rel="stylesheet" href="../assets/css/backend.css?v=1.0.0">
     <link rel="stylesheet" href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="../assets/vendor/line-awesome/dist/line-awesome/css/line-awesome.min.css">
     <link rel="stylesheet" href="../assets/vendor/remixicon/fonts/remixicon.css">
+    <style>
+        body { 
+  background: url('assets/images/bg-background.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+    </style>
 </head>
 
-<body class=" ">
-    <!-- loader Start -->
+<body>
     <div id="loading">
         <div id="loading-center">
         </div>
     </div>
-    <!-- loader END -->
-
     <div class="wrapper">
         <section class="login-content">
             <div class="container">
                 <div class="row align-items-center justify-content-center height-self-center">
-                    <div class="col-lg-8">
+                    <div class="col-lg-4">
                         <div class="card auth-card">
                             <div class="card-body p-0">
                                 <div class="d-flex align-items-center auth-content">
-                                    <div class="col-lg-7 align-self-center">
+                                    <div class="col-lg-12 align-self-center">
                                         <div class="p-3">
                                             <h2 class="mb-2">Masuk</h2>
                                             <p>Masuk untuk tetap terhubung.</p>
@@ -94,18 +98,6 @@
                                                         </div>
                                                         @endif
                                                     </div>
-                                                    <!-- <div class="col-lg-6">
-                                                    <div class="custom-control custom-checkbox mb-3">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            name="remember" id="remember"
-                                                            {{ old('remember') ? 'checked' : '' }}>
-                                                        <label class="custom-control-label control-label-1"
-                                                            for="remember">Ingat saya</label>
-                                                    </div>
-                                                </div> -->
-                                                    <!-- <div class="col-lg-6">
-                                             <a href="auth-recoverpw.html" class="text-primary float-right">Lupa Password?</a>
-                                          </div> -->
                                                 </div>
                                                 <button type="submit" class="btn btn-primary">Masuk</button>
                                                 <!-- <p class="mt-3">
@@ -115,9 +107,9 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <div class="col-lg-5 content-right">
+                                    <!-- <div class="col-lg-5 content-right">
                                         <img src="../assets/images/login/logo kementan.png" class="img-fluid image-right" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -126,19 +118,10 @@
             </div>
         </section>
     </div>
-    <!-- Backend Bundle JavaScript -->
     <script src="../assets/js/backend-bundle.min.js"></script>
-
-    <!-- Table Treeview JavaScript -->
     <script src="../assets/js/table-treeview.js"></script>
-
-    <!-- Chart Custom JavaScript -->
     <script src="../assets/js/customizer.js"></script>
-
-    <!-- Chart Custom JavaScript -->
     <script async src="../assets/js/chart-custom.js"></script>
-
-    <!-- app JavaScript -->
     <script src="../assets/js/app.js"></script>
     <script type="text/javascript">
     $('#reload').click(function() {
