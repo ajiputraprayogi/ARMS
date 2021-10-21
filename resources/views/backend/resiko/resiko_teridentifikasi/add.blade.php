@@ -78,7 +78,7 @@ Toko Online | Dashboard
                     <label class="control-label col-sm-3 align-self-center" for="email">Pernyataan Risiko<i
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
-                        <textarea id="w3review" name="pernyataan" rows="4" cols="50" class="form-control">
+                        <textarea name="pernyataan" rows="4" class="form-control">
                         </textarea>
                     </div>
                 </div>
@@ -147,12 +147,13 @@ Toko Online | Dashboard
                         <input type="text" class="form-control" name="diajukan">
                     </div> -->
                     <div class="col-sm-9">
-                        <select class="form-control" name="diajukan" id="">
+                        <input type="text" class="form-control" id="" name="diajukan" value="{{Auth::user()->name}}">
+                        <!-- <select class="form-control" name="diajukan" id="">
                             <option selected value="{{Auth::user()->name}}">{{Auth::user()->name}}</option>
                             @foreach($orang as $pengaju)
                             <option value="{{$pengaju->name}}">{{$pengaju->name}}</option>
                             @endforeach
-                        </select>
+                        </select> -->
                     </div>
                 </div>
                 <div class="form-group row">
@@ -184,9 +185,9 @@ Toko Online | Dashboard
                 </div>
                 <div class="form-group row">
                     <label class="control-label col-sm-3 align-self-center" for="email">Keterangan
-                        Persetujuan/Penolakan<i class="bintang">*</i></label>
+                        Persetujuan/Penolakan</label>
                     <div class="col-sm-9">
-                        <textarea id="w3review" name="keterangan" rows="4" cols="50" class="form-control">
+                        <textarea name="keterangan" rows="4" class="form-control">
                         </textarea>
                     </div>
                 </div>

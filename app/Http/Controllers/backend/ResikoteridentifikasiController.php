@@ -26,7 +26,15 @@ class ResikoteridentifikasiController extends Controller
     }
 
     public function listdata(){
-        return Datatables::of(resikoteridentifikasi::all())->make(true);
+        return Datatables::of(DB::table('resiko_teridentifikasi')
+        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
+        ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
+        ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
+        ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
+        ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
+        ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
+        ->orderby('id')
+        ->get())->make(true);
     }
 
     /**
@@ -113,7 +121,7 @@ class ResikoteridentifikasiController extends Controller
             'diajukan_tanggal'=> $request->tanggal_pengajuan,
             'persetujuan_oleh'=> $request->disetujui_oleh,
             'tanggal_persetujua'=> $request->tanggal_persetujuan,
-            'keterangan'=> $request->keterangan,
+            // 'keterangan'=> $request->keterangan,
             'besaran_awal' => $baw,
             'besaran_akhir'=> $bak,
             'status' => $status
@@ -197,7 +205,7 @@ class ResikoteridentifikasiController extends Controller
             'diajukan_tanggal'=> $request->tanggal_pengajuan,
             'persetujuan_oleh'=> $request->disetujui_oleh,
             'tanggal_persetujua'=> $request->tanggal_persetujuan,
-            'keterangan'=> $request->keterangan,
+            // 'keterangan'=> $request->keterangan,
             'status' => $request->status
         ]);
         return redirect('resiko-teridentifikasi')->with('status','Berhasil menyimpan data');

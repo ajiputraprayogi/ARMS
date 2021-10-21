@@ -18,8 +18,8 @@ $(function(){
             },
             {data: 'full_kode', name: 'kode_risiko'},
             {data: 'pernyataan_risiko', name: 'pernyataan_risiko'},
-            {data: 'id_konteks', name: 'konteks'},
-            {data: 'kategori_risiko', name: 'kategori_risiko'},
+            {data: 'namakonteks', name: 'konteks'},
+            {data: 'namakat', name: 'kategori_risiko'},
             {
                 render: function(data, type, row){
                     // return '<button class="btn btn-danger" onclick="hapusdata('+row['id']+')"><i class="fa fa-trash"></i></button> <a href="/client/'+row['id']+'/edit" class="btn btn-success"><i class="fa fa-wrench"></i></a>'
