@@ -51,7 +51,7 @@ Daftar Pelaksanaan Manajemen Risiko | Dashboard
     <div class="card card-transparent card-block card-stretch card-height border-none">
         <div class="card-body p-0 mt-lg-2 mt-0">
             <div class="table-responsive rounded mb-3">
-                <table class="table">
+                <table id="" class="table data-tables">
                     <thead class="bg-white text-uppercase">
                         <tr class="ligth ligth-data">
                             <th>No</th>
@@ -64,30 +64,32 @@ Daftar Pelaksanaan Manajemen Risiko | Dashboard
                             <th>Aksi</th>
                         </tr>
                     </thead>
+                    <tbody class="ligth-body">
                     @php $i=($data->currentpage()-1)* $data->perpage(); @endphp
                     @foreach($data as $row)
                     @php $i++ @endphp
-                    <tbody class="ligth-body">
-                        <th>{{$i}}</th>
-                        <th>{{$row->nama}}</th>
-                        <th class="text-center">{{$row->priode_penerapan}}</th>
-                        <th class="text-center">{{$row->totalkonteks}}</th>
-                        <th class="text-center">{{$row->totalrisiko}}</th>
-                        <th class="text-center">{{$row->selera_risiko}}</th>
-                        <th>{{$row->nama_pemilik_risiko}}</th>
-                        <th class="text-center">
-                            <a class="badge badge-info mr-2" data-toggle="modal" data-target="#showpemangku{{$row->id}}"
-                                title="View" data-original-title="View"><i class="ri-eye-line mr-0"></i></a>
-                            <a class="badge bg-success mr-2" href="{{url('edit-pelaksanaan/'.$row->faktur)}}"
-                                title="View" data-original-title="View"><i class="ri-pencil-line mr-0"></i></a>
-                            <a class="badge bg-warning mr-2" data-toggle="tooltip" data-placement="top" title=""
-                                data-original-title="Delete" onclick="hapusdatamanajemenrisiko({{$row->id}})"><i
-                                    class="ri-delete-bin-line mr-0"></i><input type="hidden" name="faktur"
-                                    value="{{$row->faktur}}"></a>
-                            <!-- <a class="badge bg-warning mr-2" data-original-title="Delete" href="{{''}}"><i class="ri-delete-bin-line mr-0"></i></a> -->
-                        </th>
-                    </tbody>
+                        <tr>
+                            <td>{{$i}}</td>
+                            <td>{{$row->nama}}</td>
+                            <td class="text-center">{{$row->priode_penerapan}}</td>
+                            <td class="text-center">{{$row->totalkonteks}}</td>
+                            <td class="text-center">{{$row->totalrisiko}}</td>
+                            <td class="text-center">{{$row->selera_risiko}}</td>
+                            <td>{{$row->nama_pemilik_risiko}}</td>
+                            <td class="text-center">
+                                <a class="badge badge-info mr-2" data-toggle="modal" data-target="#showpemangku{{$row->id}}"
+                                    title="View" data-original-title="View"><i class="ri-eye-line mr-0"></i></a>
+                                <a class="badge bg-success mr-2" href="{{url('edit-pelaksanaan/'.$row->faktur)}}"
+                                    title="View" data-original-title="View"><i class="ri-pencil-line mr-0"></i></a>
+                                <a class="badge bg-warning mr-2" data-toggle="tooltip" data-placement="top" title=""
+                                    data-original-title="Delete" onclick="hapusdatamanajemenrisiko({{$row->id}})"><i
+                                        class="ri-delete-bin-line mr-0"></i><input type="hidden" name="faktur"
+                                        value="{{$row->faktur}}"></a>
+                                <!-- <a class="badge bg-warning mr-2" data-original-title="Delete" href="{{''}}"><i class="ri-delete-bin-line mr-0"></i></a> -->
+                            </td>
+                        </tr>
                     @endforeach
+                    </tbody>
                 </table>
                 {{ $data->appends($_GET)->links() }}
             </div>
@@ -96,5 +98,5 @@ Daftar Pelaksanaan Manajemen Risiko | Dashboard
 </div>
 @endsection
 @push('script')
-<script src="{{asset('assets/customjs/backend/manajemen_risiko.js')}}"></script>
+<!-- <script src="{{asset('assets/customjs/backend/manajemen_risiko.js')}}"></script> -->
 @endpush

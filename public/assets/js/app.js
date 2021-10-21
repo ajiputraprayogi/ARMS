@@ -377,7 +377,7 @@ Index Of Script
     {
       $('.data-tables').DataTable({
         order: [[0, "asc"]],
-        searching: false, paging: false, info: false,
+        searching: false, paging: true, info: false,
         responsive: true,
         pageLength: 10,
         lengthMenu: [[5, 10, 20], [5, 10, 20]]
