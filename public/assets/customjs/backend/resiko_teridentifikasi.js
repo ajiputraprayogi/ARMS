@@ -1,7 +1,7 @@
 $(function(){
     $('#list-data').DataTable({
         order: [[0, "asc"]],
-        searching: false, paging: false, info: false,
+        searching: false, paging: true, info: false,
         ajax: 'data-resikoteridentifikasi',
 
         columns:[
