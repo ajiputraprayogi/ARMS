@@ -63,7 +63,7 @@ ARMS | Analisa Risiko
                 </div>
             </div>
             <div class="table-responsive rounded mb-3">
-                <table id="list-data" class="table mb-0 tbl-server-info">
+                <table id="list-data" class="table data-tables mb-0 tbl-server-info">
                     <thead class="bg-white text-uppercase">
                         <tr class="ligth ligth-data">
                             <th class="text-left">Kode Risiko</th>
