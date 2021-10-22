@@ -10,17 +10,37 @@
         <div class="card card-transparent card-block card-stretch card-height border-none">
             <div class="card-header p-0 mt-lg-2 mt-0">
                 <h3 class="mb-3">Daftar Tindak Pengendalian</h3>
+                <form method="get">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="">Departemen</label>
                         <div class="form-group">
-                            <select class="form-control" name="client" id="">
-                                <option selected disabled value="">Pilih Departemen</option>
-                                <option value="">...</option>
-                            </select>
+                        <select class="form-control" name="departemen" id="">
+                            <option>Semua Departemen</option>
+                            @foreach($departemen as $rowdpr)
+                            <option value="{{$rowdpr->id}}" @if($active_departemen==$rowdpr->id) selected
+                                @endif>{{$rowdpr->nama}}</option>
+                            @endforeach
+                        </select>
+                      
                         </div>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-md-4">
+                    <label for="">Tahun</label>
+                    <div class="input-group mb-3">
+                        <select class="form-control"  id="">
+                            <option>Semua Tahun</option>
+                           
+                        </select>
+                        <div class="input-group-prepend" style="border-radius:10p;">
+                            <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>
+                            <a href="{{url('/pengendalian')}}" class="btn btn-secondary"
+                                style="border-top-right-radius: 10px;border-bottom-right-radius: 10px;"><i
+                                    class="fas fa-sync"></i></a>
+                        </div>
+                    </div>
+                </div>
+                    <!-- <div class="col-md-9">
                         <label for="">Tahun</label>
                         <div class="row">
                             <div class="col-md-3">
@@ -34,8 +54,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
+            </form>
             </div>
             <hr>
             <div class="card-body p-0 mt-lg-2 mt-0">
