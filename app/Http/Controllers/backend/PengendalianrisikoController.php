@@ -11,10 +11,51 @@ use Carbon\Carbon;
 class PengendalianrisikoController extends Controller
 {
     //=======================================================================
-    public function index()
+    public function index(Request $request)
+
     {
-        $data = DB::table('pengendalian_risiko')->get();
-        return view('backend.pengendalian_risiko.pengendalian_risiko',compact('data'));
+        $infosearch ='';
+        $active_departemen = 'Semua Departemen';
+        $active_tahun = 'Semua Tahun';
+
+        if($request->has('departemen')){
+            if($request->departemen!='Semua Departemen'){
+                $active_departemen = $request->departemen;
+            }else{
+                $active_departemen = 'Semua Departemen';
+            }
+        }
+
+        if($request->has('tahun')){
+            if($request->tahun!='Semua Tahun'){
+                $active_tahun = $request->tahun;
+            }else{
+                $active_tahun = 'Semua Tahun';
+            }
+        }
+        $departemen = DB::table('pengendalian_risiko')
+        ->select(DB::raw('pengendalian_risiko.faktur,departemen.nama,departemen.id'))
+        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+        ->groupby('pengendalian_risiko.id_departemen')
+        
+        ->get();
+
+        $tahun = DB::table('pengendalian_risiko')
+        // ->groupby('priode_penerapan')
+        ->get();
+        
+        if($active_departemen!='Semua Departemen'){
+            $data = DB::table('pengendalian_risiko')
+            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+            ->where('departemen.id','=',$active_departemen)
+            ->groupby('pengendalian_risiko.faktur')
+            ->get();
+        }else{
+            $data = DB::table('pengendalian_risiko')->get();
+        }
+
+        // $data = DB::table('pengendalian_risiko')->get();
+        return view('backend.pengendalian_risiko.pengendalian_risiko',compact('data','departemen','tahun','active_departemen','active_tahun'));
     }
 
     
