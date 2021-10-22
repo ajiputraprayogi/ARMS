@@ -64,6 +64,6 @@ class HomeController extends Controller
         ->get();
 
         $pencatatan_peristiwa_resiko = DB::table('pencatatan_peristiwa_resiko')->count();
-        return view('backend.index',compact('pencatatan_peristiwa_resiko','penurunan_besaran_risiko','rencana_pengendalian','realisasi_pengendalian','sebaran_risiko','risiko_terkendali','risiko_tidak_terkendali','populasi_risiko','usulan_risiko_baru'));
+        return view('backend.dashboard.index',compact('pencatatan_peristiwa_resiko','penurunan_besaran_risiko','rencana_pengendalian','realisasi_pengendalian','sebaran_risiko','risiko_terkendali','risiko_tidak_terkendali','populasi_risiko','usulan_risiko_baru'));
     }
 }
