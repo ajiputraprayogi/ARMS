@@ -8,6 +8,7 @@ Pengendalian Risiko | Dashboard
 @section('css')
 <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.min.css')}}">
 <link rel="stylesheet" href="{{asset('assets/customjs/backend/loading.css')}}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <style>
 fieldset.scheduler-border {
     border: 1px groove #ddd !important;
@@ -161,6 +162,13 @@ legend.scheduler-border {
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="control-label col-sm-3" for="">Detail Respons Risiko</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" name="detail_respons_risiko"
+                                    id="detail_respons_risiko" rows="5" required>{{$row->detail_respons_risiko}}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="control-label col-sm-3" for="">Akar Penyebab*</label>
                             <div class="col-sm-9">
 
@@ -204,7 +212,7 @@ legend.scheduler-border {
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Target Waktu*</label>
                             <div class="col-sm-9">
-                                <input type="date" class="form-control" id="dob" value="{{$row->target_waktu}}"
+                                <input class="form-control" id="tanggal" value="{{date('d-m-Y', strtotime($row->target_waktu))}} to {{date('d-m-Y', strtotime($row->target_waktu_akhir))}}"
                                     name="target_waktu" />
                             </div>
                         </div>
@@ -220,6 +228,8 @@ legend.scheduler-border {
                                         Dilaksanakan') selected @endif>Selesai Dilaksanakan</option>
                                     <option value="Belum Terealisasi" @if($row->status_pelaksanaan=='Belum Terealisasi')
                                         selected @endif>Belum Terealisasi</option>
+                                    <option value="Terlambat" @if($row->status_pelaksanaan=='Terlambat')
+                                        selected @endif>Terlambat</option>
                                 </select>
                             </div>
                         </div>
@@ -275,4 +285,14 @@ legend.scheduler-border {
 <script src="{{asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
 <script src="{{asset('assets/customjs/backend/loading.js')}}"></script>
 <script src="{{asset('assets/customjs/backend/pengendalian_risiko_input.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    $(function() {
+    flatpickr("#tanggal", {
+        enableTime: false,
+        dateFormat: "d-m-Y",
+        mode: "range"
+    });
+    });
+</script>
 @endpush

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.7
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Oct 18, 2021 at 06:14 PM
--- Server version: 10.3.30-MariaDB-cll-lve
--- PHP Version: 7.3.30
+-- Host: 127.0.0.1
+-- Generation Time: Oct 22, 2021 at 09:39 AM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `u5225440_arms`
+-- Database: `arms`
 --
 
 -- --------------------------------------------------------
@@ -55,7 +55,12 @@ INSERT INTO `akar_masalah_why` (`id`, `kode_analisis`, `uraian`) VALUES
 (24, '526.INVES.1.2.MN.1', 'gfddfg'),
 (25, '526.INVES.1.1.MN.4', 'gfddfg'),
 (29, 'test.MONEY.3.1.MN.1', 'sadf'),
-(30, 'test.MONEY.3.2.MC.1', 'sdf');
+(30, 'test.MONEY.3.2.MC.1', 'sdf'),
+(31, 'G.1.1.INV.ATT.6.3.MD.1', 'Auditi tidak kooperatif'),
+(32, 'G.1.1.INV.ATT.6.3.MD.1', 'tidak ada bukti/ hilang'),
+(33, 'G.1.1.INV.ATT.6.3.MD.1', 'tim telaah kurang melakukan ekplorasi terhadap para pihak terkait'),
+(34, '6.2.1.1.MY.1', 'asdf'),
+(35, 'test.MONEY.1.2.MN.1', 'sadf');
 
 -- --------------------------------------------------------
 
@@ -97,7 +102,10 @@ INSERT INTO `analisa_masalah` (`id`, `kode_analisis`, `kode_risiko`, `kategori_p
 (5, '526.INVES.1.1.EX.1', '526.INVES.1.1', 'EX', 'Lockdown yang dilaksanakan oleh pemerintah daerah ', 'Melakukan negosiasi untuk menjamin agar distribusi terkait dengan pengadaan yang bergantung pada logistik masing-masing daerah bisa diberi akses khusus, sehingga tidak menghambat pelaksanaan program yang bergantung pada pengadaan tersebut.', '2021-10-10 04:12:28', '2021-10-10 04:12:28'),
 (6, '526.INVES.1.1.MN.3', '526.INVES.1.1', 'MN', 'asdf', 'sdf sdf', '2021-10-10 08:14:04', '2021-10-10 08:14:04'),
 (10, 'test.MONEY.3.1.MN.1', 'test.MONEY.3.1', 'MN', 'sadf', 'safd', '2021-10-11 04:44:06', '2021-10-11 04:44:06'),
-(11, 'test.MONEY.3.2.MC.1', 'test.MONEY.3.2', 'MC', 'asdfsadf', 'asdadfsdf', '2021-10-11 11:17:14', '2021-10-11 11:17:14');
+(11, 'test.MONEY.3.2.MC.1', 'test.MONEY.3.2', 'MC', 'asdfsadf', 'asdadfsdf', '2021-10-11 11:17:14', '2021-10-11 11:17:14'),
+(12, 'G.1.1.INV.ATT.6.3.MD.1', 'G.1.1.INV.ATT.6.3', 'MD', 'tim telaah kurang melakukan ekplorasi terhadap par', '1. Memanfaatkan teknologi informasi untuk memperoleh bukti (P18.c)\r\n2. Pencatatan Akurat dan Tepat waktu atas transaksi dan kejadian penting (P18.h)\r\n3. Akuntabilitas sumberdaya dan pencatatannya (P18.j)', '2021-10-19 13:22:55', '2021-10-19 13:22:55'),
+(13, '6.2.1.1.MY.1', '6.2.1.1', 'MY', 'safd', 'sadf', '2021-10-20 03:23:11', '2021-10-20 03:23:11'),
+(14, 'test.MONEY.1.2.MN.1', 'test.MONEY.1.2', 'MN', 'sfda', 'sadf', '2021-10-22 05:44:07', '2021-10-22 05:44:07');
 
 -- --------------------------------------------------------
 
@@ -140,7 +148,12 @@ INSERT INTO `analisa_risiko` (`id`, `id_pelaksanaan_manajemen_risiko`, `id_prob`
 (16, 9, '1', '1', '6', '1', 'test.MONEY.1.2', '#ff0000', '#00b050', '5 - Hampir Pasti Terjadi', '5 - Hampir Pasti Terjadi', '1 - Tidak Signifikan', '9', '5 - Sangat Signifikan', 25, 'Sudah', 'Memadai', 'sa', '2021-10-11 04:57:55', '2021-10-10 22:05:41'),
 (17, 9, '1', '1', '5', '1', 'test.MONEY.3.2', '#ffc000', '#00b050', '5 - Hampir Pasti Terjadi', '5 - Hampir Pasti Terjadi', '1 - Tidak Signifikan', '9', '3 - Moderat', 18, 'Sudah', 'Memadai', 'safd', '2021-10-11 05:09:02', '2021-10-10 22:10:34'),
 (18, 8, '8', '11', '5', '6', '123.MONEY.3.1', '#32bdea', '#ff0000', '4 - Sering Terjadi', '1 - Hampir Tidak Terjadi', '5 - Sangat Signifikan', '24', '3 - Moderat', 5, 'Sudah', 'Memadai', 'sdfasdfsf', '2021-10-11 11:15:17', '2021-10-11 11:15:17'),
-(19, 8, '9', '1', '6', '1', '123.MONEY.3.1', '#ff0000', '#00b050', '5 - Hampir Pasti Terjadi', '2 - Jarang Terjadi', '1 - Tidak Signifikan', '9', '5 - Sangat Signifikan', 21, 'Sudah', 'Memadai', 'sadf', '2021-10-11 13:09:16', '2021-10-11 13:09:16');
+(19, 8, '9', '1', '6', '1', '123.MONEY.3.1', '#ff0000', '#00b050', '5 - Hampir Pasti Terjadi', '2 - Jarang Terjadi', '1 - Tidak Signifikan', '9', '5 - Sangat Signifikan', 21, 'Sudah', 'Memadai', 'sadf', '2021-10-11 13:09:16', '2021-10-11 13:09:16'),
+(20, 11, '11', '10', '4', '4', 'G.1.1.INV.ATT.6.1', '#ffff00', '#00b050', '3 - Kadang Terjadi', '4 - Sering Terjadi', '2 - Minor', '10', '2 - Minor', 12, 'Sudah', 'Memadai', 'SOP Telaah', '2021-10-19 09:21:12', '2021-10-19 09:21:12'),
+(21, 11, '10', '9', '4', '4', 'G.1.1.INV.ATT.6.2', '#00b050', '#00b050', '2 - Jarang Terjadi', '3 - Kadang Terjadi', '2 - Minor', '7', '2 - Minor', 10, 'Sudah', 'Memadai', 'SOP Pembentukan Tim AI/ATT', '2021-10-19 13:12:53', '2021-10-19 13:12:53'),
+(22, 11, '10', '9', '6', '6', 'G.1.1.INV.ATT.6.3', '#ff0000', '#ff0000', '2 - Jarang Terjadi', '3 - Kadang Terjadi', '5 - Sangat Signifikan', '21', '5 - Sangat Signifikan', 22, 'Sudah', 'Memadai', 'SOP Pengendalian Pengumpulan dan Analisis Bukti', '2021-10-19 13:15:02', '2021-10-19 13:15:02'),
+(23, 6, '1', '1', '4', '1', '6.2.1.1', '#ffff00', '#00b050', '5 - Hampir Pasti Terjadi', '5 - Hampir Pasti Terjadi', '1 - Tidak Signifikan', '9', '2 - Minor', 15, 'Sudah', 'Memadai', 'sdfa', '2021-10-20 03:24:34', '2021-10-20 03:24:34'),
+(24, 9, '1', '1', '6', '6', 'test.MONEY.1.2', '#ff0000', '#ff0000', '5 - Hampir Pasti Terjadi', '5 - Hampir Pasti Terjadi', '5 - Sangat Signifikan', '25', '5 - Sangat Signifikan', 25, 'Sudah', 'Belum Memadai', 'sdfa', '2021-10-21 07:27:12', '2021-10-21 07:27:12');
 
 -- --------------------------------------------------------
 
@@ -217,7 +230,7 @@ CREATE TABLE `departemen` (
 INSERT INTO `departemen` (`id`, `kode`, `nama`, `created_at`, `updated_at`) VALUES
 (1, '1', 'Departemen 1', NULL, '2021-09-27 18:47:59'),
 (4, '2', 'Department 2', NULL, NULL),
-(5, 'INVES', 'Inspektorat Investigasi', NULL, NULL),
+(5, 'INV.ATT', 'Inspektorat Investigasi', NULL, '2021-10-19 01:57:10'),
 (6, 'MONEY', 'Inspektorat Keuangan', NULL, '2021-10-06 22:13:06');
 
 -- --------------------------------------------------------
@@ -253,7 +266,7 @@ CREATE TABLE `jenis_konteks` (
 --
 
 INSERT INTO `jenis_konteks` (`id`, `konteks`, `created_at`, `updated_at`) VALUES
-(1, 'Sasaran Strategi', NULL, '2021-09-28 00:02:25'),
+(1, 'Sasaran Strategis/Program', NULL, '2021-10-18 18:42:15'),
 (5, 'Program', NULL, '2021-09-28 00:02:31'),
 (7, 'Proses Bisnis', NULL, NULL);
 
@@ -301,8 +314,11 @@ CREATE TABLE `klasifikasi_sub_unsur_spip` (
 --
 
 INSERT INTO `klasifikasi_sub_unsur_spip` (`id`, `klasifikasi_sub_unsur_spip`, `created_at`, `updated_at`) VALUES
-(1, 'Sub Unsur 1', NULL, '2021-09-27 20:12:22'),
-(3, 'Sub Unsur 2', NULL, NULL);
+(1, 'Informasi dan Komunikasi', NULL, '2021-10-18 19:05:30'),
+(3, 'Kegiatan Pengendalian', NULL, '2021-10-18 19:05:40'),
+(5, 'Lingkungan Pengendalian', NULL, NULL),
+(6, 'Penilaian Risiko', NULL, NULL),
+(7, 'Pemantauan Pengendalian Intern', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -331,14 +347,16 @@ INSERT INTO `konteks` (`id`, `faktur_konteks`, `kode`, `nama`, `id_konteks`, `id
 (13, 'FK2021-09-29-00001', 'KODE001', 'yogapamungkas', '2', NULL, 'sdfasfd', 'safdasdf', NULL, '2021-09-29 02:40:05'),
 (21, 'FK2021-10-01-00004', 'KODE001', 'satu', '1', NULL, '456', '4654', NULL, NULL),
 (22, 'FK2021-09-29-00001', 'KODE002', 'Teh Gelas1', '5', NULL, '6465', '144165', NULL, '2021-10-03 23:05:11'),
-(23, 'FK2021-10-04-00005', '6', 'sadasd1', '1', NULL, 'asdasd1', 'asdasd', NULL, '2021-10-07 06:26:01'),
+(23, '5', '6', 'sadasd1', '1', NULL, 'asdasd1', 'asdasd', NULL, '2021-10-07 06:26:01'),
 (24, 'FK2021-09-29-00003', '526', 'Pengadaan', '5', NULL, 'Kemungkinan kejadian keterlambatan distribusi dan pengadaan karena corona, dan kejadian lain terkait dengan kerugian negara karena adanya kesalahan dalam penanganan program pengadaan.', 'Keberhasilan program dalam batasan budget dan waktu.', NULL, NULL),
 (25, 'FK2021-10-06-00006', '526', 'Pengadaan Barang', '7', '5', 'Kemungkinan Perubahan jadwal dan persyaratan karena adanya peraturan baru dari pemerintah atau adanya kejadian luar biasa terkait dengan operasional proses yang mengakibatkan permasalahan pada proses pengadaan.', 'Ketepatan waktu pengerjaan.\r\nKesesuaian dengan budget.', NULL, NULL),
 (26, 'FK2021-10-07-00007', '123', 'Pengadaan Barang', '1', '6', 'Kemungkinan kejadian keterlambatan distribusi dan pengadaan karena corona, dan kejadian lain terkait dengan kerugian negara karena adanya kesalahan dalam penanganan program pengadaan.', 'Keberhasilan program dalam batasan budget dan waktu.', NULL, NULL),
 (27, 'FK2021-10-07-00007', 'test', 'test', '5', NULL, 'as', 'sf', NULL, NULL),
 (28, '8', 'test', 'test', '1', '6', 'test', 'test', NULL, NULL),
 (29, '8', 'test', 'test', '7', '6', 'test', 'test', NULL, NULL),
-(30, '9', 'asdf', 'asdf', '7', '6', 'n,', 'hkb', NULL, NULL);
+(31, '9', 'G.1.1', 'Perjanjian Kinerja', '1', '5', '1. Pihak ketiga tidak bertanggungjawab\r\n2. Pergantian pejabat\r\n3. Perusahaan pailit\r\n4. Pemilik TGR meninggal\r\n5. Rekomendasi tidak rekomacu', 'Rasio Rekomendasi Audit Tujuan Tertentu di Lingkup Kementerian Pertanian yang Ditindaklanjuti sebesar 75%', NULL, NULL),
+(32, '9', 'G.1.2', 'Telaah materi aduan', '7', '5', 'Nil', 'Hasil telaah berkadar pengawasan', NULL, NULL),
+(33, '10', 'asdf', 'sadf', '1', NULL, 'sadf', 'sadf', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -412,8 +430,11 @@ CREATE TABLE `metode_pencapaian_tujuan` (
 --
 
 INSERT INTO `metode_pencapaian_tujuan` (`id`, `metode`, `created_at`, `updated_at`) VALUES
-(1, 'Metode Satu', NULL, '2021-09-28 00:06:50'),
-(4, 'Metode Dua', NULL, NULL);
+(1, 'Efektivitas  dan efisiensi', NULL, '2021-10-18 19:03:49'),
+(4, 'Ketaatan, Efektivitas dan Efisiensi', NULL, '2021-10-18 19:04:01'),
+(5, 'Ketaatan', NULL, NULL),
+(6, 'Keandalan Pelaporan Keuangan', NULL, NULL),
+(7, 'Pengamanan Aset Negara', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -486,10 +507,11 @@ CREATE TABLE `pelaksanaan_manajemen_risiko` (
 INSERT INTO `pelaksanaan_manajemen_risiko` (`id`, `faktur`, `id_departemen`, `nama_pemilik_risiko`, `jabatan_pemilik_risiko`, `nama_koordinator_pengelola_risiko`, `jabatan_koordinator_pengelola_risiko`, `priode_penerapan`, `selera_risiko`, `created_at`, `updated_at`) VALUES
 (3, 'FK2021-09-29-00002', '4', 'test', 'admin', 'Aji Putra Prayogi', 'Superadmin', '2022', 3, NULL, NULL),
 (5, 'FK2021-10-01-00004', '4', 'test', 'admin', 'Admin', 'Superadmin', '2024', 8, NULL, NULL),
-(6, 'FK2021-10-04-00005', '4', 'asdasd1', 'sadasda', 'Admin', 'Superadmin', '2021', 21, NULL, '2021-10-04 05:23:12'),
+(6, '5', '4', 'asdasd1', 'sadasda', 'Admin', 'Superadmin', '2021', 21, NULL, '2021-10-04 05:23:12'),
 (7, 'FK2021-10-06-00006', '5', 'Muhammad', 'Auditor Muda', 'Heni Nugraha', 'Auditor Madya', '2022', 9, NULL, NULL),
 (8, 'FK2021-10-07-00007', '6', 'Aji Putra Prayogi', 'Auditor Muda', 'Heni Nugraha', 'Auditor Madya', '2023', 7, NULL, NULL),
-(9, '8', '6', 'Junet', 'Rekam Medis', 'Admin', 'Superadmin', '2026', 25, NULL, NULL);
+(9, '8', '6', 'Junet', 'Rekam Medis', 'Admin', 'Superadmin', '2026', 25, NULL, NULL),
+(11, '9', '5', 'Inspektorat Investigasi', 'Inspektur Investigasi', 'Bagian Perencanaan dan Evaluasi', 'Koordinator Perencanaan dan Evaluasi', '2021', 10, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -509,7 +531,8 @@ CREATE TABLE `pelaksanaan_pengendalian_risiko` (
 --
 
 INSERT INTO `pelaksanaan_pengendalian_risiko` (`id`, `id_pengendalian`, `realisasi_waktu`, `hambatan`) VALUES
-(1, '9', '2021-10-13', 'sdfa');
+(1, '9', '2021-10-13', 'sdfa'),
+(3, '12', '2021-10-22', 'sadf');
 
 -- --------------------------------------------------------
 
@@ -548,7 +571,11 @@ INSERT INTO `pemangku_kepentingan` (`id`, `faktur_pemangku`, `pemangku_kepenting
 (19, '8', 'test', 'test', NULL, NULL),
 (20, '8', 'sdf', 'asd', NULL, NULL),
 (21, '8', 'test', 'test', NULL, NULL),
-(22, '9', 'hkhkj', 'hjghj', NULL, NULL);
+(23, '9', 'Pemangku Kepentingan', 'PJ Perjanjian Kinerja', NULL, NULL),
+(24, '9', 'Inspektur Jenderal', 'PJ Perjanjian Kinerja', NULL, NULL),
+(25, '9', 'Eselon I', 'Pengguna Data Kinerja', NULL, NULL),
+(26, '9', 'UPT dan Dinas', 'Pengguna Data Kinerja', NULL, NULL),
+(27, '10', 'satu', 'tesstttttttt', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -589,17 +616,20 @@ INSERT INTO `pencatatan_peristiwa_resiko` (`id`, `departemen_id`, `tahun`, `resi
 
 CREATE TABLE `pengendalian_risiko` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `faktur` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_manajemen` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_departemen` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_risiko` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_akar_masalah` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `kode_tindak_pengendalian` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `respons_risiko` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `detail_respons_risiko` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `kegiatan_pengendalian` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_klasifikasi_sub_unsur_spip` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `penanggung_jawab` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `indikator_keluaran` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `target_waktu` date NOT NULL,
+  `target_waktu_akhir` date NOT NULL,
   `status_pelaksanaan` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `frekuensi_saat_ini` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `dampak_saat_ini` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -613,10 +643,12 @@ CREATE TABLE `pengendalian_risiko` (
 -- Dumping data for table `pengendalian_risiko`
 --
 
-INSERT INTO `pengendalian_risiko` (`id`, `id_manajemen`, `id_departemen`, `id_risiko`, `id_akar_masalah`, `kode_tindak_pengendalian`, `respons_risiko`, `kegiatan_pengendalian`, `id_klasifikasi_sub_unsur_spip`, `penanggung_jawab`, `indikator_keluaran`, `target_waktu`, `status_pelaksanaan`, `frekuensi_saat_ini`, `dampak_saat_ini`, `pr_saat_ini`, `besaran_saat_ini`, `created_at`, `updated_at`) VALUES
-(8, '6', '9', '9', '11', 'PG.test.MONEY.4.1.MN.1', 'Mengurangi Dampak', 'test edit', '1', 'test penanggung jawab', 'test indikator', '2021-10-11', 'Belum Dilaksanakan', '5 - Hampir Pasti Terjadi', '1 - Tidak Signifikan', '#00b050', '9', NULL, '2021-10-16 04:11:58'),
-(9, '6', '9', '9', '11', 'PG.test.MONEY.3.2.MC.1', 'Mengurangi Dampak', 'test', '1', 'test penanggung jawab', 'test indikator', '2021-10-11', 'Belum Dilaksanakan', '1 - Hampir Tidak Terjadi', '1 - Tidak Signifikan', '#32bdea', '1', NULL, '2021-10-16 04:11:35'),
-(10, '9', '6', '12', '11', 'PG.test.MONEY.3.2.MC.1', 'Mengurangi Frekuensi', 'test', '1', 'jhk', 'hkjgjk', '2021-10-15', 'Belum Dilaksanakan', '1 - Hampir Tidak Terjadi', '1 - Tidak Signifikan', '#32bdea', '1', NULL, NULL);
+INSERT INTO `pengendalian_risiko` (`id`, `faktur`, `id_manajemen`, `id_departemen`, `id_risiko`, `id_akar_masalah`, `kode_tindak_pengendalian`, `respons_risiko`, `detail_respons_risiko`, `kegiatan_pengendalian`, `id_klasifikasi_sub_unsur_spip`, `penanggung_jawab`, `indikator_keluaran`, `target_waktu`, `target_waktu_akhir`, `status_pelaksanaan`, `frekuensi_saat_ini`, `dampak_saat_ini`, `pr_saat_ini`, `besaran_saat_ini`, `created_at`, `updated_at`) VALUES
+(8, NULL, '6', '9', '9', '11', 'PG.test.MONEY.4.1.MN.1', 'Mengurangi Dampak', '', 'test edit', '1', 'test penanggung jawab', 'test indikator', '2021-10-11', '0000-00-00', 'Belum Dilaksanakan', '5 - Hampir Pasti Terjadi', '1 - Tidak Signifikan', '#00b050', '9', NULL, '2021-10-16 04:11:58'),
+(9, '8', '6', '9', '9', '11', 'PG.test.MONEY.3.2.MC.1', 'Mengurangi Dampak', '', 'test', '1', 'test penanggung jawab', 'test indikator', '2021-10-11', '0000-00-00', 'Belum Dilaksanakan', '1 - Hampir Tidak Terjadi', '1 - Tidak Signifikan', '#32bdea', '1', NULL, '2021-10-16 04:11:35'),
+(10, NULL, '9', '6', '12', '11', 'PG.test.MONEY.3.2.MC.1', 'Mengurangi Frekuensi', '', 'test', '1', 'jhk', 'hkjgjk', '2021-10-15', '0000-00-00', 'Belum Dilaksanakan', '1 - Hampir Tidak Terjadi', '1 - Tidak Signifikan', '#32bdea', '1', NULL, NULL),
+(12, '5', '6', '4', '17', '13', 'PG.6.2.1.1.MY.1', 'Mengurangi Dampak', '', 'sfad', '1', 'sadf', 'test indikator', '2021-10-20', '0000-00-00', 'Dalam Proses Pelaksanaan', '5 - Hampir Pasti Terjadi', '1 - Tidak Signifikan', '#00b050', '9', NULL, NULL),
+(15, '8', '9', '6', '18', '14', 'PG.test.MONEY.1.2.MN.1', 'Mengurangi Dampak', 'detail1', 'fsa', '3', 'sdfa', 'safd', '2021-10-22', '2021-10-29', 'Terlambat', '1 - Hampir Tidak Terjadi', '4 - Signifikan', '#ff0000', '25', NULL, '2021-10-22 00:02:26');
 
 -- --------------------------------------------------------
 
@@ -669,7 +701,9 @@ CREATE TABLE `perubahan_besaran_risiko` (
 --
 
 INSERT INTO `perubahan_besaran_risiko` (`id`, `id_pelaksanaan_manajemen_risiko`, `kode_resiko_teridentifikasi`, `id_frekuensi_aktual`, `label_frekuensi`, `id_dampak_aktual`, `label_dampak_aktual`, `besaran_aktual`, `warna_aktual`, `deviasi`, `rekomendasi`) VALUES
-(1, 9, 'test.MONEY.3.2', 8, NULL, 1, NULL, 1, '#32bdea', 8, 'dsfg');
+(1, 9, 'test.MONEY.3.2', 8, NULL, 1, NULL, 1, '#32bdea', 8, 'dsfg'),
+(2, 11, 'G.1.1.INV.ATT.6.3', 9, NULL, 3, NULL, 13, '#ffff00', 8, 'bisa ditingkatkan.'),
+(9, 9, 'test.MONEY.1.2', 9, NULL, 1, NULL, 2, '#32bdea', 23, 'a');
 
 -- --------------------------------------------------------
 
@@ -721,11 +755,17 @@ CREATE TABLE `resiko_teridentifikasi` (
 --
 
 INSERT INTO `resiko_teridentifikasi` (`id`, `faktur`, `kode_risiko`, `number`, `full_kode`, `id_departmen`, `departmen_pemilik_resiko`, `periode_penerapan`, `id_konteks`, `id_jenis_konteks`, `konteks`, `kode_konteks`, `pernyataan_risiko`, `id_kategori`, `kategori_risiko`, `uraian_dampak`, `metode_spip`, `status_persetujuan`, `diajukan_oleh`, `diajukan_tanggal`, `persetujuan_oleh`, `tanggal_persetujua`, `keterangan`, `status`, `kode_departemen`, `id_analisis`, `pr`, `pr_akhir`, `frekuensi_akhir`, `dampak_akhir`, `frekuensi_awal`, `dampak_awal`, `besaran_awal`, `besaran_akhir`, `created_at`, `updated_at`) VALUES
-(4, NULL, '526.INVES.1', '1', '526.INVES.1.1', '5', 'Inspektorat Investigasi', '2022', '7', '25', 'Proses Bisnis', '526', 'Kemungkinan terjadi keterlambatan pada pengadaan barang yang memerlukan transportasi dari luar negeri dikarenakan pandemi.', '1', '1', 'Dampak keterlambatan akan mengakibatkan operasional yang memerlukan barang-barang tersebut tidak bisa dilaksanakan atau minimal terhambat pelaksanaannya (terganggu pelaksanaannya).', '1', 'disetujui', 'Admin', '2021-10-06', 'Heni Nugraha', '2021-10-06', 'Risiko valid dan bisa diterima penjelasannya.', 'Belum memenuhi selera risiko', 'INVES', NULL, '#ffff00', '#00b050', '2 - Jarang Terjadi', '2 - Minor', '3 - Kadang Terjadi', '3 - Moderat', '14', '7', '2021-10-06 12:46:35', '2021-10-06 12:46:35'),
+(4, NULL, '526.INVES.1', '2', '526.INVES.1.2', '5', 'Inspektorat Investigasi', '2022', '7', '25', 'Proses Bisnis', '526', 'Kemungkinan terjadi keterlambatan pada pengadaan barang yang memerlukan transportasi dari luar negeri dikarenakan pandemi.', '1', '1', 'Dampak keterlambatan akan mengakibatkan operasional yang memerlukan barang-barang tersebut tidak bisa dilaksanakan atau minimal terhambat pelaksanaannya (terganggu pelaksanaannya).', '1', 'disetujui', 'Admin', '2021-10-06', 'Heni Nugraha', '2021-10-06', 'Risiko valid dan bisa diterima penjelasannya.', 'Belum memenuhi selera risiko', 'INVES', NULL, '#ffff00', '#00b050', '2 - Jarang Terjadi', '2 - Minor', '3 - Kadang Terjadi', '3 - Moderat', '14', '7', '2021-10-06 12:46:35', '2021-10-21 20:41:09'),
 (5, NULL, '123.MONEY.3', '1', '123.MONEY.3.1', '6', 'Inspektorat Keuangan', '2023', '1', '26', 'Sasaran Strategi', '123', 'Kemungkinan terjadi keterlambatan pada pengadaan barang yang memerlukan transportasi dari luar negeri dikarenakan pandemi.', '4', '3', 'Dampak keterlambatan akan mengakibatkan operasional yang memerlukan barang-barang tersebut tidak bisa dilaksanakan atau minimal terhambat pelaksanaannya (terganggu pelaksanaannya).', '4', 'disetujui', 'Admin', '2021-10-06', 'Heni Nugraha', '2021-10-07', 'Risiko valid dan bisa diterima penjelasannya.', 'Belum memenuhi selera risiko', 'MONEY', '5', '#ff0000', '#00b050', '5 - Hampir Pasti Terjadi', '1 - Tidak Signifikan', '2 - Jarang Terjadi', '5 - Sangat Signifikan', '21', '9', '2021-10-07 05:17:30', '2021-10-07 05:17:30'),
 (7, NULL, '526.INVES.2', '1', '526.INVES.1.2', '5', 'Inspektorat Investigasi', '2022', '7', '25', 'Proses Bisnis', '526', 'Kemungkinan terjadi keterlambatan pada pengadaan barang yang memerlukan transportasi dari luar negeri dikarenakan pandemi.', '1', '1', 'Dampak keterlambatan akan mengakibatkan operasional yang memerlukan barang-barang tersebut tidak bisa dilaksanakan atau minimal terhambat pelaksanaannya (terganggu pelaksanaannya).', '1', 'disetujui', 'Admin', '2021-10-06', 'Heni Nugraha', '2021-10-06', 'Risiko valid dan bisa diterima penjelasannya.', 'Belum memenuhi selera risiko', 'INVES', NULL, '#ffff00', '#00b050', '2 - Jarang Terjadi', '2 - Minor', '3 - Kadang Terjadi', '3 - Moderat', '14', '7', '2021-10-06 12:46:35', '2021-10-06 12:46:35'),
 (9, '8', 'test.MONEY.3', '1', 'test.MONEY.3.1', '6', 'Inspektorat Keuangan', '2026', '28', '1', 'Sasaran Strategi', 'test', 'sdfa', '4', '3', 'safd', '1', 'disetujui', 'Admin', '2021-10-11', 'Heni Nugraha', '2021-10-11', 'sfad', 'Memenuhi Selera Risiko', 'MONEY', '9', '#00b050', '#32bdea', '1 - Hampir Tidak Terjadi', '1 - Tidak Signifikan', '5 - Hampir Pasti Terjadi', '1 - Tidak Signifikan', '9', '1', '2021-10-11 03:01:21', '2021-10-10 21:23:25'),
-(12, '8', 'test.MONEY.3', '2', 'test.MONEY.3.2', '6', 'Inspektorat Keuangan', '2026', '29', '7', 'Proses Bisnis', 'test', 'sadf', '3', '3', 'sadf', '1', NULL, 'Admin', '2021-10-11', 'sdfa', '2021-10-11', 'sdfa', 'Belum memenuhi selera risiko', 'MONEY', '12', '#ffc000', '#32bdea', '1 - Hampir Tidak Terjadi', '1 - Tidak Signifikan', '5 - Hampir Pasti Terjadi', '3 - Moderat', '18', '1', '2021-10-11 05:08:03', '2021-10-11 05:08:03');
+(12, '8', 'test.MONEY.3', '2', 'test.MONEY.3.2', '6', 'Inspektorat Keuangan', '2026', '29', '7', 'Proses Bisnis', 'test', 'sadf', '3', '3', 'sadf', '1', NULL, 'Admin', '2021-10-11', 'sdfa', '2021-10-11', 'sdfa', 'Belum memenuhi selera risiko', 'MONEY', '12', '#ffc000', '#32bdea', '1 - Hampir Tidak Terjadi', '1 - Tidak Signifikan', '5 - Hampir Pasti Terjadi', '3 - Moderat', '18', '1', '2021-10-11 05:08:03', '2021-10-11 05:08:03'),
+(13, '9', 'G.1.1.INV.ATT.6', '1', 'G.1.1.INV.ATT.6.1', '5', 'Inspektorat Investigasi', '2021', '31', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Bukti yang diperoleh sebagai bahan telaahan tidak lengkap.', '6', '6', 'Realisasi Capaian Kinerja Sasaran Strategis', '1', 'disetujui', 'Admin', '2021-10-19', 'Heni Nugroho', '2021-10-19', 'Nil', 'Belum memenuhi selera risiko', 'INV.ATT', '13', '#ffff00', '#00b050', '3 - Kadang Terjadi', '2 - Minor', '4 - Sering Terjadi', '2 - Minor', '12', '10', '2021-10-19 09:19:41', '2021-10-19 09:19:41'),
+(14, '9', 'G.1.1.INV.ATT.6', '2', 'G.1.1.INV.ATT.6.2', '5', 'Inspektorat Investigasi', '2021', '31', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Tim audit yang diajukan tidak memenuhi kompetensi sesuai dengan materi audit', '6', '6', 'Realisasi Capaian Kinerja Sasaran Strategis', '1', 'disetujui', 'Admin', '2021-10-19', 'Inspektorat Jenderal', '2021-10-19', 'Nil.', 'Belum memenuhi selera risiko', 'INV.ATT', '14', '#00b050', '#00b050', '2 - Jarang Terjadi', '2 - Minor', '3 - Kadang Terjadi', '2 - Minor', '10', '7', '2021-10-19 13:11:18', '2021-10-19 13:11:18'),
+(15, '9', 'G.1.1.INV.ATT.6', '3', 'G.1.1.INV.ATT.6.3', '5', 'Inspektorat Investigasi', '2021', '31', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Bukti yang diperoleh tidak lengkap', '6', '6', 'Realisasi Capaian Kinerja Sasaran Strategis', '1', 'disetujui', 'Admin', '2021-10-19', 'Inspektorat Jenderal', '2021-10-19', 'Nil.', 'Belum memenuhi selera risiko', 'INV.ATT', '15', '#ff0000', '#ffff00', '2 - Jarang Terjadi', '4 - Signifikan', '3 - Kadang Terjadi', '5 - Sangat Signifikan', '22', '13', '2021-10-19 13:14:16', '2021-10-19 13:14:16'),
+(16, '9', 'G.1.2.INV.ATT.3', '1', 'G.1.2.INV.ATT.3.1', '5', 'Inspektorat Investigasi', '2021', '32', '7', 'Proses Bisnis', 'G.1.2', 'Pengujian pengajuan.', '3', '3', 'Pengujian pengajuan.', '1', 'diajukan', 'Admin', '2021-10-19', NULL, NULL, NULL, 'Belum memenuhi selera risiko', 'INV.ATT', NULL, '#BF00FF', '#BF00FF', NULL, NULL, NULL, NULL, '0', '0', '2021-10-19 13:36:13', '2021-10-19 13:36:13'),
+(17, '5', '6.2.1', '1', '6.2.1.1', '4', 'Department 2', '2021', '23', '1', 'Sasaran Strategis/Program', '6', 'asfd', '1', '1', 'sdfa', '1', 'disetujui', 'Admin', '2021-10-20', 'Heni Nugraha', '2021-10-20', 'sfad', 'Belum memenuhi selera risiko', '2', '17', '#ffff00', '#00b050', '5 - Hampir Pasti Terjadi', '1 - Tidak Signifikan', '5 - Hampir Pasti Terjadi', '2 - Minor', '15', '9', '2021-10-20 03:21:19', '2021-10-20 03:21:19'),
+(18, '8', 'test.MONEY.1', '2', 'test.MONEY.1.2', '6', 'Inspektorat Keuangan', '2026', '28', '1', 'Sasaran Strategis/Program', 'test', 'sdfa', '1', '1', 'sdfa', '1', 'disetujui', 'Admin', '2021-10-21', 'Heni Nugraha', '2021-10-21', NULL, 'Memenuhi Selera Risiko', 'MONEY', '18', '#ff0000', '#ff0000', '1 - Hampir Tidak Terjadi', '4 - Signifikan', '5 - Hampir Pasti Terjadi', '5 - Sangat Signifikan', '25', '25', '2021-10-21 07:16:10', '2021-10-21 00:17:32');
 
 -- --------------------------------------------------------
 
@@ -947,25 +987,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `akar_masalah_why`
 --
 ALTER TABLE `akar_masalah_why`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `akar_masalah_why_thumb`
 --
 ALTER TABLE `akar_masalah_why_thumb`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=195;
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200;
 
 --
 -- AUTO_INCREMENT for table `analisa_masalah`
 --
 ALTER TABLE `analisa_masalah`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `analisa_risiko`
 --
 ALTER TABLE `analisa_risiko`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `besaran_resiko`
@@ -1001,13 +1041,13 @@ ALTER TABLE `kategori_resiko`
 -- AUTO_INCREMENT for table `klasifikasi_sub_unsur_spip`
 --
 ALTER TABLE `klasifikasi_sub_unsur_spip`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `konteks`
 --
 ALTER TABLE `konteks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `kriteria_dampak`
@@ -1025,7 +1065,7 @@ ALTER TABLE `kriteria_probabilitas`
 -- AUTO_INCREMENT for table `metode_pencapaian_tujuan`
 --
 ALTER TABLE `metode_pencapaian_tujuan`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -1037,19 +1077,19 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `pelaksanaan_manajemen_risiko`
 --
 ALTER TABLE `pelaksanaan_manajemen_risiko`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `pelaksanaan_pengendalian_risiko`
 --
 ALTER TABLE `pelaksanaan_pengendalian_risiko`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `pemangku_kepentingan`
 --
 ALTER TABLE `pemangku_kepentingan`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `pencatatan_peristiwa_resiko`
@@ -1061,7 +1101,7 @@ ALTER TABLE `pencatatan_peristiwa_resiko`
 -- AUTO_INCREMENT for table `pengendalian_risiko`
 --
 ALTER TABLE `pengendalian_risiko`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `penyebab`
@@ -1073,13 +1113,13 @@ ALTER TABLE `penyebab`
 -- AUTO_INCREMENT for table `perubahan_besaran_risiko`
 --
 ALTER TABLE `perubahan_besaran_risiko`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `resiko_teridentifikasi`
 --
 ALTER TABLE `resiko_teridentifikasi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `roles`

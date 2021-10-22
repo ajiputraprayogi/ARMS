@@ -10,6 +10,7 @@ use App\metode;
 use DataTables;
 use DB;
 use Auth;
+use Carbon\Carbon;
 // use Alfa6661\AutoNumber\AutoNumberTrait;
 
 class ResikoteridentifikasiController extends Controller
@@ -46,7 +47,7 @@ class ResikoteridentifikasiController extends Controller
     {
         $kategori = kategoriresiko::all();
         $spip = metode::all();
-        $hariini = date('Y-m-d');
+        $hariini = date('d-m-Y');
         $auth= Auth::user()->id; 
         $pengaju = DB::table('users')->where('id', '!=', $auth)->get();
         // dd($pengaju);
@@ -95,6 +96,8 @@ class ResikoteridentifikasiController extends Controller
         $coba = $request->kode_konteks.".".$request->kodedep.".".$request->kategori;
         $kode= resikoteridentifikasi::where('kode_risiko', $coba )->max('number')+1;
         $full_code= $coba.".".$kode;
+        // $pengajuan = $request->tanggal_pengajuan->format('Y-m-d');
+        // $persetujuan = $request->tanggal_persetujuan->format('Y-m-d');
         // dd($full_code);
         resikoteridentifikasi::insert([
             'faktur'=>$request->faktur,
@@ -116,11 +119,11 @@ class ResikoteridentifikasiController extends Controller
             'kategori_risiko'=> $request->kategori,
             'uraian_dampak'=> $request->dampak,
             'metode_spip'=> $request->metode,
-            'status_persetujuan'=> $request->pengajuan,
+            'status_persetujuan'=> $request->tanggal_pengajuan,
             'diajukan_oleh'=> $request->diajukan,
-            'diajukan_tanggal'=> $request->tanggal_pengajuan,
+            'diajukan_tanggal'=> Carbon::createFromFormat('d-m-Y',$request->tanggal_pengajuan)->format('Y-m-d'),
             'persetujuan_oleh'=> $request->disetujui_oleh,
-            'tanggal_persetujua'=> $request->tanggal_persetujuan,
+            'tanggal_persetujua'=> Carbon::createFromFormat('d-m-Y',$request->tanggal_persetujuan)->format('Y-m-d'),
             // 'keterangan'=> $request->keterangan,
             'besaran_awal' => $baw,
             'besaran_akhir'=> $bak,
@@ -158,6 +161,8 @@ class ResikoteridentifikasiController extends Controller
         ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
         ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
         ->where('resiko_teridentifikasi.id','=', $id)->get();
+        // $pengajuan = Carbon::createFromFormat('Y-m-d', $res->diajukan_tanggal)->format('d-m-Y');
+        // $pengajuan = Carbon::parse(DB::table('resiko_teridentifikasi')->select('resiko_teridentifikasi.diajukan_tanggal')->where('id','=', $id)->get())->format('d-m-Y');
         // dd($res);
         return view('backend.resiko.resiko_teridentifikasi.edit',['data'=>$kategori, 'data2'=>$spip, 'res'=>$res]);
     }
@@ -202,9 +207,9 @@ class ResikoteridentifikasiController extends Controller
             'metode_spip'=> $request->metode,
             'status_persetujuan'=> $request->pengajuan,
             'diajukan_oleh'=> $request->diajukan,
-            'diajukan_tanggal'=> $request->tanggal_pengajuan,
+            'diajukan_tanggal'=> Carbon::createFromFormat('d-m-Y',$request->tanggal_pengajuan)->format('Y-m-d'),
             'persetujuan_oleh'=> $request->disetujui_oleh,
-            'tanggal_persetujua'=> $request->tanggal_persetujuan,
+            'tanggal_persetujua'=> Carbon::createFromFormat('d-m-Y',$request->tanggal_persetujuan)->format('Y-m-d'),
             // 'keterangan'=> $request->keterangan,
             'status' => $request->status
         ]);

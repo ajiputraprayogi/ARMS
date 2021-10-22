@@ -6,14 +6,56 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
 use App\pengendalian_risiko;
+use Carbon\Carbon;
 
 class PengendalianrisikoController extends Controller
 {
     //=======================================================================
-    public function index()
+    public function index(Request $request)
+
     {
-        $data = DB::table('pengendalian_risiko')->get();
-        return view('backend.pengendalian_risiko.pengendalian_risiko',compact('data'));
+        $infosearch ='';
+        $active_departemen = 'Semua Departemen';
+        $active_tahun = 'Semua Tahun';
+
+        if($request->has('departemen')){
+            if($request->departemen!='Semua Departemen'){
+                $active_departemen = $request->departemen;
+            }else{
+                $active_departemen = 'Semua Departemen';
+            }
+        }
+
+        if($request->has('tahun')){
+            if($request->tahun!='Semua Tahun'){
+                $active_tahun = $request->tahun;
+            }else{
+                $active_tahun = 'Semua Tahun';
+            }
+        }
+        $departemen = DB::table('pengendalian_risiko')
+        ->select(DB::raw('pengendalian_risiko.faktur,departemen.nama,departemen.id'))
+        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+        ->groupby('pengendalian_risiko.id_departemen')
+        
+        ->get();
+
+        $tahun = DB::table('pengendalian_risiko')
+        // ->groupby('priode_penerapan')
+        ->get();
+        
+        if($active_departemen!='Semua Departemen'){
+            $data = DB::table('pengendalian_risiko')
+            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+            ->where('departemen.id','=',$active_departemen)
+            ->groupby('pengendalian_risiko.faktur')
+            ->get();
+        }else{
+            $data = DB::table('pengendalian_risiko')->get();
+        }
+
+        // $data = DB::table('pengendalian_risiko')->get();
+        return view('backend.pengendalian_risiko.pengendalian_risiko',compact('data','departemen','tahun','active_departemen','active_tahun'));
     }
 
     
@@ -71,6 +113,16 @@ class PengendalianrisikoController extends Controller
             'besaran_saat_ini'=>'required',
         ]);
         $respons_risiko = implode(", ", $request->respons_risiko);
+        if($request->has('target_waktu')){
+            $target_waktu = explode(" to ", $request->target_waktu);
+            if(count($target_waktu)<2){
+                $tglsatu = $target_waktu[0];
+                $tgldua = $target_waktu[0];
+            }else{
+                $tglsatu = $target_waktu[0];
+                $tgldua = $target_waktu[1];
+            }
+        }
         DB::table('pengendalian_risiko')->insert([
             'faktur'=>$request->faktur,
             'id_manajemen'=>$request->id_manajemen,
@@ -79,11 +131,13 @@ class PengendalianrisikoController extends Controller
             'id_akar_masalah'=>$request->id_akar_masalah,
             'kode_tindak_pengendalian'=>$request->kode_tindak_pengendalian,
             'respons_risiko'=>$respons_risiko,
+            'detail_respons_risiko'=>$request->detail_respons_risiko,
             'kegiatan_pengendalian'=>$request->kegiatan_pengendalian,
             'id_klasifikasi_sub_unsur_spip'=>$request->klasifikasi_sub_unsur_spip,
             'penanggung_jawab'=>$request->penanggung_jawab,
             'indikator_keluaran'=>$request->indikator_keluaran,
-            'target_waktu'=>$request->target_waktu,
+            'target_waktu'=>Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d'),
+            'target_waktu_akhir'=>Carbon::createFromFormat('d-m-Y',$tgldua)->format('Y-m-d'),
             'status_pelaksanaan'=>'Belum Dilaksanakan',
             'frekuensi_saat_ini'=>$request->frekuensi_saat_ini,
             'dampak_saat_ini'=>$request->dampak_saat_ini,
@@ -155,17 +209,29 @@ class PengendalianrisikoController extends Controller
             'status_pelaksanaan'=>'required',
         ]);
         $respons_risiko = implode(", ", $request->respons_risiko);
-        pengendalian_risiko::find($id)->update([
+        if($request->has('target_waktu')){
+            $target_waktu = explode(" to ", $request->target_waktu);
+            if(count($target_waktu)<2){
+                $tglsatu = $target_waktu[0];
+                $tgldua = $target_waktu[0];
+            }else{
+                $tglsatu = $target_waktu[0];
+                $tgldua = $target_waktu[1];
+            }
+        }
+        DB::table('pengendalian_risiko')->where('id',$id)->update([
             'id_manajemen'=>$request->id_manajemen,
             'id_departemen'=>$request->id_departemen,
             'id_risiko'=>$request->id_risiko,
             'respons_risiko'=>$respons_risiko,
+            'detail_respons_risiko'=>$request->detail_respons_risiko,
             'kegiatan_pengendalian'=>$request->kegiatan_pengendalian,
             'id_klasifikasi_sub_unsur_spip'=>$request->klasifikasi_sub_unsur_spip,
             'penanggung_jawab'=>$request->penanggung_jawab,
             'indikator_keluaran'=>$request->indikator_keluaran,
-            'target_waktu'=>$request->target_waktu,
-            'status_pelaksanaan'=>'Belum Dilaksanakan',
+            'target_waktu'=>Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d'),
+            'target_waktu_akhir'=>Carbon::createFromFormat('d-m-Y',$tgldua)->format('Y-m-d'),
+            'status_pelaksanaan'=>$request->status_pelaksanaan,
         ]);
         return redirect('pengendalian')->with('status','Berhasil mengubah data');
     }

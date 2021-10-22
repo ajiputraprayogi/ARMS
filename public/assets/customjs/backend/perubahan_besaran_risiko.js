@@ -89,6 +89,7 @@ $('#cari_risiko').on('select2:select', function (e) {
         },
         complete: function () {
             hitungdevisiasi();
+            hitungdevisiasiselerarisiko();
             $('#panel').loading('stop');
         }
     });
@@ -113,6 +114,7 @@ function cariresiduotomatis() {
         },
         complete: function () {
             hitungdevisiasi();
+            hitungdevisiasiselerarisiko();
             $('#panel').loading('stop');
         }
     });
@@ -122,5 +124,10 @@ function cariresiduotomatis() {
 function hitungdevisiasi(){
     if($('#besarankini').val()!='' && $('#besaran_saat_ini').val()!=''){
         $('#deviasi').val(parseInt($('#besaran_saat_ini').val())-parseInt($('#besarankini').val()));
+    }
+}
+function hitungdevisiasiselerarisiko(){
+    if($('#besarankini').val()!='' && $('#selera_risiko').val()!=''){
+        $('#deviasi_selera_risiko').val(parseInt($('#selera_risiko').val())-parseInt($('#besarankini').val()));
     }
 }

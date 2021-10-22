@@ -9,6 +9,7 @@ Toko Online | Dashboard
 }
 </style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endsection
 @section('content')
 <div class="col-md-12">
@@ -161,8 +162,8 @@ Toko Online | Dashboard
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
                         <div class="md-form md-outline input-with-post-icon datepicker">
-                            <input placeholder="Select date" type="date" id="example" class="form-control"
-                                value="{{$hariini}}" name="tanggal_pengajuan">
+                            <input placeholder="{{$hariini}}" id="example" class="form-control pickyDate"
+                                value="{{$hariini}}" name="tanggal_pengajuan" autocomplete="off">
                         </div>
                     </div>
                 </div>
@@ -178,8 +179,8 @@ Toko Online | Dashboard
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
                         <div class="md-form md-outline input-with-post-icon datepicker">
-                            <input placeholder="Select date" type="date" id="example" class="form-control"
-                                name="tanggal_persetujuan">
+                            <input placeholder="Pilih Tanggal" id="example" class="form-control pickyDate"
+                                name="tanggal_persetujuan" autocomplete="off">
                         </div>
                     </div>
                 </div>
@@ -211,6 +212,16 @@ $(document).ready(function() {
 });
 </script> -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.pickyDate').datepicker({
+            format: "dd-mm-yyyy",
+            // startDate: '-28d'
+            // locale: ''
+        });
+    });
+</script>
 <script>
     $('#carikat').on('change', function () {
         // $('#tahun').empty().trigger("change");
