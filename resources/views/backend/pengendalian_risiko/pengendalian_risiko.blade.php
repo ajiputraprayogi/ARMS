@@ -84,26 +84,28 @@
                                 <th>Aksi</th>
                             </tr>
                         </thead>
-                        @foreach($data as $item)
                         <tbody class="ligth-body">
-                            <th class="text-center">{{$item->kode_tindak_pengendalian}}</th>
-                            <th>{{$item->respons_risiko}}</th>
-                            <th>{{$item->kegiatan_pengendalian}}</th>
-                            <th>{{$item->penanggung_jawab}}</th>
-                            <th>{{$item->target_waktu}}</th>
-                            <th>{{$item->status_pelaksanaan}}</th>
-                            <th>
-                            <a class="btn btn-success btn-sm m-1"
-                                    href="{{url('/pengendalian/'.$item->id.'/edit')}}">
-                                    <i class="ri-pencil-line mr-0"></i>
-                                </a>
-                                <button class="btn btn-sm btn-danger m-1" data-toggle="tooltip" data-placement="top"
-                                    title="" data-original-title="Delete"
-                                    onclick="hapusdatamanajemenrisiko({{$item->id}})"><i
-                                        class="ri-delete-bin-line mr-0"></i></button>
-                            </th>
-                        </tbody>
+                        @foreach($data as $item)
+                            <tr>
+                                <td class="text-center">{{$item->kode_tindak_pengendalian}}</td>
+                                <td>{{$item->respons_risiko}}</td>
+                                <td>{{$item->kegiatan_pengendalian}}</td>
+                                <td>{{$item->penanggung_jawab}}</td>
+                                <td>{{$item->target_waktu}}</td>
+                                <td>{{$item->status_pelaksanaan}}</td>
+                                <td>
+                                <a class="btn btn-success btn-sm m-1"
+                                        href="{{url('/pengendalian/'.$item->id.'/edit')}}">
+                                        <i class="ri-pencil-line mr-0"></i>
+                                    </a>
+                                    <button class="btn btn-sm btn-danger m-1" data-toggle="tooltip" data-placement="top"
+                                        title="" data-original-title="Delete"
+                                        onclick="hapusdatamanajemenrisiko({{$item->id}})"><i
+                                            class="ri-delete-bin-line mr-0"></i></button>
+                                </td>
+                            </tr>
                         @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>
