@@ -8,6 +8,7 @@ Pengendalian Risiko | Dashboard
 @section('css')
 <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.min.css')}}">
 <link rel="stylesheet" href="{{asset('assets/customjs/backend/loading.css')}}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <style>
 fieldset.scheduler-border {
     border: 1px groove #ddd !important;
@@ -110,6 +111,13 @@ legend.scheduler-border {
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="control-label col-sm-3" for="">Detail Respons Risiko</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" name="detail_respons_risiko"
+                                    id="detail_respons_risiko" rows="5" required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="control-label col-sm-3" for="">Akar Penyebab*</label>
                             <div class="col-sm-9">
                                 <textarea class="form-control" name="akar_penyebab" id="akar_penyebab"
@@ -148,7 +156,7 @@ legend.scheduler-border {
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Target Waktu*</label>
                             <div class="col-sm-9">
-                                <input type="date" class="form-control" id="dob" name="target_waktu" />
+                                <input placeholder="Pilih Target Waktu" class="form-control" id="tanggal" name="target_waktu" />
                             </div>
                         </div>
                         <div class="form-group row">
@@ -203,4 +211,14 @@ legend.scheduler-border {
 <script src="{{asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
 <script src="{{asset('assets/customjs/backend/loading.js')}}"></script>
 <script src="{{asset('assets/customjs/backend/pengendalian_risiko_input.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    $(function() {
+    flatpickr("#tanggal", {
+        enableTime: false,
+        dateFormat: "d-m-Y",
+        mode: "range"
+    });
+    });
+</script>
 @endpush

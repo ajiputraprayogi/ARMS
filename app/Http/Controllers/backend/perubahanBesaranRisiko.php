@@ -53,14 +53,27 @@ class perubahanBesaranRisiko extends Controller
         foreach($dampak as $dam){
             $label_dam=$dam->nilai.' - '.$dam->nama;
         }
-
-        $up = DB::table('resiko_teridentifikasi')->where('full_kode', '=', $request->full_kode)
-        ->update([
-            'pr_akhir'=>$request->warnabesarankini,
-            'besaran_akhir'=>$request->besarankini,
-            'frekuensi_akhir'=>$label_pro,
-            'dampak_akhir'=>$label_dam,
-        ]);
+        $selera_risiko = $request->selera_risiko;
+        $besaran_saat_ini = $request->besaran_saat_ini;
+        if($besaran_saat_ini <= $selera_risiko){
+            $up = DB::table('resiko_teridentifikasi')->where('full_kode', '=', $request->full_kode)
+            ->update([
+                'pr_akhir'=>$request->warnabesarankini,
+                'besaran_akhir'=>$request->besarankini,
+                'frekuensi_akhir'=>$label_pro,
+                'dampak_akhir'=>$label_dam,
+                'status'=>'Memenuhi Selera Risiko',
+            ]);
+        }else{
+            $up = DB::table('resiko_teridentifikasi')->where('full_kode', '=', $request->full_kode)
+            ->update([
+                'pr_akhir'=>$request->warnabesarankini,
+                'besaran_akhir'=>$request->besarankini,
+                'frekuensi_akhir'=>$label_pro,
+                'dampak_akhir'=>$label_dam,
+                'status'=>'Belum memenuhi selera risiko',
+            ]);
+        }
         return redirect('perubahan-besaran-risiko')->with('status','Berhasil menyimpan data');
     }
 

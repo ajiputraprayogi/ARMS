@@ -3,12 +3,14 @@
 Toko Online | Dashboard
 @endsection
 @section('css')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
 .bintang {
     color: red;
 }
 </style>
 <style>
+
         fieldset.scheduler-border {
             border: 1px groove #ddd !important;
             padding: 0 1.4em 1.4em 1.4em !important;
@@ -279,8 +281,8 @@ Toko Online | Dashboard
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
                         <div class="md-form md-outline input-with-post-icon datepicker">
-                            <input placeholder="Select date" type="date" id="example" class="form-control"
-                                name="tanggal_pengajuan" value="{{$res->diajukan_tanggal}}">
+                            <input placeholder="{{date('d-m-Y', strtotime($res->diajukan_tanggal))}}" id="pickyDate" class="form-control pickyDate"
+                                name="tanggal_pengajuan" value="{{date('d-m-Y', strtotime($res->diajukan_tanggal))}}">
                         </div>
                     </div>
                 </div>
@@ -297,8 +299,8 @@ Toko Online | Dashboard
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
                         <div class="md-form md-outline input-with-post-icon datepicker">
-                            <input placeholder="Select date" type="date" id="example" class="form-control"
-                                name="tanggal_persetujuan" value="{{$res->tanggal_persetujua}}">
+                            <input placeholder="{{date('d-m-Y', strtotime($res->tanggal_persetujua))}}" id="pickyDate" class="form-control pickyDate"
+                                name="tanggal_persetujuan" value="{{date('d-m-Y', strtotime($res->tanggal_persetujua))}}">
                         </div>
                     </div>
                 </div>
@@ -351,4 +353,14 @@ $(document).ready(function() {
 	});
 </script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.pickyDate').datepicker({
+            format: "dd-mm-yyyy",
+            // startDate: '-28d'
+            locale: 'en'
+        });
+    });
+</script>
 @endpush

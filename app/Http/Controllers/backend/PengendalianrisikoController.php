@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
 use App\pengendalian_risiko;
+use Carbon\Carbon;
 
 class PengendalianrisikoController extends Controller
 {
@@ -71,6 +72,16 @@ class PengendalianrisikoController extends Controller
             'besaran_saat_ini'=>'required',
         ]);
         $respons_risiko = implode(", ", $request->respons_risiko);
+        if($request->has('target_waktu')){
+            $target_waktu = explode(" to ", $request->target_waktu);
+            if(count($target_waktu)<2){
+                $tglsatu = $target_waktu[0];
+                $tgldua = $target_waktu[0];
+            }else{
+                $tglsatu = $target_waktu[0];
+                $tgldua = $target_waktu[1];
+            }
+        }
         DB::table('pengendalian_risiko')->insert([
             'faktur'=>$request->faktur,
             'id_manajemen'=>$request->id_manajemen,
@@ -79,11 +90,13 @@ class PengendalianrisikoController extends Controller
             'id_akar_masalah'=>$request->id_akar_masalah,
             'kode_tindak_pengendalian'=>$request->kode_tindak_pengendalian,
             'respons_risiko'=>$respons_risiko,
+            'detail_respons_risiko'=>$request->detail_respons_risiko,
             'kegiatan_pengendalian'=>$request->kegiatan_pengendalian,
             'id_klasifikasi_sub_unsur_spip'=>$request->klasifikasi_sub_unsur_spip,
             'penanggung_jawab'=>$request->penanggung_jawab,
             'indikator_keluaran'=>$request->indikator_keluaran,
-            'target_waktu'=>$request->target_waktu,
+            'target_waktu'=>Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d'),
+            'target_waktu_akhir'=>Carbon::createFromFormat('d-m-Y',$tgldua)->format('Y-m-d'),
             'status_pelaksanaan'=>'Belum Dilaksanakan',
             'frekuensi_saat_ini'=>$request->frekuensi_saat_ini,
             'dampak_saat_ini'=>$request->dampak_saat_ini,
@@ -155,17 +168,29 @@ class PengendalianrisikoController extends Controller
             'status_pelaksanaan'=>'required',
         ]);
         $respons_risiko = implode(", ", $request->respons_risiko);
-        pengendalian_risiko::find($id)->update([
+        if($request->has('target_waktu')){
+            $target_waktu = explode(" to ", $request->target_waktu);
+            if(count($target_waktu)<2){
+                $tglsatu = $target_waktu[0];
+                $tgldua = $target_waktu[0];
+            }else{
+                $tglsatu = $target_waktu[0];
+                $tgldua = $target_waktu[1];
+            }
+        }
+        DB::table('pengendalian_risiko')->where('id',$id)->update([
             'id_manajemen'=>$request->id_manajemen,
             'id_departemen'=>$request->id_departemen,
             'id_risiko'=>$request->id_risiko,
             'respons_risiko'=>$respons_risiko,
+            'detail_respons_risiko'=>$request->detail_respons_risiko,
             'kegiatan_pengendalian'=>$request->kegiatan_pengendalian,
             'id_klasifikasi_sub_unsur_spip'=>$request->klasifikasi_sub_unsur_spip,
             'penanggung_jawab'=>$request->penanggung_jawab,
             'indikator_keluaran'=>$request->indikator_keluaran,
-            'target_waktu'=>$request->target_waktu,
-            'status_pelaksanaan'=>'Belum Dilaksanakan',
+            'target_waktu'=>Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d'),
+            'target_waktu_akhir'=>Carbon::createFromFormat('d-m-Y',$tgldua)->format('Y-m-d'),
+            'status_pelaksanaan'=>$request->status_pelaksanaan,
         ]);
         return redirect('pengendalian')->with('status','Berhasil mengubah data');
     }
