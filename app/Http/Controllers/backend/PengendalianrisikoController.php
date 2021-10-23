@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\pengendalian_risiko;
 use Carbon\Carbon;
+use Session;
 
 class PengendalianrisikoController extends Controller
 {
@@ -17,6 +18,9 @@ class PengendalianrisikoController extends Controller
         $infosearch ='';
         $active_departemen = 'Semua Departemen';
         $active_tahun = 'Semua Tahun';
+        $active_status = 'Semua Status';
+        $active_target = '';
+        $active_target_akhir = '';
 
         if($request->has('departemen')){
             if($request->departemen!='Semua Departemen'){
@@ -26,18 +30,78 @@ class PengendalianrisikoController extends Controller
             }
         }
 
-        if($request->has('tahun')){
-            if($request->tahun!='Semua Tahun'){
-                $active_tahun = $request->tahun;
+        if($request->has('status')){
+            if($request->status!='Semua Status'){
+                $active_status = $request->status;
             }else{
-                $active_tahun = 'Semua Tahun';
+                $active_status = 'Semua Status';
             }
         }
+
+        $get_target_waktu = $request->target_waktu;
+        // dd($get_target_waktu);
+        if($request->has('target_waktu')){
+            if($request->target_waktu!=''){
+                $active_target = explode(" to ", $request->target_waktu);
+                    if(count($active_target)<2){
+                        $tglsatu = $active_target[0];
+                        $tglsatuformat = Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d');
+                        $tgldua = $active_target[0];
+                        $tglduaformat = Carbon::createFromFormat('d-m-Y',$tgldua)->format('Y-m-d');
+                    }else{
+                        $tglsatu = $active_target[0];
+                        $tglsatuformat = Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d');
+                        $tgldua = $active_target[1];
+                        $tglduaformat = Carbon::createFromFormat('d-m-Y',$tgldua)->format('Y-m-d');
+                    }
+            }else{
+                $active_target = '';
+            }
+        }
+        $get_target_waktu_akhir = $request->target_waktu_akhir;
+        // dd($get_target_waktu);
+        if($request->has('target_waktu_akhir')){
+            if($request->target_waktu_akhir!=''){
+                $active_target_akhir = explode(" to ", $request->target_waktu_akhir);
+                    if(count($active_target_akhir)<2){
+                        $tglsatu_akhir = $active_target_akhir[0];
+                        $tglsatuformat_akhir = Carbon::createFromFormat('d-m-Y',$tglsatu_akhir)->format('Y-m-d');
+                        $tgldua_akhir = $active_target_akhir[0];
+                        $tglduaformat_akhir = Carbon::createFromFormat('d-m-Y',$tgldua_akhir)->format('Y-m-d');
+                    }else{
+                        $tglsatu_akhir = $active_target_akhir[0];
+                        $tglsatuformat_akhir = Carbon::createFromFormat('d-m-Y',$tglsatu_akhir)->format('Y-m-d');
+                        $tgldua_akhir = $active_target_akhir[1];
+                        $tglduaformat_akhir = Carbon::createFromFormat('d-m-Y',$tgldua_akhir)->format('Y-m-d');
+                    }
+            }else{
+                $active_target_akhir = '';
+            }
+        }
+        // $target_waktu_change = explode(" to ", $request->target_waktu);
+        //     if(count($target_waktu)<2){
+        //         $tglsatu = $target_waktu[0];
+        //         $tgldua = $target_waktu[0];
+        //     }else{
+        //         $tglsatu = $target_waktu[0];
+        //         $tgldua = $target_waktu[1];
+        //     }
+
+        // if($request->has('taget_waktu')){
+        //     if($request->tahun!=''){
+        //         $active_target = $request->target_waktu;
+        //     }else{
+        //         $active_target = '';
+        //     }
+        // }
         $departemen = DB::table('pengendalian_risiko')
-        ->select(DB::raw('pengendalian_risiko.faktur,departemen.nama,departemen.id'))
+        ->select(DB::raw('pengendalian_risiko.faktur,pengendalian_risiko.status_pelaksanaan,departemen.nama,departemen.id'))
         ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
         ->groupby('pengendalian_risiko.id_departemen')
-        
+        ->get();
+
+        $status = DB::table('pengendalian_risiko')
+        ->groupby('status_pelaksanaan')
         ->get();
 
         $tahun = DB::table('pengendalian_risiko')
@@ -45,17 +109,166 @@ class PengendalianrisikoController extends Controller
         ->get();
         
         if($active_departemen!='Semua Departemen'){
-            $data = DB::table('pengendalian_risiko')
-            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
-            ->where('departemen.id','=',$active_departemen)
-            ->groupby('pengendalian_risiko.faktur')
-            ->get();
+            if($active_status!='Semua Status'){
+                if($active_target!=''){
+                    if($active_target_akhir!=''){
+                        $data = DB::table('pengendalian_risiko')
+                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                        // ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
+                        ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                        ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status]])
+                        ->orderby('pengendalian_risiko.id','desc')
+                        ->groupby('pengendalian_risiko.faktur')
+                        ->get();
+                        // dd($data);
+                    }else{
+                        $data = DB::table('pengendalian_risiko')
+                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                        ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
+                        // ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat, $tglduaformat))
+                        ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status]])
+                        ->orderby('pengendalian_risiko.id','desc')
+                        ->groupby('pengendalian_risiko.faktur')
+                        ->get();
+                        // dd($data);
+                    }
+                }else{
+                    if($active_target_akhir!=''){
+                        $data = DB::table('pengendalian_risiko')
+                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                        ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                        ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status]])
+                        ->orderby('pengendalian_risiko.id','desc')
+                        ->groupby('pengendalian_risiko.faktur')
+                        ->get();
+                        // dd($data);
+                    }else{
+                        $data = DB::table('pengendalian_risiko')
+                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                        ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status]])
+                        ->orderby('pengendalian_risiko.id','desc')
+                        ->groupby('pengendalian_risiko.faktur')
+                        ->get();
+                        // dd($data);
+                    }
+                }
+            }else{
+                if($active_target!=''){
+                    if($active_target_akhir!=''){
+                        $data = DB::table('pengendalian_risiko')
+                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                        ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                        ->where('pengendalian_risiko.id_departemen','=',$active_departemen)
+                        ->orderby('pengendalian_risiko.id','desc')
+                        ->groupby('pengendalian_risiko.faktur')
+                        ->get();
+                        // dd($data);
+                    }else{
+                        $data = DB::table('pengendalian_risiko')
+                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                        ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
+                        ->where('pengendalian_risiko.id_departemen','=',$active_departemen)
+                        ->orderby('pengendalian_risiko.id','desc')
+                        ->groupby('pengendalian_risiko.faktur')
+                        ->get();
+                        // dd($data);
+                    }
+                }else{
+                    if($active_target_akhir!=''){
+                        $data = DB::table('pengendalian_risiko')
+                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                        ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                        ->where('pengendalian_risiko.id_departemen','=',$active_departemen)
+                        ->orderby('pengendalian_risiko.id','desc')
+                        ->groupby('pengendalian_risiko.faktur')
+                        ->get();
+                        // dd($data);
+                    }else{
+                        $data = DB::table('pengendalian_risiko')
+                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                        ->where('pengendalian_risiko.id_departemen','=',$active_departemen)
+                        ->orderby('pengendalian_risiko.id','desc')
+                        ->groupby('pengendalian_risiko.faktur')
+                        ->get();
+                    }
+                }
+            }
         }else{
-            $data = DB::table('pengendalian_risiko')->get();
+            if($active_status!='Semua Status'){
+                if($active_target!=''){
+                    if($active_target_akhir!=''){
+                        $data = DB::table('pengendalian_risiko')
+                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                        ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                        ->where('pengendalian_risiko.status_pelaksanaan','=',$active_status)
+                        ->orderby('pengendalian_risiko.id','desc')
+                        ->groupby('pengendalian_risiko.faktur')
+                        ->get();
+                        // dd($data);
+                    }else{
+                        $data = DB::table('pengendalian_risiko')
+                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                        ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
+                        ->where('pengendalian_risiko.status_pelaksanaan','=',$active_status)
+                        ->orderby('pengendalian_risiko.id','desc')
+                        ->groupby('pengendalian_risiko.faktur')
+                        ->get();
+                    }
+                }else{
+                    if($active_target_akhir!=''){
+                        $data = DB::table('pengendalian_risiko')
+                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                        ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                        ->where('pengendalian_risiko.status_pelaksanaan','=',$active_status)
+                        ->orderby('pengendalian_risiko.id','desc')
+                        ->groupby('pengendalian_risiko.faktur')
+                        ->get();
+                        // dd($data);
+                    }else{
+                        $data = DB::table('pengendalian_risiko')
+                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                        ->where('pengendalian_risiko.status_pelaksanaan','=',$active_status)
+                        ->orderby('pengendalian_risiko.id','desc')
+                        ->groupby('pengendalian_risiko.faktur')
+                        ->get();
+                    }
+                }
+            }else{
+                if($active_target!=''){
+                    if($active_target_akhir!=''){
+                        $data = DB::table('pengendalian_risiko')
+                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                        ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                        ->orderby('pengendalian_risiko.id','desc')
+                        ->get();
+                        // dd($data);
+                    }else{
+                        $data = DB::table('pengendalian_risiko')
+                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                        ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
+                        ->orderby('pengendalian_risiko.id','desc')
+                        ->get();
+                    }
+                }else{
+                    if($active_target_akhir!=''){
+                        $data = DB::table('pengendalian_risiko')
+                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                        ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                        ->orderby('pengendalian_risiko.id','desc')
+                        ->get();
+                        // dd($data);
+                    }else{
+                        $data = DB::table('pengendalian_risiko')
+                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                        ->orderby('pengendalian_risiko.id','desc')
+                        ->get();
+                    }
+                }
+            }
         }
 
         // $data = DB::table('pengendalian_risiko')->get();
-        return view('backend.pengendalian_risiko.pengendalian_risiko',compact('data','departemen','tahun','active_departemen','active_tahun'));
+        return view('backend.pengendalian_risiko.pengendalian_risiko',compact('data','departemen','status','get_target_waktu','get_target_waktu_akhir','tahun','active_departemen','active_status','active_tahun'));
     }
 
     
