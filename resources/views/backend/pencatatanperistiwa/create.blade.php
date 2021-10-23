@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Pencatatan Peristiwa Risiko | Dashboard
+    Pencatatan Peristiwa Risiko | ARMS
 @endsection
 @section('token')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -47,7 +47,7 @@
                     @csrf
                     <div class="form-group">
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Departemen Pemilik Risiko*</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Departemen Pemilik Risiko<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <!-- Select2 -->
                             <select name="departemen" class="form select" id="cari_departemen_manajemen" style="width: 100%;">
@@ -59,13 +59,13 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Tahun*</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Tahun<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <input type="text" name="tahun" id="priode_penerapan" class="form-control" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Risiko*</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Risiko<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <!-- Select2 -->
                             <select name="risiko" class="form select" id="cari_risiko" style="width: 100%;">
@@ -73,32 +73,32 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Pernyataan Risiko*</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Pernyataan Risiko<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" name="pernyataan_risiko" id="pernyataan_risiko" readonly>
                             <!-- <label id="pernyataan_risiko" for=""></label> -->
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Uraian Peristiwa*</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Uraian Peristiwa<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <textarea class="form-control" name="uraian" id="uraian" rows="5" readonly></textarea>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Waktu Kejadian*</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Waktu Kejadian<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                         <input type="date" class="form-control" name="waktu"/>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Tempat Kejadian*</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Tempat Kejadian<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" name="tempat" id="tempat">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3" for="">Skor Dampak*</label>
+                        <label class="control-label col-sm-3" for="">Skor Dampak<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                         <select class="form-control" name="skor" id="" required>
                             <option selected disabled value="">Pilih Skor Dampak</option>
@@ -109,13 +109,13 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3" for="">Pemicu Peristiwa*</label>
+                        <label class="control-label col-sm-3" for="">Pemicu Peristiwa<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <textarea class="form-control" name="pemicu" id="exampleFormControlTextarea1" rows="5" required></textarea>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3" for="">Kode Penyebab*</label>
+                        <label class="control-label col-sm-3" for="">Kode Penyebab<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                         <select class="form-control" name="kode_penyebab" id="" required>
                             <option selected disabled value="">Pilih Skor Dampak</option>

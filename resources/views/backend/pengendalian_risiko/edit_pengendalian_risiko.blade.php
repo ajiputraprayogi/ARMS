@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-Pengendalian Risiko | Dashboard
+Edit Rencana Tindak Pengendalian | ARMS
 @endsection
 @section('token')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -30,7 +30,7 @@ legend.scheduler-border {
 <div class="col-md-12">
     <div class="card card-transparent card-block card-stretch card-height border-none">
         <div class="card-header p-0 mt-lg-2 mt-0">
-            <h3 class="mb-3">Edit Pengendalian Risiko</h3>
+            <h3 class="mb-3">Edit Rencana Tinadk Pengendalian</h3>
         </div>
         @if ($errors->any())
         <div class="alert alert-danger">
@@ -65,7 +65,7 @@ legend.scheduler-border {
                     <div class="form-group">
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Departemen Pemilik
-                                Risiko*</label>
+                                Risiko<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <select name="departemen" class="form" id="cari_departemen_manajemen"
                                     style="width: 100%;">
@@ -81,7 +81,7 @@ legend.scheduler-border {
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="">Periode Penerapan*</label>
+                            <label class="control-label col-sm-3 align-self-center" for="">Periode Penerapan<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <input type="text" name="priode_penerapan" id="priode_penerapan" class="form-control"
                                     @foreach($data_manajemen_risiko as $dmr) value="{{$dmr->priode_penerapan}}"
@@ -89,7 +89,7 @@ legend.scheduler-border {
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="">Risiko*</label>
+                            <label class="control-label col-sm-3 align-self-center" for="">Risiko<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <select name="risiko" class="form" id="cari_risiko" style="width: 100%;">
                                     @foreach($data_manajemen_risiko as $dmr)
@@ -110,7 +110,7 @@ legend.scheduler-border {
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="">Pernyataan Risiko*</label>
+                            <label class="control-label col-sm-3 align-self-center" for="">Pernyataan Risiko<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <textarea class="form-control" id="pernyataan" name="pernyataan" col="3"
                                     readonly>@foreach($dataresiko as $dtr) {{$dtr->pernyataan_risiko}} @endforeach</textarea>
@@ -118,7 +118,7 @@ legend.scheduler-border {
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Analisis Akar
-                                Masalah*</label>
+                                Masalah<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <select name="departemen" class="form" id="cari_akar_masalah" style="width: 100%;">
                                     @foreach($dataresiko as $dtrs)
@@ -139,14 +139,14 @@ legend.scheduler-border {
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Kode Tindak
-                                Pengendalian*</label>
+                                Pengendalian<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" value="{{$row->kode_tindak_pengendalian}}"
                                     name="kode_tindak_pengendalian" id="kode_analisis" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3" for="">Respons Risiko *</label>
+                            <label class="control-label col-sm-3" for="">Respons Risiko<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 @php
                                 $newpic =', '.$row->respons_risiko;
@@ -169,7 +169,7 @@ legend.scheduler-border {
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3" for="">Akar Penyebab*</label>
+                            <label class="control-label col-sm-3" for="">Akar Penyebab<i class="bintang">*</i></label>
                             <div class="col-sm-9">
 
                                 <textarea class="form-control" name="akar_penyebab" id="akar_penyebab" rows="5"
@@ -178,14 +178,14 @@ legend.scheduler-border {
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3" for="">Kegiatan Pengendalian*</label>
+                            <label class="control-label col-sm-3" for="">Kegiatan Pengendalian<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <textarea class="form-control" name="kegiatan_pengendalian" id="kegiatan_pengendalian"
                                     rows="5" required>{{$row->kegiatan_pengendalian}}</textarea>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3" for="">Klasifikasi Sub Unsur SPIP*</label>
+                            <label class="control-label col-sm-3" for="">Klasifikasi Sub Unsur SPIP<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <select class="form-control" name="klasifikasi_sub_unsur_spip" id="" required>
                                     @foreach($klasifikasi as $item)
@@ -196,21 +196,21 @@ legend.scheduler-border {
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="">Penanggung Jawab*</label>
+                            <label class="control-label col-sm-3 align-self-center" for="">Penanggung Jawab<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" name="penanggung_jawab"
                                     value="{{$row->penanggung_jawab}}">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="">Indikator Keluaran*</label>
+                            <label class="control-label col-sm-3 align-self-center" for="">Indikator Keluaran<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" name="indikator_keluaran"
                                     value="{{$row->indikator_keluaran}}">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="">Target Waktu*</label>
+                            <label class="control-label col-sm-3 align-self-center" for="">Target Waktu<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <input class="form-control" id="tanggal" value="{{date('d-m-Y', strtotime($row->target_waktu))}} to {{date('d-m-Y', strtotime($row->target_waktu_akhir))}}"
                                     name="target_waktu" />

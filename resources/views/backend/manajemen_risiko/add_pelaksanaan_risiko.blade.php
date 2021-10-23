@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-Detail Pelaksanaan Manajemen Risiko | Dashboard
+Pelaksanaan Manajemen Risiko | ARMS
 @endsection
 @section('token')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -32,7 +32,7 @@ Detail Pelaksanaan Manajemen Risiko | Dashboard
                     <div class="form-group">
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Departemen Pemilik
-                                Risiko*</label>
+                                Risiko<i class="bintang">*</i> </label>
                             <div class="col-sm-9">
                                 <!-- Auto Kode Generate -->
                                 <input type="hidden" value="{{$finalkode}}" name="faktur" id="faktur"
@@ -45,21 +45,21 @@ Detail Pelaksanaan Manajemen Risiko | Dashboard
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="">Nama Pemilik Risiko*</label>
+                            <label class="control-label col-sm-3 align-self-center" for="">Nama Pemilik Risiko<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" name="nama_pemilik_risiko" id="">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Jabatan Pemilik
-                                Risiko*</label>
+                                Risiko<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <input type="" class="form-control" name="jabatan_pemilik_risiko" id="">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Nama Koordinator Pengelola
-                                Risiko*</label>
+                                Risiko<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <input type="" class="form-control" name="nama_koordinator_pengelola_risiko"
                                     value="{{Auth::user()->name}}" id="">
@@ -67,14 +67,14 @@ Detail Pelaksanaan Manajemen Risiko | Dashboard
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Jabatan Koordinator Pengelola
-                                Risiko*</label>
+                                Risiko<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <input type="" class="form-control" name="jabatan_koordinator_pengelola_risiko"
                                     value="{{Auth::user()->level}}" id="">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="">Periode Penerapan*</label>
+                            <label class="control-label col-sm-3 align-self-center" for="">Periode Penerapan<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <select class="form-control" name="priode_penerapan" id="">
                                     <option selected disabled value="">Pilih Tahun</option>
@@ -86,7 +86,7 @@ Detail Pelaksanaan Manajemen Risiko | Dashboard
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="">Selera Risiko*</label>
+                            <label class="control-label col-sm-3 align-self-center" for="">Selera Risiko<i class="bintang">*</i></label>
                             <div class="col-sm-2">
                                 <input type="number" min="1" max="25" class="form-control" name="selera_risiko" id="">
                             </div>
@@ -158,7 +158,7 @@ Detail Pelaksanaan Manajemen Risiko | Dashboard
                             <form class="form-horizontal" id="formaddkonteks" method="post">
                                 @csrf
                                 <div class="form-group row">
-                                    <label class="control-label col-sm-3 align-self-center" for="">Kode Konteks</label>
+                                    <label class="control-label col-sm-3 align-self-center" for="">Kode Konteks<i class="bintang">*</i></label>
                                     <div class="col-sm-9">
                                         <input type="hidden" value="{{$finalkode}}" name="faktur_konteks"
                                             id="faktur_konteks" class="form-group form-control" required readonly>
@@ -167,14 +167,14 @@ Detail Pelaksanaan Manajemen Risiko | Dashboard
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="control-label col-sm-3 align-self-center" for="">Nama Konteks</label>
+                                    <label class="control-label col-sm-3 align-self-center" for="">Nama Konteks<i class="bintang">*</i></label>
                                     <div class="col-sm-9">
                                         <input type="text" name="nama_konteks" class="form-control" id="nama_konteks"
                                             required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="control-label col-sm-3 align-self-center" for="">Jenis Konteks</label>
+                                    <label class="control-label col-sm-3 align-self-center" for="">Jenis Konteks<i class="bintang">*</i></label>
                                     <div class="col-sm-9">
                                         <select class="form-control" name="id_jenis_konteks" id="id_jenis_konteks"
                                             required>
@@ -188,14 +188,14 @@ Detail Pelaksanaan Manajemen Risiko | Dashboard
                                     <label class="control-label col-sm-3" for="">Detail Ancaman</label>
                                     <div class="col-sm-9">
                                         <textarea class="form-control" name="detail_ancaman_konteks"
-                                            id="detail_ancaman_konteks" rows="3" required></textarea>
+                                            id="detail_ancaman_konteks" rows="3"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="control-label col-sm-3" for="">Indikator Kinerja Kegiatan</label>
                                     <div class="col-sm-9">
                                         <textarea class="form-control" name="indikator_kinerja_kegiatan_konteks"
-                                            id="indikator_kinerja_kegiatan_konteks" rows="3" required></textarea>
+                                            id="indikator_kinerja_kegiatan_konteks" rows="3"></textarea>
                                     </div>
                                 </div>
                         </div>
@@ -221,7 +221,7 @@ Detail Pelaksanaan Manajemen Risiko | Dashboard
                                 @csrf
                                 <input type="hidden" name="_method" value="put">
                                 <div class="form-group row">
-                                    <label class="control-label col-sm-3 align-self-center" for="">Kode Konteks</label>
+                                    <label class="control-label col-sm-3 align-self-center" for="">Kode Konteks<i class="bintang">*</i></label>
                                     <div class="col-sm-9">
                                         <input type="hidden" name="konteks_id" id="konteks_id"
                                             class="form-group form-control" required readonly>
@@ -230,14 +230,14 @@ Detail Pelaksanaan Manajemen Risiko | Dashboard
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="control-label col-sm-3 align-self-center" for="">Nama Konteks</label>
+                                    <label class="control-label col-sm-3 align-self-center" for="">Nama Konteks<i class="bintang">*</i></label>
                                     <div class="col-sm-9">
                                         <input type="text" name="edit_nama_konteks" class="form-control"
                                             id="edit_nama_konteks" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="control-label col-sm-3 align-self-center" for="">Jenis Konteks</label>
+                                    <label class="control-label col-sm-3 align-self-center" for="">Jenis Konteks<i class="bintang">*</i></label>
                                     <div class="col-sm-9">
                                         <select class="form-control" name="edit_id_jenis_konteks"
                                             id="edit_id_jenis_konteks" required>
@@ -251,14 +251,14 @@ Detail Pelaksanaan Manajemen Risiko | Dashboard
                                     <label class="control-label col-sm-3" for="">Detail Ancaman</label>
                                     <div class="col-sm-9">
                                         <textarea class="form-control" name="edit_detail_ancaman_konteks"
-                                            id="edit_detail_ancaman_konteks" rows="3" required></textarea>
+                                            id="edit_detail_ancaman_konteks" rows="3"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="control-label col-sm-3" for="">Indikator Kinerja Kegiatan</label>
                                     <div class="col-sm-9">
                                         <textarea class="form-control" name="edit_indikator_kinerja_kegiatan_konteks"
-                                            id="edit_indikator_kinerja_kegiatan_konteks" rows="3" required></textarea>
+                                            id="edit_indikator_kinerja_kegiatan_konteks" rows="3"></textarea>
                                     </div>
                                 </div>
                         </div>

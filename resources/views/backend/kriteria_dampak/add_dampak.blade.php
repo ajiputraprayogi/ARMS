@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Kriteria Dampak | Dashboard
+    Kriteria Dampak | ARMS
 @endsection
 @section('content')
    <div class="col-md-12">

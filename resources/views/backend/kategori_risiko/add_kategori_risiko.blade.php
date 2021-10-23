@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Kategori Risiko | Dashboard
+    Kategori Risiko | ARMS
 @endsection
 @section('content')
    <div class="col-md-12">

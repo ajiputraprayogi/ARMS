@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Penyebab | Dashboard
+    Penyebab | ARMS
 @endsection
 @section('content')
    <div class="col-md-12">

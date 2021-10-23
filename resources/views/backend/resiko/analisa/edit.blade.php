@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-Toko Online | Analisa Risiko
+Analisis Risiko | ARMS
 @endsection
 @section('css')
 <style>
@@ -59,7 +59,7 @@ legend.scheduler-border {
                 @csrf
                 <input type="hidden" name="_method" value="put">
                 <div class="form-group row">
-                    <label class="control-label col-sm-3 align-self-center" for="email">Departemen Pemilik Reesiko<i
+                    <label class="control-label col-sm-3 align-self-center" for="email">Departemen Pemilik Risiko<i
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
                         <select class="js-example-basic-single text search-input" id="cari_departmen" name="departmen"

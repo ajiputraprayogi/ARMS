@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-Pengendalian Risiko | Dashboard
+Rencana Tindak Pengendalian Risiko | ARMS
 @endsection
 @section('token')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -30,7 +30,7 @@ legend.scheduler-border {
 <div class="col-md-12">
     <div class="card card-transparent card-block card-stretch card-height border-none">
         <div class="card-header p-0 mt-lg-2 mt-0">
-            <h3 class="mb-3">Tambah Pengendalian Risiko</h3>
+            <h3 class="mb-3">Tambah Rencana Tindak Pengendalian</h3>
         </div>
         @if ($errors->any())
         <div class="alert alert-danger">
@@ -48,7 +48,7 @@ legend.scheduler-border {
                     <div class="form-group">
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Departemen Pemilik
-                                Risiko*</label>
+                                Risiko<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <select name="departemen" class="form" id="cari_departemen_manajemen"
                                     style="width: 100%;">
@@ -59,14 +59,14 @@ legend.scheduler-border {
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="">Periode Penerapan*</label>
+                            <label class="control-label col-sm-3 align-self-center" for="">Periode Penerapan<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <input type="text" name="priode_penerapan" id="priode_penerapan" class="form-control"
                                     readonly>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="">Risiko*</label>
+                            <label class="control-label col-sm-3 align-self-center" for="">Risiko<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <select name="risiko" class="form" id="cari_risiko" style="width: 100%;">
                                 </select>
@@ -75,7 +75,7 @@ legend.scheduler-border {
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="">Pernyataan Risiko*</label>
+                            <label class="control-label col-sm-3 align-self-center" for="">Pernyataan Risiko<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" name="pernyataan_risiko" id="pernyataan_risiko"
                                     readonly>
@@ -83,7 +83,7 @@ legend.scheduler-border {
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Analisis Akar
-                                Masalah*</label>
+                                Masalah<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <select name="departemen" class="form" id="cari_akar_masalah" style="width: 100%;">
                                 </select>
@@ -92,14 +92,14 @@ legend.scheduler-border {
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Kode Tindak
-                                Pengendalian*</label>
+                                Pengendalian<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <input type="" class="form-control" name="kode_tindak_pengendalian" id="kode_analisis"
                                     readonly id="">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3" for="">Respons Risiko *</label>
+                            <label class="control-label col-sm-3" for="">Respons Risiko<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <label for="checkbox1"><input type="checkbox" class="checkbox-input"
                                         name="respons_risiko[]" value="Mengurangi Frekuensi" id="checkbox1"> Mengurangi
@@ -114,25 +114,25 @@ legend.scheduler-border {
                             <label class="control-label col-sm-3" for="">Detail Respons Risiko</label>
                             <div class="col-sm-9">
                                 <textarea class="form-control" name="detail_respons_risiko"
-                                    id="detail_respons_risiko" rows="5" required></textarea>
+                                    id="detail_respons_risiko" rows="5"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3" for="">Akar Penyebab*</label>
+                            <label class="control-label col-sm-3" for="">Akar Penyebab<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <textarea class="form-control" name="akar_penyebab" id="akar_penyebab"
                                     rows="5" readonly></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3" for="">Kegiatan Pengendalian*</label>
+                            <label class="control-label col-sm-3" for="">Kegiatan Pengendalian<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <textarea class="form-control" name="kegiatan_pengendalian"
                                     id="kegiatan_pengendalian" rows="5" required></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3" for="">Klasifikasi Sub Unsur SPIP*</label>
+                            <label class="control-label col-sm-3" for="">Klasifikasi Sub Unsur SPIP<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <select class="form-control" name="klasifikasi_sub_unsur_spip" id="" required>
                                     @foreach($klasifikasi as $item)
@@ -142,25 +142,25 @@ legend.scheduler-border {
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="">Penanggung Jawab*</label>
+                            <label class="control-label col-sm-3 align-self-center" for="">Penanggung Jawab<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <input type="" class="form-control" name="penanggung_jawab" value="" id="">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="">Indikator Keluaran*</label>
+                            <label class="control-label col-sm-3 align-self-center" for="">Indikator Keluaran<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <input type="" class="form-control" name="indikator_keluaran" value="" id="">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="">Target Waktu*</label>
+                            <label class="control-label col-sm-3 align-self-center" for="">Target Waktu<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <input placeholder="Pilih Target Waktu" class="form-control" id="tanggal" name="target_waktu" />
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3" for="">Status Pelaksanaan*</label>
+                            <label class="control-label col-sm-3" for="">Status Pelaksanaan<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <select class="form-control" name="status_pelaksanaan" id="" required readonly>
                                     <option selected value="Belum Dilaksanakan" selected>Belum Dilaksanakan</option>

@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Penyebab | Dashboard
+    Penyebab | ARMS
 @endsection
 @section('token')
 <meta name="csrf-token" content="{{ csrf_token() }}">

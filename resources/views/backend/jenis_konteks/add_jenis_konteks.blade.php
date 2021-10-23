@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Jenis Konteks | Dashboard
+    Jenis Konteks | ARMS
 @endsection
 @section('content')
    <div class="col-md-12">

@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Departemen | Dashboard
+    Departemen | ARMS
 @endsection
 @section('content')
    <div class="col-md-12">

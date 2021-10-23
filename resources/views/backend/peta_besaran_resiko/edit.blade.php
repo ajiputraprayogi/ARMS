@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Peta Besaran Risiko | Dashboard
+    Peta Besaran Risiko | ARMS
 @endsection
 @section('content')
    <div class="col-md-12">

@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-ARMS | Analisa Risiko
+Daftar Analisis Risiko | ARMS
 @endsection
 @section('token')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -68,7 +68,7 @@ ARMS | Analisa Risiko
                         <tr class="ligth ligth-data">
                             <th>Kode Risiko</th>
                             <th>Besaran Melekat</th>
-                            <th>Beseran risiko Residu</th>
+                            <th>Besaran risiko Residu</th>
                             <th>Sudah Ada Pengendalian</th>
                             <th>Aksi</th>
                         </tr>

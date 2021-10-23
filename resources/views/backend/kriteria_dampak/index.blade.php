@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Kriteria Dampak | Dashboard
+    Kriteria Dampak | ARMS
 @endsection
 @section('token')
 <meta name="csrf-token" content="{{ csrf_token() }}">

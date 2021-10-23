@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Daftar Pengendalian Risiko | Dashboard
+    Daftar Rencana Tindak Pengendalian | ARMS
 @endsection
 @section('token')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -10,7 +10,7 @@
     <div class="col-lg-12">
         <div class="card card-transparent card-block card-stretch card-height border-none">
             <div class="card-header p-0 mt-lg-2 mt-0">
-                <h3 class="mb-3">Daftar Tindak Pengendalian</h3>
+                <h3 class="mb-3">Daftar Rencana Tindak Pengendalian</h3>
                 <form method="get">
                 <div class="row">
                     <div class="col-md-3">
@@ -111,8 +111,8 @@
                                 <th>Respons Risiko</th>
                                 <th>Kegiatan Pengendalian</th>
                                 <th>Penanggung Jawab</th>
-                                <th>Target Waktu Awal</th>
-                                <th>Target Waktu Akhir</th>
+                                <th>Target Waktu Mulai</th>
+                                <th>Target Waktu Selesai</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>

@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Metode Pencapaian Tujuan SPIP | Dashboard
+    Metode Pencapaian Tujuan SPIP | ARMS
 @endsection
 @section('content')
    <div class="col-md-12">

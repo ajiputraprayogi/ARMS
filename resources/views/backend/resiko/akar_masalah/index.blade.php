@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-ARMS | Analisa Risiko
+Analisis Akar Masalah | ARMS
 @endsection
 @section('token')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -9,7 +9,7 @@ ARMS | Analisa Risiko
 <div class="col-lg-12">
     <div class="card card-transparent card-block card-stretch card-height border-none">
         <div class="card-header p-0 mt-lg-2 mt-0">
-            <h3 class="mb-3">Daftar Analisa Akar Masalah</h3>
+            <h3 class="mb-3">Daftar Analisis Akar Masalah</h3>
             <div class="row">
                 <div class="col-md-3">
                     <label for="">Departemen</label>
@@ -42,7 +42,7 @@ ARMS | Analisa Risiko
             <div class="form-group">
                 <div class="text-right">
                     <a href="{{url('analisa-akar-masalah/create')}}" class="btn btn-primary add-list"><i
-                            class="las la-plus mr-3"></i>Tambah Analisa Akar Masalah</a>
+                            class="las la-plus mr-3"></i>Tambah Analisis Akar Masalah</a>
                 </div>
             </div>
             <div class="table-responsive rounded mb-3">
@@ -51,7 +51,7 @@ ARMS | Analisa Risiko
                         <tr class="ligth ligth-data">
                             <th>Kode Risiko</th>
                             <th>Kategori Penyebab</th>
-                            <th>Akar Permasalahann</th>
+                            <th>Akar Permasalahan</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>

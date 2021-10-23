@@ -83,7 +83,7 @@ ARMS | Dashboard
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Rencana Tindak Pengendaalian</h4>
+                            <h4 class="card-title">Rencana Tindak Pengendalian</h4>
                             <div class="row">
                                 <div class="col-md-6 text-center">
                                     <h3>{{$pengendalian_risiko}}</h3>
