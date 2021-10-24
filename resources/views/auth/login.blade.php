@@ -37,8 +37,10 @@
                                 <div class="d-flex align-items-center auth-content">
                                     <div class="col-lg-12 align-self-center">
                                         <div class="p-3">
-                                            <h2 class="mb-2">Masuk</h2>
-                                            <p>Masuk untuk tetap terhubung.</p>
+                                        <center>
+                                            <img src="{{asset('assets/images/logo kementan.png')}}" width="100px" alt=""><br>
+                                            <b><label style="margin-bottom:.0rem;" class="mb-0s">INSPEKTORAT JENDERAL</label> <br> <label style="margin-bottom: .0rem;">KEMENTERIAN PERTANIAN</label></b>
+                                        </center>
                                             <form action="{{ route('login') }}" method="post">
                                                 @csrf
                                                 <div class="row">
