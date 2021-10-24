@@ -119,7 +119,7 @@ class ResikoteridentifikasiController extends Controller
             'kategori_risiko'=> $request->kategori,
             'uraian_dampak'=> $request->dampak,
             'metode_spip'=> $request->metode,
-            'status_persetujuan'=> $request->tanggal_pengajuan,
+            'status_persetujuan'=> $request->pengajuan,
             'diajukan_oleh'=> $request->diajukan,
             'diajukan_tanggal'=> Carbon::createFromFormat('d-m-Y',$request->tanggal_pengajuan)->format('Y-m-d'),
             'persetujuan_oleh'=> $request->disetujui_oleh,

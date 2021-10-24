@@ -9,37 +9,28 @@ ARMS | Dashboard
 <div class="col-lg-12">
     <div class="card card-transparent card-block card-stretch card-height border-none">
         <div class="card-header p-0 mt-lg-2 mt-0">
-            <h3 class="mb-3">Dasbor Pengawasan</h3>
-            <div class="row">
-                <div class="col-md-3">
-                    <label for="">Departemen</label>
-                    <div class="form-group">
-                        <select class="form-control" name="client" id="">
-                            <option selected disabled value="">Pilih Departemen</option>
-                            <option value="">...</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <label for="">Departemen</label>
-                    <div class="input-group mb-3">
-                        <select class="form-control" name="tahun" id="">
-                            <option>Semua Tahun</option>
-                            <option value="2021">2021</option>
-                            <option value="2022">2022</option>
-                            <option value="2023">2023</option>
-                            <option value="2024">2024</option>
-                            <option value="2026">2026</option>
-                        </select>
-                        <div class="input-group-prepend" style="border-radius:10p;">
-                            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
-                            <a href="{{url('/')}}" class="btn btn-primary"
-                                style="border-top-right-radius: 10px;border-bottom-right-radius: 10px;"><i
-                                    class="fas fa-sync"></i></a>
+            <h3 class="mb-3">Dashboard Pengawasan</h3>
+            <form method="get">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="m-0">Departemen</label>
+                        <div class="input-group mb-3">
+                            <select class="form-control" name="departemen" id="departemen">
+                                <option value="semua">Semua Departemen</option>
+                                @foreach($data_departemen as $row_departemen)
+                                <option value="{{$row_departemen->id}}" @if(request()->get('departemen')) @if(request()->get('departemen')==$row_departemen->id) selected @endif @endif>{{$row_departemen->nama}}</option>
+                                @endforeach
+                            </select>
+                            <div class="input-group-prepend" style="border-radius:10p;">
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                <a href="{{url('/dashboard')}}" class="btn btn-primary"
+                                    style="border-top-right-radius: 10px;border-bottom-right-radius: 10px;"><i
+                                        class="fas fa-sync"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
         <hr>
         <div class="card-body p-0 mt-lg-2 mt-0">
@@ -107,11 +98,11 @@ ARMS | Dashboard
                                     <p class="mb-2">Kejadian</p>
                                 </div>
                                 <div class="col-md-4 text-center">
-                                    <h3>{{$risiko_peristiwa_risiko}}</h3>
+                                    <h3>{{count($risiko_peristiwa_risiko)}}</h3>
                                     <p class="mb-2">Risiko</p>
                                 </div>
                                 <div class="col-md-4 text-center">
-                                    <h3>{{$populasi_risiko}}</h3>
+                                    <h3>{{count($penyebab_peristiwa_risiko)}}</h3>
                                     <p class="mb-2">Penyebab</p>
                                 </div>
                             </div>
@@ -126,6 +117,12 @@ ARMS | Dashboard
 @push('script')
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-
+$(function() {
+    flatpickr("#tanggal", {
+        enableTime: false,
+        dateFormat: "d-m-Y",
+        mode: "range"
+    });
+});
 </script>
 @endpush

@@ -2,22 +2,22 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::get('/', function () {
+    return redirect('/login');
+});
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('/reload-captcha', '\App\Http\Controllers\Auth\LoginController@reloadCaptcha');
 Auth::routes();
+
 Route::group(['middleware' => ['auth']],function(){
-    Route::get('/', 'backend\dashboardController@index');
-    // Basis Data
+    
+    // =============== Dashboard ========================
+    Route::get('/dashboard', 'backend\dashboardController@index');
+    Route::get('/dashboard-risiko', 'backend\dashboardController@risiko');
+    Route::get('/dashboard-penyebab', 'backend\dashboardController@penyebab');
+    Route::get('/dashboard-tindak-lanjut', 'backend\dashboardController@tindaklanjut');
+    Route::get('/dashboard-pemantauan', 'backend\dashboardController@pemantauan');
+    
     // =============== Manajemen Risiko ========================
     Route::get('/cari-data-konteks/{kode}', 'backend\ManajemenresikoController@carikonteks');
     Route::get('/cari-data-konteks/{kode}/edit', 'backend\ManajemenresikoController@caridetailkonteks');
@@ -132,6 +132,4 @@ Route::group(['middleware' => ['auth']],function(){
       Route::post('pencatatan-peristiwa-cari', 'backend\PencatatanperistiwaController@cari');
       Route::get('cari_pencatatan_manajemen', 'backend\PencatatanperistiwaController@cari_pencatatan_manajemen');
 });
-Route::group(['middleware' => ['auth']],function(){
-    Route::get('/home', 'HomeController@index')->name('home');
-});
+
