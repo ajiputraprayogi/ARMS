@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-Toko Online | Analisa Risiko
+Pemantauan Risiko | ARMS
 @endsection
 @section('css')
 <style>
@@ -35,7 +35,7 @@ legend.scheduler-border {
 <div class="col-md-12">
     <div class="card card-transparent card-block card-stretch card-height border-none">
         <div class="card-header p-0 mt-lg-2 mt-0">
-            <h3 class="mb-3">Edit Perubahan Besaran Risiko</h3>
+            <h3 class="mb-3">Edit Pemantauan Risiko</h3>
         </div>
         <div class="card-body">
             <div class="loading-div" id="panel">
@@ -55,7 +55,7 @@ legend.scheduler-border {
                 <input type="hidden" name="_method" value="put">
                     @csrf
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="email">Departemen Pemilik Resiko<i
+                        <label class="control-label col-sm-3 align-self-center" for="email">Departemen Pemilik Risiko<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <select class="js-example-basic-single text search-input" id="cari_departmen"

@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Klasifikasi Sub Unsur SPIP | Dashboard
+    Klasifikasi Sub Unsur SPIP | ARMS
 @endsection
 @section('token')
 <meta name="csrf-token" content="{{ csrf_token() }}">

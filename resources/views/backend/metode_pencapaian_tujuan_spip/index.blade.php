@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Metode Pencapaian Tujuan SPIP | Dashboard
+    Metode Pencapaian Tujuan SPIP | ARMS
 @endsection
 @section('token')
 <meta name="csrf-token" content="{{ csrf_token() }}">

@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-Toko Online | Analisa Risiko
+Analisis Risiko | ARMS
 @endsection
 @section('css')
 <style>

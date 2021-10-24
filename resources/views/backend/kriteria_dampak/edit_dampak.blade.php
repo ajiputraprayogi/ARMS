@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Kriteria Probabiltas | Dashboard
+    Kriteria Probabiltas | ARMS
 @endsection
 @section('content')
    <div class="col-md-12">

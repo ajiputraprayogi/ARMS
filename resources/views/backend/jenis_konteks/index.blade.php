@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Jenis Konteks | Dashboard
+    Jenis Konteks | ARMS
 @endsection
 @section('token')
 <meta name="csrf-token" content="{{ csrf_token() }}">

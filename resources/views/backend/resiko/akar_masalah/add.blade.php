@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-Toko Online | Analisa Risiko
+Analisis Akar Masalah | ARMS
 @endsection
 @section('css')
 <style>
@@ -34,7 +34,7 @@ Toko Online | Analisa Risiko
                 <form class="form-horizontal" action="{{url('analisa-akar-masalah')}}" method="post">
                     @csrf
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="email">Departemen Pemilik Resiko<i
+                        <label class="control-label col-sm-3 align-self-center" for="email">Departemen Pemilik Risiko<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <select class="js-example-basic-single text search-input" id="cari_departmen"
@@ -148,13 +148,13 @@ Toko Online | Analisa Risiko
                 <form class="form-horizontal" id="formaddwhy" method="post">
                     @csrf
                     <div class="form-group">
-                        <label>Akar Penyebab</label>
+                        <label>Uraian Why</label>
                         <textarea name="akar_penyebab" id="akar_penyebab" class="form-control" rows="6"></textarea>
                     </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="submit" id="addakarpenyebab" class="btn btn-primary">Simpan</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
             </div>
             </form>
         </div>
@@ -173,15 +173,15 @@ Toko Online | Analisa Risiko
                 <form class="form-horizontal" id="formeditwhy" method="post">
                     @csrf
                     <div class="form-group">
-                        <label>Akar Penyebab</label>
+                        <label>Uraian Why</label>
                         <input type="hidden" name="kode_why" id="kode_why"
                             required readonly>
                         <textarea name="edit_akar_penyebab" id="edit_akar_penyebab" class="form-control" rows="6"></textarea>
                     </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="submit" id="editakarpenyebab" class="btn btn-primary">Simpan</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
             </div>
             </form>
         </div>

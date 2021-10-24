@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Pengendalian Risiko | Dashboard
+    Pemantauan Tindak Pengendalian Risiko | ARMS
 @endsection
 @section('token')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -31,7 +31,7 @@
    <div class="col-md-12">
         <div class="card card-transparent card-block card-stretch card-height border-none">
             <div class="card-header p-0 mt-lg-2 mt-0">
-                <h3 class="mb-3">Pengendalian Risiko</h3>
+                <h3 class="mb-3">Pemantauan Tindak Pengendalian Risiko</h3>
             </div>
             @if ($errors->any())
             <div class="alert alert-danger">
@@ -49,7 +49,7 @@
                     <input type="hidden" name="_method" value="put">
                     <div class="form-group">
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Departemen Pemilik Risiko*</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Departemen Pemilik Risiko<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <!-- Select2 -->
                             <select name="departemen" class="form" id="cari_departemen_manajemen" style="width: 100%;">
@@ -61,13 +61,13 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Periode Penerapan*</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Periode Penerapan<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <input type="text" name="priode_penerapan" id="priode_penerapan" class="form-control" value="{{$rowdtl->priode_penerapanpmr}}" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Risiko*</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Risiko<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <!-- Select2 -->
                             <select name="risiko" class="form" id="cari_risiko" style="width: 100%;">
@@ -78,14 +78,14 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Pernyataan Risiko*</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Pernyataan Risiko<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" name="pernyataan_risiko" id="pernyataan_risiko" value="{{$rowdtl->pernyataan_risiko}}" readonly>
                             <!-- <label id="pernyataan_risiko" for=""></label> -->
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Kode Tindak Pengendalian *</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Kode Tindak Pengendalian <i class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <!-- Auto Kode Generate -->
                             <!-- Select2 -->
@@ -97,37 +97,37 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3" for="">Kegiatan Pengendalian*</label>
+                        <label class="control-label col-sm-3" for="">Kegiatan Pengendalian<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <textarea class="form-control" name="kegiatan_pengendalian" id="kegiatan_pengendalian" rows="5" required>{{$rowdtl->kegiatan_pengendalian}}</textarea>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Penanggung Jawab*</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Penanggung Jawab<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <input type="" class="form-control" name="penanggung_jawab" value="{{$rowdtl->penanggung_jawab}}" id="penanggung_jawab">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Indikator Keluaran*</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Indikator Keluaran<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <input type="" class="form-control" name="indikator_keluaran" value="{{$rowdtl->indikator_keluaran}}" id="indikator_keluaran">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Target Waktu*</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Target Waktu<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                         <input type="date" class="form-control" id="target_waktu" name="target_waktu" value="{{$rowdtl->target_waktu}}" />
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Realisasi Waktu*</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Realisasi Waktu<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                         <input type="date" class="form-control" id="dob" name="realisasi_waktu" value="{{$rowdtl->realisasi_waktu}}" />
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3" for="">Update Status Tindak Pengendalian Menjadi*</label>
+                        <label class="control-label col-sm-3" for="">Update Status Tindak Pengendalian Menjadi<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                         <select class="form-control" name="status_pelaksanaan" id="" required>
                             <option value="{{$rowdtl->status_pelaksanaan}}" selected>{{$rowdtl->status_pelaksanaan}}</option>
@@ -139,7 +139,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3" for="">Hambatan/Kendala*</label>
+                        <label class="control-label col-sm-3" for="">Hambatan/Kendala<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <textarea class="form-control" name="hambatan" id="exampleFormControlTextarea1" rows="5" required>{{$rowdtl->hambatan}}</textarea>
                         </div>

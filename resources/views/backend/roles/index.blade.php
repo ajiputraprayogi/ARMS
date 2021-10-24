@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Role Dan Akses | Dashboard
+    Role Dan Akses | ARMS
 @endsection
 @section('token')
 <meta name="csrf-token" content="{{ csrf_token() }}">

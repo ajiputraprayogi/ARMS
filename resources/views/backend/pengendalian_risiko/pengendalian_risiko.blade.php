@@ -1,18 +1,19 @@
 @extends('layouts.base')
 @section('title')
-    Daftar Pengendalian Risiko | Dashboard
+    Daftar Rencana Tindak Pengendalian | ARMS
 @endsection
 @section('token')
 <meta name="csrf-token" content="{{ csrf_token() }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endsection
 @section('content')
     <div class="col-lg-12">
         <div class="card card-transparent card-block card-stretch card-height border-none">
             <div class="card-header p-0 mt-lg-2 mt-0">
-                <h3 class="mb-3">Daftar Tindak Pengendalian</h3>
+                <h3 class="mb-3">Daftar Rencana Tindak Pengendalian</h3>
                 <form method="get">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="">Departemen</label>
                         <div class="form-group">
                         <select class="form-control" name="departemen" id="">
@@ -25,19 +26,50 @@
                       
                         </div>
                     </div>
-                    <div class="col-md-4">
-                    <label for="">Tahun</label>
-                    <div class="input-group mb-3">
-                        <select class="form-control"  id="">
-                            <option>Semua Tahun</option>
-                           
+                    <div class="col-md-3">
+                        <label for="">Kode Risiko</label>
+                        <div class="form-group">
+                        <select class="form-control select" name="kode_risiko" required>
+                            <option value="Belum Dilaksanakan">Semua Kode Risiko</option>
+                            @foreach($status as $rowsts)
+                            <option value="{{$rowsts->status_pelaksanaan}}" @if($active_status==$rowsts->status_pelaksanaan) selected
+                                @endif>{{$rowsts->status_pelaksanaan}}</option>
+                            @endforeach
                         </select>
-                        <div class="input-group-prepend" style="border-radius:10p;">
-                            <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>
-                            <a href="{{url('/pengendalian')}}" class="btn btn-secondary"
-                                style="border-top-right-radius: 10px;border-bottom-right-radius: 10px;"><i
-                                    class="fas fa-sync"></i></a>
+                      
                         </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="">Status</label>
+                        <div class="form-group">
+                        <select class="form-control" name="status" required>
+                            <option>Semua Status</option>
+                            @foreach($status as $rowsts)
+                            <option value="{{$rowsts->status_pelaksanaan}}" @if($active_status==$rowsts->status_pelaksanaan) selected
+                                @endif>{{$rowsts->status_pelaksanaan}}</option>
+                            @endforeach
+                        </select>
+                      
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="">Target Waktu Awal</label>
+                        <div class="input-group mb-3">
+                                <input class="form-control" id="tanggal"
+                                        name="target_waktu" placeholder="Pilih Target Waktu Awal" value="{{$get_target_waktu}}" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Target Waktu Akhir</label>
+                        <div class="input-group mb-3">
+                                <input class="form-control" id="tanggal"
+                                        name="target_waktu_akhir" placeholder="Pilih Target Waktu Akhir" value="{{$get_target_waktu_akhir}}" />
+                            <div class="input-group-prepend" style="border-radius:10p;">
+                                <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>
+                                <a href="{{url('/pengendalian')}}" class="btn btn-secondary"
+                                    style="border-top-right-radius: 10px;border-bottom-right-radius: 10px;"><i
+                                        class="fas fa-sync"></i></a>
+                            </div>
                     </div>
                 </div>
                     <!-- <div class="col-md-9">
@@ -79,7 +111,8 @@
                                 <th>Respons Risiko</th>
                                 <th>Kegiatan Pengendalian</th>
                                 <th>Penanggung Jawab</th>
-                                <th>Target Waktu</th>
+                                <th>Target Waktu Mulai</th>
+                                <th>Target Waktu Selesai</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
@@ -91,7 +124,8 @@
                                 <td>{{$item->respons_risiko}}</td>
                                 <td>{{$item->kegiatan_pengendalian}}</td>
                                 <td>{{$item->penanggung_jawab}}</td>
-                                <td>{{$item->target_waktu}}</td>
+                                <td>{{date('d-m-Y', strtotime($item->target_waktu))}}</td>
+                                <td>{{date('d-m-Y', strtotime($item->target_waktu_akhir))}}</td>
                                 <td>{{$item->status_pelaksanaan}}</td>
                                 <td>
                                 <a class="btn btn-success btn-sm m-1"
@@ -157,6 +191,21 @@
                 }
             })
         }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        $(function() {
+        flatpickr("#tanggal", {
+            enableTime: false,
+            dateFormat: "d-m-Y",
+            mode: "range",
+        });
+        });
+    </script>
+    <script>
+        $(function() {
+            $(".select").select2();
+        });
     </script>
 @endpush
 

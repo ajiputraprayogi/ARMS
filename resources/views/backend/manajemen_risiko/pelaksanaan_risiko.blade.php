@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-Daftar Pelaksanaan Manajemen Risiko | Dashboard
+Daftar Pelaksanaan Manajemen Risiko | ARMS
 @endsection
 @section('token')
 <meta name="csrf-token" content="{{ csrf_token() }}">

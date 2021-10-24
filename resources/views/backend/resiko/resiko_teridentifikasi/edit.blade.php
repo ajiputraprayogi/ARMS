@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-Toko Online | Dashboard
+Edit Risiko Teridentifikasi | ARMS
 @endsection
 @section('css')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -34,7 +34,7 @@ Toko Online | Dashboard
 <div class="col-md-12">
     <div class="card card-transparent card-block card-stretch card-height border-none">
         <div class="card-header p-0 mt-lg-2 mt-0">
-            <h3 class="mb-3">Edit Risiko</h3>
+            <h3 class="mb-3">Edit Risiko Teridentifikasi</h3>
         </div>
         <!-- <hr style="height:1px; box-shadow: 0px 10px 10px -10px #8c8c8c inset"> -->
         @if ($errors->any())
@@ -52,7 +52,7 @@ Toko Online | Dashboard
                 @csrf
                 <input type="hidden" name="_method" value="PUT">
                 <div class="form-group row">
-                    <label class="control-label col-sm-3 align-self-center" for="email">Departemen Pemilik Reesiko<i
+                    <label class="control-label col-sm-3 align-self-center" for="email">Departemen Pemilik Risiko<i
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
                         <select class="js-example-basic-single text search-input" id="cari_departmen" name="departmen"

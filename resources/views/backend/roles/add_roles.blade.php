@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Role Dan Akses | Dashboard
+    Role Dan Akses | ARMS
 @endsection
 @section('content')
    <div class="col-md-12">

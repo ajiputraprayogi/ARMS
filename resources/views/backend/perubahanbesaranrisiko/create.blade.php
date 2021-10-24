@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-Toko Online | Analisa Risiko
+Pemantauan Risiko | ARMS
 @endsection
 @section('css')
 <style>
@@ -35,7 +35,7 @@ legend.scheduler-border {
 <div class="col-md-12">
     <div class="card card-transparent card-block card-stretch card-height border-none">
         <div class="card-header p-0 mt-lg-2 mt-0">
-            <h3 class="mb-3">Tambah Perubahan Besaran Risiko</h3>
+            <h3 class="mb-3">Tambah Pemantauan Besaran Risiko</h3>
         </div>
         @if ($errors->any())
         <div class="alert alert-danger">
@@ -51,7 +51,7 @@ legend.scheduler-border {
                 <form class="form-horizontal" action="{{url('perubahan-besaran-risiko')}}" method="post">
                     @csrf
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="email">Departemen Pemilik Resiko<i
+                        <label class="control-label col-sm-3 align-self-center" for="email">Departemen Pemilik Risiko<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <select class="js-example-basic-single text search-input" id="cari_departmen"

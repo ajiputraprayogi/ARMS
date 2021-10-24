@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Daftar Pengendalian Risiko | Dashboard
+    Daftar Pengendalian Risiko | ARMS
 @endsection
 @section('token')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -9,7 +9,7 @@
     <div class="col-lg-12">
         <div class="card card-transparent card-block card-stretch card-height border-none">
             <div class="card-header p-0 mt-lg-2 mt-0">
-                <h3 class="mb-3">Daftar Pencatatan Peristiwa Risiko</h3>
+                <h3 class="mb-3">Daftar Catatan Peristiwa Risiko</h3>
                 <form class="form-horizontal" action="{{url('/pencatatan-peristiwa-cari')}}" method="post">
                 <div class="row">
                         @csrf
