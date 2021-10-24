@@ -6,8 +6,8 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('css')
-    <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.css')}}">
     <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/customjs/backend/loading.css')}}">
     <style>
         fieldset.scheduler-border {
             border: 1px groove #ddd !important;
@@ -44,22 +44,39 @@
             @endif
             <div class="card-body">
                 @foreach ($data as $item1)
+                @php
+                $data_manajemen_risiko = DB::table('pelaksanaan_manajemen_risiko')
+                ->select(DB::raw('pelaksanaan_manajemen_risiko.*,departemen.nama'))
+                ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+                ->where('pelaksanaan_manajemen_risiko.id',$item1->id_manajemen)
+                ->get();
+
+                $dataresiko = DB::table('resiko_teridentifikasi')
+                ->where('id',$item1->id_risiko)
+                ->get();
+
+                @endphp
                     <form class="form-horizontal" action="{{url('/pencatatan-peristiwa/'.$item1->id)}}" method="post">
                         @csrf
                         <input type="hidden" name="_method" value="PUT">
                         <div class="form-group">
-                        <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="">Departemen Pemilik Risiko<i class="bintang">*</i></label>
-                            <div class="col-sm-9">
-                                <!-- Select2 -->
-                                <select name="departemen" class="form select" id="cari_departemen_manajemen" style="width: 100%;">
-                                    <option selected>---Pilih Departemen---</option>
-                                    @foreach ($resiko as $item)
-                                        <option  value="{{$item->id}}" {{ $item->id == $item1->departemen_id ? 'selected' : '' }}>{{$item->departmen_pemilik_resiko}} || {{$item->periode_penerapan}}</option>
-                                    @endforeach
-                                </select>
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3 align-self-center" for="">Departemen Pemilik
+                                    Risiko<i class="bintang">*</i></label>
+                                <div class="col-sm-9">
+                                    <select name="departemen" class="form" id="cari_departemen_manajemen"
+                                        style="width: 100%;">
+                                        @foreach($data_manajemen_risiko as $dmr)
+                                        <option value="{{$dmr->id}}-{{$dmr->id_departemen}}">{{$dmr->nama}} -
+                                            ({{$dmr->priode_penerapan}})</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="hidden" value="{{$item1->id_departemen}}" name="id_manajemen"
+                                        id="id_manajemen">
+                                    <input type="hidden" value="{{$item1->id_manajemen}}" name="id_departemen"
+                                        id="id_departemen">
+                                </div>
                             </div>
-                        </div>
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Tahun<i class="bintang">*</i></label>
                             <div class="col-sm-9">
@@ -69,12 +86,23 @@
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Risiko<i class="bintang">*</i></label>
                             <div class="col-sm-9">
-                                <!-- Select2 -->
-                                <select name="risiko" class="form select" id="cari_risiko" style="width: 100%;">
-                                    @foreach ($resiko as $item)
-                                        <option  value="{{$item->full_kode}}" {{ $item->full_kode == $item1->resiko_id ? 'selected' : '' }}>{{$item->full_kode}}</option>
+                                <select name="risiko" class="form" id="cari_risiko" style="width: 100%;">
+                                    @foreach($data_manajemen_risiko as $dmr)
+                                    @php
+                                    $dataresikoo = DB::table('resiko_teridentifikasi')
+                                    ->where([['id_departmen',$dmr->id_departemen],['periode_penerapan',$dmr->priode_penerapan]])
+                                    ->get();
+                                    @endphp
+                                    @foreach($dataresiko as $dtrs)
+                                    <option value="{{$dtrs->id}}" @if($dtrs->
+                                        id==$item1->id_risiko) selected
+                                        @endif>{{$dtrs->full_kode}}</option>
+                                    @endforeach
                                     @endforeach
                                 </select>
+                                <input type="hidden" name="kode_risiko" id="kode_risiko" value="{{$item1->resiko_id}}">
+                                <input type="hidden" name="id_risiko" value="{{$item1->id_risiko}}" id="id_risiko">
+                                <input type="hidden" name="id_konteks" id="id_konteks">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -142,7 +170,10 @@
    </div>
 @endsection
 @push('script')
-    <script src="{{asset('assets/customjs/backend/pencatatanperistiwa.js')}}"></script>
+    <script src="{{asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
+    <script src="{{asset('assets/customjs/backend/loading.js')}}"></script>
+    <!-- <script src="{{asset('assets/customjs/backend/pencatatanperistiwa.js')}}"></script> -->
+    <script src="{{asset('assets/customjs/backend/pencatatanperistiwa_input.js')}}"></script>
     <script src="{{asset('assets/plugins/select2/js/select2.js')}}"></script>
     <script src="{{asset('assets/plugins/select2/js/select2.min.js')}}"></script>
     <script src="{{asset('assets/plugins/select2/js/select2.full.js')}}"></script>

@@ -6,8 +6,8 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('css')
-    <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.css')}}">
     <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/customjs/backend/loading.css')}}">
     <style>
         fieldset.scheduler-border {
             border: 1px groove #ddd !important;
@@ -47,15 +47,15 @@
                     @csrf
                     <div class="form-group">
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Departemen Pemilik Risiko<i class="bintang">*</i></label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Departemen Pemilik
+                            Risiko<i class="bintang">*</i></label>
                         <div class="col-sm-9">
-                            <!-- Select2 -->
-                            <select name="departemen" class="form select" id="cari_departemen_manajemen" style="width: 100%;">
-                                <option selected>---Pilih Departemen---</option>
-                                @foreach ($resiko as $item)
-                                    <option  value="{{$item->id}}">{{$item->departmen_pemilik_resiko}} || {{$item->periode_penerapan}}</option>
-                                @endforeach
+                            <select name="departemen" class="form" id="cari_departemen_manajemen"
+                                style="width: 100%;">
                             </select>
+                            <input type="hidden" name="id_manajemen" id="id_manajemen">
+                            <input type="hidden" name="faktur" id="faktur">
+                            <input type="hidden" name="id_departemen" id="id_departemen">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -65,13 +65,15 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Risiko<i class="bintang">*</i></label>
-                        <div class="col-sm-9">
-                            <!-- Select2 -->
-                            <select name="risiko" class="form select" id="cari_risiko" style="width: 100%;">
-                            </select>
+                            <label class="control-label col-sm-3 align-self-center" for="">Risiko<i class="bintang">*</i></label>
+                            <div class="col-sm-9">
+                                <select name="risiko" class="form" id="cari_risiko" style="width: 100%;">
+                                </select>
+                                <input type="hidden" name="kode_risiko" id="kode_risiko">
+                                <input type="hidden" name="id_risiko" id="id_risiko">
+                                <input type="hidden" name="id_konteks" id="id_konteks">
+                            </div>
                         </div>
-                    </div>
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="">Pernyataan Risiko<i class="bintang">*</i></label>
                         <div class="col-sm-9">
@@ -136,8 +138,11 @@
    </div>
 @endsection
 @push('script')
+    <script src="{{asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
+    <script src="{{asset('assets/customjs/backend/loading.js')}}"></script>
     <script src="{{asset('assets/customjs/backend/konteks.js')}}"></script>
     <script src="{{asset('assets/customjs/backend/pencatatanperistiwa.js')}}"></script>
+    <script src="{{asset('assets/customjs/backend/pencatatanperistiwa_input.js')}}"></script>
     <script src="{{asset('assets/plugins/select2/js/select2.js')}}"></script>
     <script src="{{asset('assets/plugins/select2/js/select2.min.js')}}"></script>
     <script src="{{asset('assets/plugins/select2/js/select2.full.js')}}"></script>

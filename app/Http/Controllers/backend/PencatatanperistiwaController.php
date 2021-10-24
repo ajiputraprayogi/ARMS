@@ -113,10 +113,12 @@ class PencatatanperistiwaController extends Controller
             'pemicu'=>'required',
             'kode_penyebab'=>'required',
         ]);
-        DB::table('pencatatan_peristiwa_resiko')->insert([
-            'departemen_id'=>$request->departemen,
+        $data = DB::table('pencatatan_peristiwa_resiko')->insert([
+            'departemen_id'=>$request->id_departemen,
+            'id_manajemen'=>$request->id_manajemen,
+            'id_risiko'=>$request->id_risiko,
             // tahun'=>$request->tahun,
-            'resiko_id'=>$request->risiko,
+            'resiko_id'=>$request->kode_risiko,
             // 'pernyataan'=>$request->pernyataan_risiko,
             // 'uraian'=>$request->uraian,
             'waktu'=>$request->waktu,
@@ -124,18 +126,22 @@ class PencatatanperistiwaController extends Controller
             'kriteria_id'=>$request->skor,
             'pemicu'=>$request->pemicu,
             'penyebab_id'=>$request->kode_penyebab,
-        ]);
+            ]);
+            
         return redirect('pencatatan-peristiwa')->with('status','Berhasil menambah data');
     }
 
     public function edit($id)
     {
-        $data = DB::select("SELECT a.*,b.kode AS penyebab,c.nilai AS skor,c.nama AS dampak, d.`full_kode` AS full_kode, d.`pernyataan_risiko` AS pernyataan, d.`uraian_dampak` AS uraian,d.periode_penerapan as tahun
+        $data = DB::select("SELECT a.*,b.kode AS penyebab,c.nilai AS skor,c.nama AS dampak, d.`full_kode` AS full_kode, d.`pernyataan_risiko` AS pernyataan, d.`uraian_dampak` AS uraian,d.periode_penerapan as tahun, d.`faktur` AS faktur,e.`id_departemen` AS id_departemen, f.`nama` AS nama
                             FROM pencatatan_peristiwa_resiko a
                             JOIN penyebab b ON a.`penyebab_id` = b.`id`
                             JOIN kriteria_dampak c ON a.`kriteria_id` = c.`id`
-                            JOIN resiko_teridentifikasi d ON a.`departemen_id` = d.`id`
+                            JOIN resiko_teridentifikasi d ON a.`id_risiko` = d.`id`
+                            JOIN pelaksanaan_manajemen_risiko e ON d.`faktur` = e.`faktur`
+                            JOIN departemen f ON e.`id_departemen` = f.`id`
                             WHERE a.id = '$id'");
+                            // dd($data);
         $dampakterakhir = DB::table('kriteria_dampak')->select('kriteria_dampak.*')->orderby('kriteria_dampak.id','desc')->get();
         $penyebab = DB::table('penyebab')->get();
         $resiko = DB::table('resiko_teridentifikasi')->select('id','full_kode','departmen_pemilik_resiko','periode_penerapan')->get();
@@ -158,9 +164,12 @@ class PencatatanperistiwaController extends Controller
             'kode_penyebab'=>'required',
         ]);
         Pencatatanperistiwa::find($id)->update([
-            'departemen_id'=>$request->departemen,
+            'departemen_id'=>$request->id_departemen,
+            'id_manajemen'=>$request->id_manajemen,
+            'id_risiko'=>$request->id_risiko,
+            'resiko_id'=>$request->kode_risiko,
             // tahun'=>$request->tahun,
-            'resiko_id'=>$request->risiko,
+            // 'resiko_id'=>$request->risiko,
             // 'pernyataan'=>$request->pernyataan_risiko,
             // 'uraian'=>$request->uraian,
             'waktu'=>$request->waktu,

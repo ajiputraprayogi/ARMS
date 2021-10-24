@@ -65,7 +65,7 @@
                                     </div>
                                 </th> -->
                                 <th>Kode Risiko</th>
-                                <th>Pernyataan Risiko</th>
+                                <th>Pemicu Peristiwa</th>
                                 <th>Uraian Peristiwa</th>
                                 <th>Waktu Kejadian</th>
                                 <th>Skor Dampak</th>
@@ -76,7 +76,7 @@
                         @foreach($data as $item)
                         <tbody class="ligth-body">
                             <td class="text-center">{{$item->resiko_id}}</td>
-                            <td>{{$item->pernyataan_risiko}}</td>
+                            <td>{{$item->pemicu}}</td>
                             <td>{{$item->uraian_dampak}}</td>
                             <td>{{$item->waktu}}</td>
                             <td>{{ $item->nilai }} || {{ $item->nama }}</td>

@@ -79,10 +79,10 @@
                         @foreach($data as $item)
                             <tr>
                                 <td><div class="box1" style="background-color: {{$item->pr_akhir}}"></div></td>
-                                <td>{{$item->kode_risiko}}</td>
+                                <td>{{$item->full_kode}}</td>
                                 <td>{{$item->pernyataan_risiko}}</td>
-                                <td>{{$item->konteks}}</td>
-                                <td>{{$item->kategori_risiko}}</td>
+                                <td>{{$item->namakonteks}}</td>
+                                <td>{{$item->namakat}}</td>
                                 <td>{{$item->besaran_awal}}</td>
                                 <td>{{$item->besaran_akhir}}</td>
                                 <td>{{$item->status}}</td>
