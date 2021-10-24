@@ -34,7 +34,7 @@
                             </select>
                             <div class="input-group-prepend" style="border-radius:10p;">
                                 <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>
-                                <a href="{{url('/analisa-akar-masalah')}}" class="btn btn-secondary"
+                                <a href="{{url('/pencatatan-peristiwa')}}" class="btn btn-secondary"
                                     style="border-top-right-radius: 10px;border-bottom-right-radius: 10px;"><i
                                         class="fas fa-sync"></i></a>
                             </div>
