@@ -24,7 +24,7 @@ Route::group(['middleware' => ['auth']],function(){
     Route::resource('/pelaksanaan', 'backend\ManajemenresikoController');
     Route::get('/edit-pelaksanaan/{id}', 'backend\ManajemenresikoController@edit');
     Route::post('/simpan-edit-pelaksanaan/{id}', 'backend\ManajemenresikoController@update');
-    Route::get('/hapus-pelaksanaan/{id}', 'backend\ManajemenresikoController@destroy');
+    // Route::get('/hapus-pelaksanaan/{id}', 'backend\ManajemenresikoController@destroy');
     Route::post('simpan-edit-pemangku-pelaksanaan/{id}', 'backend\ManajemenresikoController@simpaneditpemangku');
     Route::post('simpan-edit-edit-pemangku-pelaksanaan/{id}', 'backend\ManajemenresikoController@simpanediteditpemangku');
     Route::post('simpan-edit-konteks-pelaksanaan/{id}', 'backend\ManajemenresikoController@simpaneditkonteks');

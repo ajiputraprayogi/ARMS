@@ -95,7 +95,7 @@ class PengendalianrisikoController extends Controller
         //     }
         // }
         $departemen = DB::table('pengendalian_risiko')
-        ->select(DB::raw('pengendalian_risiko.faktur,pengendalian_risiko.status_pelaksanaan,departemen.nama,departemen.id'))
+        ->select(DB::raw('pengendalian_risiko.faktur,pengendalian_risiko.id as idpr,pengendalian_risiko.status_pelaksanaan,departemen.nama,departemen.id'))
         ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
         ->groupby('pengendalian_risiko.id_departemen')
         ->get();
@@ -113,6 +113,7 @@ class PengendalianrisikoController extends Controller
                 if($active_target!=''){
                     if($active_target_akhir!=''){
                         $data = DB::table('pengendalian_risiko')
+                        ->select('pengendalian_risiko.*')
                         ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
                         // ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
                         ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
@@ -123,6 +124,7 @@ class PengendalianrisikoController extends Controller
                         // dd($data);
                     }else{
                         $data = DB::table('pengendalian_risiko')
+                        ->select('pengendalian_risiko.*')
                         ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
                         ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
                         // ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat, $tglduaformat))
@@ -135,6 +137,7 @@ class PengendalianrisikoController extends Controller
                 }else{
                     if($active_target_akhir!=''){
                         $data = DB::table('pengendalian_risiko')
+                        ->select('pengendalian_risiko.*')
                         ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
                         ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
                         ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status]])
@@ -144,6 +147,7 @@ class PengendalianrisikoController extends Controller
                         // dd($data);
                     }else{
                         $data = DB::table('pengendalian_risiko')
+                        ->select('pengendalian_risiko.*')
                         ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
                         ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status]])
                         ->orderby('pengendalian_risiko.id','desc')
@@ -156,6 +160,7 @@ class PengendalianrisikoController extends Controller
                 if($active_target!=''){
                     if($active_target_akhir!=''){
                         $data = DB::table('pengendalian_risiko')
+                        ->select('pengendalian_risiko.*')
                         ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
                         ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
                         ->where('pengendalian_risiko.id_departemen','=',$active_departemen)
@@ -165,6 +170,7 @@ class PengendalianrisikoController extends Controller
                         // dd($data);
                     }else{
                         $data = DB::table('pengendalian_risiko')
+                        ->select('pengendalian_risiko.*')
                         ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
                         ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
                         ->where('pengendalian_risiko.id_departemen','=',$active_departemen)
@@ -176,6 +182,7 @@ class PengendalianrisikoController extends Controller
                 }else{
                     if($active_target_akhir!=''){
                         $data = DB::table('pengendalian_risiko')
+                        ->select('pengendalian_risiko.*')
                         ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
                         ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
                         ->where('pengendalian_risiko.id_departemen','=',$active_departemen)
@@ -185,6 +192,7 @@ class PengendalianrisikoController extends Controller
                         // dd($data);
                     }else{
                         $data = DB::table('pengendalian_risiko')
+                        ->select('pengendalian_risiko.*')
                         ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
                         ->where('pengendalian_risiko.id_departemen','=',$active_departemen)
                         ->orderby('pengendalian_risiko.id','desc')
@@ -198,6 +206,7 @@ class PengendalianrisikoController extends Controller
                 if($active_target!=''){
                     if($active_target_akhir!=''){
                         $data = DB::table('pengendalian_risiko')
+                        ->select('pengendalian_risiko.*')
                         ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
                         ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
                         ->where('pengendalian_risiko.status_pelaksanaan','=',$active_status)
@@ -207,6 +216,7 @@ class PengendalianrisikoController extends Controller
                         // dd($data);
                     }else{
                         $data = DB::table('pengendalian_risiko')
+                        ->select('pengendalian_risiko.*')
                         ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
                         ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
                         ->where('pengendalian_risiko.status_pelaksanaan','=',$active_status)
@@ -217,6 +227,7 @@ class PengendalianrisikoController extends Controller
                 }else{
                     if($active_target_akhir!=''){
                         $data = DB::table('pengendalian_risiko')
+                        ->select('pengendalian_risiko.*')
                         ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
                         ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
                         ->where('pengendalian_risiko.status_pelaksanaan','=',$active_status)
@@ -226,6 +237,7 @@ class PengendalianrisikoController extends Controller
                         // dd($data);
                     }else{
                         $data = DB::table('pengendalian_risiko')
+                        ->select('pengendalian_risiko.*')
                         ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
                         ->where('pengendalian_risiko.status_pelaksanaan','=',$active_status)
                         ->orderby('pengendalian_risiko.id','desc')
@@ -237,6 +249,7 @@ class PengendalianrisikoController extends Controller
                 if($active_target!=''){
                     if($active_target_akhir!=''){
                         $data = DB::table('pengendalian_risiko')
+                        ->select('pengendalian_risiko.*')
                         ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
                         ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
                         ->orderby('pengendalian_risiko.id','desc')
@@ -244,6 +257,7 @@ class PengendalianrisikoController extends Controller
                         // dd($data);
                     }else{
                         $data = DB::table('pengendalian_risiko')
+                        ->select('pengendalian_risiko.*')
                         ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
                         ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
                         ->orderby('pengendalian_risiko.id','desc')
@@ -252,6 +266,7 @@ class PengendalianrisikoController extends Controller
                 }else{
                     if($active_target_akhir!=''){
                         $data = DB::table('pengendalian_risiko')
+                        ->select('pengendalian_risiko.*')
                         ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
                         ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
                         ->orderby('pengendalian_risiko.id','desc')
@@ -259,6 +274,7 @@ class PengendalianrisikoController extends Controller
                         // dd($data);
                     }else{
                         $data = DB::table('pengendalian_risiko')
+                        ->select('pengendalian_risiko.*')
                         ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
                         ->orderby('pengendalian_risiko.id','desc')
                         ->get();

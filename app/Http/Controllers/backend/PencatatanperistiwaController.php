@@ -9,17 +9,69 @@ use App\Pencatatanperistiwa;
 
 class PencatatanperistiwaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = DB::select("SELECT a.id AS id,a.waktu AS waktu,a.resiko_id AS resiko_id,b.kode AS penyebab,c.nilai AS skor,c.nama AS dampak, d.`full_kode` AS full_kode, d.`pernyataan_risiko` AS pernyataan, d.`uraian_dampak` AS uraian
-                            FROM pencatatan_peristiwa_resiko a
-                            JOIN penyebab b ON a.`penyebab_id` = b.`id`
-                            JOIN kriteria_dampak c ON a.`kriteria_id` = c.`id`
-                            JOIN resiko_teridentifikasi d ON a.`departemen_id` = d.`id`");
-        $cari = DB::select("SELECT b.`departmen_pemilik_resiko` AS dept, b.`periode_penerapan` AS tahun FROM pencatatan_peristiwa_resiko a
-                            JOIN resiko_teridentifikasi b ON a.`departemen_id` = b.`id`
-                            GROUP BY b.`periode_penerapan`, a.departemen_id");
-        return view('backend.pencatatanperistiwa.index',compact('data','cari'));
+        $infosearch ='';
+        $active_departemen = 'Semua Departemen';
+        $active_tahun = 'Semua Tahun';
+
+        if($request->has('departemen')){
+            if($request->departemen!='Semua Departemen'){
+                $active_departemen = $request->departemen;
+            }else{
+                $active_departemen = 'Semua Departemen';
+            }
+        }
+        $departemen = DB::table('pencatatan_peristiwa_resiko')
+                        ->select('departemen.*','departemen.nama')
+                        ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','pencatatan_peristiwa_resiko.resiko_id')
+                        ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                        ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+                        ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
+                        ->get();
+        $tahun = DB::table('pelaksanaan_manajemen_risiko')
+        ->groupby('priode_penerapan')
+        ->get();
+        if($active_departemen!='Semua Departemen'){
+            $data = DB::table('pencatatan_peristiwa_resiko')
+            ->select('pencatatan_peristiwa_resiko.*','resiko_teridentifikasi.pernyataan_risiko','resiko_teridentifikasi.uraian_dampak','departemen.nama','kriteria_dampak.nilai','kriteria_dampak.nama','penyebab.penyebab')
+            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','pencatatan_peristiwa_resiko.resiko_id')
+            ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+            ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+            ->leftjoin('kriteria_dampak','kriteria_dampak.id','=','pencatatan_peristiwa_resiko.kriteria_id')
+            ->leftjoin('penyebab','penyebab.id','=','pencatatan_peristiwa_resiko.penyebab_id')
+            ->where('pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen)
+            // ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
+            ->get();
+            // $data = DB::select("SELECT a.id AS id,a.waktu AS waktu,a.resiko_id AS resiko_id,b.kode AS penyebab,c.nilai AS skor,c.nama AS dampak, d.`full_kode` AS full_kode, d.`pernyataan_risiko` AS pernyataan, d.`uraian_dampak` AS uraian
+            // FROM pencatatan_peristiwa_resiko a
+            // JOIN penyebab b ON a.`penyebab_id` = b.`id`
+            // JOIN kriteria_dampak c ON a.`kriteria_id` = c.`id`
+            // JOIN resiko_teridentifikasi d ON a.`departemen_id` = d.`id`
+            // WHERE d.`departmen_pemilik_resiko`= '$active_departemen'
+            // -- AND d.`periode_penerapan` = '$tahun'
+            // ");
+        }else{
+            $data = DB::table('pencatatan_peristiwa_resiko')
+            ->select('pencatatan_peristiwa_resiko.*','resiko_teridentifikasi.pernyataan_risiko','resiko_teridentifikasi.uraian_dampak','departemen.nama','kriteria_dampak.nilai','kriteria_dampak.nama','penyebab.penyebab')
+            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','pencatatan_peristiwa_resiko.resiko_id')
+            ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+            ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+            ->leftjoin('kriteria_dampak','kriteria_dampak.id','=','pencatatan_peristiwa_resiko.kriteria_id')
+            ->leftjoin('penyebab','penyebab.id','=','pencatatan_peristiwa_resiko.penyebab_id')
+            // ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
+            ->get();
+            // dd($data);
+            // $data = DB::select("SELECT a.id AS id,a.waktu AS waktu,a.resiko_id AS resiko_id,b.kode AS penyebab,c.nilai AS skor,c.nama AS dampak, d.`full_kode` AS full_kode, d.`pernyataan_risiko` AS pernyataan, d.`uraian_dampak` AS uraian
+            //         FROM pencatatan_peristiwa_resiko a
+            //         JOIN penyebab b ON a.`penyebab_id` = b.`id`
+            //         JOIN kriteria_dampak c ON a.`kriteria_id` = c.`id`
+            //         JOIN resiko_teridentifikasi d ON a.`departemen_id` = d.`id`");
+        }
+        // $cari = DB::select("SELECT b.`departmen_pemilik_resiko` AS dept, b.`periode_penerapan` AS tahun FROM pencatatan_peristiwa_resiko a
+        //                     JOIN resiko_teridentifikasi b ON a.`departemen_id` = b.`id`
+        //                     GROUP BY b.`periode_penerapan`, a.departemen_id");
+        return view('backend.pencatatanperistiwa.index',compact('data','active_departemen','active_tahun','departemen','tahun'));
     }
 
     public function cari(Request $request)

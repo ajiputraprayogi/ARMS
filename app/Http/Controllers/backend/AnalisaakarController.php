@@ -14,10 +14,50 @@ use Auth;
 class AnalisaakarController extends Controller
 {
     //=============================================================================================
-    public function index()
+    public function index(Request $request)
     {
-        $data = analisaakar::orderby('id','desc')->get();
-        return view('backend.resiko.akar_masalah.index',compact('data'));
+        $infosearch ='';
+        $active_departemen = 'Semua Departemen';
+        $active_tahun = 'Semua Tahun';
+
+        if($request->has('departemen')){
+            if($request->departemen!='Semua Departemen'){
+                $active_departemen = $request->departemen;
+            }else{
+                $active_departemen = 'Semua Departemen';
+            }
+        }
+        $departemen = DB::table('analisa_masalah')
+                        ->select('departemen.*','departemen.nama')
+                        ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','analisa_masalah.kode_risiko')
+                        ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                        ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+                        ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
+                        ->get();
+        $tahun = DB::table('pelaksanaan_manajemen_risiko')
+        ->groupby('priode_penerapan')
+        ->get();
+        if($active_departemen!='Semua Departemen'){
+            $data = DB::table('analisa_masalah')
+            ->select('analisa_masalah.*','departemen.nama')
+            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','analisa_masalah.kode_risiko')
+            ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+            ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+            ->where('pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen)
+            // ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
+            ->get();
+        }else{
+            $data = DB::table('analisa_masalah')
+            ->select('analisa_masalah.*','departemen.nama')
+            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','analisa_masalah.kode_risiko')
+            ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+            ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+            // ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
+            ->get();
+            // dd($data);
+        }
+        // $data = analisaakar::orderby('id','desc')->get();
+        return view('backend.resiko.akar_masalah.index',compact('data','active_departemen','active_tahun','departemen','tahun'));
     }
 
     //=============================================================================================

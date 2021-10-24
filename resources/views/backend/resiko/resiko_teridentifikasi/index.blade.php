@@ -10,41 +10,42 @@
         <div class="card card-transparent card-block card-stretch card-height border-none">
             <div class="card-header p-0 mt-lg-2 mt-0">
                 <h3 class="mb-3">Daftar Risiko Teridentifikasi</h3>
-                <div class="row">
-                    <div class="col-md-3">
-                        <label for="">Departemen</label>
-                        <div class="form-group">
-                            <select class="form-control" name="client" id="">
-                                <option selected disabled value="">Pilih Departemen</option>
-                                <option value="">...</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="">Konteks</label>
-                        <div class="form-group">
-                            <select class="form-control" name="client" id="">
-                                <option selected disabled value="">Pilih Konteks</option>
-                                <option value="">...</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="">Tahun</label>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <input type="date" class="form-control" id="dob" name="tanggal1"/>
-                                </div>
+                <form method="get">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <select class="form-control" name="departemen" id="">
+                                    <option>Semua Departemen</option>
+                                    @foreach($departemen as $rowdpr)
+                                    <option value="{{$rowdpr->id}}" @if($active_departemen==$rowdpr->id) selected
+                                        @endif>{{$rowdpr->nama}}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <div class="col-md-3">
-                                <div class="">
-                                    <button type="submit" class="btn btn-primary">Reset Filter</button>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group mb-3">
+                                <select class="form-control" name="tahun" id="">
+                                    <option>Semua Tahun</option>
+                                    @foreach($tahun as $rowthn)
+                                    <option value="{{$rowthn->priode_penerapan}}" @if($active_tahun==$rowthn->priode_penerapan)
+                                        selected @endif>{{$rowthn->priode_penerapan}}</option>
+                                    @endforeach
+                                </select>
+                                <div class="input-group-prepend" style="border-radius:10p;">
+                                    <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>
+                                    <a href="{{url('/resiko-teridentifikasi')}}" class="btn btn-secondary"
+                                        style="border-top-right-radius: 10px;border-bottom-right-radius: 10px;"><i
+                                            class="fas fa-sync"></i></a>
                                 </div>
                             </div>
                         </div>
+                        <!-- <div class="col-md-4 text-right">
+                            <a href="{{url('pelaksanaan/create')}}" class="btn btn-primary mb-3 btn-lg"><i
+                                    class="las la-plus mr-3"></i>Tambah Pelaksanaan Baru</a>
+                        </div> -->
                     </div>
-                </div>
+                </form>
             </div>
             <hr>
             <div class="card-body p-0 mt-lg-2 mt-0">
@@ -54,7 +55,7 @@
                     </div>
                 </div>
                 <div class="table-responsive rounded mb-3">
-                    <table id="list-data" class="table mb-0 tbl-server-info">
+                    <table id="list-data" class="table data-tables">
                         <thead class="bg-white text-uppercase">
                             <tr class="ligth ligth-data">
                                 <!-- <th>
@@ -76,6 +77,26 @@
                         </thead>
                         <tbody class="ligth-body">
                         @foreach($data as $item)
+                            <tr>
+                                <td><div class="box1" style="background-color: {{$item->pr_akhir}}"></div></td>
+                                <td>{{$item->kode_risiko}}</td>
+                                <td>{{$item->pernyataan_risiko}}</td>
+                                <td>{{$item->konteks}}</td>
+                                <td>{{$item->kategori_risiko}}</td>
+                                <td>{{$item->besaran_awal}}</td>
+                                <td>{{$item->besaran_akhir}}</td>
+                                <td>{{$item->status}}</td>
+                                <td>
+                                <a class="btn btn-success btn-sm m-1"
+                                        href="{{url('/resiko-teridentifikasi/'.$item->id.'/edit')}}">
+                                        <i class="ri-pencil-line mr-0"></i>
+                                    </a>
+                                    <button class="btn btn-sm btn-danger m-1" data-toggle="tooltip" data-placement="top"
+                                        title="" data-original-title="Delete"
+                                        onclick="hapusdatamanajemenrisiko({{$item->id}})"><i
+                                            class="ri-delete-bin-line mr-0"></i></button>
+                                </td>
+                            </tr>
                             <div class="modal fade" id="show{{$item->id}}" tabindex="-1" role="dialog"  aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
@@ -154,6 +175,49 @@
 @endsection
 @push('script')
     <script src="{{asset('phppiechart/assets/js/highcharts.js')}}"></script>
-    <script src="{{asset('assets/customjs/backend/resiko_teridentifikasi.js')}}"></script>
+    <!-- <script src="{{asset('assets/customjs/backend/resiko_teridentifikasi.js')}}"></script> -->
+    <script>
+        function hapusdatamanajemenrisiko(kode) {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger',
+                },
+                buttonsStyling: true
+            })
+            swalWithBootstrapButtons.fire({
+                title: 'Hapus Data ?',
+                text: "Data tidak dapat dipulihkan kembali!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Tidak',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    })
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/resiko-teridentifikasi/' + kode,
+                        data: {
+                            'token': $('input[name=_token]').val(),
+                        },
+                        success: function() {
+                            swalWithBootstrapButtons.fire(
+                                'Deleted!',
+                                'Data Berhasil Dihapus.',
+                                'success'
+                            )
+                            location.reload();
+                        }
+                    })
+                }
+            })
+        }
+    </script>
 @endpush
 

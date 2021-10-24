@@ -10,6 +10,7 @@ use App\pemangku_kepentingan;
 use DB;
 use App\pelaksanaanmanajemenrisiko;
 use App\departemen;
+use Carbon\Carbon;
 
 class ManajemenresikoController extends Controller
 {
@@ -144,8 +145,19 @@ class ManajemenresikoController extends Controller
             'nama_koordinator_pengelola_risiko'=>'required',
             'jabatan_koordinator_pengelola_risiko'=>'required',
             'priode_penerapan'=>'required',
+            'priode_penerapan_awal_akhir'=>'required',
             'selera_risiko'=>'required',
         ]);
+        if($request->has('priode_penerapan_awal_akhir')){
+            $priode_penerapan_awal_akhir = explode(" to ", $request->priode_penerapan_awal_akhir);
+            if(count($priode_penerapan_awal_akhir)<2){
+                $tglsatu = $priode_penerapan_awal_akhir[0];
+                $tgldua = $priode_penerapan_awal_akhir[0];
+            }else{
+                $tglsatu = $priode_penerapan_awal_akhir[0];
+                $tgldua = $priode_penerapan_awal_akhir[1];
+            }
+        }
         pelaksanaanmanajemenrisiko::insert([
             'faktur'=>$request->faktur,
             'id_departemen'=>$request->id_departemen,
@@ -154,6 +166,8 @@ class ManajemenresikoController extends Controller
             'nama_koordinator_pengelola_risiko'=>$request->nama_koordinator_pengelola_risiko,
             'jabatan_koordinator_pengelola_risiko'=>$request->jabatan_koordinator_pengelola_risiko,
             'priode_penerapan'=>$request->priode_penerapan,
+            'priode_penerapan_awal'=>Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d'),
+            'priode_penerapan_akhir'=>Carbon::createFromFormat('d-m-Y',$tgldua)->format('Y-m-d'),
             'selera_risiko'=>$request->selera_risiko,
         ]);
         $up = DB::table('konteks')->where('faktur_konteks', '=', $request->faktur)->update([
@@ -205,8 +219,19 @@ class ManajemenresikoController extends Controller
             'nama_koordinator_pengelola_risiko'=>'required',
             'jabatan_koordinator_pengelola_risiko'=>'required',
             'priode_penerapan'=>'required',
+            'priode_penerapan_awal_akhir'=>'required',
             'selera_risiko'=>'required',
         ]);
+        if($request->has('priode_penerapan_awal_akhir')){
+            $priode_penerapan_awal_akhir = explode(" to ", $request->priode_penerapan_awal_akhir);
+            if(count($priode_penerapan_awal_akhir)<2){
+                $tglsatu = $priode_penerapan_awal_akhir[0];
+                $tgldua = $priode_penerapan_awal_akhir[0];
+            }else{
+                $tglsatu = $priode_penerapan_awal_akhir[0];
+                $tgldua = $priode_penerapan_awal_akhir[1];
+            }
+        }
         pelaksanaanmanajemenrisiko::find($id)->update([
             'faktur'=>$request->faktur,
             'id_departemen'=>$request->id_departemen,
@@ -215,6 +240,8 @@ class ManajemenresikoController extends Controller
             'nama_koordinator_pengelola_risiko'=>$request->nama_koordinator_pengelola_risiko,
             'jabatan_koordinator_pengelola_risiko'=>$request->jabatan_koordinator_pengelola_risiko,
             'priode_penerapan'=>$request->priode_penerapan,
+            'priode_penerapan_awal'=>Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d'),
+            'priode_penerapan_akhir'=>Carbon::createFromFormat('d-m-Y',$tgldua)->format('Y-m-d'),
             'selera_risiko'=>$request->selera_risiko,
         ]);
         $up = DB::table('konteks')->where('faktur_konteks', '=', $request->faktur)->update([
@@ -229,12 +256,12 @@ class ManajemenresikoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
-        $faktur = $request->faktur;
-        pelaksanaanmanajemenrisiko::destroy($id);
-        konteks::destroy($faktur);
-        pemangku_kepentingan::destroy($faktur);
+        // $faktur = $request->faktur;
+        pelaksanaanmanajemenrisiko::where('faktur', $id)->delete();
+        konteks::where('faktur_konteks', $id)->delete();
+        pemangku_kepentingan::where('faktur_pemangku', $id)->delete();
     }
 
     public function simpaneditkonteks(Request $request, $id){

@@ -82,7 +82,7 @@ Daftar Pelaksanaan Manajemen Risiko | ARMS
                                 <a class="badge bg-success mr-2" href="{{url('edit-pelaksanaan/'.$row->faktur)}}"
                                     title="View" data-original-title="View"><i class="ri-pencil-line mr-0"></i></a>
                                 <a class="badge bg-warning mr-2" data-toggle="tooltip" data-placement="top" title=""
-                                    data-original-title="Delete" onclick="hapusdatamanajemenrisiko({{$row->id}})"><i
+                                    data-original-title="Delete" onclick="hapusdatamanajemenrisiko({{$row->faktur}})"><i
                                         class="ri-delete-bin-line mr-0"></i><input type="hidden" name="faktur"
                                         value="{{$row->faktur}}"></a>
                                 <!-- <a class="badge bg-warning mr-2" data-original-title="Delete" href="{{''}}"><i class="ri-delete-bin-line mr-0"></i></a> -->
@@ -99,4 +99,47 @@ Daftar Pelaksanaan Manajemen Risiko | ARMS
 @endsection
 @push('script')
 <!-- <script src="{{asset('assets/customjs/backend/manajemen_risiko.js')}}"></script> -->
+<script>
+        function hapusdatamanajemenrisiko(kode) {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger',
+                },
+                buttonsStyling: true
+            })
+            swalWithBootstrapButtons.fire({
+                title: 'Hapus Data ?',
+                text: "Data tidak dapat dipulihkan kembali!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Tidak',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    })
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/pelaksanaan/' + kode,
+                        data: {
+                            'token': $('input[name=_token]').val(),
+                        },
+                        success: function() {
+                            swalWithBootstrapButtons.fire(
+                                'Deleted!',
+                                'Data Berhasil Dihapus.',
+                                'success'
+                            )
+                            location.reload();
+                        }
+                    })
+                }
+            })
+        }
+    </script>
 @endpush

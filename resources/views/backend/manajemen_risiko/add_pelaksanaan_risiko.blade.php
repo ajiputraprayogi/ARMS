@@ -9,6 +9,7 @@ Pelaksanaan Manajemen Risiko | ARMS
 <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.css')}}">
 <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.min.css')}}">
 <link rel="stylesheet" href="{{asset('assets/customjs/backend/loading.css')}}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endsection
 @section('content')
 <div class="col-md-12">
@@ -74,7 +75,7 @@ Pelaksanaan Manajemen Risiko | ARMS
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="">Periode Penerapan<i class="bintang">*</i></label>
+                            <label class="control-label col-sm-3 align-self-center" for="">Tahun Penerapan<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <select class="form-control" name="priode_penerapan" id="">
                                     <option selected disabled value="">Pilih Tahun</option>
@@ -83,6 +84,12 @@ Pelaksanaan Manajemen Risiko | ARMS
                                     echo "<option value='$i'>$i</option>
                                     "; ?>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label col-sm-3 align-self-center" for="">Priode Penerapan<i class="bintang">*</i></label>
+                            <div class="col-sm-9">
+                                <input placeholder="Pilih Priode Penerapan" class="form-control" id="tanggal" name="priode_penerapan_awal_akhir" />
                             </div>
                         </div>
                         <div class="form-group row">
@@ -362,5 +369,15 @@ Pelaksanaan Manajemen Risiko | ARMS
     <script src="{{asset('assets/customjs/backend/pemangku_kepentingan.js')}}"></script>
     <script src="{{asset('assets/customjs/backend/departemen.js')}}"></script> -->
 <script src="{{asset('assets/customjs/backend/add_pelaksanaan_risiko.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    $(function() {
+    flatpickr("#tanggal", {
+        enableTime: false,
+        dateFormat: "d-m-Y",
+        mode: "range"
+    });
+    });
+</script>
 
 @endpush
