@@ -29,12 +29,12 @@
                     <div class="col-md-3">
                         <label for="">Kode Risiko</label>
                         <div class="form-group">
-                        <select class="form-control select" name="kode_risiko" required>
+                        <select class="form-control" name="kode_risiko" required>
                             <option value="Belum Dilaksanakan">Semua Kode Risiko</option>
-                            @foreach($status as $rowsts)
+                            <!-- @foreach($status as $rowsts)
                             <option value="{{$rowsts->status_pelaksanaan}}" @if($active_status==$rowsts->status_pelaksanaan) selected
                                 @endif>{{$rowsts->status_pelaksanaan}}</option>
-                            @endforeach
+                            @endforeach -->
                         </select>
                       
                         </div>
@@ -108,6 +108,7 @@
                                     </div>
                                 </th> -->
                                 <th>Kode Pengendalian</th>
+                                <th>Kode Risiko</th>
                                 <th>Respons Risiko</th>
                                 <th>Kegiatan Pengendalian</th>
                                 <th>Penanggung Jawab</th>
@@ -121,6 +122,7 @@
                         @foreach($data as $item)
                             <tr>
                                 <td class="text-center">{{$item->kode_tindak_pengendalian}}</td>
+                                <td>{{$item->full_kode}}</td>
                                 <td>{{$item->respons_risiko}}</td>
                                 <td>{{$item->kegiatan_pengendalian}}</td>
                                 <td>{{$item->penanggung_jawab}}</td>

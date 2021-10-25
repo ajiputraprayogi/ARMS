@@ -120,7 +120,7 @@ class PencatatanperistiwaController extends Controller
             // tahun'=>$request->tahun,
             'resiko_id'=>$request->kode_risiko,
             // 'pernyataan'=>$request->pernyataan_risiko,
-            // 'uraian'=>$request->uraian,
+            'uraian'=>$request->uraian,
             'waktu'=>$request->waktu,
             'tempat'=>$request->tempat,
             'kriteria_id'=>$request->skor,
@@ -133,7 +133,7 @@ class PencatatanperistiwaController extends Controller
 
     public function edit($id)
     {
-        $data = DB::select("SELECT a.*,b.kode AS penyebab,c.nilai AS skor,c.nama AS dampak, d.`full_kode` AS full_kode, d.`pernyataan_risiko` AS pernyataan, d.`uraian_dampak` AS uraian,d.periode_penerapan as tahun, d.`faktur` AS faktur,e.`id_departemen` AS id_departemen, f.`nama` AS nama
+        $data = DB::select("SELECT a.*,a.`uraian` AS uraianpencatatan,b.kode AS penyebab,c.nilai AS skor,c.nama AS dampak, d.`full_kode` AS full_kode, d.`pernyataan_risiko` AS pernyataan, d.`uraian_dampak` AS uraian,d.periode_penerapan as tahun, d.`faktur` AS faktur,e.`id_departemen` AS id_departemen, f.`nama` AS nama
                             FROM pencatatan_peristiwa_resiko a
                             JOIN penyebab b ON a.`penyebab_id` = b.`id`
                             JOIN kriteria_dampak c ON a.`kriteria_id` = c.`id`
@@ -171,7 +171,7 @@ class PencatatanperistiwaController extends Controller
             // tahun'=>$request->tahun,
             // 'resiko_id'=>$request->risiko,
             // 'pernyataan'=>$request->pernyataan_risiko,
-            // 'uraian'=>$request->uraian,
+            'uraian'=>$request->uraian,
             'waktu'=>$request->waktu,
             'tempat'=>$request->tempat,
             'kriteria_id'=>$request->skor,

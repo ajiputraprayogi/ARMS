@@ -71,6 +71,7 @@
                                 <th>Kategori</th>
                                 <th>Besaran Risiko awal</th>
                                 <th>Besaran Risiko Terakhir</th>
+                                
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
@@ -83,8 +84,9 @@
                                 <td>{{$item->pernyataan_risiko}}</td>
                                 <td>{{$item->namakonteks}}</td>
                                 <td>{{$item->namakat}}</td>
-                                <td>{{$item->besaran_awal}}</td>
-                                <td>{{$item->besaran_akhir}}</td>
+                                <td class="text-center">{{$item->besaran_awal}}</td>
+                                <td class="text-center">{{$item->besaran_akhir}}</td>
+                                
                                 <td>{{$item->status}}</td>
                                 <td>
                                 <a class="btn btn-success btn-sm m-1"

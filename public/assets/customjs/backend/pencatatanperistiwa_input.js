@@ -73,7 +73,7 @@ $('#cari_risiko').on('select2:select', function (e) {
                 $('#id_risiko').val(item.id)
                 $('#id_konteks').val(item.id_konteks)
                 $('#pernyataan_risiko').val(item.pernyataan_risiko)
-                $('#uraian').val(item.uraian_dampak)
+                // $('#uraian').val(item.uraian_dampak)
                 $('#full_kode').val(item.full_kode);
                 $('#kode_risiko').val(item.full_kode);
                 $('#cario').append('<option value="">' + item.frekuensi_akhir + '</option>');

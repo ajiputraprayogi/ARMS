@@ -77,7 +77,7 @@
                         <tbody class="ligth-body">
                             <td class="text-center">{{$item->resiko_id}}</td>
                             <td>{{$item->pemicu}}</td>
-                            <td>{{$item->uraian_dampak}}</td>
+                            <td>{{$item->uraian}}</td>
                             <td>{{$item->waktu}}</td>
                             <td>{{ $item->nilai }} || {{ $item->nama }}</td>
                             <td>{{$item->penyebab}}</td>

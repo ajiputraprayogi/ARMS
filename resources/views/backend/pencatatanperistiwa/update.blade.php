@@ -115,7 +115,7 @@
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Uraian Peristiwa<i class="bintang">*</i></label>
                             <div class="col-sm-9">
-                                <textarea class="form-control" name="uraian" id="uraian" rows="5" readonly>{{ $item1->uraian }}</textarea>
+                                <textarea class="form-control" name="uraian" id="uraian" rows="5">{{ $item1->uraianpencatatan }}</textarea>
                             </div>
                         </div>
                         <div class="form-group row">

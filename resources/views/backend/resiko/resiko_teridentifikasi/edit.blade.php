@@ -67,6 +67,7 @@ Edit Risiko Teridentifikasi | ARMS
                 <input type="hidden" name="id_dep" id="id_dep" value="{{$res->id_departmen}}">
                 <input type="hidden" name="kodedep" id="kodedep" value="{{$res->kode_departemen}}">
                 <input type="hidden" name="namadep" id="namadep" value="{{$res->departmen_pemilik_resiko}}">
+                <input type="hidden" class="form-control" id="selera_risiko" name="selera_risiko" value="{{$res->selera_risiko}}" readonly>
                 <div class="form-group row">
                     <label class="control-label col-sm-3 align-self-center" for="email">Periode Penerapan<i
                             class="bintang">*</i></label>
@@ -197,7 +198,7 @@ Edit Risiko Teridentifikasi | ARMS
                         <label class="control-label col-sm-3 align-self-center" for="email">Besaran Risiko Awal <i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
-                            <input type="text" name="besaran_saat_ini" id="besaran" style="background-color : {{$res->pr}}; " class="box1" value="{{$res->besaran_awal}}" readonly>
+                            <input type="text" name="besaran_saat_ini" id="besaran_aktual" style="background-color : {{$res->pr}}; " class="box1" value="{{$res->besaran_awal}}" readonly>
                             <input type="hidden" name="pr_saat_ini" id="pr_saat_ini">
                         </div>
                     </div>
@@ -253,6 +254,13 @@ Edit Risiko Teridentifikasi | ARMS
                     <input type="hidden" name="idpro" id="idpro">
                     <input type="hidden" name="iddam" id="iddam">
                 </fieldset>
+                <div class="form-group row">
+                    <label class="control-label col-sm-3 align-self-center" for="email">Deviasi Selera Risiko</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" style="width: 10%!important;" id="deviasi_selera_risiko" name="deviasi_selera_risiko" value="{{$res->selera_risiko - $res->besaran_akhir}}"
+                            readonly>
+                    </div>
+                </div>
                 @endif
                 <div class="form-group" align="center">
                     <b>Pengajuan dan Persetujuan</b>

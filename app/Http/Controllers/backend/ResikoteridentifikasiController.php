@@ -57,7 +57,7 @@ class ResikoteridentifikasiController extends Controller
             // dd($data);
         }else{
             $data = DB::table('resiko_teridentifikasi')
-            ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
+            ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','pelaksanaan_manajemen_risiko.selera_risiko','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
             ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
             ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
@@ -195,10 +195,11 @@ class ResikoteridentifikasiController extends Controller
      */
     public function edit($id)
     {
+        // $deviasi = $res->besaran_akhir - $res->besaran_awal;
         $kategori = kategoriresiko::get();
         $spip = metode::all();
         $res = DB::table('resiko_teridentifikasi')
-        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
+        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','pelaksanaan_manajemen_risiko.selera_risiko','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
         ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
         ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
         ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
@@ -293,7 +294,7 @@ class ResikoteridentifikasiController extends Controller
         // ->where('pelaksanaan_manajemen_risiko.id',$id)
         // ->get();
         $data =  DB::table('pelaksanaan_manajemen_risiko')
-        ->select('pelaksanaan_manajemen_risiko.id','pelaksanaan_manajemen_risiko.faktur', 'pelaksanaan_manajemen_risiko.id_departemen', 'pelaksanaan_manajemen_risiko.priode_penerapan','departemen.kode as kodedep','departemen.nama as namadep','konteks.id as idk','konteks.kode as kodek')
+        ->select('pelaksanaan_manajemen_risiko.id','pelaksanaan_manajemen_risiko.faktur', 'pelaksanaan_manajemen_risiko.id_departemen', 'pelaksanaan_manajemen_risiko.priode_penerapan','pelaksanaan_manajemen_risiko.selera_risiko','departemen.kode as kodedep','departemen.nama as namadep','konteks.id as idk','konteks.kode as kodek')
         ->leftjoin('departemen', 'pelaksanaan_manajemen_risiko.id_departemen', '=', 'departemen.id')
         ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
         ->where('pelaksanaan_manajemen_risiko.id',$id)

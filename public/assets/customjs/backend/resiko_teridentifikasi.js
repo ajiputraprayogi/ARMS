@@ -145,6 +145,7 @@ $(function() {
                     $('#id_dep').val(item.id_departemen);
                     $('#kodedep').val(item.kodedep);
                     $('#namadep').val(item.namadep);
+                    $('#selera_risiko').val(item.selera_risiko);
                     $('#tahun').val(item.priode_penerapan);
                     // $('#cari_konteks').val(item.jk);
                 });
@@ -177,3 +178,8 @@ $(function() {
 		});
 	});
 })
+function hitungdevisiasiselerarisiko(){
+    if($('#besaran').val()!='' && $('#selera_risiko').val()!=''){
+        $('#deviasi_selera_risiko').val(parseInt($('#selera_risiko').val())-parseInt($('#besaran').val()));
+    }
+}
