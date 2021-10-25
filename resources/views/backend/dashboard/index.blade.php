@@ -41,7 +41,7 @@ ARMS | Dashboard
                             <h4 class="card-title">Risiko</h4>
                             <div class="row">
                                 <div class="col-md-6 text-center">
-                                    <h3>{{$populasi_risiko}}</h3>
+                                    <h2>{{$populasi_risiko}}</h2>
                                     <p class="mb-2">Teridentifikasi</p>
                                 </div>
                                 <div class="col-md-6 text-center">
