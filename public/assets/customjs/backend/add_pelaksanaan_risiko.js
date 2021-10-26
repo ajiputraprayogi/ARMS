@@ -52,7 +52,7 @@ $('#cari_departemen').on('select2:select', function (e) {
 
 //=====================================================================================
 $('#addkonteksbtn').on('click', function (e) {
-    if ($('#kode_konteks').val() == '' || $('#nama_konteks').val() == '' || $('#id_jenis_konteks').val() == '' || $('#detail_ancaman_konteks').val() == '' || $('#indikator_kinerja_kegiatan_konteks').val() == '') {
+    if ($('#kode_konteks').val() == '' || $('#nama_konteks').val() == '' || $('#id_jenis_konteks').val() == '') {
         swalWithBootstrapButtons.fire({
             title: 'Oops',
             text: 'Data tidak boleh kosog',

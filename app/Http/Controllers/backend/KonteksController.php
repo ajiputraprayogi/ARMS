@@ -18,7 +18,7 @@ class KonteksController extends Controller
     {
         //
     }
-    
+
     public function listdata(){
         return Datatables::of(konteks::leftJoin('jenis_konteks','konteks.id_konteks','=','jenis_konteks.id')
         ->select('jenis_konteks.id as idjk','jenis_konteks.*','konteks.*')->get())->make(true);
@@ -47,8 +47,8 @@ class KonteksController extends Controller
             'kode_konteks'=>'required',
             'nama_konteks'=>'required',
             'id_jenis_konteks'=>'required',
-            'detail_ancaman_konteks'=>'required',
-            'indikator_kinerja_kegiatan_konteks'=>'required',
+            'detail_ancaman_konteks'=>'',
+            'indikator_kinerja_kegiatan_konteks'=>'',
         ]);
         konteks::insert([
             'faktur_konteks'=>$request->faktur_konteks,
@@ -96,8 +96,8 @@ class KonteksController extends Controller
             'edit_kode_konteks'=>'required',
             'edit_nama_konteks'=>'required',
             'edit_id_jenis_konteks'=>'required',
-            'edit_detail_ancaman_konteks'=>'required',
-            'edit_indikator_kinerja_kegiatan_konteks'=>'required',
+            'edit_detail_ancaman_konteks'=>'',
+            'edit_indikator_kinerja_kegiatan_konteks'=>'',
         ]);
         konteks::find($id)->update([
             'kode'=>$request->edit_kode_konteks,
