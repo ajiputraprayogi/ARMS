@@ -24,6 +24,28 @@
                             </div>
                         </div>
                         <div class="col-md-4">
+                            <div class="form-group">
+                                <select class="form-control" name="konteks" id="">
+                                    <option>Semua Konteks</option>
+                                    @foreach($konteks as $rowkts)
+                                    <option value="{{$rowkts->id}}" @if($active_konteks==$rowkts->id) selected
+                                        @endif>{{$rowkts->nama}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <select class="form-control" name="status" id="">
+                                    <option>Semua Status</option>
+                                    @foreach($status as $rowsts)
+                                    <option value="{{$rowsts->status}}" @if($active_status==$rowsts->status) selected
+                                        @endif>{{$rowsts->status}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="input-group mb-3">
                                 <select class="form-control" name="tahun" id="">
                                     <option>Semua Tahun</option>

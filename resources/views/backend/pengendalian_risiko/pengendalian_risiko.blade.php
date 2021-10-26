@@ -13,7 +13,7 @@
                 <h3 class="mb-3">Daftar Rencana Tindak Pengendalian</h3>
                 <form method="get">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="">Departemen</label>
                         <div class="form-group">
                         <select class="form-control" name="departemen" id="">
@@ -26,20 +26,20 @@
                       
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="">Kode Risiko</label>
                         <div class="form-group">
-                        <select class="form-control" name="kode_risiko" required>
-                            <option value="Belum Dilaksanakan">Semua Kode Risiko</option>
-                            <!-- @foreach($status as $rowsts)
-                            <option value="{{$rowsts->status_pelaksanaan}}" @if($active_status==$rowsts->status_pelaksanaan) selected
-                                @endif>{{$rowsts->status_pelaksanaan}}</option>
-                            @endforeach -->
+                        <select class="form-control select" name="kode_risiko" required>
+                            <option value="Semua Kode Risiko">Semua Kode Risiko</option>
+                            @foreach($kode_risiko as $rowkode)
+                            <option value="{{$rowkode->full_kode}}" @if($active_kode==$rowkode->full_kode) selected
+                                @endif>{{$rowkode->full_kode}}</option>
+                            @endforeach
                         </select>
                       
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="">Status</label>
                         <div class="form-group">
                         <select class="form-control" name="status" required>
@@ -52,7 +52,7 @@
                       
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="">Target Waktu Awal</label>
                         <div class="input-group mb-3">
                                 <input class="form-control" id="tanggal"

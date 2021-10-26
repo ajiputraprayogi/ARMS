@@ -25,12 +25,35 @@ class ResikoteridentifikasiController extends Controller
         $infosearch ='';
         $active_departemen = 'Semua Departemen';
         $active_tahun = 'Semua Tahun';
+        $active_konteks = 'Semua Konteks';
+        $active_status = 'Semua Status';
 
         if($request->has('departemen')){
             if($request->departemen!='Semua Departemen'){
                 $active_departemen = $request->departemen;
             }else{
                 $active_departemen = 'Semua Departemen';
+            }
+        }
+        if($request->has('tahun')){
+            if($request->tahun!='Semua Tahun'){
+                $active_tahun = $request->tahun;
+            }else{
+                $active_tahun = 'Semua Tahun';
+            }
+        }
+        if($request->has('konteks')){
+            if($request->konteks!='Semua Konteks'){
+                $active_konteks = $request->konteks;
+            }else{
+                $active_konteks = 'Semua Konteks';
+            }
+        }
+        if($request->has('status')){
+            if($request->status!='Semua Status'){
+                $active_status = $request->status;
+            }else{
+                $active_status = 'Semua Status';
             }
         }
         $departemen = DB::table('resiko_teridentifikasi')
@@ -43,31 +66,241 @@ class ResikoteridentifikasiController extends Controller
         ->groupby('priode_penerapan')
         ->get();
         
+        $konteks = DB::table('resiko_teridentifikasi')
+                        ->select('konteks.*')
+                        ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                        ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
+                        ->groupby('konteks.id')
+                        ->orderby('konteks.nama','asc')
+                        ->get();
+                        
+        $status = DB::table('resiko_teridentifikasi')
+                        ->select('resiko_teridentifikasi.*')
+                        ->groupby('status')
+                        ->orderby('status','asc')
+                        ->get();
+
         if($active_departemen!='Semua Departemen'){
-            $data = DB::table('resiko_teridentifikasi')
-            ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
-            ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
-            ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
-            ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
-            ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen]])
-            ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
-            ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
-            ->orderby('id')
-            ->get();
-            // dd($data);
+            if($active_tahun!='Semua Tahun'){
+                if($active_konteks!='Semua Konteks'){
+                    if($active_status!='Semua Status'){
+                        $data = DB::table('resiko_teridentifikasi')
+                        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
+                        ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
+                        ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
+                        ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
+                        ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['konteks.id','=',$active_konteks],['resiko_teridentifikasi.status','=',$active_status]])
+                        ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
+                        ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
+                        ->orderby('id')
+                        ->get();
+                        // dd($data);
+                    }else{
+                        $data = DB::table('resiko_teridentifikasi')
+                        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
+                        ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
+                        ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
+                        ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
+                        ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['konteks.id','=',$active_konteks]])
+                        ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
+                        ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
+                        ->orderby('id')
+                        ->get();
+                        // dd($data);
+                    }
+                }else{
+                    if($active_status!='Semua Status'){
+                        $data = DB::table('resiko_teridentifikasi')
+                        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
+                        ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
+                        ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
+                        ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
+                        ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['resiko_teridentifikasi.status','=',$active_status]])
+                        ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
+                        ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
+                        ->orderby('id')
+                        ->get();
+                        // dd($data);
+                    }else{
+                        $data = DB::table('resiko_teridentifikasi')
+                        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
+                        ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
+                        ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
+                        ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
+                        ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun]])
+                        ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
+                        ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
+                        ->orderby('id')
+                        ->get();
+                        // dd($data);
+                    }
+                }
+            }else{
+                if($active_konteks!='Semua Konteks'){
+                    if($active_status!='Semua Status'){
+                        $data = DB::table('resiko_teridentifikasi')
+                        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
+                        ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
+                        ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
+                        ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
+                        ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen],['konteks.id','=',$active_konteks],['resiko_teridentifikasi.status','=',$active_status]])
+                        ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
+                        ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
+                        ->orderby('id')
+                        ->get();
+                        // dd($data);
+                    }else{
+                        $data = DB::table('resiko_teridentifikasi')
+                        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
+                        ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
+                        ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
+                        ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
+                        ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen],['konteks.id','=',$active_konteks]])
+                        ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
+                        ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
+                        ->orderby('id')
+                        ->get();
+                        // dd($data);
+                    }
+                }else{
+                    if($active_status!='Semua Status'){
+                        $data = DB::table('resiko_teridentifikasi')
+                        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
+                        ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
+                        ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
+                        ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
+                        ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen],['resiko_teridentifikasi.status','=',$active_status]])
+                        ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
+                        ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
+                        ->orderby('id')
+                        ->get();
+                        // dd($data);
+                    }else{
+                        $data = DB::table('resiko_teridentifikasi')
+                        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
+                        ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
+                        ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
+                        ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
+                        ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen]])
+                        ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
+                        ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
+                        ->orderby('id')
+                        ->get();
+                        // dd($data);
+                    }
+                }
+            }
         }else{
-            $data = DB::table('resiko_teridentifikasi')
-            ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','pelaksanaan_manajemen_risiko.selera_risiko','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
-            ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
-            ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
-            ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
-            ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
-            ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
-            ->orderby('id')
-            ->get();
+            if($active_tahun!='Semua Tahun'){
+                if($active_konteks!='Semua Konteks'){
+                    if($active_status!='Semua Status'){
+                        $data = DB::table('resiko_teridentifikasi')
+                        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','pelaksanaan_manajemen_risiko.selera_risiko','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
+                        ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
+                        ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
+                        ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
+                        ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
+                        ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
+                        ->where([['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['konteks.id','=',$active_konteks],['resiko_teridentifikasi.status','=',$active_status]])
+                        ->orderby('id')
+                        ->get();
+                        // dd($data);
+                    }else{
+                        $data = DB::table('resiko_teridentifikasi')
+                        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','pelaksanaan_manajemen_risiko.selera_risiko','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
+                        ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
+                        ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
+                        ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
+                        ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
+                        ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
+                        ->where([['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['konteks.id','=',$active_konteks]])
+                        ->orderby('id')
+                        ->get();
+                        // dd($data);
+                    }
+                }else{
+                    if($active_status!='Semua Status'){
+                        $data = DB::table('resiko_teridentifikasi')
+                        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','pelaksanaan_manajemen_risiko.selera_risiko','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
+                        ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
+                        ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
+                        ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
+                        ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
+                        ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
+                        ->where([['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['resiko_teridentifikasi.status','=',$active_status]])
+                        ->orderby('id')
+                        ->get();
+                        // dd($data);
+                    }else{
+                        $data = DB::table('resiko_teridentifikasi')
+                        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','pelaksanaan_manajemen_risiko.selera_risiko','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
+                        ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
+                        ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
+                        ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
+                        ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
+                        ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
+                        ->where('pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun)
+                        ->orderby('id')
+                        ->get();
+                        // dd($data);
+                    }
+                }
+            }else{
+                if($active_konteks!='Semua Konteks'){
+                    if($active_status!='Semua Status'){
+                        $data = DB::table('resiko_teridentifikasi')
+                        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','pelaksanaan_manajemen_risiko.selera_risiko','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
+                        ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
+                        ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
+                        ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
+                        ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
+                        ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
+                        ->where([['konteks.id',$active_konteks],['resiko_teridentifikasi.status','=',$active_status]])
+                        ->orderby('id')
+                        ->get();
+                        // dd($data);
+                    }else{
+                        $data = DB::table('resiko_teridentifikasi')
+                        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','pelaksanaan_manajemen_risiko.selera_risiko','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
+                        ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
+                        ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
+                        ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
+                        ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
+                        ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
+                        ->where('konteks.id',$active_konteks)
+                        ->orderby('id')
+                        ->get();
+                        // dd($data);
+                    }
+                }else{
+                    if($active_status!='Semua Status'){
+                        $data = DB::table('resiko_teridentifikasi')
+                        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','pelaksanaan_manajemen_risiko.selera_risiko','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
+                        ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
+                        ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
+                        ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
+                        ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
+                        ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
+                        ->where('resiko_teridentifikasi.status','=',$active_status)
+                        ->orderby('id')
+                        ->get();
+                        // dd($data);
+                    }else{
+                        $data = DB::table('resiko_teridentifikasi')
+                        ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','pelaksanaan_manajemen_risiko.selera_risiko','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')
+                        ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
+                        ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
+                        ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
+                        ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
+                        ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
+                        ->orderby('id')
+                        ->get();
+                    }
+                }
+            }
         }
         // $data = resikoteridentifikasi::all();
-        return view('backend.resiko.resiko_teridentifikasi.index',compact('data','active_departemen','active_tahun','departemen','tahun'));
+        return view('backend.resiko.resiko_teridentifikasi.index',compact('data','active_departemen','active_tahun','active_konteks','active_status','departemen','tahun','konteks','status'));
     }
 
     public function listdata(){

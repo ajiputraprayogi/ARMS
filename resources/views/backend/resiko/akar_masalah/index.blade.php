@@ -24,6 +24,28 @@ Analisis Akar Masalah | ARMS
                         </div>
                     </div>
                     <div class="col-md-4">
+                        <div class="form-group">
+                            <select class="form-control" name="kategori_penyebab" id="">
+                                <option>Semua Kategori Penyebab</option>
+                                @foreach($kategori_penyebab as $rowkat)
+                                <option value="{{$rowkat->kode}}" @if($active_kategori==$rowkat->kode) selected
+                                    @endif>{{$rowkat->kode}} - {{$rowkat->penyebab}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select class="form-control select" name="kode_risiko" id="">
+                                <option>Semua Kode Risiko</option>
+                                @foreach($kode_risiko as $rowkdr)
+                                <option value="{{$rowkdr->full_kode}}" @if($active_kode==$rowkdr->full_kode) selected
+                                    @endif>{{$rowkdr->full_kode}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="input-group mb-3">
                             <select class="form-control" name="tahun" id="">
                                 <option>Semua Tahun</option>
@@ -134,4 +156,18 @@ function hapusdatamanajemenrisiko(kode) {
     })
 }
 </script>
+<script>
+        $(function() {
+        flatpickr("#tanggal", {
+            enableTime: false,
+            dateFormat: "d-m-Y",
+            mode: "range",
+        });
+        });
+    </script>
+    <script>
+        $(function() {
+            $(".select").select2();
+        });
+    </script>
 @endpush

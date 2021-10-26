@@ -21,6 +21,7 @@ class PengendalianrisikoController extends Controller
         $active_status = 'Semua Status';
         $active_target = '';
         $active_target_akhir = '';
+        $active_kode = 'Semua Kode Risiko';
 
         if($request->has('departemen')){
             if($request->departemen!='Semua Departemen'){
@@ -78,6 +79,13 @@ class PengendalianrisikoController extends Controller
                 $active_target_akhir = '';
             }
         }
+        if($request->has('kode_risiko')){
+            if($request->kode_risiko!='Semua Kode Risiko'){
+                $active_kode = $request->kode_risiko;
+            }else{
+                $active_kode = 'Semua Kode Risiko';
+            }
+        }
         // $target_waktu_change = explode(" to ", $request->target_waktu);
         //     if(count($target_waktu)<2){
         //         $tglsatu = $target_waktu[0];
@@ -107,105 +115,216 @@ class PengendalianrisikoController extends Controller
         $tahun = DB::table('pengendalian_risiko')
         // ->groupby('priode_penerapan')
         ->get();
+
+        $kode_risiko = DB::table('pengendalian_risiko')
+                ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                ->orderby('pengendalian_risiko.id','desc')
+                ->get();
         
         if($active_departemen!='Semua Departemen'){
             if($active_status!='Semua Status'){
                 if($active_target!=''){
                     if($active_target_akhir!=''){
-                        $data = DB::table('pengendalian_risiko')
-                        ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
-                        ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
-                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
-                        // ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
-                        ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
-                        ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status]])
-                        ->orderby('pengendalian_risiko.id','desc')
-                        ->groupby('pengendalian_risiko.faktur')
-                        ->get();
-                        // dd($data);
+                        if($active_kode!='Semua Kode Risiko'){
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            // ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
+                            ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                            ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status],['resiko_teridentifikasi.full_kode','=',$active_kode]])
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                            // dd($data);
+                        }else{
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            // ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
+                            ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                            ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status]])
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                            // dd($data);
+                        }
                     }else{
-                        $data = DB::table('pengendalian_risiko')
-                        ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
-                        ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
-                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
-                        ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
-                        // ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat, $tglduaformat))
-                        ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status]])
-                        ->orderby('pengendalian_risiko.id','desc')
-                        ->groupby('pengendalian_risiko.faktur')
-                        ->get();
-                        // dd($data);
+                        if($active_kode!='Semua Kode Risiko'){
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
+                            // ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat, $tglduaformat))
+                            ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status],['resiko_teridentifikasi.full_kode','=',$active_kode]])
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                            // dd($data);
+                        }else{
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
+                            // ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat, $tglduaformat))
+                            ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status]])
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                            // dd($data);
+                        }
                     }
                 }else{
                     if($active_target_akhir!=''){
-                        $data = DB::table('pengendalian_risiko')
-                        ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
-                        ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
-                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
-                        ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
-                        ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status]])
-                        ->orderby('pengendalian_risiko.id','desc')
-                        ->groupby('pengendalian_risiko.faktur')
-                        ->get();
-                        // dd($data);
+                        if($active_kode!='Semua Kode Risiko'){
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                            ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status],['resiko_teridentifikasi.full_kode','=',$active_kode]])
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                            // dd($data);
+                        }else{
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                            ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status]])
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                            // dd($data);
+                        }
                     }else{
-                        $data = DB::table('pengendalian_risiko')
-                        ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
-                        ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
-                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
-                        ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status]])
-                        ->orderby('pengendalian_risiko.id','desc')
-                        ->groupby('pengendalian_risiko.faktur')
-                        ->get();
-                        // dd($data);
+                        if($active_kode!='Semua Kode Risiko'){
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status],['resiko_teridentifikasi.full_kode','=',$active_kode]])
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                            // dd($data);
+                        }else{
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status]])
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                            // dd($data);
+                        }
                     }
                 }
             }else{
                 if($active_target!=''){
                     if($active_target_akhir!=''){
-                        $data = DB::table('pengendalian_risiko')
-                        ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
-                        ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
-                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
-                        ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
-                        ->where('pengendalian_risiko.id_departemen','=',$active_departemen)
-                        ->orderby('pengendalian_risiko.id','desc')
-                        ->groupby('pengendalian_risiko.faktur')
-                        ->get();
-                        // dd($data);
+                        if($active_kode!='Semua Kode Risiko'){
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                            ->where([['pengendalian_risiko.id_departemen','=',$active_departemen],['resiko_teridentifikasi.full_kode','=',$active_kode]])
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                            // dd($data);
+                        }else{
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                            ->where('pengendalian_risiko.id_departemen','=',$active_departemen)
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                            // dd($data);
+                        }
                     }else{
-                        $data = DB::table('pengendalian_risiko')
-                        ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
-                        ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
-                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
-                        ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
-                        ->where('pengendalian_risiko.id_departemen','=',$active_departemen)
-                        ->orderby('pengendalian_risiko.id','desc')
-                        ->groupby('pengendalian_risiko.faktur')
-                        ->get();
-                        // dd($data);
+                        if($active_kode!='Semua Kode Risiko'){
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
+                            ->where([['pengendalian_risiko.id_departemen','=',$active_departemen],['resiko_teridentifikasi.full_kode','=',$active_kode]])
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                            // dd($data);
+                        }else{
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
+                            ->where('pengendalian_risiko.id_departemen','=',$active_departemen)
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                            // dd($data);
+                        }
                     }
                 }else{
                     if($active_target_akhir!=''){
-                        $data = DB::table('pengendalian_risiko')
-                        ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
-                        ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
-                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
-                        ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
-                        ->where('pengendalian_risiko.id_departemen','=',$active_departemen)
-                        ->orderby('pengendalian_risiko.id','desc')
-                        ->groupby('pengendalian_risiko.faktur')
-                        ->get();
-                        // dd($data);
+                        if($active_kode!='Semua Kode Risiko'){
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                            ->where([['pengendalian_risiko.id_departemen','=',$active_departemen],['resiko_teridentifikasi.full_kode','=',$active_kode]])
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                            // dd($data);
+                        }else{
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                            ->where('pengendalian_risiko.id_departemen','=',$active_departemen)
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                            // dd($data); 
+                        }
                     }else{
-                        $data = DB::table('pengendalian_risiko')
-                        ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
-                        ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
-                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
-                        ->where('pengendalian_risiko.id_departemen','=',$active_departemen)
-                        ->orderby('pengendalian_risiko.id','desc')
-                        ->groupby('pengendalian_risiko.faktur')
-                        ->get();
+                        if($active_kode!='Semua Kode Risiko'){
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->where([['pengendalian_risiko.id_departemen','=',$active_departemen],['resiko_teridentifikasi.full_kode','=',$active_kode]])
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                            // dd($data);
+                        }else{
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->where('pengendalian_risiko.id_departemen','=',$active_departemen)
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                        }
                     }
                 }
             }
@@ -213,94 +332,191 @@ class PengendalianrisikoController extends Controller
             if($active_status!='Semua Status'){
                 if($active_target!=''){
                     if($active_target_akhir!=''){
-                        $data = DB::table('pengendalian_risiko')
-                        ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
-                        ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
-                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
-                        ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
-                        ->where('pengendalian_risiko.status_pelaksanaan','=',$active_status)
-                        ->orderby('pengendalian_risiko.id','desc')
-                        ->groupby('pengendalian_risiko.faktur')
-                        ->get();
-                        // dd($data);
+                        if($active_kode!='Semua Kode Risiko'){
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                            ->where([['pengendalian_risiko.status_pelaksanaan','=',$active_status],['resiko_teridentifikasi.full_kode','=',$active_kode]])
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                            // dd($data);
+                        }else{
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                            ->where('pengendalian_risiko.status_pelaksanaan','=',$active_status)
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                            // dd($data);
+                        }
                     }else{
-                        $data = DB::table('pengendalian_risiko')
-                        ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
-                        ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
-                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
-                        ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
-                        ->where('pengendalian_risiko.status_pelaksanaan','=',$active_status)
-                        ->orderby('pengendalian_risiko.id','desc')
-                        ->groupby('pengendalian_risiko.faktur')
-                        ->get();
+                        if($active_kode!='Semua Kode Risiko'){
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
+                            ->where([['pengendalian_risiko.status_pelaksanaan','=',$active_status],['resiko_teridentifikasi.full_kode','=',$active_kode]])
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                            // dd($data);
+                        }else{
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
+                            ->where('pengendalian_risiko.status_pelaksanaan','=',$active_status)
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                        }
                     }
                 }else{
                     if($active_target_akhir!=''){
-                        $data = DB::table('pengendalian_risiko')
-                        ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
-                        ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
-                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
-                        ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
-                        ->where('pengendalian_risiko.status_pelaksanaan','=',$active_status)
-                        ->orderby('pengendalian_risiko.id','desc')
-                        ->groupby('pengendalian_risiko.faktur')
-                        ->get();
-                        // dd($data);
+                        if($active_kode!='Semua Kode Risiko'){
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                            ->where([['pengendalian_risiko.status_pelaksanaan','=',$active_status],['resiko_teridentifikasi.full_kode','=',$active_kode]])
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                            // dd($data);
+                        }else{
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                            ->where('pengendalian_risiko.status_pelaksanaan','=',$active_status)
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                            // dd($data);   
+                        }
                     }else{
-                        $data = DB::table('pengendalian_risiko')
-                        ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
-                        ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
-                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
-                        ->where('pengendalian_risiko.status_pelaksanaan','=',$active_status)
-                        ->orderby('pengendalian_risiko.id','desc')
-                        ->groupby('pengendalian_risiko.faktur')
-                        ->get();
+                        if($active_kode!='Semua Kode Risiko'){
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->where([['pengendalian_risiko.status_pelaksanaan','=',$active_status],['resiko_teridentifikasi.full_kode','=',$active_kode]])
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                            // dd($data);
+                        }else{
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->where('pengendalian_risiko.status_pelaksanaan','=',$active_status)
+                            ->orderby('pengendalian_risiko.id','desc')
+                            // ->groupby('pengendalian_risiko.faktur')
+                            ->get();
+                        }
                     }
                 }
             }else{
                 if($active_target!=''){
                     if($active_target_akhir!=''){
-                        $data = DB::table('pengendalian_risiko')
-                        ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
-                        ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
-                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
-                        ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
-                        ->orderby('pengendalian_risiko.id','desc')
-                        ->get();
-                        // dd($data);
+                        if($active_kode!='Semua Kode Risiko'){
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                            ->where('resiko_teridentifikasi.full_kode','=',$active_kode)
+                            // ->orderby('pengendalian_risiko.id','desc')
+                            ->get();
+                            // dd($data);
+                        }else{
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                            // ->orderby('pengendalian_risiko.id','desc')
+                            ->get();
+                            // dd($data);   
+                        }
                     }else{
-                        $data = DB::table('pengendalian_risiko')
-                        ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
-                        ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
-                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
-                        ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
-                        ->orderby('pengendalian_risiko.id','desc')
-                        ->get();
+                        if($active_kode!='Semua Kode Risiko'){
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
+                            ->where('resiko_teridentifikasi.full_kode','=',$active_kode)
+                            ->orderby('pengendalian_risiko.id','desc')
+                            ->get();
+                            // dd($data);
+                        }else{
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
+                            ->orderby('pengendalian_risiko.id','desc')
+                            ->get();
+                        }
                     }
                 }else{
                     if($active_target_akhir!=''){
-                        $data = DB::table('pengendalian_risiko')
-                        ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
-                        ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
-                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
-                        ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
-                        ->orderby('pengendalian_risiko.id','desc')
-                        ->get();
-                        // dd($data);
+                        if($active_kode!='Smeua Kode Risiko'){
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                            ->where('resiko_teridentifikasi.full_kode','=',$active_kode)
+                            ->orderby('pengendalian_risiko.id','desc')
+                            ->get();
+                            // dd($data);
+                        }else{
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
+                            ->orderby('pengendalian_risiko.id','desc')
+                            ->get();
+                            // dd($data);
+                        }
                     }else{
-                        $data = DB::table('pengendalian_risiko')
-                        ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
-                        ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
-                        ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
-                        ->orderby('pengendalian_risiko.id','desc')
-                        ->get();
+                        if($active_kode!='Semua Kode Risiko'){
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->where('resiko_teridentifikasi.full_kode','=',$active_kode)
+                            ->orderby('pengendalian_risiko.id','desc')
+                            ->get();
+                        }else{
+                            $data = DB::table('pengendalian_risiko')
+                            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                            ->leftjoin('departemen','departemen.id','=','pengendalian_risiko.id_departemen')
+                            ->orderby('pengendalian_risiko.id','desc')
+                            ->get();
+                        }
                     }
                 }
             }
         }
 
         // $data = DB::table('pengendalian_risiko')->get();
-        return view('backend.pengendalian_risiko.pengendalian_risiko',compact('data','departemen','status','get_target_waktu','get_target_waktu_akhir','tahun','active_departemen','active_status','active_tahun'));
+        return view('backend.pengendalian_risiko.pengendalian_risiko',compact('data','departemen','status','get_target_waktu','get_target_waktu_akhir','tahun','kode_risiko','active_kode','active_departemen','active_status','active_tahun'));
     }
 
     
