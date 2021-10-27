@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 26, 2021 at 06:27 PM
+-- Generation Time: Oct 27, 2021 at 10:10 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 7.4.25
 
@@ -543,6 +543,7 @@ CREATE TABLE `pemangku_kepentingan` (
   `faktur_pemangku` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `pemangku_kepentingan` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `keterangan` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `kelompok_pemangku_kepentingan` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -551,27 +552,28 @@ CREATE TABLE `pemangku_kepentingan` (
 -- Dumping data for table `pemangku_kepentingan`
 --
 
-INSERT INTO `pemangku_kepentingan` (`id`, `faktur_pemangku`, `pemangku_kepentingan`, `keterangan`, `created_at`, `updated_at`) VALUES
-(1, '', 'sfdasafd', 'asdsadf', NULL, '2021-09-28 19:32:51'),
-(2, '', 'dsfa', 'sdfa', NULL, NULL),
-(7, 'FK2021-09-29-00002', 'coba', 'sdafsdfasfd', NULL, NULL),
-(9, 'FK2021-09-29-00003', 'satu', 'sfdsdf', NULL, NULL),
-(11, 'FK2021-10-01-00004', 'test', '56', NULL, NULL),
-(12, 'FK2021-09-29-00003', 'Tes', 'Tess', NULL, NULL),
-(13, 'FK2021-09-29-00001', 'coba1', '45', NULL, '2021-10-03 23:05:39'),
-(14, 'FK2021-10-04-00005', 'test', '1', NULL, NULL),
-(15, 'FK2021-10-04-00005', 'coba', '2', NULL, NULL),
-(16, 'FK2021-10-06-00006', 'Inspektorat Jenderal', 'Sebagai pengawas dari departemen pemilik risiko.', NULL, NULL),
-(17, 'FK2021-10-06-00006', 'Departemen keuangan', 'Sebagai pengawas budget.', NULL, NULL),
-(18, 'FK2021-10-07-00007', 'Departemen keuangan', 'Sebagai pengawas budget.', NULL, NULL),
-(19, '8', 'test', 'test', NULL, NULL),
-(20, '8', 'sdf', 'asd', NULL, NULL),
-(21, '8', 'test', 'test', NULL, NULL),
-(23, '9', 'Pemangku Kepentingan', 'PJ Perjanjian Kinerja', NULL, NULL),
-(24, '9', 'Inspektur Jenderal', 'PJ Perjanjian Kinerja', NULL, NULL),
-(25, '9', 'Eselon I', 'Pengguna Data Kinerja', NULL, NULL),
-(26, '9', 'UPT dan Dinas', 'Pengguna Data Kinerja', NULL, NULL),
-(29, '10', 'sdaf', 'sadf', NULL, NULL);
+INSERT INTO `pemangku_kepentingan` (`id`, `faktur_pemangku`, `pemangku_kepentingan`, `keterangan`, `kelompok_pemangku_kepentingan`, `created_at`, `updated_at`) VALUES
+(1, '', 'sfdasafd', 'asdsadf', NULL, NULL, '2021-09-28 19:32:51'),
+(2, '', 'dsfa', 'sdfa', NULL, NULL, NULL),
+(7, 'FK2021-09-29-00002', 'coba', 'sdafsdfasfd', NULL, NULL, NULL),
+(9, 'FK2021-09-29-00003', 'satu', 'sfdsdf', NULL, NULL, NULL),
+(11, 'FK2021-10-01-00004', 'test', '56', NULL, NULL, NULL),
+(12, 'FK2021-09-29-00003', 'Tes', 'Tess', NULL, NULL, NULL),
+(13, 'FK2021-09-29-00001', 'coba1', '45', NULL, NULL, '2021-10-03 23:05:39'),
+(14, 'FK2021-10-04-00005', 'test', '1', NULL, NULL, NULL),
+(15, 'FK2021-10-04-00005', 'coba', '2', NULL, NULL, NULL),
+(16, 'FK2021-10-06-00006', 'Inspektorat Jenderal', 'Sebagai pengawas dari departemen pemilik risiko.', NULL, NULL, NULL),
+(17, 'FK2021-10-06-00006', 'Departemen keuangan', 'Sebagai pengawas budget.', NULL, NULL, NULL),
+(18, 'FK2021-10-07-00007', 'Departemen keuangan', 'Sebagai pengawas budget.', NULL, NULL, NULL),
+(19, '8', 'test', 'test', NULL, NULL, NULL),
+(20, '8', 'sdf', 'asd', NULL, NULL, NULL),
+(21, '8', 'test', 'test', NULL, NULL, NULL),
+(23, '9', 'Pemangku Kepentingan', 'PJ Perjanjian Kinerja', NULL, NULL, NULL),
+(24, '9', 'Inspektur Jenderal', 'PJ Perjanjian Kinerja', NULL, NULL, NULL),
+(25, '9', 'Eselon I', 'Pengguna Data Kinerja', NULL, NULL, NULL),
+(26, '9', 'UPT dan Dinas', 'Pengguna Data Kinerja', NULL, NULL, NULL),
+(29, '10', 'sdaf', 'sadf', NULL, NULL, NULL),
+(30, '10', 'testing 1', 'mengetest 1', 'eksternal', NULL, '2021-10-27 01:06:50');
 
 -- --------------------------------------------------------
 
@@ -1086,7 +1088,7 @@ ALTER TABLE `pelaksanaan_pengendalian_risiko`
 -- AUTO_INCREMENT for table `pemangku_kepentingan`
 --
 ALTER TABLE `pemangku_kepentingan`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `pencatatan_peristiwa_resiko`
