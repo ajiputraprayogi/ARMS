@@ -24,6 +24,39 @@
                         </div>
                     </div>
                     <div class="col-md-4">
+                        <div class="form-group">
+                            <select class="form-control select" name="kode_risiko" id="">
+                                <option>Semua Kode Risiko</option>
+                                @foreach($kode_risiko as $rowkdr)
+                                <option value="{{$rowkdr->full_kode}}" @if($active_kode==$rowkdr->full_kode) selected
+                                    @endif>{{$rowkdr->full_kode}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select class="form-control" name="kode_penyebab" id="">
+                                <option>Semua Kode Penyebab</option>
+                                @foreach($kode_penyebab as $rowkdp)
+                                <option value="{{$rowkdp->kode}}" @if($active_penyebab==$rowkdp->kode) selected
+                                    @endif>{{$rowkdp->kode}} - {{$rowkdp->penyebab}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select class="form-control select" name="pemicu_kejadian" id="">
+                                <option>Semua Pemicu Kejadian</option>
+                                @foreach($pemicu_kejadian as $rowpkj)
+                                <option value="{{$rowpkj->pemicu}}" @if($active_pemicu==$rowpkj->pemicu) selected
+                                    @endif>{{$rowpkj->pemicu}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="input-group mb-3">
                             <select class="form-control" name="tahun" id="">
                                 <option>Semua Tahun</option>
@@ -147,6 +180,11 @@
                 }
             })
         }
+    </script>
+    <script>
+        $(function() {
+            $(".select").select2();
+        });
     </script>
 @endpush
 
