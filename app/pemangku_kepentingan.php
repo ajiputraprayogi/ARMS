@@ -8,6 +8,6 @@ class pemangku_kepentingan extends Model
 {
     protected $table = 'pemangku_kepentingan';
     protected $fillable = [
-        'pemangku_kepentingan','keterangan'
+        'pemangku_kepentingan','keterangan','kelompok_pemangku_kepentingan'
     ];
 }

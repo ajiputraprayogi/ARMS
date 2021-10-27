@@ -44,11 +44,13 @@ class PemangkukepentinganController extends Controller
             'faktur_pemangku'=>'required',
             'pemangku_kepentingan'=>'required',
             'keterangan'=>'required',
+            'kelompok_pemangku_kepentingan'=>''
         ]);
         pemangku_kepentingan::insert([
             'faktur_pemangku'=>$request->faktur_pemangku,
             'pemangku_kepentingan'=>$request->pemangku_kepentingan,
             'keterangan'=>$request->keterangan,
+            'kelompok_pemangku_kepentingan'=>$request->kelompok_pemangku_kepentingan,
         ]);
         //return redirect('pelaksanaan/create')->with('statuspemangku','Sukses menambahkan data');
     }
@@ -87,10 +89,12 @@ class PemangkukepentinganController extends Controller
         $request->validate([
             'edit_pemangku_kepentingan'=>'required',
             'edit_keterangan'=>'required',
+            'edit_kelompok_pemangku_kepentingan'=>''
         ]);
         pemangku_kepentingan::find($id)->update([
             'pemangku_kepentingan'=>$request->edit_pemangku_kepentingan,
             'keterangan'=>$request->edit_keterangan,
+            'kelompok_pemangku_kepentingan'=>$request->edit_kelompok_pemangku_kepentingan,
         ]);
         //return redirect('pelaksanaan/create')->with('statuspemangku','Sukses mengubah data');
     }

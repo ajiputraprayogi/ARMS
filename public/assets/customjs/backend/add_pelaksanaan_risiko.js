@@ -190,6 +190,7 @@ function getdatapemangku() {
                 rows_pemangku = rows_pemangku + '<td class="text-center">' + no + '</td>';
                 rows_pemangku = rows_pemangku + '<td>' + value.pemangku_kepentingan + '</td>';
                 rows_pemangku = rows_pemangku + '<td>' + value.keterangan + '</td>';
+                rows_pemangku = rows_pemangku + '<td>' + value.kelompok_pemangku_kepentingan + '</td>';
                 rows_pemangku = rows_pemangku + '<td class="text-center"><button type="button" onclick="viewdatapemangku(' + value.id + ')" class="btn m-1 btn-info btn-sm"><i class="ri-eye-line mr-0"></i></button><button type="button" onclick="editdatapemangku(' + value.id + ')" class="btn m-1 btn-success btn-sm"><i class="ri-pencil-line mr-0"></i></button><button type="button" onclick="hapusdatapemangku(' + value.id + ')" class="btn btn-danger btn-sm m-1"><i class="ri-delete-bin-line mr-0"></i></button></td>';
                 rows_pemangku = rows_pemangku + '</tr>';
             });
@@ -269,12 +270,14 @@ function editdatapemangku(kode) {
                 $('#pemangku_id').val(value.id);
                 $('#edit_pemangku_kepentingan').val(value.pemangku_kepentingan);
                 $('#edit_keterangan').val(value.keterangan);
+                $('#edit_kelompok_pemangku_kepentingan').val(value.kelompok_pemangku_kepentingan);
                 $('#labelpemangku').html('Edit Pemangku Kepentingan');
             });
         }, complete: function () {
             $('#editpemangkubtn').show();
             $('#edit_pemangku_kepentingan').attr('readonly', false);
             $('#edit_keterangan').attr('readonly', false);
+            $('#edit_kelompok_pemangku_kepentingan').attr('readonly', false);
             $('#edit_pemangku').modal('show');
             $('#panel').loading('stop');
         }
@@ -292,12 +295,14 @@ function viewdatapemangku(kode) {
                 $('#pemangku_id').val(value.id);
                 $('#edit_pemangku_kepentingan').val(value.pemangku_kepentingan);
                 $('#edit_keterangan').val(value.keterangan);
+                $('#edit_kelompok_pemangku_kepentingan').val(value.kelompok_pemangku_kepentingan);
                 $('#labelpemangku').html('View Pemangku Kepentingan');
             });
         }, complete: function () {
             $('#editpemangkubtn').hide();
             $('#edit_pemangku_kepentingan').attr('readonly', true);
             $('#edit_keterangan').attr('readonly', true);
+            $('#edit_kelompok_pemangku_kepentingan').attr('readonly', true);
             $('#edit_pemangku').modal('show');
             $('#panel').loading('stop');
         }
@@ -430,6 +435,7 @@ $('#addpemangkubtn').on('click', function (e) {
                 }, complete: function () {
                     $('#pemangku_kepentingan').val('');
                     $('#keterangan').val('');
+                    $('#kelompok_pemangku_kepentingan').val('');
                     $('#pemangku').modal('hide');
                     $('#panel').loading('stop');
                     getdatapemangku()

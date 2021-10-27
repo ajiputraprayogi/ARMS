@@ -79,7 +79,7 @@ Pelaksanaan Manajemen Risiko | ARMS
                             <div class="col-sm-9">
                                 <select class="form-control" name="priode_penerapan" id="">
                                     <option selected disabled value="">Pilih Tahun</option>
-                                    <?php 
+                                    <?php
                                     $tahun=date('Y'); for ($i=$tahun; $i<=date('Y') +5 ; $i++)
                                     echo "<option value='$i'>$i</option>
                                     "; ?>
@@ -138,6 +138,7 @@ Pelaksanaan Manajemen Risiko | ARMS
                                         <th>No</th>
                                         <th>Nama Pemangku kepentingan</th>
                                         <th>Keterangan</th>
+                                        <th>Kelompok Pemangku Kepentingan</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -306,6 +307,16 @@ Pelaksanaan Manajemen Risiko | ARMS
                                             required></textarea>
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label class="control-label col-sm-3" for="">Kelompok Pemangku Kepentingan</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" name="kelompok_pemangku_kepentingan" id="kelompok_pemangku_kepentingan" required>
+                                            <option value="" selected disabled hidden>- Pilih Kelompok -</option>
+                                            <option value="internal">Internal</option>
+                                            <option value="eksternal">Eksternal</option>
+                                        </select>
+                                    </div>
+                                </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -344,6 +355,15 @@ Pelaksanaan Manajemen Risiko | ARMS
                                     <div class="col-sm-9">
                                         <textarea class="form-control" name="edit_keterangan" id="edit_keterangan" rows="4"
                                             required></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="control-label col-sm-3" for="">Kelompok Pemangku Kepentingan</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" name="edit_kelompok_pemangku_kepentingan" id="edit_kelompok_pemangku_kepentingan" required>
+                                            <option value="internal">Internal</option>
+                                            <option value="eksternal">Eksternal</option>
+                                        </select>
                                     </div>
                                 </div>
                         </div>
