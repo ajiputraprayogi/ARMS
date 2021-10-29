@@ -31,11 +31,12 @@
                                 <th>Tingkat Dampak</th>
                                 <th>Besaran Risiko</th>
                                 <th>Warna</th>
+                                <th>Kategori</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="ligth-body">
-                            
+
                         </tbody>
                     </table>
                 </div>

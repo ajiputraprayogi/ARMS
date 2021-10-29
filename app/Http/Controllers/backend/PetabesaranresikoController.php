@@ -23,7 +23,7 @@ class PetabesaranresikoController extends Controller
     }
 
     public function listdata(){
-        return Datatables::of(DB::table('besaran_resiko')->select('besaran_resiko.id', 'besaran_resiko.id_prob', 'besaran_resiko.id_dampak', 'besaran_resiko.nilai', 'besaran_resiko.kode_warna', 'kriteria_dampak.nilai as nilai_dampak' , 'kriteria_probabilitas.nilai as nilai_probabilitas')
+        return Datatables::of(DB::table('besaran_resiko')->select('besaran_resiko.id', 'besaran_resiko.id_prob', 'besaran_resiko.id_dampak', 'besaran_resiko.nilai', 'besaran_resiko.kode_warna', 'besaran_resiko.level as kategori', 'kriteria_dampak.nilai as nilai_dampak' , 'kriteria_probabilitas.nilai as nilai_probabilitas')
         ->join('kriteria_probabilitas', 'besaran_resiko.id_prob', '=', 'kriteria_probabilitas.id')->join('kriteria_dampak', 'besaran_resiko.id_dampak', '=', 'kriteria_dampak.id')->get())->make(true);
     }
     /**
@@ -50,12 +50,14 @@ class PetabesaranresikoController extends Controller
             'warna' => 'required',
             'prob' => 'required',
             'dampak' => 'required',
+            'kategori' => 'required'
         ]);
         besaranresiko::insert([
             'kode_warna' => $request->warna,
             'id_prob' => $request->prob,
             'id_dampak' => $request->dampak,
             'nilai' => $request->nilai,
+            'level' => $request->kategori
         ]);
         return redirect('petabesaranresiko')->with('status','Berhasil menyimpan data');
     }
@@ -68,7 +70,7 @@ class PetabesaranresikoController extends Controller
      */
     public function show($id)
     {
-        
+
     }
 
     /**
@@ -79,7 +81,7 @@ class PetabesaranresikoController extends Controller
      */
     public function edit($id)
     {
-        $data= DB::table('besaran_resiko')->select('besaran_resiko.kode_warna', 'besaran_resiko.id', 'besaran_resiko.id_prob', 'besaran_resiko.id_dampak', 'besaran_resiko.nilai as nilai_besaran', 'kriteria_probabilitas.id as id_probabilitas', 'kriteria_probabilitas.nama as nama_probabilitas', 'kriteria_probabilitas.nilai as nilai_probabilitas'
+        $data= DB::table('besaran_resiko')->select('besaran_resiko.kode_warna', 'besaran_resiko.id', 'besaran_resiko.id_prob', 'besaran_resiko.id_dampak', 'besaran_resiko.nilai as nilai_besaran', 'besaran_resiko.level as kategori', 'kriteria_probabilitas.id as id_probabilitas', 'kriteria_probabilitas.nama as nama_probabilitas', 'kriteria_probabilitas.nilai as nilai_probabilitas'
         , 'kriteria_dampak.id as id_dampak', 'kriteria_dampak.nama as nama_damp', 'kriteria_dampak.nilai as nilai_damp')
         ->leftjoin('kriteria_probabilitas', 'besaran_resiko.id_prob', '=', 'kriteria_probabilitas.id')
         ->leftjoin('kriteria_dampak', 'besaran_resiko.id_dampak', '=', 'kriteria_dampak.id')
@@ -93,7 +95,7 @@ class PetabesaranresikoController extends Controller
         // $nilkod = DB::table('besaran_resiko')->select('kode_warna', 'nilai')->where('id', $id)->get();
         // dd($data);
         // $link= DB::table('besaran_resiko')->where('id',$id)->get();
-        
+
         $probabilitas = DB::table('kriteria_probabilitas')->select('*')->get();
         $dampak = DB::table('kriteria_dampak')->select('*')->get();
         return view('backend.peta_besaran_resiko.edit',['data'=>$data, 'probabilitas'=>$probabilitas, 'dampak'=>$dampak]);
@@ -116,7 +118,7 @@ class PetabesaranresikoController extends Controller
             'nilai' => $request->nilai,
             'kode_warna' => $request->warna,
         ]);
-        
+
         return redirect('petabesaranresiko')->with('status','Berhasil menyimpan data');
     }
 

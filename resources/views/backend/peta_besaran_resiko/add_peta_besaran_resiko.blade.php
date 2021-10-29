@@ -18,7 +18,7 @@
                                 <option selected disabled value="">Pilih Kriteria Probabilitas</option>
                                 @foreach($probabilitas as $data1)
                                     <option value="{{$data1->id}}" > {{$data1->nilai}} - {{$data1->nama}}</option>
-                                    
+
                                 @endforeach
                             </select>
                         </div>
@@ -46,6 +46,19 @@
                             <input type="color" class="form-control col-sm-1" id="exampleInputcolor" value="#32BDEA" name="warna">
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3" for="email">Kategori</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="kategori" id="kategori" required>
+                                <option value="" selected disabled hidden>- Pilih kategori -</option>
+                                <option value="Sangat Rendah">Sangat Rendah</option>
+                                <option value="Rendah">Rendah</option>
+                                <option value="Sedang">Sedang</option>
+                                <option value="Tinggi">Tinggi</option>
+                                <option value="Sangat Tinggi">Sangat Tinggi</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="text-right">
                         <div class="form-group">
                             <button class="btn btn-primary">Simpan</button>
@@ -63,4 +76,3 @@
     <script src="{{asset('assets/customjs/backend/pemangku_kepentingan.js')}}"></script>
 @endpush
 
- 

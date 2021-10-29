@@ -18,6 +18,7 @@ $(function(){
                 "orderable": false,
                 "data": null,
             },
+            {data: 'kategori', name: 'kategori'},
             {
                 render: function(data, type, row){
                     // return '<button class="btn btn-danger" onclick="hapusdata('+row['id']+')"><i class="fa fa-trash"></i></button> <a href="/client/'+row['id']+'/edit" class="btn btn-success"><i class="fa fa-wrench"></i></a>'
