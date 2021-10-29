@@ -40,6 +40,10 @@ class perubahanBesaranRisiko extends Controller
             'deviasi'=>$request->deviasi,
             'warna_aktual'=>$request->warnabesarankini,
             'rekomendasi'=>$request->rekomendasi,
+            'frekuensi_saat_ini'=>$request->frekuensi_saat_ini,
+            'dampak_saat_ini'=>$request->dampak_saat_ini,
+            'besaran_saat_ini'=>$request->besaran_saat_ini,
+            'pr_saat_ini'=>$request->pr_saat_ini,
         ]);
         $frekuensi = DB::table('kriteria_probabilitas')->where('id',$request->frekkini)->get();
         $dampak = DB::table('kriteria_dampak')->where('id',$request->dampakini)->get();
@@ -54,24 +58,24 @@ class perubahanBesaranRisiko extends Controller
             $label_dam=$dam->nilai.' - '.$dam->nama;
         }
         $selera_risiko = $request->selera_risiko;
-        $besaran_saat_ini = $request->besaran_saat_ini;
+        $besaran_saat_ini = $request->besarankini;
         if($besaran_saat_ini <= $selera_risiko){
             $up = DB::table('resiko_teridentifikasi')->where('full_kode', '=', $request->full_kode)
             ->update([
-                // 'pr_akhir'=>$request->warnabesarankini,
-                // 'besaran_akhir'=>$request->besarankini,
-                // 'frekuensi_akhir'=>$label_pro,
-                // 'dampak_akhir'=>$label_dam,
+                'pr_akhir'=>$request->warnabesarankini,
+                'besaran_akhir'=>$request->besarankini,
+                'frekuensi_akhir'=>$label_pro,
+                'dampak_akhir'=>$label_dam,
                 'status'=>'Memenuhi Selera Risiko',
             ]);
         }else{
             $up = DB::table('resiko_teridentifikasi')->where('full_kode', '=', $request->full_kode)
             ->update([
-                // 'pr_akhir'=>$request->warnabesarankini,
-                // 'besaran_akhir'=>$request->besarankini,
-                // 'frekuensi_akhir'=>$label_pro,
-                // 'dampak_akhir'=>$label_dam,
-                'status'=>'Belum memenuhi selera risiko',
+                'pr_akhir'=>$request->warnabesarankini,
+                'besaran_akhir'=>$request->besarankini,
+                'frekuensi_akhir'=>$label_pro,
+                'dampak_akhir'=>$label_dam,
+                'status'=>'Belum Memenuhi Selera Risiko',
             ]);
         }
         return redirect('perubahan-besaran-risiko')->with('status','Berhasil menyimpan data');
@@ -98,10 +102,10 @@ class perubahanBesaranRisiko extends Controller
         DB::table('perubahan_besaran_risiko')
         ->where('id',$id)
         ->update([
-            'id_pelaksanaan_manajemen_risiko'=>$request->id,
+            // 'id_pelaksanaan_manajemen_risiko'=>$request->id,
             'id_frekuensi_aktual'=>$request->frekkini,
             'id_dampak_aktual'=>$request->dampakini,
-            'kode_resiko_teridentifikasi'=>$request->full_kode,
+            // 'kode_resiko_teridentifikasi'=>$request->full_kode,
             'besaran_aktual'=>$request->besarankini,
             'deviasi'=>$request->deviasi,
             'warna_aktual'=>$request->warnabesarankini,
@@ -127,6 +131,27 @@ class perubahanBesaranRisiko extends Controller
         //     'frekuensi_akhir'=>$label_pro,
         //     'dampak_akhir'=>$label_dam,
         // ]);
+        $selera_risiko = $request->selera_risiko;
+        $besaran_saat_ini = $request->besarankini;
+        if($besaran_saat_ini <= $selera_risiko){
+            $up = DB::table('resiko_teridentifikasi')->where('full_kode', '=', $request->full_kode)
+            ->update([
+                'pr_akhir'=>$request->warnabesarankini,
+                'besaran_akhir'=>$request->besarankini,
+                'frekuensi_akhir'=>$label_pro,
+                'dampak_akhir'=>$label_dam,
+                'status'=>'Memenuhi Selera Risiko',
+            ]);
+        }else{
+            $up = DB::table('resiko_teridentifikasi')->where('full_kode', '=', $request->full_kode)
+            ->update([
+                'pr_akhir'=>$request->warnabesarankini,
+                'besaran_akhir'=>$request->besarankini,
+                'frekuensi_akhir'=>$label_pro,
+                'dampak_akhir'=>$label_dam,
+                'status'=>'Belum Memenuhi Selera Risiko',
+            ]);
+        }
         return redirect('perubahan-besaran-risiko')->with('status','Berhasil memperbarui data');
     }
 

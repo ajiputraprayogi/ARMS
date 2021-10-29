@@ -116,14 +116,14 @@ legend.scheduler-border {
                                 Ini</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="frekuensi_saat_ini"
-                                    name="frekuensi_saat_ini" @foreach($dataresiko as $dtr) value="{{$dtr->frekuensi_akhir}}" @endforeach readonly>
+                                    name="frekuensi_saat_ini" @foreach($datadetail as $dtr) value="{{$dtr->frekuensi_saat_ini}}" @endforeach readonly>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="email">Skor Dampak Saat
                                 Ini</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="dampak_saat_ini" @foreach($dataresiko as $dtr) value="{{$dtr->dampak_akhir}}" @endforeach name="dampak_saat_ini"
+                                <input type="text" class="form-control" id="dampak_saat_ini" @foreach($datadetail as $dtr) value="{{$dtr->dampak_saat_ini}}" @endforeach name="dampak_saat_ini"
                                     readonly>
                             </div>
                         </div>
@@ -131,7 +131,7 @@ legend.scheduler-border {
                             <label class="control-label col-sm-3 align-self-center" for="email">Besaran Risiko Saat Ini
                                 <i class="bintang">*</i></label>
                             <div class="col-sm-9">
-                                <input type="text" name="besaran_saat_ini" id="besaran_saat_ini" class="box1" @foreach($dataresiko as $dtr) style="background-color:{{$dtr->pr_akhir}};" value="{{$dtr->besaran_akhir}}" @endforeach readonly>
+                                <input type="text" name="besaran_saat_ini" id="besaran_saat_ini" class="box1" @foreach($datadetail as $dtr) style="background-color:{{$dtr->pr_saat_ini}};" value="{{$dtr->besaran_saat_ini}}" @endforeach readonly>
                             </div>
                         </div>
                     </fieldset>

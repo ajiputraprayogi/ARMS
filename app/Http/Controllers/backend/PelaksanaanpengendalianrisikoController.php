@@ -179,7 +179,7 @@ class PelaksanaanpengendalianrisikoController extends Controller
         ->get();
         $pengendalian = DB::table('pengendalian_risiko')
         ->where('pengendalian_risiko.status_pelaksanaan','!=','Selesai Dilaksanakan')
-        ->where('pengendalian_risiko.faktur',$faktur)
+        ->where('pengendalian_risiko.id_risiko',$id)
         ->get();
         $print=[
             'detail'=>$data,

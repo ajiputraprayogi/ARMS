@@ -84,6 +84,7 @@ $('#cari_risiko').on('select2:select', function (e) {
                     $('#dampak_saat_ini').val(item.dampak_akhir);
                     $('#besaran_saat_ini').val(item.besaran_akhir);
                     $('#besaran_saat_ini').css("background-color", item.pr_akhir);
+                    $('#pr_saat_ini').val(item.pr_akhir);
                 })
             }
         },

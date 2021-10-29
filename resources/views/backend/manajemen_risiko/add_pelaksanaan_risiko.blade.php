@@ -63,7 +63,7 @@ Pelaksanaan Manajemen Risiko | ARMS
                                 Risiko<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <input type="" class="form-control" name="nama_koordinator_pengelola_risiko"
-                                    value="{{Auth::user()->name}}" id="">
+                                     id="">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -71,7 +71,7 @@ Pelaksanaan Manajemen Risiko | ARMS
                                 Risiko<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <input type="" class="form-control" name="jabatan_koordinator_pengelola_risiko"
-                                    value="{{Auth::user()->level}}" id="">
+                                     id="">
                             </div>
                         </div>
                         <div class="form-group row">

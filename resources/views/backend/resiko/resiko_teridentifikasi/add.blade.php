@@ -148,7 +148,7 @@ Identifikasi Risiko | ARMS
                         <input type="text" class="form-control" name="diajukan">
                     </div> -->
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="" name="diajukan" value="{{Auth::user()->name}}">
+                        <input type="text" class="form-control" id="" name="diajukan">
                         <!-- <select class="form-control" name="diajukan" id="">
                             <option selected value="{{Auth::user()->name}}">{{Auth::user()->name}}</option>
                             @foreach($orang as $pengaju)
@@ -161,7 +161,7 @@ Identifikasi Risiko | ARMS
                     <label class="control-label col-sm-3 align-self-center" for="email">Diajukan Pada<i
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
-                        <div class="md-form md-outline input-with-post-icon datepicker">
+                        <div class="md-form md-outline input-with-post-icon">
                             <input placeholder="{{$hariini}}" id="example" class="form-control pickyDate"
                                 value="{{$hariini}}" name="tanggal_pengajuan" autocomplete="off">
                         </div>

@@ -90,13 +90,13 @@ legend.scheduler-border {
                             <input type="text" class="form-control" id="selera_risiko" name="selera_risiko" readonly>
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <!-- <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Deviasi Selera Risiko</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" style="width: 10%!important;" id="deviasi_selera_risiko" name="deviasi_selera_risiko"
                                 readonly>
                         </div>
-                    </div>
+                    </div> -->
                     <fieldset class="scheduler-border">
                         <legend class="scheduler-border">Resiko Yang Direspons</legend>
                         <div class="form-group row">
@@ -120,6 +120,7 @@ legend.scheduler-border {
                                 <i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <input type="text" name="besaran_saat_ini" id="besaran_saat_ini" class="box1" readonly>
+                                <input type="hidden" name="pr_saat_ini" id="pr_saat_ini">
                             </div>
                         </div>
                     </fieldset>

@@ -82,11 +82,7 @@ Analisis Akar Masalah | ARMS
                             <select class="js-example-basic-single text search-input" id="cari_risiko"
                                 name="cari_risiko" style="width:100%;">
                                 @foreach($data_manajemen_risiko as $dmr)
-                                @php
-                                $dataresiko = DB::table('resiko_teridentifikasi')
-                                ->where([['id_departmen',$dmr->id_departemen],['periode_penerapan',$dmr->priode_penerapan]])
-                                ->get();
-                                @endphp
+                               
 
                                 @foreach($dataresiko as $dtr)
                                 <option value="{{$dtr->full_kode}}" @if($dtr->full_kode==$rowdtl->kode_risiko) selected
