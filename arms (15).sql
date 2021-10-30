@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2021 at 04:51 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.1
+-- Generation Time: Oct 30, 2021 at 04:16 AM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 7.4.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `arms`
+-- Database: `arms_new`
 --
 
 -- --------------------------------------------------------
@@ -458,8 +457,8 @@ CREATE TABLE `konteks` (
   `nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_konteks` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_departemen` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `detail_ancaman` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `indikator_kinerja_kegiatan` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `detail_ancaman` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `indikator_kinerja_kegiatan` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -697,6 +696,7 @@ CREATE TABLE `pemangku_kepentingan` (
   `faktur_pemangku` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `pemangku_kepentingan` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `keterangan` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `kelompok_pemangku_kepentingan` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -705,41 +705,41 @@ CREATE TABLE `pemangku_kepentingan` (
 -- Dumping data for table `pemangku_kepentingan`
 --
 
-INSERT INTO `pemangku_kepentingan` (`id`, `faktur_pemangku`, `pemangku_kepentingan`, `keterangan`, `created_at`, `updated_at`) VALUES
-(1, '', 'sfdasafd', 'asdsadf', NULL, '2021-09-28 19:32:51'),
-(2, '', 'dsfa', 'sdfa', NULL, NULL),
-(10, 'FK2021-09-29-00003', 'ghggh', 'gsfgfd', NULL, NULL),
-(12, 'FK2021-09-29-00003', 'Tes', 'Tess', NULL, NULL),
-(13, 'FK2021-09-29-00001', 'coba1', '45', NULL, '2021-10-03 23:05:39'),
-(14, 'FK2021-10-04-00005', 'test', '1', NULL, NULL),
-(15, 'FK2021-10-04-00005', 'coba', '2', NULL, NULL),
-(16, 'FK2021-10-06-00006', 'Inspektorat Jenderal', 'Sebagai pengawas dari departemen pemilik risiko.', NULL, NULL),
-(17, 'FK2021-10-06-00006', 'Departemen keuangan', 'Sebagai pengawas budget.', NULL, NULL),
-(18, 'FK2021-10-07-00007', 'Departemen keuangan', 'Sebagai pengawas budget.', NULL, NULL),
-(19, '8', 'test', 'test', NULL, NULL),
-(20, '8', 'sdf', 'asd', NULL, NULL),
-(21, '8', 'test', 'test', NULL, NULL),
-(23, '9', 'Pemangku Kepentingan', 'PJ Perjanjian Kinerja', NULL, NULL),
-(24, '9', 'Inspektur Jenderal', 'PJ Perjanjian Kinerja', NULL, NULL),
-(25, '9', 'Eselon I', 'Pengguna Data Kinerja', NULL, NULL),
-(26, '9', 'UPT dan Dinas', 'Pengguna Data Kinerja', NULL, NULL),
-(27, '10', 'satu', 'tesstttttttt', NULL, NULL),
-(28, '1', 'Menteri Pertanian', 'PJ Perjanjian Kerja', NULL, NULL),
-(29, '1', 'Inspektur Jenderal', 'PJ Perjanjian Kerja', NULL, NULL),
-(30, '1', 'Inspektorat IV Itjen Kementan', 'Reviuer', NULL, NULL),
-(31, '1', 'Kementerian Pan dan RB', 'Evaluator', NULL, NULL),
-(32, '1', 'Eselon I', 'Pengguna Data Kinerja', NULL, NULL),
-(33, '2', 'Menteri Pertanian', 'PJ Perjanjian Kinerja', NULL, NULL),
-(34, '2', 'Inspektur Jenderal', 'PJ Perjanjian Kinerja', NULL, NULL),
-(35, '2', 'Eselon I', 'Pengguna Data Kinerja', NULL, NULL),
-(36, '2', 'Eselon II', 'Pengguna Data Kinerja', NULL, NULL),
-(37, '2', 'UPT dan Dinas', 'Pengguna Data Kinerja', NULL, NULL),
-(38, '2', 'Masyarakat/Mitra', 'Stakeholder Eksternal', NULL, NULL),
-(39, '3', 'Menteri Pertanian', 'PJ Perjanjian Kinerja', NULL, NULL),
-(40, '3', 'Inspektur Jenderal', 'PJ Perjanjian Kinerja', NULL, NULL),
-(41, '3', 'Eselon I', 'Pengguna data kinerja', NULL, NULL),
-(42, '3', 'Masyarakat/Mitra', 'Stakeholder Eksternal', NULL, NULL),
-(43, '3', 'UPT dan Dinas', 'Pengguna Data Kinerja', NULL, NULL);
+INSERT INTO `pemangku_kepentingan` (`id`, `faktur_pemangku`, `pemangku_kepentingan`, `keterangan`, `kelompok_pemangku_kepentingan`, `created_at`, `updated_at`) VALUES
+(1, '', 'sfdasafd', 'asdsadf', NULL, NULL, '2021-09-28 19:32:51'),
+(2, '', 'dsfa', 'sdfa', NULL, NULL, NULL),
+(10, 'FK2021-09-29-00003', 'ghggh', 'gsfgfd', NULL, NULL, NULL),
+(12, 'FK2021-09-29-00003', 'Tes', 'Tess', NULL, NULL, NULL),
+(13, 'FK2021-09-29-00001', 'coba1', '45', NULL, NULL, '2021-10-03 23:05:39'),
+(14, 'FK2021-10-04-00005', 'test', '1', NULL, NULL, NULL),
+(15, 'FK2021-10-04-00005', 'coba', '2', NULL, NULL, NULL),
+(16, 'FK2021-10-06-00006', 'Inspektorat Jenderal', 'Sebagai pengawas dari departemen pemilik risiko.', NULL, NULL, NULL),
+(17, 'FK2021-10-06-00006', 'Departemen keuangan', 'Sebagai pengawas budget.', NULL, NULL, NULL),
+(18, 'FK2021-10-07-00007', 'Departemen keuangan', 'Sebagai pengawas budget.', NULL, NULL, NULL),
+(19, '8', 'test', 'test', NULL, NULL, NULL),
+(20, '8', 'sdf', 'asd', NULL, NULL, NULL),
+(21, '8', 'test', 'test', NULL, NULL, NULL),
+(23, '9', 'Pemangku Kepentingan', 'PJ Perjanjian Kinerja', NULL, NULL, NULL),
+(24, '9', 'Inspektur Jenderal', 'PJ Perjanjian Kinerja', NULL, NULL, NULL),
+(25, '9', 'Eselon I', 'Pengguna Data Kinerja', NULL, NULL, NULL),
+(26, '9', 'UPT dan Dinas', 'Pengguna Data Kinerja', NULL, NULL, NULL),
+(27, '10', 'satu', 'tesstttttttt', NULL, NULL, NULL),
+(28, '1', 'Menteri Pertanian', 'PJ Perjanjian Kerja', NULL, NULL, NULL),
+(29, '1', 'Inspektur Jenderal', 'PJ Perjanjian Kerja', NULL, NULL, NULL),
+(30, '1', 'Inspektorat IV Itjen Kementan', 'Reviuer', NULL, NULL, NULL),
+(31, '1', 'Kementerian Pan dan RB', 'Evaluator', NULL, NULL, NULL),
+(32, '1', 'Eselon I', 'Pengguna Data Kinerja', NULL, NULL, NULL),
+(33, '2', 'Menteri Pertanian', 'PJ Perjanjian Kinerja', NULL, NULL, NULL),
+(34, '2', 'Inspektur Jenderal', 'PJ Perjanjian Kinerja', NULL, NULL, NULL),
+(35, '2', 'Eselon I', 'Pengguna Data Kinerja', NULL, NULL, NULL),
+(36, '2', 'Eselon II', 'Pengguna Data Kinerja', NULL, NULL, NULL),
+(37, '2', 'UPT dan Dinas', 'Pengguna Data Kinerja', NULL, NULL, NULL),
+(38, '2', 'Masyarakat/Mitra', 'Stakeholder Eksternal', NULL, NULL, NULL),
+(39, '3', 'Menteri Pertanian', 'PJ Perjanjian Kinerja', NULL, NULL, NULL),
+(40, '3', 'Inspektur Jenderal', 'PJ Perjanjian Kinerja', NULL, NULL, NULL),
+(41, '3', 'Eselon I', 'Pengguna data kinerja', NULL, NULL, NULL),
+(42, '3', 'Masyarakat/Mitra', 'Stakeholder Eksternal', NULL, NULL, NULL),
+(43, '3', 'UPT dan Dinas', 'Pengguna Data Kinerja', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1033,7 +1033,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `username`, `name`, `email`, `telp`, `level`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'admin', 'Admin', 'admin@gmail.com', '08123456789', 'Superadmin', NULL, '$2y$10$YMBMtOqrXPF.i8c7lO1BH.mTuJR7yXMjiiHgLKQWSLi0GEXFWO9eu', NULL, '2021-09-27 20:58:30', '2021-09-27 20:58:30'),
 (2, 'asdfsdf', 'safdsfd', 'dsfasafd@gmail.com', '08123456789', 'Admin', NULL, '$2y$10$Qqf.q8M68mx1TYDiMipRYu0kftIyxWFqUQtIDPXxdrh1PTovLsBZu', NULL, NULL, NULL),
-(3, 'fdhgsdfg', 'safddfsa', 'asdfgfa@gmail.com', '08123456789', 'User', NULL, '$2y$10$MTn4CStysHojvSbeApyQ0ORRU.WZSz2GMGKHELhbNXfmTXBqlyM1O', NULL, NULL, NULL);
+(3, 'fdhgsdfg', 'safddfsa', 'asdfgfa@gmail.com', '08123456789', 'User', NULL, '$2y$10$MTn4CStysHojvSbeApyQ0ORRU.WZSz2GMGKHELhbNXfmTXBqlyM1O', NULL, NULL, NULL),
+(4, 'taufikisme', 'taufik', 'taufik@gmail.com', '08124081290581', 'User', NULL, '$2y$10$6C6wbl/qWv8X88oKn0gxUuGBK/DcNm.VpIAyTCsj4CjB49uZiQD5q', NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -1348,7 +1349,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
