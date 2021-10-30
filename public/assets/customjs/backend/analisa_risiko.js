@@ -41,6 +41,7 @@ $('#cari_departmen').on('select2:select', function (e) {
                 $('#kodedep').val(item.kodedep);
                 $('#namadep').val(item.namadep);
                 $('#tahun').val(item.priode_penerapan);
+                $('#selera_risiko').val(item.selera_risiko);
             });
             $.each(data.resiko, function (key, value) {
                 var newOption = new Option(value.full_kode, value.id, false, false);

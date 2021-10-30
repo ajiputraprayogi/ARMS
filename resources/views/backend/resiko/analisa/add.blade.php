@@ -60,6 +60,7 @@ legend.scheduler-border {
                     <input type="hidden" name="id_dep" id="id_dep">
                     <input type="hidden" name="kodedep" id="kodedep">
                     <input type="hidden" name="namadep" id="namadep">
+                    <input type="hidden" name="selera_risiko" id="selera_risiko">
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Tahun<i
                                 class="bintang">*</i></label>

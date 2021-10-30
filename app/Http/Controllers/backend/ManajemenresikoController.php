@@ -53,10 +53,10 @@ class ManajemenresikoController extends Controller
         if($active_departemen!='Semua Departemen'){
             if($active_tahun!='Semua Tahun'){
                 $data = DB::table('pelaksanaan_manajemen_risiko')
-                ->select(DB::raw('pelaksanaan_manajemen_risiko.*,count(konteks.faktur_konteks) as totalkonteks,count(resiko_teridentifikasi.kode_konteks) as totalrisiko,departemen.nama'))
+                ->select(DB::raw('pelaksanaan_manajemen_risiko.*,count(konteks.faktur_konteks) as totalkonteks,departemen.nama,konteks.id as idk'))
                 ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
                 ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
-                ->leftjoin('resiko_teridentifikasi', 'resiko_teridentifikasi.kode_konteks','=','konteks.kode')
+                // ->leftjoin('resiko_teridentifikasi', 'resiko_teridentifikasi.kode_konteks','=','konteks.kode')
                 ->where([['departemen.id','=',$active_departemen],['priode_penerapan','=',$active_tahun]])
                 ->orderby('pelaksanaan_manajemen_risiko.id','desc')
                 ->groupby('pelaksanaan_manajemen_risiko.faktur')
@@ -64,10 +64,10 @@ class ManajemenresikoController extends Controller
                // dd($data);
             }else{
                 $data = DB::table('pelaksanaan_manajemen_risiko')
-                ->select(DB::raw('pelaksanaan_manajemen_risiko.*,count(konteks.faktur_konteks) as totalkonteks,count(resiko_teridentifikasi.kode_konteks) as totalrisiko,departemen.nama'))
+                ->select(DB::raw('pelaksanaan_manajemen_risiko.*,count(konteks.faktur_konteks) as totalkonteks,departemen.nama,konteks.id as idk'))
                 ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
                 ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
-                ->leftjoin('resiko_teridentifikasi', 'resiko_teridentifikasi.kode_konteks','=','konteks.kode')
+                // ->leftjoin('resiko_teridentifikasi', 'resiko_teridentifikasi.kode_konteks','=','konteks.kode')
                 ->where('pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen)
                 ->orderby('pelaksanaan_manajemen_risiko.id','desc')
                 ->groupby('pelaksanaan_manajemen_risiko.faktur')
@@ -76,20 +76,20 @@ class ManajemenresikoController extends Controller
         }else{
             if($active_tahun!='Semua Tahun'){
                 $data = DB::table('pelaksanaan_manajemen_risiko')
-                ->select(DB::raw('pelaksanaan_manajemen_risiko.*,count(konteks.faktur_konteks) as totalkonteks,count(resiko_teridentifikasi.kode_konteks) as totalrisiko,departemen.nama'))
+                ->select(DB::raw('pelaksanaan_manajemen_risiko.*,count(konteks.faktur_konteks) as totalkonteks,departemen.nama,konteks.id as idk'))
                 ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
                 ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
-                ->leftjoin('resiko_teridentifikasi', 'resiko_teridentifikasi.kode_konteks','=','konteks.kode')
+                // ->leftjoin('resiko_teridentifikasi', 'resiko_teridentifikasi.kode_konteks','=','konteks.kode')
                 ->where('pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun)
                 ->orderby('pelaksanaan_manajemen_risiko.id','desc')
                 ->groupby('pelaksanaan_manajemen_risiko.faktur')
                 ->paginate(50);
             }else{
                 $data = DB::table('pelaksanaan_manajemen_risiko')
-                ->select(DB::raw('pelaksanaan_manajemen_risiko.*,count(konteks.faktur_konteks) as totalkonteks,count(resiko_teridentifikasi.kode_konteks) as totalrisiko,departemen.nama'))
+                ->select(DB::raw('pelaksanaan_manajemen_risiko.*,count(konteks.faktur_konteks) as totalkonteks,departemen.nama,konteks.id as idk'))
                 ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
                 ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
-                ->leftjoin('resiko_teridentifikasi', 'resiko_teridentifikasi.kode_konteks','=','konteks.kode')
+                // ->leftjoin('resiko_teridentifikasi', 'resiko_teridentifikasi.kode_konteks','=','konteks.kode')
                 ->orderby('pelaksanaan_manajemen_risiko.id','desc')
                 ->groupby('pelaksanaan_manajemen_risiko.faktur')
                 ->paginate(50);

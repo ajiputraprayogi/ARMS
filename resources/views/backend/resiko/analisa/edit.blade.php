@@ -26,6 +26,7 @@ legend.scheduler-border {
 }
 </style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="{{asset('assets/customjs/backend/loading.css')}}">
 @endsection
 @section('content')
 <div class="col-md-12">
@@ -43,6 +44,8 @@ legend.scheduler-border {
         </div>
         @endif
         <div class="card-body">
+            <div class="loading-div" id="panel">
+            
             @foreach($data as $rowdtl)
             @php
             $data_manajemen_risiko = DB::table('pelaksanaan_manajemen_risiko')
@@ -74,6 +77,7 @@ legend.scheduler-border {
                 
                 <input type="hidden" name="id" id="id" @foreach($data_manajemen_risiko as $dmr) value="{{$dmr->id}}" @endforeach>
                 <input type="hidden" name="id_dep" id="id_dep" @foreach($data_manajemen_risiko as $dmr) value="{{$dmr->id_departemen}}" @endforeach>
+                <input type="hidden" name="selera_risiko" id="selera_risiko" @foreach($data_manajemen_risiko as $dmr) value="{{$dmr->selera_risiko}}" @endforeach>
                 <input type="hidden" name="kodedep" id="kodedep">
                 <input type="hidden" name="namadep" id="namadep">
                 
@@ -93,12 +97,8 @@ legend.scheduler-border {
                         <select class="js-example-basic-single text search-input" id="cari_kode" name="kode"
                             style="width:100%;">
                             @foreach($data_manajemen_risiko as $dmr)
-                            @php
-                            $dataresiko = DB::table('resiko_teridentifikasi')
-                            ->where([['id_departmen',$dmr->id_departemen],['periode_penerapan',$dmr->priode_penerapan]])
-                            ->get();
-                            @endphp
-                            @foreach($dataresiko as $dtr)
+                           
+                            @foreach($dataresikoselected as $dtr)
                             <option value="{{$dtr->id}}" @if($dtr->full_kode==$rowdtl->kode_risiko) selected
                                 @endif>{{$dtr->full_kode}}</option>
                             @endforeach
@@ -108,7 +108,7 @@ legend.scheduler-border {
                     </div>
                 </div>
                 
-                <input type="hidden" name="full_kode" id="full_kode" @foreach($dataresiko as $dtr) value="{{$dtr->full_kode}}" @endforeach>
+                <input type="hidden" name="full_kode" id="full_kode" @foreach($dataresikoselected as $dtr) value="{{$dtr->full_kode}}" @endforeach>
                 <div class="form-group row">
                     <label class="control-label col-sm-3 align-self-center" for="email">Pernyataan Risiko</label>
                     <div class="col-sm-9">
@@ -247,6 +247,7 @@ legend.scheduler-border {
                 </div>
             </form>
             @endforeach
+            </div>
         </div>
     </div>
 </div>
@@ -255,6 +256,6 @@ legend.scheduler-border {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="{{asset('assets/customjs/backend/analisa_risiko.js')}}"></script>
-
+<script src="{{asset('assets/customjs/backend/loading.js')}}"></script>
 
 @endpush

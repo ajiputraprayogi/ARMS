@@ -67,13 +67,18 @@ Daftar Pelaksanaan Manajemen Risiko | ARMS
                     <tbody class="ligth-body">
                     @php $i=($data->currentpage()-1)* $data->perpage(); @endphp
                     @foreach($data as $row)
+                    @php
+                        $risiko = DB::table('resiko_teridentifikasi')
+                        ->where('resiko_teridentifikasi.id_konteks',$row->idk)
+                        ->count();
+                    @endphp
                     @php $i++ @endphp
                         <tr>
                             <td>{{$i}}</td>
                             <td>{{$row->nama}}</td>
                             <td class="text-center">{{$row->priode_penerapan}}</td>
                             <td class="text-center">{{$row->totalkonteks}}</td>
-                            <td class="text-center">{{$row->totalrisiko}}</td>
+                            <td class="text-center">{{$risiko}}</td>
                             <td class="text-center">{{$row->selera_risiko}}</td>
                             <td>{{$row->nama_pemilik_risiko}}</td>
                             <td class="text-center">

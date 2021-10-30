@@ -6,6 +6,10 @@ ARMS | Dashboard
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endsection
 @section('content')
+@php
+    use Carbon\Carbon;
+    $this->data['pengendalian_risiko'] = \DB::table('pengendalian_risiko')->where('status_pelaksanaan', 'like', 'Selesai Dilaksanakan%')->whereDate('target_waktu_akhir', '>', Carbon::now())->count();
+@endphp
 <div class="col-lg-12">
     <div class="card card-transparent card-block card-stretch card-height border-none">
         <div class="card-header p-0 mt-lg-2 mt-0">
