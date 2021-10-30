@@ -96,7 +96,7 @@ class ManajemenresikoController extends Controller
             }
         }
 
-        
+
         return view('backend.manajemen_risiko.pelaksanaan_risiko',compact('data','departemen','tahun','active_departemen','active_tahun'));
     }
 
