@@ -31,7 +31,8 @@ class DepartemenController extends Controller
      */
     public function create()
     {
-        return view('backend.departemen.add_departemen');
+        $data = departemen::all();
+        return view('backend.departemen.add_departemen',compact('data'));
     }
 
     /**
@@ -46,9 +47,15 @@ class DepartemenController extends Controller
             'kode' => 'required',
             'nama' => 'required',
         ]);
+        if($request->mengelola_risiko == ''){
+            $id_departemen = '';
+        }else{
+            $id_departemen = implode(",",$request->mengelola_risiko);
+        }
         departemen::insert([
             'kode' => $request->kode,
             'nama' => $request->nama,
+            'mengelola_risiko'=>$id_departemen,
         ]);
         return redirect('departemen')->with('status','Sukses menyimpan data');
     }
@@ -72,8 +79,9 @@ class DepartemenController extends Controller
      */
     public function edit($id)
     {
+        $datadep = departemen::all();
         $data = departemen::find($id);
-        return view('backend.departemen.edit_departemen',['data'=>$data]);
+        return view('backend.departemen.edit_departemen',['data'=>$data,'datadep'=>$datadep]);
     }
 
     /**
@@ -89,10 +97,16 @@ class DepartemenController extends Controller
             'kode'=>'required',
             'nama'=>'required',
         ]);
+        if($request->mengelola_risiko == ''){
+            $id_departemen = '';
+        }else{
+            $id_departemen = implode(",",$request->mengelola_risiko);
+        }
         departemen::find($id)->update([
             'kode'=>$request->kode,
             'nama'=>$request->nama,
-        ]);
+            'mengelola_risiko'=>$id_departemen
+            ]);
         return redirect('departemen')->with('status','Sukses mengubah data');
     }
 

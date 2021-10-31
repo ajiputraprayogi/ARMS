@@ -32,6 +32,17 @@
                             <input type="text" name="nama" class="form-control" id="" required>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3" for="">Mengelola Risiko</label>
+                        <div class="col-sm-9">
+                            @foreach($data as $row)
+                                <div class="checkbox d-inline-block mr-3">
+                                    <label for="{{$row->id}}"><input type="checkbox" class="checkbox-input" name="mengelola_risiko[]" value="{{$row->id}}" id="{{$row->id}}">
+                                        {{$row->nama}}</label>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
                     <div class="text-right">
                         <div class="form-group">
                             <button class="btn btn-primary">Simpan</button>
