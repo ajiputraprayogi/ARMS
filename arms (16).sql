@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 30, 2021 at 04:16 AM
--- Server version: 10.4.20-MariaDB
--- PHP Version: 7.4.25
+-- Generation Time: Oct 31, 2021 at 12:00 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `arms_new`
+-- Database: `arms`
 --
 
 -- --------------------------------------------------------
@@ -252,17 +253,17 @@ CREATE TABLE `analisa_risiko` (
 
 INSERT INTO `analisa_risiko` (`id`, `id_pelaksanaan_manajemen_risiko`, `id_prob`, `id_prob_residu`, `id_dampak`, `id_dampak_residu`, `kode_risiko`, `pr`, `pr_residu`, `frekuensi_residu`, `frekuensi_melekat`, `dampak_residu`, `besaran_residu`, `dampak_melekat`, `besaran_melekat`, `sudah_ada_pengendalian`, `apakah_memadai`, `uraian_pengendalian`, `created_at`, `updated_at`) VALUES
 (25, 13, '11', '10', '5', '5', 'G.1.1.BMN.6.1', '#ffc000', '#ffff00', '3 - Kadang Terjadi', '4 - Sering Terjadi', '3 - Moderat', '14', '3 - Moderat', 16, 'Sudah', 'Memadai', 'SOP Verifikasi', '2021-10-24 09:18:45', '2021-10-24 09:18:45'),
-(26, 13, '10', '10', '5', '5', 'G.1.1.BMN.5.1', '#ffff00', '#ffff00', '3 - Kadang Terjadi', '3 - Kadang Terjadi', '3 - Moderat', '14', '3 - Moderat', 14, 'Sudah', 'Memadai', 'SOP Verifikasi', '2021-10-24 09:20:30', '2021-10-24 09:20:30'),
-(27, 13, '11', '9', '6', '3', 'G.1.1.BMN.6.2', '#ff0000', '#ffff00', '2 - Jarang Terjadi', '4 - Sering Terjadi', '4 - Signifikan', '13', '5 - Sangat Signifikan', 24, 'Sudah', 'Memadai', 'SOP Verifikasi', '2021-10-24 09:24:52', '2021-10-24 09:24:52'),
-(28, 13, '10', '10', '6', '3', 'G.1.1.BMN.6.3', '#ff0000', '#ffc000', '3 - Kadang Terjadi', '3 - Kadang Terjadi', '4 - Signifikan', '17', '5 - Sangat Signifikan', 22, 'Sudah', 'Memadai', 'SOP Verifikasi', '2021-10-24 09:38:12', '2021-10-24 09:38:12'),
-(29, 13, '10', '9', '6', '3', 'G.1.1.BMN.5.2', '#ff0000', '#ffff00', '2 - Jarang Terjadi', '3 - Kadang Terjadi', '4 - Signifikan', '13', '5 - Sangat Signifikan', 22, 'Sudah', 'Memadai', 'SOP Verifikasi', '2021-10-24 09:40:32', '2021-10-24 09:40:32'),
-(30, 13, '10', '9', '6', '3', 'G.1.1.BMN.5.3', '#ff0000', '#ffff00', '2 - Jarang Terjadi', '3 - Kadang Terjadi', '4 - Signifikan', '13', '5 - Sangat Signifikan', 22, 'Sudah', 'Memadai', 'SOP Verifikasi', '2021-10-24 09:45:01', '2021-10-24 09:45:01'),
-(31, 13, '10', '10', '3', '3', 'G.1.1.BMN.5.4', '#ffc000', '#ffc000', '3 - Kadang Terjadi', '3 - Kadang Terjadi', '4 - Signifikan', '17', '4 - Signifikan', 17, 'Sudah', 'Memadai', 'SOP Verifikasi', '2021-10-24 09:45:59', '2021-10-24 09:45:59'),
-(32, 13, '9', '9', '5', '5', 'G.1.1.BMN.7.1', '#00b050', '#00b050', '2 - Jarang Terjadi', '2 - Jarang Terjadi', '3 - Moderat', '11', '3 - Moderat', 11, 'Sudah', 'Belum Memadai', 'SOP Verifikasi', '2021-10-24 09:50:09', '2021-10-24 09:50:09'),
+(26, 13, '10', '8', '5', '5', 'G.1.1.BMN.6.1', '#ffff00', '#32bdea', '1 - Hampir Tidak Terjadi', '3 - Kadang Terjadi', '3 - Moderat', '5', '3 - Moderat', 14, 'Sudah', 'Memadai', 'SOP Verifikasi', '2021-10-24 09:20:30', '2021-10-29 21:34:42'),
+(27, 13, '11', '9', '6', '3', 'G.1.1.BMN.6.1', '#ff0000', '#ffff00', '2 - Jarang Terjadi', '4 - Sering Terjadi', '4 - Signifikan', '13', '5 - Sangat Signifikan', 24, 'Sudah', 'Memadai', 'SOP Verifikasi', '2021-10-24 09:24:52', '2021-10-29 21:33:43'),
+(28, 13, '10', '10', '6', '3', 'G.1.1.BMN.6.1', '#ff0000', '#ffc000', '3 - Kadang Terjadi', '3 - Kadang Terjadi', '4 - Signifikan', '17', '5 - Sangat Signifikan', 22, 'Sudah', 'Memadai', 'SOP Verifikasi', '2021-10-24 09:38:12', '2021-10-29 21:33:22'),
+(29, 13, '10', '9', '6', '3', 'G.1.1.BMN.6.1', '#ff0000', '#ffff00', '2 - Jarang Terjadi', '3 - Kadang Terjadi', '4 - Signifikan', '13', '5 - Sangat Signifikan', 22, 'Sudah', 'Memadai', 'SOP Verifikasi', '2021-10-24 09:40:32', '2021-10-29 21:16:31'),
+(30, 13, '10', '9', '6', '3', 'G.1.1.BMN.6.1', '#ff0000', '#ffff00', '2 - Jarang Terjadi', '3 - Kadang Terjadi', '4 - Signifikan', '13', '5 - Sangat Signifikan', 22, 'Sudah', 'Memadai', 'SOP Verifikasi', '2021-10-24 09:45:01', '2021-10-29 21:21:54'),
+(31, 13, '10', '10', '3', '3', 'G.1.1.BMN.6.1', '#ffc000', '#ffc000', '3 - Kadang Terjadi', '3 - Kadang Terjadi', '4 - Signifikan', '17', '4 - Signifikan', 17, 'Sudah', 'Memadai', 'SOP Verifikasi', '2021-10-24 09:45:59', '2021-10-29 21:35:35'),
+(32, 13, '9', '9', '5', '5', 'G.1.1.BMN.6.1', '#00b050', '#00b050', '2 - Jarang Terjadi', '2 - Jarang Terjadi', '3 - Moderat', '11', '3 - Moderat', 11, 'Sudah', 'Belum Memadai', 'SOP Verifikasi', '2021-10-24 09:50:09', '2021-10-29 21:31:18'),
 (33, 13, '9', '8', '4', '4', 'G.1.1.BMN.7.2', '#00b050', '#32bdea', '1 - Hampir Tidak Terjadi', '2 - Jarang Terjadi', '2 - Minor', '3', '2 - Minor', 7, 'Sudah', 'Belum Memadai', 'SOP Verifikasi', '2021-10-24 09:51:55', '2021-10-24 09:51:55'),
 (34, 13, '10', '10', '6', '3', 'G.1.1.BMN.7.3', '#ff0000', '#ffc000', '3 - Kadang Terjadi', '3 - Kadang Terjadi', '4 - Signifikan', '17', '5 - Sangat Signifikan', 22, 'Sudah', 'Belum Memadai', 'SOP Verifikasi', '2021-10-24 09:52:39', '2021-10-24 09:52:39'),
-(35, 13, '11', '10', '5', '4', 'G.1.1.BMN.6.4', '#ffc000', '#00b050', '3 - Kadang Terjadi', '4 - Sering Terjadi', '2 - Minor', '10', '3 - Moderat', 16, 'Sudah', 'Memadai', 'SOP Verifikasi', '2021-10-24 09:53:31', '2021-10-24 09:53:31'),
-(36, 13, '11', '11', '3', '3', 'G.1.1.BMN.5.5', '#ffc000', '#ffc000', '4 - Sering Terjadi', '4 - Sering Terjadi', '4 - Signifikan', '19', '4 - Signifikan', 19, 'Sudah', 'Memadai', 'SOP Verifikasi', '2021-10-24 09:54:27', '2021-10-24 09:54:27'),
+(35, 13, '11', '10', '5', '4', 'G.1.1.BMN.6.1', '#ffc000', '#00b050', '3 - Kadang Terjadi', '4 - Sering Terjadi', '2 - Minor', '10', '3 - Moderat', 16, 'Sudah', 'Memadai', 'SOP Verifikasi', '2021-10-24 09:53:31', '2021-10-29 21:22:52'),
+(36, 13, '11', '11', '3', '6', 'G.1.1.BMN.5.3', '#ffc000', '#ff0000', '4 - Sering Terjadi', '4 - Sering Terjadi', '5 - Sangat Signifikan', '24', '4 - Signifikan', 19, 'Sudah', 'Memadai', 'SOP Verifikasi', '2021-10-24 09:54:27', '2021-10-29 21:52:58'),
 (37, 12, '8', '8', '3', '5', 'G.1.1.EP.LAKIN.5.1', '#00b050', '#32bdea', '1 - Hampir Tidak Terjadi', '1 - Hampir Tidak Terjadi', '3 - Moderat', '5', '4 - Signifikan', 8, 'Sudah', 'Memadai', 'Dilakukan pemantauan berkala terhadap IKK', '2021-10-24 15:42:54', '2021-10-24 15:42:54'),
 (38, 12, '11', '11', '3', '5', 'G.1.1.EP.LAKIN.6.1', '#ffc000', '#ffc000', '4 - Sering Terjadi', '4 - Sering Terjadi', '3 - Moderat', '16', '4 - Signifikan', 19, 'Sudah', 'Memadai', 'Dilakukan Pemantauan realisasi kepada masing-masing PJ Kegiatan', '2021-10-24 15:43:46', '2021-10-24 15:43:46'),
 (39, 12, '8', '8', '5', '5', 'G.1.1.EP.LAKIN.3.1', '#32bdea', '#32bdea', '1 - Hampir Tidak Terjadi', '1 - Hampir Tidak Terjadi', '3 - Moderat', '5', '3 - Moderat', 5, NULL, 'Memadai', '-', '2021-10-24 15:46:21', '2021-10-24 15:46:21'),
@@ -270,7 +271,7 @@ INSERT INTO `analisa_risiko` (`id`, `id_pelaksanaan_manajemen_risiko`, `id_prob`
 (41, 12, '9', '9', '3', '5', 'G.1.1.EP.LAKIN.6.2', '#ffff00', '#00b050', '2 - Jarang Terjadi', '2 - Jarang Terjadi', '3 - Moderat', '11', '4 - Signifikan', 13, 'Sudah', 'Memadai', 'Telah disusun Manual IKU atau SBIK', '2021-10-24 15:48:02', '2021-10-24 15:48:02'),
 (42, 14, '11', '10', '4', '4', 'G.1.1.INV.ATT.6.1', '#ffff00', '#00b050', '3 - Kadang Terjadi', '4 - Sering Terjadi', '2 - Minor', '10', '2 - Minor', 12, 'Sudah', 'Memadai', 'SOP Telaah', '2021-10-24 20:16:54', '2021-10-24 20:16:54'),
 (43, 14, '11', '10', '4', '4', 'G.1.1.INV.ATT.6.1', '#ffff00', '#00b050', '3 - Kadang Terjadi', '4 - Sering Terjadi', '2 - Minor', '10', '2 - Minor', 12, 'Sudah', 'Memadai', 'SOP Telaah', '2021-10-24 21:14:10', '2021-10-24 21:14:10'),
-(44, 14, '10', '9', '4', '4', 'G.1.1.INV.ATT.6.2', '#00b050', '#00b050', '2 - Jarang Terjadi', '3 - Kadang Terjadi', '2 - Minor', '7', '2 - Minor', 10, 'Sudah', 'Memadai', 'SOP Pembentukan Tim AI/ATT', '2021-10-24 21:14:50', '2021-10-24 21:14:50'),
+(44, 14, '10', '9', '4', '4', 'G.1.1.INV.ATT.5.2', '#00b050', '#00b050', '2 - Jarang Terjadi', '3 - Kadang Terjadi', '2 - Minor', '7', '2 - Minor', 10, 'Sudah', 'Memadai', 'SOP Pembentukan Tim AI/ATT', '2021-10-24 21:14:50', '2021-10-29 21:37:00'),
 (45, 14, '8', '8', '5', '5', 'G.1.1.INV.ATT.6.3', '#32bdea', '#32bdea', '1 - Hampir Tidak Terjadi', '1 - Hampir Tidak Terjadi', '3 - Moderat', '5', '3 - Moderat', 5, 'Sudah', 'Memadai', 'SOP Pengendalian Pengumpulan dan Analisis Bukti.', '2021-10-24 21:18:18', '2021-10-24 21:18:18'),
 (46, 14, '9', '8', '6', '6', 'G.1.1.INV.ATT.6.4', '#ff0000', '#ff0000', '1 - Hampir Tidak Terjadi', '2 - Jarang Terjadi', '5 - Sangat Signifikan', '20', '5 - Sangat Signifikan', 21, 'Sudah', 'Memadai', 'SOP Pengendalian Pembuktian Modus Operandi', '2021-10-24 21:19:05', '2021-10-24 21:19:05'),
 (47, 14, '10', '9', '6', '6', 'G.1.1.INV.ATT.6.5', '#ff0000', '#ff0000', '2 - Jarang Terjadi', '3 - Kadang Terjadi', '5 - Sangat Signifikan', '21', '5 - Sangat Signifikan', 22, 'Sudah', 'Memadai', 'SOP Pengendalian Pengumpulan dan Analisis Bukti.', '2021-10-25 00:55:24', '2021-10-25 00:55:24'),
@@ -344,6 +345,7 @@ CREATE TABLE `departemen` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `kode` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mengelola_risiko` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -352,10 +354,10 @@ CREATE TABLE `departemen` (
 -- Dumping data for table `departemen`
 --
 
-INSERT INTO `departemen` (`id`, `kode`, `nama`, `created_at`, `updated_at`) VALUES
-(5, 'INV.ATT', 'Inspektorat Investigasi', NULL, '2021-10-19 01:57:10'),
-(7, 'BMN', 'Biro KP dan BMN', NULL, NULL),
-(8, 'EP.LAKIN', 'Sekretariat Inspektorat Jenderal', NULL, NULL);
+INSERT INTO `departemen` (`id`, `kode`, `nama`, `mengelola_risiko`, `created_at`, `updated_at`) VALUES
+(5, 'INV.ATT', 'Inspektorat Investigasi', '', NULL, '2021-10-31 00:16:30'),
+(7, 'BMN', 'Biro KP dan BMN', '', NULL, '2021-10-30 23:56:28'),
+(8, 'EP.LAKIN', 'Sekretariat Inspektorat Jenderal', '', NULL, '2021-10-30 22:20:30');
 
 -- --------------------------------------------------------
 
@@ -729,8 +731,8 @@ INSERT INTO `pemangku_kepentingan` (`id`, `faktur_pemangku`, `pemangku_kepenting
 (30, '1', 'Inspektorat IV Itjen Kementan', 'Reviuer', NULL, NULL, NULL),
 (31, '1', 'Kementerian Pan dan RB', 'Evaluator', NULL, NULL, NULL),
 (32, '1', 'Eselon I', 'Pengguna Data Kinerja', NULL, NULL, NULL),
-(33, '2', 'Menteri Pertanian', 'PJ Perjanjian Kinerja', NULL, NULL, NULL),
-(34, '2', 'Inspektur Jenderal', 'PJ Perjanjian Kinerja', NULL, NULL, NULL),
+(33, '2', 'Menteri Pertanian', 'PJ Perjanjian Kinerja', 'internal', NULL, '2021-10-29 21:10:27'),
+(34, '2', 'Inspektur Jenderal', 'PJ Perjanjian Kinerja', 'eksternal', NULL, '2021-10-29 21:10:36'),
 (35, '2', 'Eselon I', 'Pengguna Data Kinerja', NULL, NULL, NULL),
 (36, '2', 'Eselon II', 'Pengguna Data Kinerja', NULL, NULL, NULL),
 (37, '2', 'UPT dan Dinas', 'Pengguna Data Kinerja', NULL, NULL, NULL),
@@ -956,12 +958,12 @@ CREATE TABLE `resiko_teridentifikasi` (
 --
 
 INSERT INTO `resiko_teridentifikasi` (`id`, `faktur`, `kode_risiko`, `number`, `full_kode`, `id_departmen`, `departmen_pemilik_resiko`, `periode_penerapan`, `id_konteks`, `id_jenis_konteks`, `konteks`, `kode_konteks`, `pernyataan_risiko`, `id_kategori`, `kategori_risiko`, `uraian_dampak`, `metode_spip`, `status_persetujuan`, `diajukan_oleh`, `diajukan_tanggal`, `persetujuan_oleh`, `tanggal_persetujua`, `keterangan`, `status`, `kode_departemen`, `id_analisis`, `pr`, `pr_akhir`, `frekuensi_akhir`, `dampak_akhir`, `frekuensi_awal`, `dampak_awal`, `besaran_awal`, `besaran_akhir`, `created_at`, `updated_at`) VALUES
-(24, '2', 'G.1.1.BMN.6', '1', 'G.1.1.BMN.6.1', '7', 'Biro KP dan BMN', '2021', '35', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Belanja barang tidak dapat diyakini keterjadiannya;', '6', '6', 'Realisasi Capaian Kinerja Sasaran Strategis', '6', 'disetujui', 'Biro Keuangan, Perlengkapan dan BMN', '2021-10-24', 'Biro Keuangan, Perlengkapan dan BMN', '2021-10-24', NULL, 'Belum memenuhi selera risiko', 'BMN', '24', '#ffc000', '#ffff00', '3 - Kadang Terjadi', '3 - Moderat', '4 - Sering Terjadi', '3 - Moderat', '16', '14', '2021-10-24 08:28:38', '2021-10-24 08:28:38'),
+(24, '2', 'G.1.1.BMN.6', '1', 'G.1.1.BMN.6.1', '7', 'Biro KP dan BMN', '2021', '35', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Belanja barang tidak dapat diyakini keterjadiannya;', '6', '6', 'Realisasi Capaian Kinerja Sasaran Strategis', '6', 'disetujui', 'Biro Keuangan, Perlengkapan dan BMN', '2021-10-24', 'Biro Keuangan, Perlengkapan dan BMN', '2021-10-24', NULL, 'Memenuhi Selera Risiko', 'BMN', '24', '#ffc000', '#ffc000', '3 - Kadang Terjadi', '4 - Signifikan', '3 - Kadang Terjadi', '4 - Signifikan', '17', '17', '2021-10-24 08:28:38', '2021-10-24 08:28:38'),
 (25, '2', 'G.1.1.BMN.5', '1', 'G.1.1.BMN.5.1', '7', 'Biro KP dan BMN', '2021', '35', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Pertanggungjawaban realisasi belanja pengelolaan lahan tidak sesuai fakta.', '5', '5', 'Realisasi Capaian Kinerja Sasaran Strategis.', '6', 'disetujui', 'Biro Keuangan, Perlengkapan dan BMN', '2021-10-24', 'Biro Keuangan, Perlengkapan dan BMN', '2021-10-24', NULL, 'Belum memenuhi selera risiko', 'BMN', '25', '#ffff00', '#ffff00', '3 - Kadang Terjadi', '3 - Moderat', '3 - Kadang Terjadi', '3 - Moderat', '14', '14', '2021-10-24 08:29:30', '2021-10-24 08:29:30'),
 (26, '2', 'G.1.1.BMN.6', '2', 'G.1.1.BMN.6.2', '7', 'Biro KP dan BMN', '2021', '35', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Pelaksanaan kegiatan swakelola tersebut tidak dilaksanakan sendiri (disub-kontrakan) oleh Kontraktor.', '6', '6', 'Realisasi Capaian Kinerja Sasaran Strategis.', '6', 'disetujui', 'Biro Keuangan, Perlengkapan dan BMN', '2021-10-24', 'Biro Keuangan, Perlengkapan dan BMN', '2021-10-24', NULL, 'Belum memenuhi selera risiko', 'BMN', '26', '#ff0000', '#ffff00', '2 - Jarang Terjadi', '4 - Signifikan', '4 - Sering Terjadi', '5 - Sangat Signifikan', '24', '13', '2021-10-24 08:33:06', '2021-10-24 08:33:06'),
 (27, '2', 'G.1.1.BMN.6', '3', 'G.1.1.BMN.6.3', '7', 'Biro KP dan BMN', '2021', '35', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Laporan realisasi pekerjaan tidak sesuai fakta di lapangan.', '6', '6', 'Realisasi Capaian Kinerja Sasaran Strategis.', '6', 'disetujui', 'Biro Keuangan, Perlengkapan dan BMN', '2021-10-24', 'Biro Keuangan, Perlengkapan dan BMN', '2021-10-24', NULL, 'Belum memenuhi selera risiko', 'BMN', '27', '#ff0000', '#ffc000', '3 - Kadang Terjadi', '4 - Signifikan', '3 - Kadang Terjadi', '5 - Sangat Signifikan', '22', '17', '2021-10-24 08:38:56', '2021-10-24 08:38:56'),
 (28, '2', 'G.1.1.BMN.5', '2', 'G.1.1.BMN.5.2', '7', 'Biro KP dan BMN', '2021', '35', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Terdapat selisih antara rekapitulasi belanja yang disampaikan kepada BPK dengan RAB pengolahan lahan.', '5', '5', 'Realisasi Capaian Kinerja Sasaran Strategis.', '6', 'disetujui', 'Biro Keuangan, Perlengkapan dan BMN', '2021-10-24', 'Biro Keuangan, Perlengkapan dan BMN', '2021-10-24', NULL, 'Belum memenuhi selera risiko', 'BMN', '28', '#ff0000', '#ffff00', '2 - Jarang Terjadi', '4 - Signifikan', '3 - Kadang Terjadi', '5 - Sangat Signifikan', '22', '13', '2021-10-24 08:43:00', '2021-10-24 08:43:00'),
-(29, '2', 'G.1.1.BMN.5', '3', 'G.1.1.BMN.5.3', '7', 'Biro KP dan BMN', '2021', '35', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Surat Pertanggung Jawaban (SPJ) yang disampaikan tidak sesuai dengan belanja tunai.', '5', '5', 'Penurunan Reputasi dan Realisasi Capaian Kinerja Sasaran Strategis.', '6', 'disetujui', 'Biro Keuangan, Perlengkapan dan BMN', '2021-10-24', 'Biro Keuangan, Perlengkapan dan BMN', '2021-10-24', NULL, 'Belum memenuhi selera risiko', 'BMN', '29', '#ff0000', '#ffff00', '2 - Jarang Terjadi', '4 - Signifikan', '3 - Kadang Terjadi', '5 - Sangat Signifikan', '22', '13', '2021-10-24 08:47:56', '2021-10-24 08:47:56'),
+(29, '2', 'G.1.1.BMN.5', '3', 'G.1.1.BMN.5.3', '7', 'Biro KP dan BMN', '2021', '35', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Surat Pertanggung Jawaban (SPJ) yang disampaikan tidak sesuai dengan belanja tunai.', '5', '5', 'Penurunan Reputasi dan Realisasi Capaian Kinerja Sasaran Strategis.', '6', 'disetujui', 'Biro Keuangan, Perlengkapan dan BMN', '2021-10-24', 'Biro Keuangan, Perlengkapan dan BMN', '2021-10-24', NULL, 'Belum Memenuhi Selera Risiko', 'BMN', '29', '#ffc000', '#ff0000', '4 - Sering Terjadi', '5 - Sangat Signifikan', '4 - Sering Terjadi', '4 - Signifikan', '19', '24', '2021-10-24 08:47:56', '2021-10-24 08:47:56'),
 (30, '2', 'G.1.1.BMN.5', '4', 'G.1.1.BMN.5.4', '7', 'Biro KP dan BMN', '2021', '35', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Pembayaran gaji tenaga kerja tidak didukung bukti yang memadai.', '5', '5', 'Penurunan Reputasi dan Realisasi Capaian Kinerja Sasaran Strategis.', '6', 'disetujui', 'Biro Keuangan, Perlengkapan dan BMN', '2021-10-24', 'Biro Keuangan, Perlengkapan dan BMN', '2021-10-24', NULL, 'Belum memenuhi selera risiko', 'BMN', '30', '#ffc000', '#ffc000', '3 - Kadang Terjadi', '4 - Signifikan', '3 - Kadang Terjadi', '4 - Signifikan', '17', '17', '2021-10-24 08:53:52', '2021-10-24 08:53:52'),
 (31, '2', 'G.1.1.BMN.7', '1', 'G.1.1.BMN.7.1', '7', 'Biro KP dan BMN', '2021', '35', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Pembelian sparepart secara on-line namun tidak ditemukan dalam aplikasi terkait.', '7', '7', 'Penurunan Reputasi.', '6', 'disetujui', 'Biro Keuangan, Perlengkapan dan BMN', '2021-10-24', 'Biro Keuangan, Perlengkapan dan BMN', '2021-10-24', NULL, 'Belum memenuhi selera risiko', 'BMN', '31', '#00b050', '#00b050', '2 - Jarang Terjadi', '3 - Moderat', '2 - Jarang Terjadi', '3 - Moderat', '11', '11', '2021-10-24 08:54:37', '2021-10-24 08:54:37'),
 (32, '2', 'G.1.1.BMN.7', '2', 'G.1.1.BMN.7.2', '7', 'Biro KP dan BMN', '2021', '35', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Kuitansi pembelian sparepart secara on-line tidak dilengkapi dengan tanggal pembelian.', '7', '7', 'Penurunan Reputasi.', '6', 'disetujui', 'Biro Keuangan, Perlengkapan dan BMN', '2021-10-24', 'Biro Keuangan, Perlengkapan dan BMN', '2021-10-24', NULL, 'Belum memenuhi selera risiko', 'BMN', '32', '#00b050', '#32bdea', '1 - Hampir Tidak Terjadi', '2 - Minor', '2 - Jarang Terjadi', '2 - Minor', '7', '3', '2021-10-24 08:55:21', '2021-10-24 08:55:21'),
@@ -973,7 +975,7 @@ INSERT INTO `resiko_teridentifikasi` (`id`, `faktur`, `kode_risiko`, `number`, `
 (38, '1', 'G.1.1.EP.LAKIN.2', '1', 'G.1.1.EP.LAKIN.2.1', '8', 'Sekretariat Inspektorat Jenderal', '2021', '34', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Petunjuk Teknis / Pedoman Penyusunan Lakin Tidak Memadai.', '3', '2', 'Penurunan Reputasi.', '5', 'disetujui', 'Sekretariat Inspektorat Jenderal', '2021-10-01', 'Inspektorat Jenderal', '2021-10-04', NULL, 'Memenuhi Selera Risiko', 'EP.LAKIN', '38', '#32bdea', '#32bdea', '1 - Hampir Tidak Terjadi', '3 - Moderat', '1 - Hampir Tidak Terjadi', '3 - Moderat', '5', '5', '2021-10-24 13:01:48', '2021-10-24 08:50:03'),
 (39, '1', 'G.1.1.EP.LAKIN.7', '1', 'G.1.1.EP.LAKIN.7.1', '8', 'Sekretariat Inspektorat Jenderal', '2021', '34', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Data dari Eksternal (Menpan RB/BPKP/KPK) terlambat dipublikasi.', '7', '7', 'Temuan hasil pemeriksaan BPK dan hasil pengawasan Inspektorat.', '5', 'disetujui', 'Sekretariat Inspektorat Jenderal', '2021-10-01', 'Inspektorat Jenderal', '2021-10-04', NULL, 'Belum memenuhi selera risiko', 'EP.LAKIN', '39', '#ff0000', '#ff0000', '5 - Hampir Pasti Terjadi', '5 - Sangat Signifikan', '5 - Hampir Pasti Terjadi', '5 - Sangat Signifikan', '25', '25', '2021-10-24 13:03:33', '2021-10-24 13:03:33'),
 (40, '1', 'G.1.1.EP.LAKIN.5', '1', 'G.1.1.EP.LAKIN.5.1', '8', 'Sekretariat Inspektorat Jenderal', '2021', '34', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Pengukuran Indikator Kinerja Tidak Tepat.', '6', '5', 'Realisasi Capaian Kinerja Sasaran Strategis.', '1', 'disetujui', 'Sekretariat Inspektorat Jenderal', '2021-10-01', 'Inspektorat Jenderal', '2021-10-04', NULL, 'Memenuhi Selera Risiko', 'EP.LAKIN', '40', '#ffff00', '#00b050', '2 - Jarang Terjadi', '3 - Moderat', '2 - Jarang Terjadi', '4 - Signifikan', '13', '11', '2021-10-24 13:04:25', '2021-10-24 08:50:12'),
-(41, '3', 'G.1.1.INV.ATT.5', '2', 'G.1.1.INV.ATT.5.2', '5', 'Inspektorat Investigasi', '2021', '44', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Bukti yang diperoleh sebagai bahan telaahan tidak lengkap', '6', '5', 'Realisasi Capaian Kinerja Sasaran Strategis', '1', 'disetujui', 'Inspektorat Investigasi', '2021-10-24', 'Inspektorat Jenderal', '2021-10-25', NULL, 'Memenuhi Selera Risiko', 'INV.ATT', '41', '#ffff00', '#00b050', '3 - Kadang Terjadi', '2 - Minor', '4 - Sering Terjadi', '2 - Minor', '12', '10', '2021-10-24 20:14:56', '2021-10-27 05:46:31'),
+(41, '3', 'G.1.1.INV.ATT.5', '2', 'G.1.1.INV.ATT.5.2', '5', 'Inspektorat Investigasi', '2021', '44', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Bukti yang diperoleh sebagai bahan telaahan tidak lengkap', '6', '5', 'Realisasi Capaian Kinerja Sasaran Strategis', '1', 'disetujui', 'Inspektorat Investigasi', '2021-10-24', 'Inspektorat Jenderal', '2021-10-25', NULL, 'Memenuhi Selera Risiko', 'INV.ATT', '41', '#00b050', '#00b050', '2 - Jarang Terjadi', '2 - Minor', '3 - Kadang Terjadi', '2 - Minor', '10', '7', '2021-10-24 20:14:56', '2021-10-27 05:46:31'),
 (42, '3', 'G.1.1.INV.ATT.5', '1', 'G.1.1.INV.ATT.5.1', '5', 'Inspektorat Investigasi', '2021', '44', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Tim audit yang diajukan tidak memenuhi kompetensi sesuai dengan materi audit', '6', '5', 'Realisasi Capaian Kinerja Sasaran Strategis', '1', 'disetujui', 'Inspektorat Investigasi', '2021-10-24', 'Inspektorat Jenderal', '2021-10-25', NULL, 'Memenuhi Selera Risiko', 'INV.ATT', '42', '#00b050', '#32bdea', '1 - Hampir Tidak Terjadi', '1 - Tidak Signifikan', '3 - Kadang Terjadi', '2 - Minor', '10', '1', '2021-10-24 20:46:06', '2021-10-24 18:21:44'),
 (43, '3', 'G.1.1.INV.ATT.6', '3', 'G.1.1.INV.ATT.6.3', '5', 'Inspektorat Investigasi', '2021', '44', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Rumusan modus operandi jauh dari kenyataan', '6', '6', 'Realisasi Capaian Kinerja Sasaran Strategis', '1', 'disetujui', 'Inspektorat Investigasi', '2021-10-24', 'Inspektorat Jenderal', '2021-10-25', NULL, 'Memenuhi Selera Risiko', 'INV.ATT', '43', '#32bdea', '#32bdea', '1 - Hampir Tidak Terjadi', '3 - Moderat', '1 - Hampir Tidak Terjadi', '3 - Moderat', '5', '5', '2021-10-24 20:55:37', '2021-10-24 20:55:37'),
 (44, '3', 'G.1.1.INV.ATT.6', '4', 'G.1.1.INV.ATT.6.4', '5', 'Inspektorat Investigasi', '2021', '44', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Langkah-langkah kerja yang disusun tidak aplikatif untuk membuktikan adanya modus operandi pelanggaran ketentuan.', '6', '6', 'Realisasi Capaian Kinerja Sasaran Strategis.', '1', 'disetujui', 'Inspektorat Investigasi', '2021-10-24', 'Inspektorat Jenderal', '2021-10-25', NULL, 'Belum memenuhi selera risiko', 'INV.ATT', '44', '#ff0000', '#ff0000', '1 - Hampir Tidak Terjadi', '5 - Sangat Signifikan', '2 - Jarang Terjadi', '5 - Sangat Signifikan', '21', '20', '2021-10-24 20:59:57', '2021-10-24 20:59:57'),
@@ -1235,7 +1237,7 @@ ALTER TABLE `besaran_resiko`
 -- AUTO_INCREMENT for table `departemen`
 --
 ALTER TABLE `departemen`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
