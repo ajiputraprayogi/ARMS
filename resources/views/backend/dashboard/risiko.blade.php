@@ -189,13 +189,13 @@ if($row_selera_risiko->besaran_akhir>$row_selera_risiko->selera_risiko){
                                                 ->count();
                                             }
                                             @endphp
-                                            
+
                                             <td style="background:{{$cari_nilai->kode_warna}};">
                                             <div class="row">
-                                                <div class="col-md-12 text-left">
+                                                <div class="col-md-12 text-left font-weight-bold">
                                             {{$hitung_risikonya}}
                                                 </div>
-                                                <div class="col-md-12 text-right">
+                                                <div class="col-md-12 text-right font-weight-bold">
                                             {{$cari_nilai->nilai}}</div>
                                             </div>
                                             </td>
