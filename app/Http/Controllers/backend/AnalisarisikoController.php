@@ -73,17 +73,33 @@ class AnalisarisikoController extends Controller
             'apakah_memadai'=>$request->apakah_memadai,
         ]);
         
-        $up = DB::table('resiko_teridentifikasi')->where('full_kode', '=', $request->full_kode)->update([
-            'id_analisis'=>$request->id_analisis,
-            'pr'=>$request->warna,
-            'besaran_awal'=>$request->besaran,
-            'frekuensi_awal'=>$request->nilpro.' - '.$request->nampro,
-            'dampak_awal'=>$request->nildam.' - '.$request->namdam,
-            'pr_akhir'=>$request->warnar,
-            'besaran_akhir'=>$request->besarankini,
-            'frekuensi_akhir'=>$request->nilpror.' - '.$request->nampror,
-            'dampak_akhir'=>$request->nildamr.' - '.$request->namdamr,
-        ]);
+        $selera_risiko = $request->selera_risiko;
+        $besarankini = $request->besarankini;
+        if($besarankini <= $selera_risiko){
+            $up = DB::table('resiko_teridentifikasi')->where('full_kode', '=', $request->full_kode)->update([
+                'pr'=>$request->warna,
+                'besaran_awal'=>$request->besaran,
+                'frekuensi_awal'=>$request->nilpro.' - '.$request->nampro,
+                'dampak_awal'=>$request->nildam.' - '.$request->namdam,
+                'pr_akhir'=>$request->warnar,
+                'besaran_akhir'=>$request->besarankini,
+                'frekuensi_akhir'=>$request->nilpror.' - '.$request->nampror,
+                'dampak_akhir'=>$request->nildamr.' - '.$request->namdamr,
+                'status'=>'Memenuhi Selera Risiko',
+            ]);
+        }else{
+            $up = DB::table('resiko_teridentifikasi')->where('full_kode', '=', $request->full_kode)->update([
+                'pr'=>$request->warna,
+                'besaran_awal'=>$request->besaran,
+                'frekuensi_awal'=>$request->nilpro.' - '.$request->nampro,
+                'dampak_awal'=>$request->nildam.' - '.$request->namdam,
+                'pr_akhir'=>$request->warnar,
+                'besaran_akhir'=>$request->besarankini,
+                'frekuensi_akhir'=>$request->nilpror.' - '.$request->nampror,
+                'dampak_akhir'=>$request->nildamr.' - '.$request->namdamr,
+                'status'=>'Belum Memenuhi Selera Risiko',
+            ]);
+        }
         return redirect('analisa-risiko')->with('status','Berhasil menyimpan data');
     }
 
@@ -125,16 +141,33 @@ class AnalisarisikoController extends Controller
             'uraian_pengendalian'=>$request->uraian_pengendalian,
             'apakah_memadai'=>$request->apakah_memadai,
         ]);
-        $up = DB::table('resiko_teridentifikasi')->where('full_kode', '=', $request->full_kode)->update([
-            'pr'=>$request->warna,
-            'besaran_awal'=>$request->besaran,
-            'frekuensi_awal'=>$request->nilpro.' - '.$request->nampro,
-            'dampak_awal'=>$request->nildam.' - '.$request->namdam,
-            'pr_akhir'=>$request->warnar,
-            'besaran_akhir'=>$request->besarankini,
-            'frekuensi_akhir'=>$request->nilpror.' - '.$request->nampror,
-            'dampak_akhir'=>$request->nildamr.' - '.$request->namdamr,
-        ]);
+        $selera_risiko = $request->selera_risiko;
+        $besarankini = $request->besarankini;
+        if($besarankini <= $selera_risiko){
+            $up = DB::table('resiko_teridentifikasi')->where('full_kode', '=', $request->full_kode)->update([
+                'pr'=>$request->warna,
+                'besaran_awal'=>$request->besaran,
+                'frekuensi_awal'=>$request->nilpro.' - '.$request->nampro,
+                'dampak_awal'=>$request->nildam.' - '.$request->namdam,
+                'pr_akhir'=>$request->warnar,
+                'besaran_akhir'=>$request->besarankini,
+                'frekuensi_akhir'=>$request->nilpror.' - '.$request->nampror,
+                'dampak_akhir'=>$request->nildamr.' - '.$request->namdamr,
+                'status'=>'Memenuhi Selera Risiko',
+            ]);
+        }else{
+            $up = DB::table('resiko_teridentifikasi')->where('full_kode', '=', $request->full_kode)->update([
+                'pr'=>$request->warna,
+                'besaran_awal'=>$request->besaran,
+                'frekuensi_awal'=>$request->nilpro.' - '.$request->nampro,
+                'dampak_awal'=>$request->nildam.' - '.$request->namdam,
+                'pr_akhir'=>$request->warnar,
+                'besaran_akhir'=>$request->besarankini,
+                'frekuensi_akhir'=>$request->nilpror.' - '.$request->nampror,
+                'dampak_akhir'=>$request->nildamr.' - '.$request->namdamr,
+                'status'=>'Belum Memenuhi Selera Risiko',
+            ]);
+        }
         return redirect('analisa-risiko')->with('status','Berhasil mengupdate data');
     }
 
@@ -149,7 +182,7 @@ class AnalisarisikoController extends Controller
         if($request->has('q')){
             $cari = $request->q;
             $data = DB::table('pelaksanaan_manajemen_risiko')
-                    ->select('pelaksanaan_manajemen_risiko.id', 'pelaksanaan_manajemen_risiko.id_departemen', 'pelaksanaan_manajemen_risiko.priode_penerapan','departemen.kode as kodedep','departemen.nama as namadep')
+                    ->select('pelaksanaan_manajemen_risiko.id', 'pelaksanaan_manajemen_risiko.id_departemen', 'pelaksanaan_manajemen_risiko.priode_penerapan','departemen.kode as kodedep','departemen.nama as namadep','pelaksanaan_manajemen_risiko.selera_risiko')
                     ->leftjoin('departemen', 'pelaksanaan_manajemen_risiko.id_departemen', '=', 'departemen.id')
                     ->where('departemen.kode','like','%'.$cari.'%')
                     ->orwhere('departemen.nama','like','%'.$cari.'%')
@@ -162,7 +195,7 @@ class AnalisarisikoController extends Controller
     //====================================================================================
     public function hasilcaridepartmen($id,$iddepartemen){
         $data = DB::table('pelaksanaan_manajemen_risiko')
-        ->select('pelaksanaan_manajemen_risiko.id', 'pelaksanaan_manajemen_risiko.id_departemen', 'pelaksanaan_manajemen_risiko.priode_penerapan','departemen.kode as kodedep','departemen.nama as namadep')
+        ->select('pelaksanaan_manajemen_risiko.id', 'pelaksanaan_manajemen_risiko.id_departemen', 'pelaksanaan_manajemen_risiko.priode_penerapan','departemen.kode as kodedep','departemen.nama as namadep','pelaksanaan_manajemen_risiko.selera_risiko')
         ->leftjoin('departemen', 'pelaksanaan_manajemen_risiko.id_departemen', '=', 'departemen.id')
         ->where('pelaksanaan_manajemen_risiko.id',$id)
         ->get();

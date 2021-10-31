@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="../assets/vendor/remixicon/fonts/remixicon.css">
     <style>
         body { 
-  background: url('assets/images/bg-background2.jpg') no-repeat center center fixed; 
+  background: url('assets/images/desain web login 1 (1).jpg') no-repeat; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

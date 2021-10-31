@@ -8,6 +8,6 @@ class departemen extends Model
 {
     protected $table = 'departemen';
     protected $fillable = [
-        'kode','nama'
+        'kode','nama','mengelola_risiko'
     ];
 }

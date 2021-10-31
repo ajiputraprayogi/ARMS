@@ -33,6 +33,27 @@
                             <input type="text" name="nama" class="form-control" value="{{$data->nama}}" id="" required>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3" for="">Mengelola Risiko</label>
+                        <div class="col-sm-9">
+                            @foreach($datadep as $row)
+                            @if($row->id!==$data->id)
+                                @if($row->mengelola_risiko == '')
+                                @php
+                                $newpic =','.$data->mengelola_risiko;
+                                $datarespon=explode(',',$newpic);
+                                @endphp
+                                    <div class="checkbox d-inline-block mr-3">
+                                        <label for="{{$row->id}}"><input type="checkbox" class="checkbox-input" name="mengelola_risiko[]" @foreach($datarespon as $dres) @if($dres==$row->id) checked @endif @endforeach value="{{$row->id}}" id="{{$row->id}}">
+                                         {{$row->nama}}</label>
+                                    </div>
+                                @else
+
+                                @endif
+                            @endif
+                            @endforeach
+                        </div>
+                    </div>
                     <div class="text-right">
                         <div class="form-group">
                         <button class="btn btn-primary">Edit</button>
