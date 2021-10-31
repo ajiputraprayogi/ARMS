@@ -65,7 +65,7 @@ class ResikoteridentifikasiController extends Controller
         $tahun = DB::table('pelaksanaan_manajemen_risiko')
         ->groupby('priode_penerapan')
         ->get();
-        
+
         $konteks = DB::table('resiko_teridentifikasi')
                         ->select('konteks.*')
                         ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
@@ -73,7 +73,7 @@ class ResikoteridentifikasiController extends Controller
                         ->groupby('konteks.id')
                         ->orderby('konteks.nama','asc')
                         ->get();
-                        
+
         $status = DB::table('resiko_teridentifikasi')
                         ->select('resiko_teridentifikasi.*')
                         ->groupby('status')
@@ -325,7 +325,7 @@ class ResikoteridentifikasiController extends Controller
         $kategori = kategoriresiko::all();
         $spip = metode::all();
         $hariini = date('d-m-Y');
-        $auth= Auth::user()->id; 
+        $auth= Auth::user()->id;
         $pengaju = DB::table('users')->where('id', '!=', $auth)->get();
         // dd($pengaju);
         return view('backend.resiko.resiko_teridentifikasi.add',['data'=>$kategori, 'data2'=>$spip, 'hariini'=>$hariini, 'orang'=>$pengaju]);
@@ -399,8 +399,8 @@ class ResikoteridentifikasiController extends Controller
             'status_persetujuan'=> $request->pengajuan,
             'diajukan_oleh'=> $request->diajukan,
             'diajukan_tanggal'=> Carbon::createFromFormat('d-m-Y',$request->tanggal_pengajuan)->format('Y-m-d'),
-            'persetujuan_oleh'=> $request->disetujui_oleh,
-            'tanggal_persetujua'=> Carbon::createFromFormat('d-m-Y',$request->tanggal_persetujuan)->format('Y-m-d'),
+            'persetujuan_oleh'=> $request->disetujui_oleh ? $request->disetujui_oleh : '',
+            'tanggal_persetujua'=> $request->tanggal_persetujuan ? Carbon::createFromFormat('d-m-Y',$request->tanggal_persetujuan)->format('Y-m-d') : '',
             // 'keterangan'=> $request->keterangan,
             'besaran_awal' => $baw,
             'besaran_akhir'=> $bak,
@@ -464,7 +464,7 @@ class ResikoteridentifikasiController extends Controller
         // $data = $request->idkat;
         // dd($full_code);
         // $ui="21sadasd";
-        
+
         resikoteridentifikasi::find($id)->update([
             'faktur'=>$request->faktur,
             'kode_risiko'=>$coba,
@@ -486,8 +486,8 @@ class ResikoteridentifikasiController extends Controller
             'status_persetujuan'=> $request->pengajuan,
             'diajukan_oleh'=> $request->diajukan,
             'diajukan_tanggal'=> Carbon::createFromFormat('d-m-Y',$request->tanggal_pengajuan)->format('Y-m-d'),
-            'persetujuan_oleh'=> $request->disetujui_oleh,
-            'tanggal_persetujua'=> Carbon::createFromFormat('d-m-Y',$request->tanggal_persetujuan)->format('Y-m-d'),
+            'persetujuan_oleh'=> $request->disetujui_oleh ? $request->disetujui_oleh : '',
+            'tanggal_persetujua'=> $request->tanggal_persetujuan ? Carbon::createFromFormat('d-m-Y',$request->tanggal_persetujuan)->format('Y-m-d') : '',
             // 'keterangan'=> $request->keterangan,
             'status' => $request->status
         ]);
@@ -516,7 +516,7 @@ class ResikoteridentifikasiController extends Controller
                     ->where('departemen.kode','like','%'.$cari.'%')
                     ->orwhere('departemen.nama','like','%'.$cari.'%')
                     ->get();
-            
+
             return response()->json($data);
         }
     }
@@ -552,7 +552,7 @@ class ResikoteridentifikasiController extends Controller
                     ->where('jenis_konteks.konteks','like','%'.$cari.'%')
                     ->orwhere('konteks.kode','like','%'.$cari.'%')
                     ->get();
-            
+
             return response()->json($data);
         }
     }
@@ -563,7 +563,7 @@ class ResikoteridentifikasiController extends Controller
                     ->leftjoin('jenis_konteks', 'konteks.id_konteks', '=', 'jenis_konteks.id')
                     ->where('konteks.id','=', $id)
                     ->get();
-            
+
             return response()->json($data);
     }
 }

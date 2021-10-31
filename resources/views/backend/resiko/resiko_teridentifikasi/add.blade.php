@@ -79,8 +79,7 @@ Identifikasi Risiko | ARMS
                     <label class="control-label col-sm-3 align-self-center" for="email">Pernyataan Risiko<i
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
-                        <textarea name="pernyataan" rows="4" class="form-control">
-                        </textarea>
+                        <textarea name="pernyataan" rows="4" class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -102,8 +101,7 @@ Identifikasi Risiko | ARMS
                     <label class="control-label col-sm-3 align-self-center" for="email">Uraian Dampak<i
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
-                        <textarea id="w3review" name="dampak" rows="4" cols="50" class="form-control">
-                        </textarea>
+                        <textarea id="w3review" name="dampak" rows="4" cols="50" class="form-control"></textarea>
                     </div>
                 </div>
                 <!-- <div class="form-group row">
