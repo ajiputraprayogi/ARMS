@@ -192,7 +192,7 @@ if($row_selera_risiko->besaran_akhir>$row_selera_risiko->selera_risiko){
 
                                             <td style="background:{{$cari_nilai->kode_warna}};">
                                             <div class="row">
-                                                <div class="col-md-12 text-left font-weight-bold">
+                                                <div class="col-md-12 text-left font-weight-bold" style="font-size: 1.2rem;">
                                             {{$hitung_risikonya}}
                                                 </div>
                                                 <div class="col-md-12 text-right font-weight-bold">
