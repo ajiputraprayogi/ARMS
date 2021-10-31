@@ -92,7 +92,7 @@ Identifikasi Risiko | ARMS
                             @foreach($data as $kategori)
                             <option value="{{$kategori->id}}">{{$kategori->resiko}}</option>
                             @endforeach
-                            
+
                             <!-- $kodekat = DB::table('kategori_resiko')->where('id', '=', $cari)->get(); -->
                         </select>
                         <input type="hidden" id="kodekat" name="kodekat">
@@ -168,15 +168,13 @@ Identifikasi Risiko | ARMS
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="control-label col-sm-3 align-self-center" for="email">Disetujui/Ditolak Oleh<i
-                            class="bintang">*</i></label>
+                    <label class="control-label col-sm-3 align-self-center" for="email">Disetujui/Ditolak Oleh</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" name="disetujui_oleh">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="control-label col-sm-3 align-self-center" for="email">Disetujui/Ditolak Pada<i
-                            class="bintang">*</i></label>
+                    <label class="control-label col-sm-3 align-self-center" for="email">Disetujui/Ditolak Pada</label>
                     <div class="col-sm-9">
                         <div class="md-form md-outline input-with-post-icon datepicker">
                             <input placeholder="Pilih Tanggal" id="example" class="form-control pickyDate"
@@ -236,7 +234,7 @@ $(document).ready(function() {
 							$('#kodekat').val(item.kode);
 					})
 				}
-                
+
 			},
 		});
 	});

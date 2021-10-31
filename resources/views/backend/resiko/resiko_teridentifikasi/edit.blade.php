@@ -174,9 +174,9 @@ Edit Risiko Teridentifikasi | ARMS
                         <div class="col-sm-9">
                             <select class="form-control" disabled name="" id="cario" onchange="caribesaran()">
                                 <option selected disabled value="{{$res->frekuensi_awal}}">{{$res->frekuensi_awal}}</option>
-                                
+
                                 <option value=""></option>
-                                
+
                             </select>
                             <input type="hidden" name="frekuensi_saat_ini" id="frekuensi_saat_ini">
                         </div>
@@ -187,9 +187,9 @@ Edit Risiko Teridentifikasi | ARMS
                         <div class="col-sm-9">
                             <select class="form-control" disabled name="dampak_saat_ini" id="dampakk" onchange="caribesaran()" class="dampakk">
                                 <option selected disabled value="{{$res->dampak_awal}}">{{$res->dampak_awal}}</option>
-                                
+
                                 <option value=""></option>
-                                
+
                             </select>
                             <input type="hidden" name="dampak_saat_ini" id="dampak_saat_ini">
                         </div>
@@ -218,9 +218,9 @@ Edit Risiko Teridentifikasi | ARMS
                         <div class="col-sm-9">
                             <select class="form-control" disabled name="" id="cario" onchange="caribesaran()">
                                 <option selected disabled value="{{$res->frekuensi_akhir}}">{{$res->frekuensi_akhir}}</option>
-                                
+
                                 <option value=""></option>
-                                
+
                             </select>
                             <input type="hidden" name="frekuensi_saat_ini" id="frekuensi_saat_ini">
                         </div>
@@ -231,9 +231,9 @@ Edit Risiko Teridentifikasi | ARMS
                         <div class="col-sm-9">
                             <select class="form-control" disabled name="dampak_saat_ini" id="dampakk" onchange="caribesaran()" class="dampakk">
                                 <option selected disabled value="{{$res->dampak_akhir}}">{{$res->dampak_akhir}}</option>
-                                
+
                                 <option value=""></option>
-                                
+
                             </select>
                             <input type="hidden" name="dampak_saat_ini" id="dampak_saat_ini">
                         </div>
@@ -295,16 +295,14 @@ Edit Risiko Teridentifikasi | ARMS
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="control-label col-sm-3 align-self-center" for="email">Disetujui/Ditolak Oleh<i
-                            class="bintang">*</i></label>
+                    <label class="control-label col-sm-3 align-self-center" for="email">Disetujui/Ditolak Oleh</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" name="disetujui_oleh"
                             value="{{$res->persetujuan_oleh}}">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="control-label col-sm-3 align-self-center" for="email">Disetujui/Ditolak Pada<i
-                            class="bintang">*</i></label>
+                    <label class="control-label col-sm-3 align-self-center" for="email">Disetujui/Ditolak Pada</label>
                     <div class="col-sm-9">
                         <div class="md-form md-outline input-with-post-icon datepicker">
                             <input placeholder="{{date('d-m-Y', strtotime($res->tanggal_persetujua))}}" id="pickyDate" class="form-control pickyDate"
@@ -355,7 +353,7 @@ $(document).ready(function() {
                             $('#idkat').val(item.id);
 					})
 				}
-                
+
 			},
 		});
 	});
