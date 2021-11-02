@@ -36,7 +36,17 @@
                     <div class="form-group row">
                         <label class="control-label col-sm-3" for="">Mengelola Risiko</label>
                         <div class="col-sm-9">
-                            @foreach($datadep as $row)
+                            <select class="form-control" name="mengelola_risiko" id="">
+                                <option value="">Pilih Mengelola Risiko</option>
+                                @foreach($datadep as $row)
+                                    @if($row->mengelola_risiko=='')
+                                        @if($row->id!==$data->id)
+                                            <option value="{{$row->id}}">{{$row->nama}}</option>
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </select>
+                            <!-- @foreach($datadep as $row)
                             @if($row->id!==$data->id)
                                 @if($row->mengelola_risiko == '')
                                 @php
@@ -51,7 +61,7 @@
 
                                 @endif
                             @endif
-                            @endforeach
+                            @endforeach -->
                         </div>
                     </div>
                     <div class="text-right">

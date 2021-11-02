@@ -50,6 +50,10 @@ Route::group(['middleware' => ['auth']],function(){
     Route::get('cari_pengendalian_hasil/{id}','backend\PelaksanaanpengendalianrisikoController@cari_pengendalian_hasil');
     // =============== Pelaksanaan Pengendalian Risiko =========
 
+    // =============== Pemantauan Efektivitas Pengendalian =====
+    Route::resource('pemantauan-efektivitas-pengendalian','backend\pemantauanefektivitaspengendalianController');
+    // =========================================================
+
     Route::resource('konteks', 'backend\KonteksController');
     Route::get('data-konteks', 'backend\KonteksController@listdata');
     

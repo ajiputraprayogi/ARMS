@@ -35,12 +35,23 @@
                     <div class="form-group row">
                         <label class="control-label col-sm-3" for="">Mengelola Risiko</label>
                         <div class="col-sm-9">
-                            @foreach($data as $row)
-                                <div class="checkbox d-inline-block mr-3">
-                                    <label for="{{$row->id}}"><input type="checkbox" class="checkbox-input" name="mengelola_risiko[]" value="{{$row->id}}" id="{{$row->id}}">
-                                        {{$row->nama}}</label>
-                                </div>
-                            @endforeach
+                            <select class="form-control" name="mengelola_risiko" id="">
+                                <option value="">Pilih Mengelola Risiko</option>
+                                @foreach($data as $row)
+                                @php
+                                    $datadep = DB::table('departemen')
+                                    ->where('id','!=',$row->mengelola_risiko)
+                                    ->get();
+                                @endphp
+                                @endforeach
+                                @foreach($datadep as $rowdep)
+                                    @if($rowdep->mengelola_risiko=='')
+                                        <option value="{{$rowdep->id}}">{{$rowdep->nama}}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            <!-- <label for="{{$row->id}}"><input type="checkbox" class="checkbox-input" name="mengelola_risiko[]" value="{{$row->id}}" id="{{$row->id}}">
+                                {{$row->nama}}</label> -->
                         </div>
                     </div>
                     <div class="text-right">
