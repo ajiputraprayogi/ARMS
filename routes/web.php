@@ -51,7 +51,7 @@ Route::group(['middleware' => ['auth']],function(){
     // =============== Pelaksanaan Pengendalian Risiko =========
 
     // =============== Pemantauan Efektivitas Pengendalian =====
-    Route::resource('pemantauan-efektivitas-pengendalian','backend\pemantauanefektivitaspengendalianController');
+    Route::resource('pemantauan-efektivitas','backend\pemantauanefektivitaspengendalianController');
     // =========================================================
 
     Route::resource('konteks', 'backend\KonteksController');

@@ -103,7 +103,7 @@
                                   <a href="{{url('perubahan-besaran-risiko')}}">
                                       <i class="las la-minus"></i><span>Perubahan Besaran Risiko</span>
                                   </a>
-                                  <a href="{{url('pemantauan-efektivitas-pengendalian')}}">
+                                  <a href="{{url('pemantauan-efektivitas')}}">
                                       <i class="las la-minus"></i><span>Pemantauan Efektivitas Pengendalian</span>
                                   </a>
                               </li>

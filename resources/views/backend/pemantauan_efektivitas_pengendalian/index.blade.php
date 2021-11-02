@@ -13,7 +13,7 @@
                 <h3 class="mb-3">Daftar Rencana Tindak Pengendalian</h3>
                 <form method="get">
                 <div class="row">
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
                         <label for="">Departemen</label>
                         <div class="form-group">
                         <select class="form-control" name="departemen" id="">
@@ -22,8 +22,8 @@
                         </select>
                       
                         </div>
-                    </div>
-                    <div class="col-md-4">
+                    </div> -->
+                    <!-- <div class="col-md-4">
                         <label for="">Kode Risiko</label>
                         <div class="form-group">
                         <select class="form-control select" name="kode_risiko" required>
@@ -32,8 +32,8 @@
                         </select>
                       
                         </div>
-                    </div>
-                    <div class="col-md-4">
+                    </div> -->
+                    <!-- <div class="col-md-4">
                         <label for="">Status</label>
                         <div class="form-group">
                         <select class="form-control" name="status" required>
@@ -41,24 +41,24 @@
                             <option value="" selected></option>
                         </select>
                         </div>
-                    </div>
-                    <div class="col-md-4">
+                    </div> -->
+                    <!-- <div class="col-md-4">
                         <label for="">Target Waktu Awal</label>
                         <div class="input-group mb-3">
                                 <input class="form-control" id="tanggal"
                                         name="target_waktu" placeholder="Pilih Target Waktu Awal" value="" />
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-md-4">
-                        <label for="">Target Waktu Akhir</label>
+                        <!-- <label for="">Target Waktu Akhir</label> -->
                         <div class="input-group mb-3">
-                                <input class="form-control" id="tanggal"
-                                        name="target_waktu_akhir" placeholder="Pilih Target Waktu Akhir" value="" />
+                                <!-- <input class="form-control" id="tanggal"
+                                        name="target_waktu_akhir" placeholder="Pilih Target Waktu Akhir" value="" /> -->
                             <div class="input-group-prepend" style="border-radius:10p;">
-                                <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>
-                                <a href="" class="btn btn-secondary"
+                                <!-- <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button> -->
+                                <!-- <a href="" class="btn btn-secondary"
                                     style="border-top-right-radius: 10px;border-bottom-right-radius: 10px;"><i
-                                        class="fas fa-sync"></i></a>
+                                        class="fas fa-sync"></i></a> -->
                             </div>
                     </div>
                 </div>
@@ -80,11 +80,11 @@
                 </div>
             </form>
             </div>
-            <hr>
+            <!-- <hr> -->
             <div class="card-body p-0 mt-lg-2 mt-0">
                 <div class="form-group">
                     <div class="text-right">
-                        <a href="{{url('pengendalian/create')}}" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Tambah Tindakan Pengendalian</a>
+                        <a href="{{url('pemantauan-efektivitas/create')}}" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Tambah Tindakan Pengendalian</a>
                     </div>
                 </div>
                 <div class="table-responsive rounded mb-3">
@@ -97,19 +97,46 @@
                                         <label for="checkbox1" class="mb-0"></label>
                                     </div>
                                 </th> -->
-                                <th>Kode Pengendalian</th>
                                 <th>Kode Risiko</th>
-                                <th>Respons Risiko</th>
-                                <th>Kegiatan Pengendalian</th>
-                                <th>Penanggung Jawab</th>
-                                <th>Target Waktu Mulai</th>
-                                <th>Target Waktu Selesai</th>
-                                <th>Status</th>
+                                <th>Pernyataan Risiko</th>
+                                <th>Kode Tindak Pengendalian</th>
+                                <th>Besaran Risiko Yang Direspons</th>
+                                <th>Besaran Risiko Aktual</th>
+                                <th>Pemilik Risiko</th>
+                                <th>Keterangan</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="ligth-body">
-                            
+                        @foreach($data as $item)
+                            <tr>
+                                <td>{{$item->full_kode}}</td>
+                                <td>{{$item->pernyataan_risiko}}</td>
+                                <td>{{$item->kode_tindak_pengendalian}}</td>
+                                <td>
+                                    <label for="">{{$item->frekuensi_saat_ini}}</label><br>
+                                    <label for="">{{$item->dampak_saat_ini}}</label><br>
+                                    <input type="text" class="box1" value="{{$item->besaran_saat_ini}}" style="background-color: {{$item->pr_saat_ini}}" readonly>
+                                </td>
+                                <td>
+                                    <label for="">{{$item->frekuensi_akhir}}</label><br>
+                                    <label for="">{{$item->dampak_akhir}}</label><br>
+                                    <input type="text" class="box1" value="{{$item->besaran_akhir}}" style="background-color: {{$item->pr_akhir}}" readonly>
+                                </td>
+                                <td>{{$item->nama}}</td>
+                                <td>{{$item->keterangan}}</td>
+                                <td>
+                                <a class="btn btn-success btn-sm m-1"
+                                        href="{{url('pemantauan-efektivitas/'.$item->id.'/edit')}}">
+                                        <i class="ri-pencil-line mr-0"></i>
+                                    </a>
+                                    <button class="btn btn-sm btn-danger m-1" data-toggle="tooltip" data-placement="top"
+                                        title="" data-original-title="Delete"
+                                        onclick="hapusdatamanajemenrisiko({{$item->id}})"><i
+                                            class="ri-delete-bin-line mr-0"></i></button>
+                                </td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -146,7 +173,7 @@
                     })
                     $.ajax({
                         type: 'DELETE',
-                        url: '//' + kode,
+                        url: '/pemantauan-efektivitas/' + kode,
                         data: {
                             'token': $('input[name=_token]').val(),
                         },
