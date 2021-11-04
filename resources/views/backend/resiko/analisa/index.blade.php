@@ -77,9 +77,21 @@ Daftar Analisis Risiko | ARMS
                         @foreach($data as $row)
                         <tr>
                             <td class="text-center">{{$row->kode_risiko}}</td>
-                            <td class="text-center">{{$row->besaran_melekat}}</td>
-                            <td class="text-center">{{$row->besaran_residu}}</td>
+                            <td>
+                                <label for="">{{$row->frekuensi_melekat}}</label><br>
+                                <label for="">{{$row->dampak_melekat}}</label><br>
+                                <input type="text" class="box1" value="{{$row->besaran_melekat}}" style="background-color: {{$row->pr}}" readonly>
+                            </td>
+                            <td>
+                                <label for="">{{$row->frekuensi_residu}}</label><br>
+                                <label for="">{{$row->dampak_residu}}</label><br>
+                                <input type="text" class="box1" value="{{$row->besaran_residu}}" style="background-color: {{$row->pr_residu}}" readonly>
+                            </td>
+                            @if($row->sudah_ada_pengendalian=='')
+                            <td class="text-center">Belum</td>
+                            @else
                             <td class="text-center">{{$row->sudah_ada_pengendalian}}</td>
+                            @endif
                             <td class="text-center">
                                 <a class="btn btn-success btn-sm m-1"
                                     href="{{url('/analisa-risiko/'.$row->id.'/edit')}}">

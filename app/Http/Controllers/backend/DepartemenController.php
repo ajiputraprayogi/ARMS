@@ -17,12 +17,19 @@ class DepartemenController extends Controller
      */
     public function index()
     {
-        $data = departemen::all();
+        // $data = departemen::all();
+        $data = DB::table('departemen')
+        ->select('departemen.*','a.nama as namadep')
+        ->leftjoin('departemen as a','a.id','=','departemen.mengelola_risiko')
+        ->get();
         return view('backend.departemen.index',['data'=>$data]);
     }
 
     public function listdata(){
-        return Datatables::of(departemen::all())->make(true);
+        return Datatables::of($data = DB::table('departemen')
+        ->select('departemen.*','a.nama as namadep')
+        ->leftjoin('departemen as a','a.mengelola_risiko','=','departemen.id')
+        ->get())->make(true);
     }
     /**
      * Show the form for creating a new resource.
@@ -80,7 +87,11 @@ class DepartemenController extends Controller
     public function edit($id)
     {
         $datadep = departemen::all();
-        $data = departemen::find($id);
+        $data = DB::table('departemen')
+        ->select('departemen.*','a.nama as namadep')
+        ->leftjoin('departemen as a','a.id','=','departemen.mengelola_risiko')
+        ->where('departemen.id',$id)
+        ->get();
         return view('backend.departemen.edit_departemen',['data'=>$data,'datadep'=>$datadep]);
     }
 

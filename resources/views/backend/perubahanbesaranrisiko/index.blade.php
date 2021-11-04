@@ -77,8 +77,16 @@ Pemantauan Risiko | ARMS
                         @foreach($data as $row)
                         <tr>
                             <td class="text-left">{{$row->kode_resiko_teridentifikasi}}</td>
-                            <td class="text-center">{{$row->besaran_saat_ini}}</td>
-                            <td class="text-center">{{$row->besaran_aktual}}</td>
+                            <td>
+                                <label for="">{{$row->frekuensi_saat_ini}}</label><br>
+                                <label for="">{{$row->dampak_saat_ini}}</label><br>
+                                <input type="text" class="box1" value="{{$row->besaran_saat_ini}}" style="background-color: {{$row->pr_saat_ini}}" readonly>
+                            </td>
+                            <td>
+                                <label for="">{{$row->frekuensi_akhir}}</label><br>
+                                <label for="">{{$row->dampak_akhir}}</label><br>
+                                <input type="text" class="box1" value="{{$row->besaran_akhir}}" style="background-color: {{$row->pr_akhir}}" readonly>
+                            </td>
                             <td class="text-center">{{$row->deviasi}}</td>
                             <td class="text-center">
                                 <a class="btn btn-success btn-sm m-1"

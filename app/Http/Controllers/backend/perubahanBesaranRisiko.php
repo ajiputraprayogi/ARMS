@@ -12,7 +12,7 @@ class perubahanBesaranRisiko extends Controller
     public function index()
     {
         $data = DB::table('perubahan_besaran_risiko')
-        ->select(DB::raw('perubahan_besaran_risiko.*,resiko_teridentifikasi.besaran_akhir'))
+        ->select(DB::raw('perubahan_besaran_risiko.*,resiko_teridentifikasi.besaran_akhir,resiko_teridentifikasi.frekuensi_akhir,resiko_teridentifikasi.dampak_akhir,resiko_teridentifikasi.pr_akhir'))
         ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','perubahan_besaran_risiko.kode_resiko_teridentifikasi')
         ->orderby('perubahan_besaran_risiko.id','desc')
         ->get();

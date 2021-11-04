@@ -18,6 +18,7 @@
             </div>
             @endif
             <div class="card-body">
+            @foreach($data as $data)
                 <form class="form-horizontal" action="{{url('departemen/'.$data->id)}}" method="post">
                     @csrf
                     <input type="hidden" name="_method" value="PUT">
@@ -37,11 +38,11 @@
                         <label class="control-label col-sm-3" for="">Mengelola Risiko</label>
                         <div class="col-sm-9">
                             <select class="form-control" name="mengelola_risiko" id="">
-                                <option value="">Pilih Mengelola Risiko</option>
+                                <option value="Tidak Ada">Tidak Ada</option>
                                 @foreach($datadep as $row)
                                     @if($row->mengelola_risiko=='')
-                                        @if($row->id!==$data->id)
-                                            <option value="{{$row->id}}">{{$row->nama}}</option>
+                                        @if($row->mengelola_risiko!==$data->id)
+                                            <option value="{{$row->id}}"@if($row->id==$data->mengelola_risiko) selected @endif>{{$row->nama}}</option>
                                         @endif
                                     @endif
                                 @endforeach
@@ -71,6 +72,7 @@
                         </div>
                     </div>
                 </form>
+            @endforeach
             </div>
         </div>
    </div>

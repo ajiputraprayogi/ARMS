@@ -106,9 +106,16 @@
                                 <td>{{$item->pernyataan_risiko}}</td>
                                 <td>{{$item->namakonteks}}</td>
                                 <td>{{$item->namakat}}</td>
-                                <td class="text-center">{{$item->besaran_awal}}</td>
-                                <td class="text-center">{{$item->besaran_akhir}}</td>
-                                
+                                <td>
+                                    <label for="">{{$item->frekuensi_awal}}</label><br>
+                                    <label for="">{{$item->dampak_awal}}</label><br>
+                                    <input type="text" class="box1" value="{{$item->besaran_awal}}" style="background-color: {{$item->pr}}" readonly>
+                                </td>
+                                <td>
+                                    <label for="">{{$item->frekuensi_akhir}}</label><br>
+                                    <label for="">{{$item->dampak_akhir}}</label><br>
+                                    <input type="text" class="box1" value="{{$item->besaran_akhir}}" style="background-color: {{$item->pr_akhir}}" readonly>
+                                </td>
                                 <td>{{$item->status}}</td>
                                 <td>
                                 <a class="btn btn-success btn-sm m-1"

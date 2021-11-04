@@ -37,11 +37,30 @@
                                 </th> -->
                                 <th>Kode Departemen </th>
                                 <th>Nama Departemen</th>
+                                <th>Mengelola Risiko</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="ligth-body">
                             @foreach($data as $item)
+                            <tr>
+                                <td>{{$item->kode}}</td>
+                                <td>{{$item->nama}}</td>
+                                @if($item->namadep=='')
+                                <td>Tidak Ada</td>
+                                @else
+                                <td>{{$item->namadep}}</td>
+                                @endif
+                                <td>
+                                <a class="btn btn-success btn-sm m-1"
+                                    href="{{url('/departemen/'.$item->id.'/edit')}}">
+                                    <i class="ri-pencil-line mr-0"></i>
+                                </a>
+                                <button class="btn btn-sm btn-danger m-1" data-toggle="tooltip" data-placement="top"
+                                    title="" data-original-title="Delete" onclick="hapusdata({{$item->id}})"><i
+                                        class="ri-delete-bin-line mr-0"></i></button>
+                                </td>
+                            </tr>
                             <div class="modal fade" id="show{{$item->id}}" tabindex="-1" role="dialog"  aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
@@ -84,6 +103,6 @@
 @endsection
 @push('script')
     <script src="{{asset('phppiechart/assets/js/highcharts.js')}}"></script>
-    <script src="{{asset('assets/customjs/backend/departemen.js')}}"></script>
+    <!-- <script src="{{asset('assets/customjs/backend/departemen.js')}}"></script> -->
 @endpush
 
