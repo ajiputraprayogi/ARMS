@@ -135,5 +135,9 @@ Route::group(['middleware' => ['auth']],function(){
       Route::resource('pencatatan-peristiwa', 'backend\PencatatanperistiwaController');
       Route::post('pencatatan-peristiwa-cari', 'backend\PencatatanperistiwaController@cari');
       Route::get('cari_pencatatan_manajemen', 'backend\PencatatanperistiwaController@cari_pencatatan_manajemen');
+
+    // ============================== Filter ============================
+    Route::get('/cari-departmen-filter','backend\ResikoteridentifikasiController@caridepartmenfilter'); 
+    Route::get('/hasil-cari-departmen-filter/{faktur}','backend\ResikoteridentifikasiController@hasilcaridepartmenfilter');
 });
 

@@ -14,10 +14,10 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <select class="form-control" name="departemen" id="">
+                                <select class="form-control" name="departemen" id="departemen">
                                     <option>Semua Departemen</option>
                                     @foreach($departemen as $rowdpr)
-                                    <option value="{{$rowdpr->id}}" @if($active_departemen==$rowdpr->id) selected
+                                    <option value="{{$rowdpr->faktur}}" @if($active_departemen==$rowdpr->faktur) selected
                                         @endif>{{$rowdpr->nama}}</option>
                                     @endforeach
                                 </select>
@@ -25,11 +25,22 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <select class="form-control" name="konteks" id="">
+                                <select class="form-control" name="konteks" id="konteks">
                                     <option>Semua Konteks</option>
                                     @foreach($konteks as $rowkts)
                                     <option value="{{$rowkts->id}}" @if($active_konteks==$rowkts->id) selected
                                         @endif>{{$rowkts->nama}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <select class="form-control" name="kategori" id="">
+                                    <option>Semua Kategori</option>
+                                    @foreach($kategori as $rowktg)
+                                    <option value="{{$rowktg->id}}" @if($active_kategori==$rowktg->id) selected
+                                        @endif>{{$rowktg->resiko}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -206,7 +217,7 @@
 @endsection
 @push('script')
     <script src="{{asset('phppiechart/assets/js/highcharts.js')}}"></script>
-    <!-- <script src="{{asset('assets/customjs/backend/resiko_teridentifikasi.js')}}"></script> -->
+    <script src="{{asset('assets/customjs/backend/resiko_teridentifikasi_filter.js')}}"></script>
     <script>
         function hapusdatamanajemenrisiko(kode) {
             const swalWithBootstrapButtons = Swal.mixin({
