@@ -20,7 +20,7 @@ class DepartemenController extends Controller
         // $data = departemen::all();
         $data = DB::table('departemen')
         ->select('departemen.*','a.nama as namadep')
-        ->leftjoin('departemen as a','a.id','=','departemen.mengelola_risiko')
+        ->leftjoin('departemen as a','a.id','=','departemen.id_bawahan')
         ->get();
         return view('backend.departemen.index',['data'=>$data]);
     }
@@ -59,10 +59,19 @@ class DepartemenController extends Controller
         // }else{
         //     $id_departemen = implode(",",$request->mengelola_risiko);
         // }
+        $mengelola_risiko = explode(",", $request->mengelola_risiko);
+            if(count($mengelola_risiko)<2){
+                $id = $mengelola_risiko[0];
+                $id_atasan = $mengelola_risiko[0];
+            }else{
+                $id = $mengelola_risiko[0];
+                $id_atasan = $mengelola_risiko[1];
+            }
         departemen::insert([
             'kode' => $request->kode,
             'nama' => $request->nama,
-            'mengelola_risiko'=>$request->mengelola_risiko,
+            'id_bawahan'=>$id,
+            'id_atasan'=>$id_atasan,
         ]);
         return redirect('departemen')->with('status','Sukses menyimpan data');
     }
@@ -86,12 +95,17 @@ class DepartemenController extends Controller
      */
     public function edit($id)
     {
-        $datadep = departemen::all();
         $data = DB::table('departemen')
         ->select('departemen.*','a.nama as namadep')
-        ->leftjoin('departemen as a','a.id','=','departemen.mengelola_risiko')
+        ->leftjoin('departemen as a','a.id','=','departemen.id_bawahan')
         ->where('departemen.id',$id)
         ->get();
+        foreach($data as $row){
+            $datadep = DB::table('departemen')
+            ->select('departemen.*')
+            ->where([['id_atasan','!=',$row->id],['id_atasan','!=',$row->id_bawahan]])
+            ->get();
+        }
         return view('backend.departemen.edit_departemen',['data'=>$data,'datadep'=>$datadep]);
     }
 
@@ -113,10 +127,19 @@ class DepartemenController extends Controller
         // }else{
         //     $id_departemen = implode(",",$request->mengelola_risiko);
         // }
+        $mengelola_risiko = explode(",", $request->mengelola_risiko);
+        if(count($mengelola_risiko)<2){
+            $id_bawahan = $mengelola_risiko[0];
+            $id_atasan = $mengelola_risiko[0];
+        }else{
+            $id_bawahan = $mengelola_risiko[0];
+            $id_atasan = $mengelola_risiko[1];
+        }
         departemen::find($id)->update([
             'kode'=>$request->kode,
             'nama'=>$request->nama,
-            'mengelola_risiko'=>$request->mengelola_risiko,
+            'id_atasan'=>$id_atasan,
+            'id_bawahan'=>$id_bawahan,
             ]);
         return redirect('departemen')->with('status','Sukses mengubah data');
     }

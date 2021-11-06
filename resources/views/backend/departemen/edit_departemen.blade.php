@@ -38,16 +38,24 @@
                         <label class="control-label col-sm-3" for="">Mengelola Risiko</label>
                         <div class="col-sm-9">
                             <select class="form-control" name="mengelola_risiko" id="">
-                                <option value="Tidak Ada">Tidak Ada</option>
+                                <option value="">Tidak Ada</option>
                                 @foreach($datadep as $row)
-                                    @if($row->mengelola_risiko=='')
-                                        @if($row->mengelola_risiko!==$data->id)
-                                            <option value="{{$row->id}}"@if($row->id==$data->mengelola_risiko) selected @endif>{{$row->nama}}</option>
+                                    {{-- @if($row->mengelola_risiko=='') --}}
+                                        @if($row->id!==$data->id)
+                                            
+                                                    <option value="@if($row->id_atasan=='')
+                                                        {{$row->id}}
+                                                    @else
+                                                        {{$row->id}},{{$row->id_atasan}}
+                                                    @endif"@if($row->id==$data->id_bawahan) selected @endif>{{$row->nama}}</option>
+                                                
+                                        @else
+                                        
                                         @endif
-                                    @endif
+                                    {{-- @endif --}}
                                 @endforeach
                             </select>
-                            <!-- @foreach($datadep as $row)
+                            {{-- <!-- @foreach($datadep as $row)
                             @if($row->id!==$data->id)
                                 @if($row->mengelola_risiko == '')
                                 @php
@@ -62,7 +70,7 @@
 
                                 @endif
                             @endif
-                            @endforeach -->
+                            @endforeach --> --}}
                         </div>
                     </div>
                     <div class="text-right">

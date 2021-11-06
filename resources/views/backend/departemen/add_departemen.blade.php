@@ -38,20 +38,14 @@
                             <select class="form-control" name="mengelola_risiko" id="">
                                 <option value="">Pilih Mengelola Risiko</option>
                                 @foreach($data as $row)
-                                @php
-                                    $datadep = DB::table('departemen')
-                                    ->where('id','!=',$row->mengelola_risiko)
-                                    ->get();
-                                @endphp
-                                @endforeach
-                                @foreach($datadep as $rowdep)
-                                    @if($rowdep->mengelola_risiko=='')
-                                        <option value="{{$rowdep->id}}">{{$rowdep->nama}}</option>
-                                    @endif
+                                            <option value="
+                                                @if($row->id_atasan=='')
+                                                    {{$row->id}}
+                                                @else
+                                                    {{$row->id}},{{$row->id_atasan}}
+                                                @endif">{{$row->nama}}</option>
                                 @endforeach
                             </select>
-                            <!-- <label for="{{$row->id}}"><input type="checkbox" class="checkbox-input" name="mengelola_risiko[]" value="{{$row->id}}" id="{{$row->id}}">
-                                {{$row->nama}}</label> -->
                         </div>
                     </div>
                     <div class="text-right">
