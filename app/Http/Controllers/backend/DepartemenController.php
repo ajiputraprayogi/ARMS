@@ -10,13 +10,34 @@ use Illuminate\Support\Facades\DB;
 
 class DepartemenController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function caridepartemen($id)
+    {
+        $id_dep=[];
+        $id_atasan = [];
+        $i_limit=1;
+        array_push($id_atasan,$id);
+        //dd(count($id_atasan));
+
+        for ($i=0; $i <$i_limit ; $i++) { 
+            for ($j=0; $j < count($id_atasan) ; $j++) { 
+                $data = DB::table('departemen_test')->where('id_atasan',$id_atasan[$j])->get();
+                if(count($data)>0){
+                    foreach($data as $row){
+                        array_push($id_atasan,$row->id);
+                    }
+                    $i_limit++;
+                }else{
+                    $i_limit=$i;
+                }
+            }
+        }
+        // dd($id_atasan);
+        return $id_atasan;
+    }
+
     public function index()
     {
+        $this->caridepartemen(22);
         // $data = departemen::all();
         $data = DB::table('departemen')
         ->select('departemen.*','a.nama as namadep')
@@ -103,7 +124,7 @@ class DepartemenController extends Controller
         foreach($data as $row){
             $datadep = DB::table('departemen')
             ->select('departemen.*')
-            ->where([['id_atasan','!=',$row->id],['id_atasan','!=',$row->id_bawahan]])
+            ->where([['id_atasan','!=',$row->id]])
             ->get();
         }
         return view('backend.departemen.edit_departemen',['data'=>$data,'datadep'=>$datadep]);
