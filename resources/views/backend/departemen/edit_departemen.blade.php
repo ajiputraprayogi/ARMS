@@ -43,11 +43,7 @@
                                     {{-- @if($row->mengelola_risiko=='') --}}
                                         @if($row->id!==$data->id)
                                             
-                                                    <option value="@if($row->id_atasan=='')
-                                                        {{$row->id}}
-                                                    @else
-                                                        {{$row->id}},{{$row->id_atasan}}
-                                                    @endif"@if($row->id==$data->id_bawahan) selected @endif>{{$row->nama}}</option>
+                                                    <option value="{{$row->id}}"@if($row->id==$data->id_atasan) selected @endif>{{$row->nama}}</option>
                                                 
                                         @else
                                         

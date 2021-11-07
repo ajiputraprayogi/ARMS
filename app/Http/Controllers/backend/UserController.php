@@ -8,6 +8,7 @@ use App\User;
 use DataTables;
 use Hash;
 use App\roles;
+use DB;
 
 class UserController extends Controller
 {
@@ -23,7 +24,11 @@ class UserController extends Controller
     }
 
     public function listdata(){
-        return Datatables::of(User::all())->make(true);
+        return Datatables::of(User::leftjoin('roles','roles.id','=','users.level')
+                ->leftjoin('departemen','departemen.id','=','users.id_departemen')
+                ->select('users.*','roles.role','departemen.nama')
+                ->get())
+                ->make(true);
     }
     /**
      * Show the form for creating a new resource.
@@ -82,7 +87,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = User::find($id);
+        $unit_kerja = DB::table('departemen')->get();
+        $roles = roles::all();
+        return view('backend.user.edit_user',['data'=>$data,'roles'=>$roles,'unit_kerja'=>$unit_kerja]);
     }
 
     /**
@@ -94,7 +102,37 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'level' => ['required'],
+            'telp' => ['required'],
+            'username' => ['required'],
+            'name' => ['required', 'string', 'max:255'],
+            // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            // 'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+        $password = $request->password;
+        if($password==''){
+            User::find($id)->update([
+            'username' => $request->username,
+            'telp' => $request->telp,
+            'level' => $request->level,
+            'id_departemen' => $request->unit_kerja,
+            'name' => $request->name,
+            'email' => $request->email,
+            // 'password' => Hash::make($request->password),
+            ]);
+        }else{
+            User::find($id)->update([
+            'username' => $request->username,
+            'telp' => $request->telp,
+            'level' => $request->level,
+            'id_departemen' => $request->unit_kerja,
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+        }
+        return redirect('user')->with('status','Sukses mengubah data');
     }
 
     /**

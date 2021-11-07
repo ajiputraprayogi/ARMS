@@ -40,6 +40,7 @@
                                 <th>Email</th>
                                 <th>Telpon</th>
                                 <th>Roles</th>
+                                <th>Unit Kerja</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
