@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 06, 2021 at 12:07 PM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 7.3.31
+-- Generation Time: Nov 08, 2021 at 12:40 PM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 7.4.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `arms`
+-- Database: `arms_new`
 --
 
 -- --------------------------------------------------------
@@ -272,6 +272,20 @@ INSERT INTO `analisa_risiko` (`id`, `id_pelaksanaan_manajemen_risiko`, `id_prob`
 (52, 14, '10', '9', '6', '6', 'G.1.1.INV.ATT.7.3', '#ff0000', '#ff0000', '2 - Jarang Terjadi', '3 - Kadang Terjadi', '5 - Sangat Signifikan', '21', '5 - Sangat Signifikan', 22, 'Sudah', 'Memadai', 'SOP Pengendalian LHA', '2021-10-25 01:20:55', '2021-10-25 01:20:55'),
 (53, 13, '11', '8', '3', '3', 'G.1.1.BMN.5.3', '#ffc000', '#00b050', '1 - Hampir Tidak Terjadi', '4 - Sering Terjadi', '4 - Signifikan', '8', '4 - Signifikan', 19, 'Sudah', 'Memadai', 'sdfa', '2021-10-31 11:18:30', '2021-10-31 11:18:30'),
 (54, 12, '9', '9', '5', '4', 'G.1.1.EP.LAKIN.6.2', '#00b050', '#00b050', '2 - Jarang Terjadi', '2 - Jarang Terjadi', '2 - Minor', '7', '3 - Moderat', 11, 'Sudah', 'Memadai', 'Backup koneksi', '2021-11-02 13:34:58', '2021-11-02 13:34:58');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auto_numbers`
+--
+
+CREATE TABLE `auto_numbers` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `number` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -610,7 +624,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (24, '2021_09_25_041103_create_klasifikasi_sub_unsur_spips_table', 1),
 (25, '2021_09_25_041245_create_departemens_table', 1),
 (26, '2021_09_28_061908_create_konteks_table', 2),
-(27, '2021_09_28_065159_create_pemangku_kepentingans_table', 3);
+(27, '2021_09_28_065159_create_pemangku_kepentingans_table', 3),
+(28, '2017_08_03_055212_create_auto_numbers', 4),
+(29, '2021_11_08_040410_create_periode_pelaporans_table', 5),
+(30, '2021_11_08_061734_create_pelaporan_pengelolaan_risiko_table', 6),
+(31, '2021_11_08_063452_create_tembusan_table', 7);
 
 -- --------------------------------------------------------
 
@@ -692,6 +710,29 @@ INSERT INTO `pelaksanaan_pengendalian_risiko` (`id`, `id_pengendalian`, `realisa
 (21, '38', '2021-11-05', 'pelaku kunci tidak ada.'),
 (22, '39', '2021-11-15', 'kegagalan sertifikasi kompetensi.'),
 (23, '41', '2021-11-05', '1. kesulitan menetapkan penyebab hakiki.\r\n2. kriteria audit multitafsir.');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pelaporan_pengelolaan_risiko`
+--
+
+CREATE TABLE `pelaporan_pengelolaan_risiko` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_periode_pelaporan` int(11) NOT NULL,
+  `id_unit_kerja` int(11) NOT NULL,
+  `status` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `pelaporan_pengelolaan_risiko`
+--
+
+INSERT INTO `pelaporan_pengelolaan_risiko` (`id`, `id_periode_pelaporan`, `id_unit_kerja`, `status`, `file`, `created_at`, `updated_at`) VALUES
+(1, 1, 29, 'diajukan', 'CV_TAUFIK.pdf', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -906,6 +947,30 @@ INSERT INTO `penyebab` (`id`, `kode`, `penyebab`, `created_at`, `updated_at`) VA
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `periode_pelaporans`
+--
+
+CREATE TABLE `periode_pelaporans` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `tanggal_mulai` date NOT NULL,
+  `tanggal_selesai` date NOT NULL,
+  `status` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama_periode` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `periode_pelaporans`
+--
+
+INSERT INTO `periode_pelaporans` (`id`, `tanggal_mulai`, `tanggal_selesai`, `status`, `nama_periode`, `created_at`, `updated_at`) VALUES
+(1, '2021-11-08', '2021-11-13', 'aktif', '8 - 13 Nov 2021', NULL, '2021-11-07 22:51:01'),
+(3, '2021-11-08', '2021-11-30', 'aktif', '8 - 30 Nov 2021', NULL, '2021-11-08 00:05:42');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `perubahan_besaran_risiko`
 --
 
@@ -1043,6 +1108,28 @@ INSERT INTO `roles` (`id`, `role`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tembusan`
+--
+
+CREATE TABLE `tembusan` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_pelaporan` int(11) NOT NULL,
+  `id_departemen` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tembusan`
+--
+
+INSERT INTO `tembusan` (`id`, `id_pelaporan`, `id_departemen`, `created_at`, `updated_at`) VALUES
+(1, 1, 5, NULL, NULL),
+(2, 1, 15, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -1095,6 +1182,12 @@ ALTER TABLE `analisa_masalah`
 -- Indexes for table `analisa_risiko`
 --
 ALTER TABLE `analisa_risiko`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `auto_numbers`
+--
+ALTER TABLE `auto_numbers`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1182,6 +1275,12 @@ ALTER TABLE `pelaksanaan_pengendalian_risiko`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `pelaporan_pengelolaan_risiko`
+--
+ALTER TABLE `pelaporan_pengelolaan_risiko`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `pemangku_kepentingan`
 --
 ALTER TABLE `pemangku_kepentingan`
@@ -1212,6 +1311,12 @@ ALTER TABLE `penyebab`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `periode_pelaporans`
+--
+ALTER TABLE `periode_pelaporans`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `perubahan_besaran_risiko`
 --
 ALTER TABLE `perubahan_besaran_risiko`
@@ -1227,6 +1332,12 @@ ALTER TABLE `resiko_teridentifikasi`
 -- Indexes for table `roles`
 --
 ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tembusan`
+--
+ALTER TABLE `tembusan`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1263,6 +1374,12 @@ ALTER TABLE `analisa_masalah`
 --
 ALTER TABLE `analisa_risiko`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+
+--
+-- AUTO_INCREMENT for table `auto_numbers`
+--
+ALTER TABLE `auto_numbers`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `besaran_resiko`
@@ -1328,7 +1445,7 @@ ALTER TABLE `metode_pencapaian_tujuan`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `pelaksanaan_manajemen_risiko`
@@ -1341,6 +1458,12 @@ ALTER TABLE `pelaksanaan_manajemen_risiko`
 --
 ALTER TABLE `pelaksanaan_pengendalian_risiko`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT for table `pelaporan_pengelolaan_risiko`
+--
+ALTER TABLE `pelaporan_pengelolaan_risiko`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `pemangku_kepentingan`
@@ -1373,6 +1496,12 @@ ALTER TABLE `penyebab`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `periode_pelaporans`
+--
+ALTER TABLE `periode_pelaporans`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `perubahan_besaran_risiko`
 --
 ALTER TABLE `perubahan_besaran_risiko`
@@ -1389,6 +1518,12 @@ ALTER TABLE `resiko_teridentifikasi`
 --
 ALTER TABLE `roles`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tembusan`
+--
+ALTER TABLE `tembusan`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
