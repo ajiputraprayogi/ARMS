@@ -240,7 +240,13 @@
                                     </div>
                                     <div class="p-3">
                                         <h5 class="mb-1">{{Auth::user()->email}}</h5>
-                                        <p class="mb-0">{{Auth::user()->level}}</p>
+                                        @php 
+                                            $level = Auth::user()->level;
+                                            $roles = DB::table('roles')->where('id',$level)->get();
+                                        @endphp
+                                        <p class="mb-0">@foreach ($roles as $row)
+                                            {{$row->role}}
+                                        @endforeach</p>
                                         <div class="d-flex align-items-center justify-content-center mt-3">
                                             <a href="{{url('edit-profil')}}" class="btn border mr-2">Profil</a>
                                             <a href="{{ route('logout') }}" onclick="event.preventDefault();
