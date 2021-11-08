@@ -109,6 +109,26 @@
                               </li>
                           </ul>
                       </li>
+
+                      <li class="" class="svg-icon">
+                          <a href="#laporanpengelolaanrisiko" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                              <!-- <svg class="svg-icon" id="p-dash2" width="20" height="20"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle>
+                                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                              </svg> -->
+                              <span class="ml-4">Laporan</span>
+                              <svg class="svg-icon iq-arrow-right arrow-active" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                  <polyline points="10 15 15 20 20 15"></polyline><path d="M4 4h7a4 4 0 0 1 4 4v12"></path>
+                              </svg>
+                          </a>
+                          <ul id="laporanpengelolaanrisiko" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                              <li class="">
+                                  <a href="{{url('pelaksanaan')}}">
+                                      <i class="las la-minus"></i><span class="text-wrap">Pelaporan Pengelolaan Risiko</span>
+                                  </a>
+                              </li>
+                          </ul>
+                      </li>
+
                       <li class="" class="svg-icon">
                           <a href="#masterdata" class="collapsed" data-toggle="collapse" aria-expanded="false">
                               <!-- <svg class="svg-icon" id="p-dash2" width="20" height="20"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle>
@@ -158,6 +178,11 @@
                               <li class="">
                                   <a href="{{url('klasifikasisubunsurspip')}}" title="Klasifikasi Sub Unsur SPIP">
                                       <i class="las la-minus"></i><span>Klasifikasi Sub Unsur SPIP</span>
+                                  </a>
+                              </li>
+                              <li class="">
+                                  <a href="{{url('periodepelaporan')}}">
+                                      <i class="las la-minus"></i><span>Periode Pelaporan</span>
                                   </a>
                               </li>
                               <li class="">
@@ -738,6 +763,5 @@
               </div> -->
               <div class="p-3"></div>
           </div>
-          </div>      
+          </div>
 </div>
-      

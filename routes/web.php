@@ -10,14 +10,14 @@ Route::get('/reload-captcha', '\App\Http\Controllers\Auth\LoginController@reload
 Auth::routes();
 
 Route::group(['middleware' => ['auth']],function(){
-    
+
     // =============== Dashboard ========================
     Route::get('/dashboard', 'backend\dashboardController@index');
     Route::get('/dashboard-risiko', 'backend\dashboardController@risiko');
     Route::get('/dashboard-penyebab', 'backend\dashboardController@penyebab');
     Route::get('/dashboard-tindak-lanjut', 'backend\dashboardController@tindaklanjut');
     Route::get('/dashboard-pemantauan', 'backend\dashboardController@pemantauan');
-    
+
     // =============== Manajemen Risiko ========================
     Route::get('/cari-data-konteks/{kode}', 'backend\ManajemenresikoController@carikonteks');
     Route::get('/cari-data-konteks/{kode}/edit', 'backend\ManajemenresikoController@caridetailkonteks');
@@ -56,7 +56,7 @@ Route::group(['middleware' => ['auth']],function(){
 
     Route::resource('konteks', 'backend\KonteksController');
     Route::get('data-konteks', 'backend\KonteksController@listdata');
-    
+
     Route::get('/cari-data-pemangku/{kode}', 'backend\PemangkukepentinganController@caripemangku');
     Route::get('/cari-data-pemangku/{kode}/edit', 'backend\PemangkukepentinganController@caridetailpemangku');
     Route::resource('pemangkukepentingan', 'backend\PemangkukepentinganController');
@@ -80,6 +80,9 @@ Route::group(['middleware' => ['auth']],function(){
 
     Route::resource('penyebab', 'backend\PenyebabController');
     Route::get('data-penyebab', 'backend\PenyebabController@listdata');
+
+    Route::resource('periodepelaporan', 'backend\PeriodepelaporanController');
+    Route::get('data-periodepelaporan', 'backend\PeriodepelaporanController@listdata');
 
     Route::resource('metodepencapaiantujuanspip', 'backend\MetodepencapaiantujuanspipController');
     Route::get('data-metodepencapaiantujuanspip', 'backend\MetodepencapaiantujuanspipController@listdata');
@@ -137,7 +140,7 @@ Route::group(['middleware' => ['auth']],function(){
       Route::get('cari_pencatatan_manajemen', 'backend\PencatatanperistiwaController@cari_pencatatan_manajemen');
 
     // ============================== Filter ============================
-    Route::get('/cari-departmen-filter','backend\ResikoteridentifikasiController@caridepartmenfilter'); 
+    Route::get('/cari-departmen-filter','backend\ResikoteridentifikasiController@caridepartmenfilter');
     Route::get('/hasil-cari-departmen-filter/{faktur}','backend\ResikoteridentifikasiController@hasilcaridepartmenfilter');
 });
 
