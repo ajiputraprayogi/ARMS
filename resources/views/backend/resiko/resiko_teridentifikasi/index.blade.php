@@ -118,14 +118,22 @@
                                 <td>{{$item->namakonteks}}</td>
                                 <td>{{$item->namakat}}</td>
                                 <td>
-                                    <label for="">{{$item->frekuensi_awal}}</label><br>
-                                    <label for="">{{$item->dampak_awal}}</label><br>
-                                    <input type="text" class="box1" value="{{$item->besaran_awal}}" style="background-color: {{$item->pr}}" readonly>
+                                    @if($item->frekuensi_awal=='' && $item->dampak_awal=='' && $item->pr=='#BF00FF')
+                                        <input type="text" class="box1" value="{{$item->besaran_awal}}" style="background-color: {{$item->pr}}" readonly>
+                                    @else
+                                        <label for="">{{$item->frekuensi_awal}}</label><br>
+                                        <label for="">{{$item->dampak_awal}}</label><br>
+                                        <input type="text" class="box1" value="{{$item->besaran_awal}}" style="background-color: {{$item->pr}}" readonly>
+                                    @endif
                                 </td>
                                 <td>
-                                    <label for="">{{$item->frekuensi_akhir}}</label><br>
-                                    <label for="">{{$item->dampak_akhir}}</label><br>
-                                    <input type="text" class="box1" value="{{$item->besaran_akhir}}" style="background-color: {{$item->pr_akhir}}" readonly>
+                                    @if($item->frekuensi_akhir=='' && $item->dampak_akhir=='' && $item->pr_akhir=='#BF00FF')
+                                        <input type="text" class="box1" value="{{$item->besaran_akhir}}" style="background-color: {{$item->pr_akhir}}" readonly>
+                                    @else
+                                        <label for="">{{$item->frekuensi_akhir}}</label><br>
+                                        <label for="">{{$item->dampak_akhir}}</label><br>
+                                        <input type="text" class="box1" value="{{$item->besaran_akhir}}" style="background-color: {{$item->pr_akhir}}" readonly>
+                                    @endif
                                 </td>
                                 <td>{{$item->status}}</td>
                                 <td>

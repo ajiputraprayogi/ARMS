@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2021 at 12:40 PM
--- Server version: 10.4.20-MariaDB
--- PHP Version: 7.4.25
+-- Generation Time: Nov 08, 2021 at 12:21 PM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 7.3.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -351,8 +351,7 @@ CREATE TABLE `departemen` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `kode` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_atasan` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_bawahan` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id_atasan` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -361,23 +360,23 @@ CREATE TABLE `departemen` (
 -- Dumping data for table `departemen`
 --
 
-INSERT INTO `departemen` (`id`, `kode`, `nama`, `id_atasan`, `id_bawahan`, `created_at`, `updated_at`) VALUES
-(5, 'INV.ATT', 'Inspektorat Investigasi', '', '', NULL, '2021-11-02 06:37:13'),
-(7, 'BMN', 'Biro KP dan BMN', '', '', NULL, '2021-11-05 21:02:02'),
-(8, 'EP.LAKIN', 'Sekretariat Inspektorat Jenderal', '', '', NULL, '2021-11-05 21:09:12'),
-(9, 'ITJEN', 'Inspektorat Jendral', '', '', NULL, '2021-11-05 22:10:57'),
-(15, '1', 'MENPAN', '', '', NULL, '2021-11-05 22:18:29'),
-(22, '2', 'ITJEN', '15', '15', NULL, '2021-11-05 23:02:32'),
-(23, '3', 'SEKJEN', '15', '15', NULL, '2021-11-05 23:28:19'),
-(24, '4', 'LAKIN', '15', '22', NULL, '2021-11-05 23:29:04'),
-(25, '5', 'IR-I', '15', '22', NULL, '2021-11-05 23:29:16'),
-(26, '6', 'IR-II', '15', '22', NULL, '2021-11-05 23:29:23'),
-(27, '7', 'IR-IIII', '15', '22', NULL, '2021-11-05 23:29:33'),
-(28, '8', 'IR-IV', '15', '22', NULL, '2021-11-05 23:29:41'),
-(29, '9', 'INVES', '15', '22', NULL, '2021-11-05 23:29:58'),
-(30, '10', 'BMN', '15', '23', NULL, '2021-11-05 23:30:37'),
-(31, '11', 'Kelompok Perencanaan dan Evaluasi', '15', '24', NULL, '2021-11-05 23:30:49'),
-(32, '12', 'Bagian Perencanaan dan Evaluasi', '15', '29', NULL, '2021-11-05 23:31:05');
+INSERT INTO `departemen` (`id`, `kode`, `nama`, `id_atasan`, `created_at`, `updated_at`) VALUES
+(5, 'INV.ATT', 'Inspektorat Investigasi', '', NULL, '2021-11-02 06:37:13'),
+(7, 'BMN', 'Biro KP dan BMN', '', NULL, '2021-11-05 21:02:02'),
+(8, 'EP.LAKIN', 'Sekretariat Inspektorat Jenderal', '', NULL, '2021-11-05 21:09:12'),
+(9, 'ITJEN', 'Inspektorat Jendral', '', NULL, '2021-11-05 22:10:57'),
+(15, '1', 'MENPAN', NULL, NULL, '2021-11-06 21:16:18'),
+(22, '2', 'ITJEN', '15', NULL, '2021-11-05 23:02:32'),
+(23, '3', 'SEKJEN', '15', NULL, '2021-11-05 23:28:19'),
+(24, '4', 'LAKIN', '22', NULL, '2021-11-05 23:29:04'),
+(25, '5', 'IR-I', '22', NULL, '2021-11-05 23:29:16'),
+(26, '6', 'IR-II', '22', NULL, '2021-11-05 23:29:23'),
+(27, '7', 'IR-IIII', '22', NULL, '2021-11-05 23:29:33'),
+(28, '8', 'IR-IV', '22', NULL, '2021-11-05 23:29:41'),
+(29, '9', 'INVES', '22', NULL, '2021-11-05 23:29:58'),
+(30, '10', 'BMN', '23', NULL, '2021-11-05 23:30:37'),
+(31, '11', 'Kelompok Perencanaan dan Evaluasi', '24', NULL, '2021-11-05 23:30:49'),
+(32, '12', 'Bagian Perencanaan dan Evaluasi', '29', NULL, '2021-11-05 23:31:05');
 
 -- --------------------------------------------------------
 
@@ -514,7 +513,8 @@ INSERT INTO `konteks` (`id`, `faktur_konteks`, `kode`, `nama`, `id_konteks`, `id
 (42, '2', 'G.1.8', 'Input Surat Perintah Membayar dan Surat Perintah Pencairan Dana (SPM/SP2D)', '7', '7', '-', 'Pembayaran SPM dan SP2D tepat waktu, tepat sasaran', NULL, NULL),
 (43, '2', 'G.1.9', 'Reviu oleh Inspektorat Jenderal Kementan', '7', '7', '-', 'Rekomendasi hasil audit dapat ditindaklanjuti tepat waktu.', NULL, NULL),
 (44, '3', 'G.1.1', 'Perjanjian Kinerja', '1', '5', '- Pihak ketiga tidak bertanggung jawab\r\n- Pergantian pejabat\r\n- Perusahaan pailit\r\n- Pemilik TGR meninggal\r\n- Rekomendasi tidak rekomacu', 'Rasio Rekomendasi Audit Tujuan Tertentu di Lingkup Kementerian Pertanian yang Ditindaklanjuti sebesar 75%', NULL, NULL),
-(45, '3', 'G.1.1.1', 'Telaah materi aduan', '7', '5', '-', 'Hasil telaah berkadar pengawasan', NULL, NULL);
+(45, '3', 'G.1.1.1', 'Telaah materi aduan', '7', '5', '-', 'Hasil telaah berkadar pengawasan', NULL, NULL),
+(46, '4', 'test', 'test', '7', '22', 'sdfa', 'sdf', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -671,7 +671,8 @@ CREATE TABLE `pelaksanaan_manajemen_risiko` (
 INSERT INTO `pelaksanaan_manajemen_risiko` (`id`, `faktur`, `id_departemen`, `nama_pemilik_risiko`, `jabatan_pemilik_risiko`, `nama_koordinator_pengelola_risiko`, `jabatan_koordinator_pengelola_risiko`, `priode_penerapan`, `priode_penerapan_awal`, `priode_penerapan_akhir`, `selera_risiko`, `created_at`, `updated_at`) VALUES
 (12, '1', '8', 'Inspektorat Jenderal', 'Inspektur Jenderal', 'Kelompok Perencanaan dan Evaluasi', 'Koordinator Kelompok Perencanaan dan Evaluasi', '2021', '1970-01-01', '1970-01-01', 15, NULL, '2021-10-24 08:49:24'),
 (13, '2', '7', 'Kepala Biro KP dan BMN', 'Kepala Biro KP dan BMN', 'Bagian Perencanaan dan Evaluasi', 'Koordinator Perencanaan dan Evaluasi', '2021', '2021-01-01', '2021-12-31', 10, NULL, '2021-10-24 05:57:52'),
-(14, '3', '5', 'Inspektorat Investigasi', 'Inspektur Investigasi', 'Bagian Perencanaan dan Evaluasi', 'Koordinator Perencanaan dan Evaluasi', '2021', '2021-01-01', '2021-12-31', 10, NULL, NULL);
+(14, '3', '5', 'Inspektorat Investigasi', 'Inspektur Investigasi', 'Bagian Perencanaan dan Evaluasi', 'Koordinator Perencanaan dan Evaluasi', '2021', '2021-01-01', '2021-12-31', 10, NULL, NULL),
+(15, '4', '22', 'ITJEN', 'Admin', 'sdfa', 'sdfa', '2022', '2021-11-07', '2021-11-13', 15, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -788,7 +789,8 @@ INSERT INTO `pemangku_kepentingan` (`id`, `faktur_pemangku`, `pemangku_kepenting
 (40, '3', 'Inspektur Jenderal', 'PJ Perjanjian Kinerja', NULL, NULL, NULL),
 (41, '3', 'Eselon I', 'Pengguna data kinerja', NULL, NULL, NULL),
 (42, '3', 'Masyarakat/Mitra', 'Stakeholder Eksternal', NULL, NULL, NULL),
-(43, '3', 'UPT dan Dinas', 'Pengguna Data Kinerja', NULL, NULL, NULL);
+(43, '3', 'UPT dan Dinas', 'Pengguna Data Kinerja', NULL, NULL, NULL),
+(44, '4', 'test', 'test', 'eksternal', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1081,7 +1083,8 @@ INSERT INTO `resiko_teridentifikasi` (`id`, `faktur`, `kode_risiko`, `number`, `
 (48, '3', 'G.1.1.INV.ATT.6', '8', 'G.1.1.INV.ATT.6.8', '5', 'Inspektorat Investigasi', '2021', '44', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Laporan digugat.', '7', '6', 'Penurunan Reputasi.', '4', 'disetujui', 'Inspektorat Investigasi', '2021-10-24', 'Inspektorat Jenderal', '2021-10-25', NULL, 'Memenuhi Selera Risiko', 'INV.ATT', '48', '#00b050', '#00b050', '1 - Hampir Tidak Terjadi', '4 - Signifikan', '1 - Hampir Tidak Terjadi', '4 - Signifikan', '8', '8', '2021-10-24 21:06:08', '2021-10-24 18:22:04'),
 (49, '3', 'G.1.1.INV.ATT.6', '9', 'G.1.1.INV.ATT.6.9', '5', 'Inspektorat Investigasi', '2021', '44', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Laporan tidak diterima oleh yang berhak .', '7', '6', 'Penurunan Reputasi.', '4', 'disetujui', 'Inspektorat Investigasi', '2021-10-24', 'Inspektorat Jenderal', '2021-10-25', NULL, 'Memenuhi Selera Risiko', 'INV.ATT', '49', '#ffff00', '#00b050', '1 - Hampir Tidak Terjadi', '4 - Signifikan', '2 - Jarang Terjadi', '4 - Signifikan', '13', '8', '2021-10-24 21:10:12', '2021-10-24 18:22:13'),
 (50, '3', 'G.1.1.INV.ATT.7', '3', 'G.1.1.INV.ATT.7.3', '5', 'Inspektorat Investigasi', '2021', '44', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Rekomendasi tidak dapat ditindaklanjuti.', '7', '7', 'Realisasi Capaian Kinerja Sasaran Strategis.', '1', 'disetujui', 'Inspektorat Investigasi', '2021-10-24', 'Inspektorat Jenderal', '2021-10-25', NULL, 'Belum memenuhi selera risiko', 'INV.ATT', '50', '#ff0000', '#ff0000', '2 - Jarang Terjadi', '5 - Sangat Signifikan', '3 - Kadang Terjadi', '5 - Sangat Signifikan', '22', '21', '2021-10-24 21:10:51', '2021-10-24 21:10:51'),
-(51, '1', 'G.1.1.EP.LAKIN.6', '2', 'G.1.1.EP.LAKIN.6.2', '8', 'Sekretariat Inspektorat Jenderal', '2021', '34', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Inet mati', '6', '6', 'Test', '6', 'diajukan', 'Internal', '2021-11-02', '', '0000-00-00', NULL, 'Memenuhi Selera Risiko', 'EP.LAKIN', NULL, '#00b050', '#00b050', '2 - Jarang Terjadi', '2 - Minor', '2 - Jarang Terjadi', '3 - Moderat', '11', '7', '2021-11-02 13:33:36', '2021-11-02 13:33:36');
+(51, '1', 'G.1.1.EP.LAKIN.6', '2', 'G.1.1.EP.LAKIN.6.2', '8', 'Sekretariat Inspektorat Jenderal', '2021', '34', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Inet mati', '6', '6', 'Test', '6', 'diajukan', 'Internal', '2021-11-02', '', '0000-00-00', NULL, 'Memenuhi Selera Risiko', 'EP.LAKIN', NULL, '#00b050', '#00b050', '2 - Jarang Terjadi', '2 - Minor', '2 - Jarang Terjadi', '3 - Moderat', '11', '7', '2021-11-02 13:33:36', '2021-11-02 13:33:36'),
+(52, '4', 'test.2.4', '1', 'test.2.4.1', '22', 'ITJEN', '2022', '46', '7', 'Proses Bisnis', 'test', 'sadf', '4', '4', 'sdfa', '5', 'disetujui', 'sdf', '2021-11-07', 'sdfa', '2021-11-24', NULL, 'Belum memenuhi selera risiko', '2', NULL, '#BF00FF', '#BF00FF', NULL, NULL, NULL, NULL, '0', '0', '2021-11-07 04:03:55', '2021-11-07 04:03:55');
 
 -- --------------------------------------------------------
 
@@ -1140,6 +1143,7 @@ CREATE TABLE `users` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `telp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `level` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_departemen` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1151,10 +1155,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `name`, `email`, `telp`, `level`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'Admin', 'admin@gmail.com', '08123456789', 'Superadmin', NULL, '$2y$10$YMBMtOqrXPF.i8c7lO1BH.mTuJR7yXMjiiHgLKQWSLi0GEXFWO9eu', NULL, '2021-09-27 20:58:30', '2021-09-27 20:58:30'),
-(2, 'asdfsdf', 'safdsfd', 'dsfasafd@gmail.com', '08123456789', 'Admin', NULL, '$2y$10$Qqf.q8M68mx1TYDiMipRYu0kftIyxWFqUQtIDPXxdrh1PTovLsBZu', NULL, NULL, NULL),
-(3, 'fdhgsdfg', 'safddfsa', 'asdfgfa@gmail.com', '08123456789', 'User', NULL, '$2y$10$MTn4CStysHojvSbeApyQ0ORRU.WZSz2GMGKHELhbNXfmTXBqlyM1O', NULL, NULL, NULL);
+INSERT INTO `users` (`id`, `username`, `name`, `email`, `telp`, `level`, `id_departemen`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'superadmin', 'Superadmin', 'superadmin@gmail.com', '08123456789', '1', '5', NULL, '$2y$10$9BwnGxby2.yINEAZvYPBBev9KSxYzfE/m7yL4L2X4/jMr/8g6sIPO', NULL, '2021-09-27 20:58:30', '2021-11-07 19:34:49'),
+(2, 'admin', 'admin', 'admin@gmail.com', '08123456789', '2', '22', NULL, '$2y$10$/ygf3rh9NcPsGErk8j4gLeObeq0ajzWbEB8IvI8JaJMOSiWs/b7EW', NULL, NULL, '2021-11-06 21:06:55'),
+(3, 'user', 'user', 'user@gmail.com', '08123456789', '3', '24', NULL, '$2y$10$9yJQmu.kna.Ti64AJV5JmuyNjLzwQbbSDfKI/WYo5NdscfFBKm/Yu', NULL, NULL, '2021-11-06 20:53:55'),
+(4, 'ajiputraprayogi', 'ajiputraprayogi', 'ajiputraprayogi@gmail.com', '08123456789', 'user', '', NULL, '$2y$10$cdrcMj2qdLvMmQdJaTNWfuW1nogWqoDqmvrk3YtKYfoFLM.IK82wa', NULL, '2021-11-06 20:47:54', '2021-11-06 20:47:54');
 
 --
 -- Indexes for dumped tables
@@ -1391,7 +1396,7 @@ ALTER TABLE `besaran_resiko`
 -- AUTO_INCREMENT for table `departemen`
 --
 ALTER TABLE `departemen`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1421,7 +1426,7 @@ ALTER TABLE `klasifikasi_sub_unsur_spip`
 -- AUTO_INCREMENT for table `konteks`
 --
 ALTER TABLE `konteks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `kriteria_dampak`
@@ -1451,7 +1456,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `pelaksanaan_manajemen_risiko`
 --
 ALTER TABLE `pelaksanaan_manajemen_risiko`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `pelaksanaan_pengendalian_risiko`
@@ -1469,7 +1474,7 @@ ALTER TABLE `pelaporan_pengelolaan_risiko`
 -- AUTO_INCREMENT for table `pemangku_kepentingan`
 --
 ALTER TABLE `pemangku_kepentingan`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `pemantauan_efektivitas_pengendalian`
@@ -1511,7 +1516,7 @@ ALTER TABLE `perubahan_besaran_risiko`
 -- AUTO_INCREMENT for table `resiko_teridentifikasi`
 --
 ALTER TABLE `resiko_teridentifikasi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -1529,7 +1534,7 @@ ALTER TABLE `tembusan`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
