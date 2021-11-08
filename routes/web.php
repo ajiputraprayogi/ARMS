@@ -84,6 +84,9 @@ Route::group(['middleware' => ['auth']],function(){
     Route::resource('periodepelaporan', 'backend\PeriodepelaporanController');
     Route::get('data-periodepelaporan', 'backend\PeriodepelaporanController@listdata');
 
+    Route::resource('pelaporan-pengelolaan-risiko', 'backend\PelaporanpengelolaanrisikoController');
+    Route::get('data-pelaporanpengelolaanrisiko', 'backend\PelaporanpengelolaanrisikoController@listdata');
+
     Route::resource('metodepencapaiantujuanspip', 'backend\MetodepencapaiantujuanspipController');
     Route::get('data-metodepencapaiantujuanspip', 'backend\MetodepencapaiantujuanspipController@listdata');
 
