@@ -3,27 +3,28 @@ $(function() {
         placeholder: "Semua Konteks",
     });
     $('#departemen').select2({
-        placeholder: 'Semua Departemen',
-        ajax: {
-            url: '/cari-departmen-filter',
-            dataType: 'json',
-            delay: 250,
-            processResults: function(data) {
-                return {
-                    results: $.map(data, function(item) {
-                        return {
-                            id: item.faktur,
-                            text: item.namadep
-                        }
+        placeholder: "Semua Departemen",
+        // ajax: {
+        //     url: '/cari-departmen-filter',
+        //     dataType: 'json',
+        //     delay: 250,
+        //     processResults: function(data) {
+        //         return {
+        //             results: $.map(data, function(item) {
+        //                 return {
+        //                     id: item.faktur,
+        //                     text: item.namadep
+        //                 }
 
-                    })
-                }
-            },
-            cache: true
-        }
+        //             })
+        //         }
+        //     },
+        //     cache: true
+        // }
     });
 
     $('#departemen').on('select2:select', function (e) {
+        // $('#departemen').empty().trigger("change");
         $('#konteks').empty().trigger("change");
 		var kode = $(this).val();
         // console.log(kode);
@@ -45,6 +46,7 @@ $(function() {
                 });
                 $.each(data.resiko, function (key, value) {
                     var newOption = new Option(value.nama,value.id,false, false);
+                    // var twoOption = new Option("Semua Konteks", false, false);
                     $('#konteks').append(newOption).trigger('change');
                 });
 			},

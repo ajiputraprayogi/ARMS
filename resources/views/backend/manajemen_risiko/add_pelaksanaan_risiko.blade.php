@@ -39,18 +39,48 @@ Pelaksanaan Manajemen Risiko | ARMS
                                 <input type="hidden" value="{{$finalkode}}" name="faktur" id="faktur"
                                     class="form-group form-control" required readonly>
                                 <!-- Select2 -->
-                                <select name="departemen" class="form-control" id="cari_departemen" style="width: 100%;"
-                                    data-placeholder="Search ...">
+                                @php
+                                $id = Auth::user()->id_departemen;
+                                $id_dep=[];
+                                $id_atasan = [];
+                                $i_limit=1;
+                                array_push($id_atasan,$id);
+                                //dd(count($id_atasan));
+
+                                for ($i=0; $i <$i_limit ; $i++) { 
+                                    for ($j=0; $j < count($id_atasan) ; $j++) { 
+                                        $data = DB::table('departemen')->where('id_atasan',$id_atasan[$j])->get();
+                                        if(count($data)>0){
+                                            foreach($data as $row){
+                                                array_push($id_atasan,$row->id);
+                                            }
+                                            $i_limit++;
+                                        }else{
+                                            $i_limit=$i;
+                                        }
+                                    }
+                                }
+                                // dd($id_atasan);
+                                // return $id_atasan;
+                                    $data = DB::table('departemen')
+                                    ->whereIn('id',$id_atasan)
+                                    ->get();
+                                @endphp
+                                <select name="departemen" class="form-control" id="cari_departemen" style="width: 100%;">
+                                    <option value="">Pilih Departemen</option>
+                                    @foreach ($data as $rowdep)
+                                        <option value="{{$rowdep->id}}">{{$rowdep->nama}}</option>
+                                    @endforeach
                                 </select>
                                 <input type="hidden" name="id_departemen" id="id_departemen">
                             </div>
                         </div>
-                        <div class="form-group row">
+                        {{-- <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Nama Pemilik Risiko<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" name="nama_pemilik_risiko" id="">
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Jabatan Pemilik
                                 Risiko<i class="bintang">*</i></label>
@@ -62,8 +92,11 @@ Pelaksanaan Manajemen Risiko | ARMS
                             <label class="control-label col-sm-3 align-self-center" for="">Nama Koordinator Pengelola
                                 Risiko<i class="bintang">*</i></label>
                             <div class="col-sm-9">
-                                <input type="" class="form-control" name="nama_koordinator_pengelola_risiko"
-                                     id="">
+                                {{-- <input type="" class="form-control" name="nama_koordinator_pengelola_risiko"
+                                     id=""> --}}
+                                <select name="nama_koordinator_pengelola_risiko" class="form-control" id="nama_koordinator_pengelola_risiko" style="width: 100%;">
+                                </select>
+                                <input type="hidden" name="id_koordinator" id="id_koordinator">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -385,9 +418,9 @@ Pelaksanaan Manajemen Risiko | ARMS
 <script src="{{asset('assets/plugins/select2/js/select2.full.js')}}"></script>
 <script src="{{asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
 <script src="{{asset('assets/customjs/backend/loading.js')}}"></script>
-<!-- <script src="{{asset('assets/customjs/backend/konteks.js')}}"></script>
+{{-- <!-- <script src="{{asset('assets/customjs/backend/konteks.js')}}"></script>
     <script src="{{asset('assets/customjs/backend/pemangku_kepentingan.js')}}"></script>
-    <script src="{{asset('assets/customjs/backend/departemen.js')}}"></script> -->
+    <script src="{{asset('assets/customjs/backend/departemen.js')}}"></script> --> --}}
 <script src="{{asset('assets/customjs/backend/add_pelaksanaan_risiko.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>

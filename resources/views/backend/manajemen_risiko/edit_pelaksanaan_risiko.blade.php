@@ -39,21 +39,27 @@ Edit Detail Pelaksanaan Manajemen Risiko | ARMS
                             <input type="hidden" value="{{$row->faktur}}" name="faktur" id="faktur"
                                 class="form-group form-control" required readonly>
                             <!-- Select2 -->
+                            @php
+                                $datadep = DB::table('departemen')
+                                ->get();
+                            @endphp
                             <select name="departemen" value="{{$row->nama}}" class="form" id="cari_departemen"
                                 style="width: 100%;">
-                                <option value="{{$row->id_departemen}}">{{$row->nama}}</option>
+                                @foreach ($datadep as $rowdep)
+                                    <option value="{{$rowdep->id}}"@if($rowdep->id==$row->id_departemen) selected @endif>{{$rowdep->nama}}</option>
+                                @endforeach
                             </select>
                             <input type="hidden" value="{{$row->id_departemen}}" name="id_departemen"
                                 id="id_departemen">
                         </div>
                     </div>
-                    <div class="form-group row">
+                    {{-- <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="">Nama Pemilik Risiko<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" value="{{$row->nama_pemilik_risiko}}"
                                 name="nama_pemilik_risiko" id="">
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="">Jabatan Pemilik Risiko<i class="bintang">*</i></label>
                         <div class="col-sm-9">
@@ -61,12 +67,24 @@ Edit Detail Pelaksanaan Manajemen Risiko | ARMS
                                 name="jabatan_pemilik_risiko" id="">
                         </div>
                     </div>
-                    <div class="form-group row">
+                    {{-- <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="">Nama Koordinator Pengelola
                             Risiko<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <input type="" class="form-control" name="nama_koordinator_pengelola_risiko"
                                 value="{{$row->nama_koordinator_pengelola_risiko}}" id="">
+                        </div>
+                    </div> --}}
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3 align-self-center" for="">Nama Koordinator Pengelola
+                            Risiko<i class="bintang">*</i></label>
+                        <div class="col-sm-9">
+                            {{-- <input type="" class="form-control" name="nama_koordinator_pengelola_risiko"
+                                 id=""> --}}
+                            <select name="nama_koordinator_pengelola_risiko" value="{{$row->nama}}" class="form-control" id="nama_koordinator_pengelola_risiko" style="width: 100%;">
+                                <option value="{{$row->id_departemen}}">{{$row->koordinator}}</option>
+                            </select>
+                            <input type="hidden" name="id_koordinator" value="{{$row->id_koordinator}}" id="id_koordinator">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -96,7 +114,11 @@ Edit Detail Pelaksanaan Manajemen Risiko | ARMS
                     <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Priode Penerapan<i class="bintang">*</i></label>
                             <div class="col-sm-9">
-                                <input placeholder="Pilih Priode Penerapan" class="form-control" id="tanggal" name="priode_penerapan_awal_akhir" value="{{date('d-m-Y', strtotime($row->priode_penerapan_awal))}} to {{date('d-m-Y', strtotime($row->priode_penerapan_akhir))}}"/>
+                                @if($row->priode_penerapan_awal=='0000-00-00')
+                                    <input placeholder="Pilih Priode Penerapan" class="form-control" id="tanggal" name="priode_penerapan_awal_akhir"/>
+                                @else
+                                    <input placeholder="Pilih Priode Penerapan" class="form-control" id="tanggal" name="priode_penerapan_awal_akhir" value="{{date('d-m-Y', strtotime($row->priode_penerapan_awal))}} to {{date('d-m-Y', strtotime($row->priode_penerapan_akhir))}}"/>
+                                @endif
                             </div>
                         </div>
                     <div class="form-group row">

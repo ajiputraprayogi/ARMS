@@ -9,47 +9,101 @@ const swalWithBootstrapButtons = Swal.mixin({
 $(function () {
 
     //=====================================================================================
+    // getdepartemen();
+    // $('#cari_departemen').select2({
+    //     placeholder: "Pilih Departemen",
+    // });
+    $('#nama_koordinator_pengelola_risiko').select2({
+        placeholder: "Pilih Pengelola",
+    });
     $('#cari_departemen').select2({
-        ajax: {
-            url: '/cari_departemen',
-            dataType: 'json',
-            delay: 250,
-            processResults: function (data) {
-                return {
-                    results: $.map(data, function (item) {
-                        return {
-                            id: item.id,
-                            text: item.nama
-                        }
+        placeholder: "Pilih Departemen",
+        // ajax: {
+        //     url: '/cari_departemen',
+        //     dataType: 'json',
+        //     delay: 250,
+        //     processResults: function (data) {
+        //         return {
+        //             results: $.map(data.departemen, function (item) {
+        //                 return {
+        //                     id: item.id,
+        //                     text: item.nama
+        //                 }
 
-                    })
-                }
-            },
-            cache: true
-        }
+        //             })
+        //         }
+        //     },
+        //     cache: true
+        // }
     });
 
     //=====================================================================================
     getdatakonteks()
     getdatapemangku()
 });
-
+// ===================================================================================
+// function getdepartemen(){
+//     $('#panel').loading('toggle');
+//     var url = '/cari_departemen';
+//     var newOption = [];
+//     $.ajax({
+//         type: "GET",
+//         dataType: "json",
+//         url: url,
+//         success: function(data){
+//             $.each(data, function(key, value){
+//                 var newOption = new Option(value.nama,value.id, false, false);
+//                 $('#cari_departemen').append(newOption).trigger('change');
+//             });
+//         },
+//         complete: function(){
+//             $('#cari_departemen').val(null).trigger('change');
+//             $('#panel').loading('stop');
+//         }
+//     });
+// }
 //=====================================================================================
 $('#cari_departemen').on('select2:select', function (e) {
+    $('#panel').loading('toggle');
+    $('#nama_koordinator_pengelola_risiko').empty().trigger("change");
+    // $('#id_koordinator').empty().trigger("change");
     var kode = $(this).val();
     $.ajax({
         type: 'GET',
         url: '/cari_departemen_hasil/' + kode,
         success: function (data) {
-            return {
-                results: $.map(data, function (item) {
-                    $('#id_departemen').val(item.id);
-                })
-            }
+            $.each(data.departemen, function(key, item){
+                $('#id_departemen').val(item.id);
+            });
+            $.each(data.pengelola, function(key, item){
+                var newOption = new Option(item.nama,item.id, false, false);
+                $('#nama_koordinator_pengelola_risiko').append(newOption).trigger('change');
+            });
         },
+        complete: function () {
+            $('#nama_koordinator_pengelola_risiko').val(null).trigger('change');
+            $('#id_koordinator').val(null).trigger('change');
+            $('#panel').loading('stop');
+        }
     });
 });
-
+// ====================================================================================
+$('#nama_koordinator_pengelola_risiko').on('select2:select', function(e){
+    $('#panel').loading('toggle');
+    var kode = $(this).val();
+    $.ajax({
+        type: 'GET',
+        url: '/cari_departemen_hasil/' + kode,
+        success:function(data){
+            $.each(data.departemen, function(key, item){
+                $('#id_koordinator').val(item.id);
+            });
+        },
+        complete: function(){
+            $('#panel').loading('stop');
+        }
+    })
+});
 //=====================================================================================
 $('#addkonteksbtn').on('click', function (e) {
     if ($('#kode_konteks').val() == '' || $('#nama_konteks').val() == '' || $('#id_jenis_konteks').val() == '') {

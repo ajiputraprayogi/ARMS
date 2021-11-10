@@ -80,7 +80,7 @@ Daftar Pelaksanaan Manajemen Risiko | ARMS
                             <td class="text-center">{{$row->totalkonteks}}</td>
                             <td class="text-center">{{$risiko}}</td>
                             <td class="text-center">{{$row->selera_risiko}}</td>
-                            <td>{{$row->nama_pemilik_risiko}}</td>
+                            <td>{{$row->nama}}</td>
                             <td class="text-center">
                                 <a class="badge badge-info mr-2" data-toggle="modal" data-target="#showpemangku{{$row->id}}"
                                     title="View" data-original-title="View"><i class="ri-eye-line mr-0"></i></a>

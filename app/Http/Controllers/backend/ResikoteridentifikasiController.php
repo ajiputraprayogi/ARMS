@@ -92,6 +92,7 @@ class ResikoteridentifikasiController extends Controller
                         ->select('pelaksanaan_manajemen_risiko.faktur','departemen.*','departemen.nama')
                         ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
                         ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+                        ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                         ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
                         ->get();
         $tahun = DB::table('pelaksanaan_manajemen_risiko')
@@ -102,7 +103,8 @@ class ResikoteridentifikasiController extends Controller
                         ->select('konteks.*')
                         ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
                         ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
-                        ->groupby('konteks.nama')
+                        ->where('pelaksanaan_manajemen_risiko.faktur','=',$active_departemen)
+                        ->groupby('konteks.id')
                         ->orderby('konteks.nama','asc')
                         ->get();
 
@@ -129,7 +131,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
                             ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
-                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['konteks.id','=',$active_konteks],['resiko_teridentifikasi.status','=',$active_status],['resiko_teridentifikasi.id_kategori','=',$active_kategori],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['konteks.id','=',$active_konteks],['resiko_teridentifikasi.status','=',$active_status],['resiko_teridentifikasi.id_kategori','=',$active_kategori]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
                             ->orderby('id')
@@ -141,7 +144,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
                             ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
-                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['konteks.id','=',$active_konteks],['resiko_teridentifikasi.status','=',$active_status],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['konteks.id','=',$active_konteks],['resiko_teridentifikasi.status','=',$active_status]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
                             ->orderby('id')
@@ -155,7 +159,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
                             ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
-                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['konteks.id','=',$active_konteks],['resiko_teridentifikasi.id_kategori','=',$active_kategori],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['konteks.id','=',$active_konteks],['resiko_teridentifikasi.id_kategori','=',$active_kategori]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
                             ->orderby('id')
@@ -167,7 +172,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
                             ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
-                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['konteks.id','=',$active_konteks],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['konteks.id','=',$active_konteks]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
                             ->orderby('id')
@@ -183,7 +189,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
                             ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
-                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['resiko_teridentifikasi.status','=',$active_status],['resiko_teridentifikasi.id_kategori','=',$active_kategori],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['resiko_teridentifikasi.status','=',$active_status],['resiko_teridentifikasi.id_kategori','=',$active_kategori]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
                             ->orderby('id')
@@ -195,7 +202,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
                             ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
-                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['resiko_teridentifikasi.status','=',$active_status],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['resiko_teridentifikasi.status','=',$active_status]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
                             ->orderby('id')
@@ -209,7 +217,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
                             ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
-                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['resiko_teridentifikasi.id_kategori','=',$active_kategori],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['resiko_teridentifikasi.id_kategori','=',$active_kategori]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
                             ->orderby('id')
@@ -221,7 +230,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
                             ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
-                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
                             ->orderby('id')
@@ -239,7 +249,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
                             ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
-                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['konteks.id','=',$active_konteks],['resiko_teridentifikasi.status','=',$active_status],['resiko_teridentifikasi.id_kategori','=',$active_kategori],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['konteks.id','=',$active_konteks],['resiko_teridentifikasi.status','=',$active_status],['resiko_teridentifikasi.id_kategori','=',$active_kategori]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
                             ->orderby('id')
@@ -251,7 +262,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
                             ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
-                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['konteks.id','=',$active_konteks],['resiko_teridentifikasi.status','=',$active_status],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['konteks.id','=',$active_konteks],['resiko_teridentifikasi.status','=',$active_status]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
                             ->orderby('id')
@@ -265,7 +277,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
                             ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
-                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['konteks.id','=',$active_konteks],['resiko_teridentifikasi.id_kategori','=',$active_kategori],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['konteks.id','=',$active_konteks],['resiko_teridentifikasi.id_kategori','=',$active_kategori]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
                             ->orderby('id')
@@ -277,7 +290,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
                             ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
-                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['konteks.id','=',$active_konteks],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['konteks.id','=',$active_konteks]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
                             ->orderby('id')
@@ -293,7 +307,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
                             ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
-                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['resiko_teridentifikasi.status','=',$active_status],['resiko_teridentifikasi.id_kategori','=',$active_kategori],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['resiko_teridentifikasi.status','=',$active_status],['resiko_teridentifikasi.id_kategori','=',$active_kategori]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
                             ->orderby('id')
@@ -305,7 +320,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
                             ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
-                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['resiko_teridentifikasi.status','=',$active_status],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['resiko_teridentifikasi.status','=',$active_status]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
                             ->orderby('id')
@@ -319,7 +335,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
                             ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
-                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['resiko_teridentifikasi.id_kategori','=',$active_kategori],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['resiko_teridentifikasi.id_kategori','=',$active_kategori]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
                             ->orderby('id')
@@ -331,7 +348,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('pelaksanaan_manajemen_risiko','resiko_teridentifikasi.faktur','=','pelaksanaan_manajemen_risiko.faktur')
                             ->leftjoin('departemen','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
-                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
                             ->orderby('id')
@@ -353,7 +371,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
-                            ->where([['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['konteks.id','=',$active_konteks],['resiko_teridentifikasi.status','=',$active_status],['resiko_teridentifikasi.id_kategori','=',$active_kategori],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['konteks.id','=',$active_konteks],['resiko_teridentifikasi.status','=',$active_status],['resiko_teridentifikasi.id_kategori','=',$active_kategori]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->orderby('id')
                             ->get();
                             // dd($data);
@@ -365,7 +384,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
-                            ->where([['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['konteks.id','=',$active_konteks],['resiko_teridentifikasi.status','=',$active_status],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['konteks.id','=',$active_konteks],['resiko_teridentifikasi.status','=',$active_status]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->orderby('id')
                             ->get();
                             // dd($data);
@@ -379,7 +399,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
-                            ->where([['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['konteks.id','=',$active_konteks],['resiko_teridentifikasi.id_kategori','=',$active_kategori],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['konteks.id','=',$active_konteks],['resiko_teridentifikasi.id_kategori','=',$active_kategori]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->orderby('id')
                             ->get();
                             // dd($data);
@@ -391,7 +412,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
-                            ->where([['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['konteks.id','=',$active_konteks],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['konteks.id','=',$active_konteks]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->orderby('id')
                             ->get();
                             // dd($data);
@@ -407,7 +429,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
-                            ->where([['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['resiko_teridentifikasi.status','=',$active_status],['resiko_teridentifikasi.id_kategori','=',$active_kategori],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['resiko_teridentifikasi.status','=',$active_status],['resiko_teridentifikasi.id_kategori','=',$active_kategori]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->orderby('id')
                             ->get();
                             // dd($data);
@@ -419,7 +442,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
-                            ->where([['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['resiko_teridentifikasi.status','=',$active_status],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['resiko_teridentifikasi.status','=',$active_status]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->orderby('id')
                             ->get();
                             // dd($data);
@@ -433,7 +457,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
-                            ->where([['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['resiko_teridentifikasi.id_kategori','=',$active_kategori],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['resiko_teridentifikasi.id_kategori','=',$active_kategori]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->orderby('id')
                             ->get();
                             // dd($data);
@@ -445,7 +470,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
-                            ->where([['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->orderby('id')
                             ->get();
                             // dd($data);
@@ -463,7 +489,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
-                            ->where([['konteks.id',$active_konteks],['resiko_teridentifikasi.status','=',$active_status],['resiko_teridentifikasi.id_kategori','=',$active_kategori],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['konteks.id',$active_konteks],['resiko_teridentifikasi.status','=',$active_status],['resiko_teridentifikasi.id_kategori','=',$active_kategori]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->orderby('id')
                             ->get();
                             // dd($data);
@@ -475,7 +502,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
-                            ->where([['konteks.id',$active_konteks],['resiko_teridentifikasi.status','=',$active_status],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['konteks.id',$active_konteks],['resiko_teridentifikasi.status','=',$active_status]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->orderby('id')
                             ->get();
                             // dd($data);
@@ -489,7 +517,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
-                            ->where([['konteks.id',$active_konteks],['resiko_teridentifikasi.id_kategori','=',$active_kategori],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['konteks.id',$active_konteks],['resiko_teridentifikasi.id_kategori','=',$active_kategori]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->orderby('id')
                             ->get();
                             // dd($data);
@@ -501,7 +530,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
-                            ->where([['konteks.id',$active_konteks],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['konteks.id',$active_konteks]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->orderby('id')
                             ->get();
                             // dd($data);
@@ -517,7 +547,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
-                            ->where([['resiko_teridentifikasi.status','=',$active_status],['resiko_teridentifikasi.id_kategori','=',$active_kategori],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['resiko_teridentifikasi.status','=',$active_status],['resiko_teridentifikasi.id_kategori','=',$active_kategori]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->orderby('id')
                             ->get();
                             // dd($data);
@@ -529,7 +560,8 @@ class ResikoteridentifikasiController extends Controller
                             ->leftjoin('konteks','resiko_teridentifikasi.id_konteks','=','konteks.id')
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
-                            ->where([['resiko_teridentifikasi.status','=',$active_status],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->where([['resiko_teridentifikasi.status','=',$active_status]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->orderby('id')
                             ->get();
                             // dd($data);
@@ -544,8 +576,10 @@ class ResikoteridentifikasiController extends Controller
                             ->join('kategori_resiko', 'resiko_teridentifikasi.id_kategori', '=', 'kategori_resiko.id')
                             ->join('metode_pencapaian_tujuan', 'resiko_teridentifikasi.metode_spip', '=', 'metode_pencapaian_tujuan.id')
                             ->where([['resiko_teridentifikasi.id_kategori','=',$active_kategori],['pelaksanaan_manajemen_risiko.id_departemen',$id_atasan]])
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->orderby('id')
                             ->get();
+                            // dd($data);
                         }else{
                             $data = DB::table('resiko_teridentifikasi')
                             ->select('resiko_teridentifikasi.*', 'kategori_resiko.id as idkat','kategori_resiko.kode as kodekat', 'kategori_resiko.resiko as namakat','metode_pencapaian_tujuan.id as idmet','metode_pencapaian_tujuan.metode as metod','konteks.id as idkonteks','konteks.kode as kodekonteks','konteks.nama as namakonteks','pelaksanaan_manajemen_risiko.id_departemen','pelaksanaan_manajemen_risiko.selera_risiko','departemen.nama as namadep','pelaksanaan_manajemen_risiko.priode_penerapan')

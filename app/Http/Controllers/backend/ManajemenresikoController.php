@@ -140,12 +140,12 @@ class ManajemenresikoController extends Controller
         $request->validate([
             'faktur'=>'required',
             'id_departemen'=>'required',
-            'nama_pemilik_risiko'=>'required',
+            // 'nama_pemilik_risiko'=>'required',
             'jabatan_pemilik_risiko'=>'required',
             'nama_koordinator_pengelola_risiko'=>'required',
             'jabatan_koordinator_pengelola_risiko'=>'required',
-            'priode_penerapan'=>'required',
-            'priode_penerapan_awal_akhir'=>'required',
+            // 'priode_penerapan'=>'required',
+            // 'priode_penerapan_awal_akhir'=>'required',
             'selera_risiko'=>'required',
         ]);
         if($request->has('priode_penerapan_awal_akhir')){
@@ -161,13 +161,13 @@ class ManajemenresikoController extends Controller
         pelaksanaanmanajemenrisiko::insert([
             'faktur'=>$request->faktur,
             'id_departemen'=>$request->id_departemen,
-            'nama_pemilik_risiko'=>$request->nama_pemilik_risiko,
+            'nama_pemilik_risiko'=>$request->id_departemen,
             'jabatan_pemilik_risiko'=>$request->jabatan_pemilik_risiko,
-            'nama_koordinator_pengelola_risiko'=>$request->nama_koordinator_pengelola_risiko,
+            'nama_koordinator_pengelola_risiko'=>$request->id_koordinator,
             'jabatan_koordinator_pengelola_risiko'=>$request->jabatan_koordinator_pengelola_risiko,
             'priode_penerapan'=>$request->priode_penerapan,
-            'priode_penerapan_awal'=>Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d'),
-            'priode_penerapan_akhir'=>Carbon::createFromFormat('d-m-Y',$tgldua)->format('Y-m-d'),
+            'priode_penerapan_awal'=>$tglsatu ? Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d') : '',
+            'priode_penerapan_akhir'=>$tgldua ? Carbon::createFromFormat('d-m-Y',$tgldua)->format('Y-m-d') : '',
             'selera_risiko'=>$request->selera_risiko,
         ]);
         $up = DB::table('konteks')->where('faktur_konteks', '=', $request->faktur)->update([
@@ -191,7 +191,8 @@ class ManajemenresikoController extends Controller
         ->select('jenis_konteks.id as idjk','jenis_konteks.*','konteks.*')->where('faktur_konteks',$id)->get();
         $pemangku_kepentingan = pemangku_kepentingan::all()->where('faktur_pemangku',$id);
         $data = DB::table('pelaksanaan_manajemen_risiko')
-        ->select(DB::raw('pelaksanaan_manajemen_risiko.*,count(*) as totalkonteks,departemen.nama'))
+        ->select(DB::raw('pelaksanaan_manajemen_risiko.*,departemen.nama,koordinator.id as id_koordinator,koordinator.nama as koordinator'))
+        ->leftjoin('departemen as koordinator','koordinator.id','=','pelaksanaan_manajemen_risiko.nama_koordinator_pengelola_risiko')
         ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
         ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
         ->orderby('pelaksanaan_manajemen_risiko.id','desc')
@@ -199,6 +200,7 @@ class ManajemenresikoController extends Controller
         ->where('pelaksanaan_manajemen_risiko.faktur',$id)
         ->get();
         $manajemenrisiko = pelaksanaanmanajemenrisiko::all()->where('faktur',$id);
+        // dd($data);
         return view('backend.manajemen_risiko.edit_pelaksanaan_risiko',compact('data','konteks','pemangku_kepentingan','jeniskonteks','manajemenrisiko'));
     }
 
@@ -214,12 +216,12 @@ class ManajemenresikoController extends Controller
         $request->validate([
             'faktur'=>'required',
             'id_departemen'=>'required',
-            'nama_pemilik_risiko'=>'required',
+            // 'nama_pemilik_risiko'=>'required',
             'jabatan_pemilik_risiko'=>'required',
             'nama_koordinator_pengelola_risiko'=>'required',
             'jabatan_koordinator_pengelola_risiko'=>'required',
-            'priode_penerapan'=>'required',
-            'priode_penerapan_awal_akhir'=>'required',
+            // 'priode_penerapan'=>'required',
+            // 'priode_penerapan_awal_akhir'=>'required',
             'selera_risiko'=>'required',
         ]);
         if($request->has('priode_penerapan_awal_akhir')){
@@ -235,13 +237,13 @@ class ManajemenresikoController extends Controller
         pelaksanaanmanajemenrisiko::find($id)->update([
             'faktur'=>$request->faktur,
             'id_departemen'=>$request->id_departemen,
-            'nama_pemilik_risiko'=>$request->nama_pemilik_risiko,
+            'nama_pemilik_risiko'=>$request->id_departemen,
             'jabatan_pemilik_risiko'=>$request->jabatan_pemilik_risiko,
             'nama_koordinator_pengelola_risiko'=>$request->nama_koordinator_pengelola_risiko,
             'jabatan_koordinator_pengelola_risiko'=>$request->jabatan_koordinator_pengelola_risiko,
             'priode_penerapan'=>$request->priode_penerapan,
-            'priode_penerapan_awal'=>Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d'),
-            'priode_penerapan_akhir'=>Carbon::createFromFormat('d-m-Y',$tgldua)->format('Y-m-d'),
+            'priode_penerapan_awal'=>$tglsatu ? Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d') : '',
+            'priode_penerapan_akhir'=>$tgldua ? Carbon::createFromFormat('d-m-Y',$tgldua)->format('Y-m-d') : '',
             'selera_risiko'=>$request->selera_risiko,
         ]);
         $up = DB::table('konteks')->where('faktur_konteks', '=', $request->faktur)->update([
