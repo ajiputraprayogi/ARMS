@@ -14,11 +14,22 @@ Analisis Akar Masalah | ARMS
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <select class="form-control" name="departemen" id="">
+                            <select class="form-control" name="departemen" id="departemen">
                                 <option>Semua Departemen</option>
                                 @foreach($departemen as $rowdpr)
-                                <option value="{{$rowdpr->id}}" @if($active_departemen==$rowdpr->id) selected
+                                <option value="{{$rowdpr->faktur}}" @if($active_departemen==$rowdpr->faktur) selected
                                     @endif>{{$rowdpr->nama}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select class="form-control" name="kode_risiko" id="kode_risiko">
+                                <option>Semua Kode Risiko</option>
+                                @foreach($kode_risiko as $rowkdr)
+                                <option value="{{$rowkdr->full_kode}}" @if($active_kode==$rowkdr->full_kode) selected
+                                    @endif>{{$rowkdr->full_kode}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -30,17 +41,6 @@ Analisis Akar Masalah | ARMS
                                 @foreach($kategori_penyebab as $rowkat)
                                 <option value="{{$rowkat->kode}}" @if($active_kategori==$rowkat->kode) selected
                                     @endif>{{$rowkat->kode}} - {{$rowkat->penyebab}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <select class="form-control select" name="kode_risiko" id="">
-                                <option>Semua Kode Risiko</option>
-                                @foreach($kode_risiko as $rowkdr)
-                                <option value="{{$rowkdr->full_kode}}" @if($active_kode==$rowkdr->full_kode) selected
-                                    @endif>{{$rowkdr->full_kode}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -113,6 +113,8 @@ Analisis Akar Masalah | ARMS
 </div>
 @endsection
 @push('script')
+{{-- <script src="{{asset('assets/customjs/backend/resiko_teridentifikasi_filter.js')}}"></script> --}}
+<script src="{{asset('assets/customjs/backend/akar_masalah_filter.js')}}"></script>
 <script>
 function hapusdatamanajemenrisiko(kode) {
     const swalWithBootstrapButtons = Swal.mixin({
@@ -156,7 +158,7 @@ function hapusdatamanajemenrisiko(kode) {
     })
 }
 </script>
-<script>
+{{-- <script>
         $(function() {
         flatpickr("#tanggal", {
             enableTime: false,
@@ -164,7 +166,7 @@ function hapusdatamanajemenrisiko(kode) {
             mode: "range",
         });
         });
-    </script>
+    </script> --}}
     <script>
         $(function() {
             $(".select").select2();

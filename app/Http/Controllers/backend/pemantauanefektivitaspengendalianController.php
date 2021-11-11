@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
+use Auth;
 
 class pemantauanefektivitaspengendalianController extends Controller
 {
@@ -15,6 +16,30 @@ class pemantauanefektivitaspengendalianController extends Controller
      */
     public function index()
     {
+        // ===================================
+        $id = Auth::user()->id_departemen;
+        $id_dep=[];
+        $id_atasan = [];
+        $i_limit=1;
+        array_push($id_atasan,$id);
+        //dd(count($id_atasan));
+
+        for ($i=0; $i <$i_limit ; $i++) { 
+            for ($j=0; $j < count($id_atasan) ; $j++) { 
+                $data = DB::table('departemen')->where('id_atasan',$id_atasan[$j])->get();
+                if(count($data)>0){
+                    foreach($data as $row){
+                        array_push($id_atasan,$row->id);
+                    }
+                    $i_limit++;
+                }else{
+                    $i_limit=$i;
+                }
+            }
+        }
+        // dd($id_atasan);
+        // return $id_atasan;
+        // ===================================
         $data = DB::table('pemantauan_efektivitas_pengendalian')
                 ->select([
                     'pemantauan_efektivitas_pengendalian.*',
@@ -35,6 +60,7 @@ class pemantauanefektivitaspengendalianController extends Controller
                 ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
                 ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pemantauan_efektivitas_pengendalian.id_risiko')
                 ->leftjoin('pengendalian_risiko','pengendalian_risiko.id','=','pemantauan_efektivitas_pengendalian.id_pengendalian')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                 ->get();
         return view('backend.pemantauan_efektivitas_pengendalian.index',compact('data'));
     }

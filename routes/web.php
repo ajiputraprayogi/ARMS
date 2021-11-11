@@ -145,5 +145,6 @@ Route::group(['middleware' => ['auth']],function(){
     // ============================== Filter ============================
     Route::get('/cari-departmen-filter','backend\ResikoteridentifikasiController@caridepartmenfilter');
     Route::get('/hasil-cari-departmen-filter/{faktur}','backend\ResikoteridentifikasiController@hasilcaridepartmenfilter');
+    Route::get('/hasil-cari-departmen-akar-filter/{faktur}','backend\AnalisaakarController@hasilcaridepartmenfilter');
 });
 

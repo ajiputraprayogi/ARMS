@@ -11,6 +11,7 @@ use DB;
 use App\pelaksanaanmanajemenrisiko;
 use App\departemen;
 use Carbon\Carbon;
+use Auth;
 
 class ManajemenresikoController extends Controller
 {
@@ -21,6 +22,30 @@ class ManajemenresikoController extends Controller
      */
     public function index(Request $request)
     {
+        // ==================================
+        $id = Auth::user()->id_departemen;
+        $id_dep=[];
+        $id_atasan = [];
+        $i_limit=1;
+        array_push($id_atasan,$id);
+        //dd(count($id_atasan));
+
+        for ($i=0; $i <$i_limit ; $i++) { 
+            for ($j=0; $j < count($id_atasan) ; $j++) { 
+                $data = DB::table('departemen')->where('id_atasan',$id_atasan[$j])->get();
+                if(count($data)>0){
+                    foreach($data as $row){
+                        array_push($id_atasan,$row->id);
+                    }
+                    $i_limit++;
+                }else{
+                    $i_limit=$i;
+                }
+            }
+        }
+        // dd($id_atasan);
+        // return $id_atasan;
+        // ==================================
         $infosearch ='';
         $active_departemen = 'Semua Departemen';
         $active_tahun = 'Semua Tahun';
@@ -43,6 +68,7 @@ class ManajemenresikoController extends Controller
         $departemen = DB::table('pelaksanaan_manajemen_risiko')
         ->select(DB::raw('pelaksanaan_manajemen_risiko.faktur,departemen.nama,departemen.id'))
         ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+        ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
         ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
         ->get();
 
@@ -58,6 +84,7 @@ class ManajemenresikoController extends Controller
                 ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
                 // ->leftjoin('resiko_teridentifikasi', 'resiko_teridentifikasi.kode_konteks','=','konteks.kode')
                 ->where([['departemen.id','=',$active_departemen],['priode_penerapan','=',$active_tahun]])
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                 ->orderby('pelaksanaan_manajemen_risiko.id','desc')
                 ->groupby('pelaksanaan_manajemen_risiko.faktur')
                 ->paginate(50);
@@ -69,6 +96,7 @@ class ManajemenresikoController extends Controller
                 ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
                 // ->leftjoin('resiko_teridentifikasi', 'resiko_teridentifikasi.kode_konteks','=','konteks.kode')
                 ->where('pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen)
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                 ->orderby('pelaksanaan_manajemen_risiko.id','desc')
                 ->groupby('pelaksanaan_manajemen_risiko.faktur')
                 ->paginate(50);
@@ -81,6 +109,7 @@ class ManajemenresikoController extends Controller
                 ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
                 // ->leftjoin('resiko_teridentifikasi', 'resiko_teridentifikasi.kode_konteks','=','konteks.kode')
                 ->where('pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun)
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                 ->orderby('pelaksanaan_manajemen_risiko.id','desc')
                 ->groupby('pelaksanaan_manajemen_risiko.faktur')
                 ->paginate(50);
@@ -90,6 +119,7 @@ class ManajemenresikoController extends Controller
                 ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
                 ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
                 // ->leftjoin('resiko_teridentifikasi', 'resiko_teridentifikasi.kode_konteks','=','konteks.kode')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                 ->orderby('pelaksanaan_manajemen_risiko.id','desc')
                 ->groupby('pelaksanaan_manajemen_risiko.faktur')
                 ->paginate(50);
@@ -186,6 +216,28 @@ class ManajemenresikoController extends Controller
      */
     public function edit($id)
     {
+        $id_user = Auth::user()->id_departemen;
+        $id_dep=[];
+        $id_atasan = [];
+        $i_limit=1;
+        array_push($id_atasan,$id_user);
+        //dd(count($id_atasan));
+
+        for ($i=0; $i <$i_limit ; $i++) { 
+            for ($j=0; $j < count($id_atasan) ; $j++) { 
+                $departemen = DB::table('departemen')->where('id_atasan',$id_atasan[$j])->get();
+                if(count($departemen)>0){
+                    foreach($departemen as $row){
+                        array_push($id_atasan,$row->id);
+                    }
+                    $i_limit++;
+                }else{
+                    $i_limit=$i;
+                }
+            }
+        }
+        // dd($id_atasan);
+        // return $id_atasan;
         $jeniskonteks = jeniskonteks::all();
         $konteks = konteks::leftJoin('jenis_konteks','konteks.id_konteks','=','jenis_konteks.id')
         ->select('jenis_konteks.id as idjk','jenis_konteks.*','konteks.*')->where('faktur_konteks',$id)->get();
@@ -201,7 +253,7 @@ class ManajemenresikoController extends Controller
         ->get();
         $manajemenrisiko = pelaksanaanmanajemenrisiko::all()->where('faktur',$id);
         // dd($data);
-        return view('backend.manajemen_risiko.edit_pelaksanaan_risiko',compact('data','konteks','pemangku_kepentingan','jeniskonteks','manajemenrisiko'));
+        return view('backend.manajemen_risiko.edit_pelaksanaan_risiko',compact('data','konteks','pemangku_kepentingan','jeniskonteks','manajemenrisiko','id_atasan'));
     }
 
     /**
@@ -234,12 +286,12 @@ class ManajemenresikoController extends Controller
                 $tgldua = $priode_penerapan_awal_akhir[1];
             }
         }
-        pelaksanaanmanajemenrisiko::find($id)->update([
+        DB::table('pelaksanaan_manajemen_risiko')->where('id',$id)->update([
             'faktur'=>$request->faktur,
             'id_departemen'=>$request->id_departemen,
             'nama_pemilik_risiko'=>$request->id_departemen,
             'jabatan_pemilik_risiko'=>$request->jabatan_pemilik_risiko,
-            'nama_koordinator_pengelola_risiko'=>$request->nama_koordinator_pengelola_risiko,
+            'nama_koordinator_pengelola_risiko'=>$request->id_koordinator,
             'jabatan_koordinator_pengelola_risiko'=>$request->jabatan_koordinator_pengelola_risiko,
             'priode_penerapan'=>$request->priode_penerapan,
             'priode_penerapan_awal'=>$tglsatu ? Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d') : '',
@@ -249,6 +301,7 @@ class ManajemenresikoController extends Controller
         $up = DB::table('konteks')->where('faktur_konteks', '=', $request->faktur)->update([
             'id_departemen'=>$request->id_departemen,
         ]);
+        
         return redirect('/pelaksanaan')->with('status','Sukses mengubah data');
     }
 

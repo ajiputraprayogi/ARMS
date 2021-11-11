@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
+use Auth;
 
 class PelaksanaanpengendalianrisikoController extends Controller
 {
@@ -15,6 +16,30 @@ class PelaksanaanpengendalianrisikoController extends Controller
      */
     public function index()
     {
+        // ===================================
+        $id = Auth::user()->id_departemen;
+        $id_dep=[];
+        $id_atasan = [];
+        $i_limit=1;
+        array_push($id_atasan,$id);
+        //dd(count($id_atasan));
+
+        for ($i=0; $i <$i_limit ; $i++) { 
+            for ($j=0; $j < count($id_atasan) ; $j++) { 
+                $data = DB::table('departemen')->where('id_atasan',$id_atasan[$j])->get();
+                if(count($data)>0){
+                    foreach($data as $row){
+                        array_push($id_atasan,$row->id);
+                    }
+                    $i_limit++;
+                }else{
+                    $i_limit=$i;
+                }
+            }
+        }
+        // dd($id_atasan);
+        // return $id_atasan;
+        // ===================================
         $data = DB::table('pelaksanaan_pengendalian_risiko')
         ->select([
             'pelaksanaan_pengendalian_risiko.*',
@@ -23,7 +48,10 @@ class PelaksanaanpengendalianrisikoController extends Controller
         ])
         ->leftjoin('pengendalian_risiko','pengendalian_risiko.id','=','pelaksanaan_pengendalian_risiko.id_pengendalian')
         ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+        ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+        ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
         ->orderby('id','desc')->get();
+        // dd($data);
         return view('backend.pelaksanaan_pengendalian_risiko.index',compact('data'));
     }
 

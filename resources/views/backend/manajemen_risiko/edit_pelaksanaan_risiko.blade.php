@@ -41,6 +41,7 @@ Edit Detail Pelaksanaan Manajemen Risiko | ARMS
                             <!-- Select2 -->
                             @php
                                 $datadep = DB::table('departemen')
+                                ->whereIn('id',$id_atasan)
                                 ->get();
                             @endphp
                             <select name="departemen" value="{{$row->nama}}" class="form" id="cari_departemen"
@@ -81,8 +82,15 @@ Edit Detail Pelaksanaan Manajemen Risiko | ARMS
                         <div class="col-sm-9">
                             {{-- <input type="" class="form-control" name="nama_koordinator_pengelola_risiko"
                                  id=""> --}}
+                            @php
+                                $datakor = DB::table('departemen')
+                                ->where('id_atasan',$row->id_departemen)
+                                ->get();
+                            @endphp
                             <select name="nama_koordinator_pengelola_risiko" value="{{$row->nama}}" class="form-control" id="nama_koordinator_pengelola_risiko" style="width: 100%;">
-                                <option value="{{$row->id_departemen}}">{{$row->koordinator}}</option>
+                                @foreach ($datakor as $rowkor)
+                                    <option value="{{$rowkor->id}}"@if($rowkor->id==$row->id_koordinator) selected @endif>{{$rowkor->nama}}</option>
+                                @endforeach
                             </select>
                             <input type="hidden" name="id_koordinator" value="{{$row->id_koordinator}}" id="id_koordinator">
                         </div>

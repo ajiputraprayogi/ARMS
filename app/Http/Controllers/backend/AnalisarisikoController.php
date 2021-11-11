@@ -7,13 +7,43 @@ use Illuminate\Http\Request;
 use App\analisarisiko;
 use DataTables;
 use DB;
+use Auth;
 
 class AnalisarisikoController extends Controller
 {
     //====================================================================================
     public function index()
     {
-        $data = DB::table('analisa_risiko')->orderby('id','desc')->get();
+        // ==================================
+        $id = Auth::user()->id_departemen;
+        $id_dep=[];
+        $id_atasan = [];
+        $i_limit=1;
+        array_push($id_atasan,$id);
+        //dd(count($id_atasan));
+
+        for ($i=0; $i <$i_limit ; $i++) { 
+            for ($j=0; $j < count($id_atasan) ; $j++) { 
+                $data = DB::table('departemen')->where('id_atasan',$id_atasan[$j])->get();
+                if(count($data)>0){
+                    foreach($data as $row){
+                        array_push($id_atasan,$row->id);
+                    }
+                    $i_limit++;
+                }else{
+                    $i_limit=$i;
+                }
+            }
+        }
+        // dd($id_atasan);
+        // return $id_atasan;
+        // ==================================
+        $data = DB::table('analisa_risiko')
+        ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','analisa_risiko.id_pelaksanaan_manajemen_risiko')
+        ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+        ->orderby('analisa_risiko.id','desc')
+        ->get();
+        // dd($data);
         return view('backend.resiko.analisa.index',compact('data'));
     }
 

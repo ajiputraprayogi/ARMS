@@ -99,14 +99,27 @@ class ResikoteridentifikasiController extends Controller
         ->groupby('priode_penerapan')
         ->get();
 
-        $konteks = DB::table('resiko_teridentifikasi')
-                        ->select('konteks.*')
-                        ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
-                        ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
-                        ->where('pelaksanaan_manajemen_risiko.faktur','=',$active_departemen)
-                        ->groupby('konteks.id')
-                        ->orderby('konteks.nama','asc')
-                        ->get();
+        if($active_departemen!='Semua Departemen'){
+            $konteks = DB::table('resiko_teridentifikasi')
+                            ->select('konteks.*')
+                            ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                            ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
+                            ->where('pelaksanaan_manajemen_risiko.faktur','=',$active_departemen)
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                            ->groupby('konteks.id')
+                            ->orderby('konteks.nama','asc')
+                            ->get();
+        }else{
+            $konteks = DB::table('resiko_teridentifikasi')
+                            ->select('konteks.*')
+                            ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                            ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
+                            // ->where('pelaksanaan_manajemen_risiko.faktur','=',$active_departemen)
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                            ->groupby('konteks.id')
+                            ->orderby('konteks.nama','asc')
+                            ->get();
+        }
 
         $status = DB::table('resiko_teridentifikasi')
                         ->select('resiko_teridentifikasi.*')
@@ -894,6 +907,7 @@ class ResikoteridentifikasiController extends Controller
 
         $resiko = DB::table('konteks')
         ->where('faktur_konteks',$id)
+        ->groupby('konteks.id')
         ->get();
         $print=[
             'detail'=>$data,
