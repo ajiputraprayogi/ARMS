@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2021 at 01:08 PM
--- Server version: 10.4.20-MariaDB
+-- Generation Time: Nov 12, 2021 at 12:13 PM
+-- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -613,7 +613,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (27, '2021_09_28_065159_create_pemangku_kepentingans_table', 3),
 (28, '2021_11_08_040410_create_periode_pelaporans_table', 4),
 (29, '2021_11_08_061734_create_pelaporan_pengelolaan_risiko_table', 5),
-(30, '2021_11_08_063452_create_tembusan_table', 6);
+(30, '2021_11_08_063452_create_tembusan_table', 6),
+(31, '2021_11_12_100537_create_tujuanpelaporan_table', 7);
 
 -- --------------------------------------------------------
 
@@ -718,7 +719,7 @@ CREATE TABLE `pelaporan_pengelolaan_risiko` (
 --
 
 INSERT INTO `pelaporan_pengelolaan_risiko` (`id`, `id_periode_pelaporan`, `id_unit_kerja`, `status`, `file`, `created_at`, `updated_at`) VALUES
-(2, 1, 29, 'diajukan', '1636373153_CV_Taufik_Afandi.pdf', '2021-11-08 05:05:53', '2021-11-08 05:05:53');
+(3, 1, 29, 'proses pemeriksaan', 'ARMS-App.pdf', NULL, '2021-11-12 04:11:39');
 
 -- --------------------------------------------------------
 
@@ -1111,8 +1112,28 @@ CREATE TABLE `tembusan` (
 --
 
 INSERT INTO `tembusan` (`id`, `id_pelaporan`, `id_departemen`, `created_at`, `updated_at`) VALUES
-(3, 2, 15, '2021-11-08 05:05:53', '2021-11-08 05:05:53'),
-(4, 2, 30, '2021-11-08 05:05:53', '2021-11-08 05:05:53');
+(5, 3, 15, NULL, NULL),
+(6, 3, 23, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tujuanpelaporan`
+--
+
+CREATE TABLE `tujuanpelaporan` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_pelaporan` int(11) NOT NULL,
+  `id_departemen` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tujuanpelaporan`
+--
+
+INSERT INTO `tujuanpelaporan` (`id`, `id_pelaporan`, `id_departemen`) VALUES
+(1, 3, 15),
+(2, 3, 23);
 
 -- --------------------------------------------------------
 
@@ -1324,6 +1345,12 @@ ALTER TABLE `tembusan`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tujuanpelaporan`
+--
+ALTER TABLE `tujuanpelaporan`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -1422,7 +1449,7 @@ ALTER TABLE `metode_pencapaian_tujuan`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `pelaksanaan_manajemen_risiko`
@@ -1440,7 +1467,7 @@ ALTER TABLE `pelaksanaan_pengendalian_risiko`
 -- AUTO_INCREMENT for table `pelaporan_pengelolaan_risiko`
 --
 ALTER TABLE `pelaporan_pengelolaan_risiko`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `pemangku_kepentingan`
@@ -1500,7 +1527,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `tembusan`
 --
 ALTER TABLE `tembusan`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `tujuanpelaporan`
+--
+ALTER TABLE `tujuanpelaporan`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
