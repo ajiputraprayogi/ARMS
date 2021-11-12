@@ -58,6 +58,15 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label class="control-label col-sm-3 align-self-center" for="">Kepada</label>
+                        <div class="col-sm-9">
+                            <!-- Select2 -->
+                            <select name="tujuanpelaporan[]" multiple="multiple" class="form-control select2" id="cari_tujuanpelaporan" style="width: 100%;"
+                                data-placeholder="Search ...">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="">Tembusan</label>
                         <div class="col-sm-9">
                             <!-- Select2 -->

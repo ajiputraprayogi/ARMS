@@ -16,6 +16,13 @@ class pelaporanpengelolaanrisiko extends Model
         return $this->hasMany(tembusan::class, 'id_pelaporan', 'id');
     }
 
+    /**
+     * Mendapatkan data tembusan.
+     */
+    public function tujuanpelaporan(){
+        return $this->hasMany(tujuanpelaporan::class, 'id_pelaporan', 'id');
+    }
+
     public function periodepelaporan(){
         return $this->hasOne(periodepelaporan::class, 'id', 'id_periode_pelaporan');
     }

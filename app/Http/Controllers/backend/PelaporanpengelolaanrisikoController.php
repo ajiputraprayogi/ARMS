@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\pelaporanpengelolaanrisiko;
 use App\periodepelaporan;
 use App\tembusan;
+use App\tujuanpelaporan;
 use DataTables;
 
 class PelaporanpengelolaanrisikoController extends Controller
@@ -17,15 +18,16 @@ class PelaporanpengelolaanrisikoController extends Controller
      */
     public function index()
     {
-        $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen'])->get();
+        $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])->get();
         // dd($data);
         return view('backend.pelaporanpengelolaanrisiko.index',['data'=>$data]);
     }
 
     public function listdata(){
         // dd(Datatables::of(pelaporanpengelolaanrisiko::with('tembusan.departemen')->get())->make(true));
-        return Datatables::of(pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen'])->get())->make(true);
+        return Datatables::of(pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])->get())->make(true);
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -53,6 +55,7 @@ class PelaporanpengelolaanrisikoController extends Controller
             'status' => 'required',
             'file_laporan' => 'required|max:5096',
             'tembusan' => 'required',
+            'tujuanpelaporan' => 'required',
         ]);
         // dd($request);
         if ($request->hasFile('file_laporan')) {
@@ -73,6 +76,13 @@ class PelaporanpengelolaanrisikoController extends Controller
             tembusan::create([
                 'id_pelaporan'  => $add_pelaporan->id,
                 'id_departemen' => $tembusan
+            ]);
+        }
+
+        foreach ($request->tujuanpelaporan as $tujuanpelaporan){
+            tujuanpelaporan::create([
+                'id_pelaporan'  => $add_pelaporan->id,
+                'id_departemen' => $tujuanpelaporan
             ]);
         }
 
@@ -99,7 +109,7 @@ class PelaporanpengelolaanrisikoController extends Controller
     public function edit($id)
     {
         $data=pelaporanpengelolaanrisiko::find($id);
-        return view('backend.pelaporanpengelolaanrisiko.edit_pelaporanpengelolaanrisiko',['data'=>$data]);
+        return view('backend.pelaporanpengelolaanrisiko.edit',['data'=>$data]);
     }
 
     /**
@@ -112,16 +122,10 @@ class PelaporanpengelolaanrisikoController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'tanggal_mulai' => 'required',
-            'tanggal_selesai' => 'required',
             'status' => 'required',
-            'nama_periode' => 'required',
         ]);
         pelaporanpengelolaanrisiko::find($id)->update([
-            'tanggal_mulai' => $request->tanggal_mulai,
-            'tanggal_selesai' => $request->tanggal_selesai,
             'status' => $request->status,
-            'nama_periode' => $request->nama_periode,
         ]);
         return redirect('pelaporan-pengelolaan-risiko')->with('status','Sukses mengubah data');
     }
@@ -140,5 +144,6 @@ class PelaporanpengelolaanrisikoController extends Controller
         }
         pelaporanpengelolaanrisiko::destroy($id);
         tembusan::where('id_pelaporan', $id)->delete();
+        tujuanpelaporan::where('id_pelaporan', $id)->delete();
     }
 }
