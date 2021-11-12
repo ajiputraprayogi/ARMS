@@ -5,7 +5,7 @@ $('#cari_departemen').select2({
         delay: 250,
         processResults: function (data) {
             return {
-                results: $.map(data, function (item) {
+                results: $.map(data.departemen, function (item) {
                     return {
                         id: item.id,
                         text: item.nama
@@ -25,7 +25,7 @@ $('#cari_tembusan').select2({
         delay: 250,
         processResults: function (data) {
             return {
-                results: $.map(data, function (item) {
+                results: $.map(data.departemen, function (item) {
                     return {
                         id: item.id,
                         text: item.nama
@@ -45,7 +45,7 @@ $('#cari_tujuanpelaporan').select2({
         delay: 250,
         processResults: function (data) {
             return {
-                results: $.map(data, function (item) {
+                results: $.map(data.departemen, function (item) {
                     return {
                         id: item.id,
                         text: item.nama
