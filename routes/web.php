@@ -87,6 +87,9 @@ Route::group(['middleware' => ['auth']],function(){
     Route::resource('pelaporan-pengelolaan-risiko', 'backend\PelaporanpengelolaanrisikoController');
     Route::get('data-pelaporanpengelolaanrisiko', 'backend\PelaporanpengelolaanrisikoController@listdata');
 
+    // Cari atasan untuk Pelaporan
+    Route::get('cari-atasan/{id}', 'backend\PelaporanpengelolaanrisikoController@cariatasan');
+
     Route::resource('metodepencapaiantujuanspip', 'backend\MetodepencapaiantujuanspipController');
     Route::get('data-metodepencapaiantujuanspip', 'backend\MetodepencapaiantujuanspipController@listdata');
 

@@ -7,6 +7,7 @@ use App\pelaporanpengelolaanrisiko;
 use App\periodepelaporan;
 use App\tembusan;
 use App\tujuanpelaporan;
+use App\departemen;
 use DataTables;
 
 class PelaporanpengelolaanrisikoController extends Controller
@@ -26,6 +27,33 @@ class PelaporanpengelolaanrisikoController extends Controller
     public function listdata(){
         // dd(Datatables::of(pelaporanpengelolaanrisiko::with('tembusan.departemen')->get())->make(true));
         return Datatables::of(pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])->get())->make(true);
+    }
+
+    public function cariatasan($id)
+    {
+        $dep = departemen::find($id);
+        $id_dep=[];
+        $id_atasan = [];
+        $i_limit=1;
+        array_push($id_atasan,$dep->id_atasan);
+        //dd(count($id_atasan));
+
+        for ($i=0; $i <$i_limit ; $i++) {
+            for ($j=0; $j < count($id_atasan) ; $j++) {
+                $data = departemen::find($id_atasan[$j]);
+                if($data->id_atasan != null){
+                    array_push($id_atasan, $data->id_atasan);
+                    $i_limit++;
+                }else{
+                    $i_limit=$i;
+                }
+            }
+        }
+        $filtered_atasan = departemen::whereIn('id', $id_atasan)->get();
+        // dd($filtered_atasan);
+        return response()->json([
+            'data_atasan' => $filtered_atasan
+        ]);
     }
 
     /**

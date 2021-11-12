@@ -17,7 +17,7 @@
                 </ul>
             </div>
             @endif
-            <div class="card-body">
+            <div class="card-body" id="panel">
                 <form class="form-horizontal" action="{{url('pelaporan-pengelolaan-risiko')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group row">
@@ -38,6 +38,7 @@
                             <select name="departemen" class="form-control select2" id="cari_departemen" style="width: 100%;"
                                 data-placeholder="Search ...">
                             </select>
+                            <input type="hidden" id="id_unit_kerja" />
                         </div>
                     </div>
                     <div class="form-group row">
