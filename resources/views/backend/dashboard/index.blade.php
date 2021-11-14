@@ -7,8 +7,21 @@ ARMS | Dashboard
 @endsection
 @section('content')
 @php
+    // $this->data['pengendalian_risiko'] = \DB::table('pengendalian_risiko')->where('status_pelaksanaan', ?'like', 'Selesai Dilaksanakan%')->whereDate('target_waktu_akhir', '>', Carbon::now())->count();
     use Carbon\Carbon;
-    $this->data['pengendalian_risiko'] = \DB::table('pengendalian_risiko')->where('status_pelaksanaan', 'like', 'Selesai Dilaksanakan%')->whereDate('target_waktu_akhir', '>', Carbon::now())->count();
+    $tgl = Carbon::now();
+    $now = $tgl->format('Y-m-d');
+    $id_pengendalian = [];
+    $data = DB::table('pengendalian_risiko')->where('status_pelaksanaan','Selesai Dilaksanakan')->get();
+    if(count($data)>0){
+        foreach ($data as $row) {
+            array_push($id_pengendalian,$row->id);
+        }
+    }
+    $update_status = DB::table('pengendalian_risiko')->whereNotIn('id',$id_pengendalian)->whereDate('target_waktu_akhir', '<', $now)->update([
+        'status_pelaksanaan'=>'Terlambat',
+    ]);
+    // dd($update_status);
 @endphp
 <div class="col-lg-12">
     <div class="card card-transparent card-block card-stretch card-height border-none">
