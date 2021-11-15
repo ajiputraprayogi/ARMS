@@ -79,21 +79,37 @@ class PencatatanperistiwaController extends Controller
             }
         }
         $departemen = DB::table('pencatatan_peristiwa_resiko')
-                        ->select('departemen.*','departemen.nama')
+                        ->select('pelaksanaan_manajemen_risiko.*','departemen.nama')
+                        ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pencatatan_peristiwa_resiko.id_manajemen')
                         ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','pencatatan_peristiwa_resiko.resiko_id')
-                        ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
                         ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
-                        ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
+                        ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                        ->groupby('departemen.id')
                         ->get();
+                        // dd($departemen);
         $tahun = DB::table('pelaksanaan_manajemen_risiko')
         ->groupby('priode_penerapan')
         ->get();
-        $kode_risiko = DB::table('pencatatan_peristiwa_resiko')
-                        ->select('resiko_teridentifikasi.full_kode')
-                        ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pencatatan_peristiwa_resiko.id_risiko')
-                        ->groupby('pencatatan_peristiwa_resiko.id_risiko')
-                        ->orderby('resiko_teridentifikasi.full_kode','asc')
-                        ->get();
+        if($active_departemen!='Semua Departemen'){
+            $kode_risiko = DB::table('pencatatan_peristiwa_resiko')
+            ->select('resiko_teridentifikasi.full_kode')
+            ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pencatatan_peristiwa_resiko.id_manajemen')
+            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pencatatan_peristiwa_resiko.id_risiko')
+            ->where('pelaksanaan_manajemen_risiko.faktur',$active_departemen)
+            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+            ->groupby('pencatatan_peristiwa_resiko.id_risiko')
+            ->orderby('resiko_teridentifikasi.full_kode','asc')
+            ->get();
+        }else{
+            $kode_risiko = DB::table('pencatatan_peristiwa_resiko')
+            ->select('resiko_teridentifikasi.full_kode')
+            ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pencatatan_peristiwa_resiko.id_manajemen')
+            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pencatatan_peristiwa_resiko.id_risiko')
+            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+            ->groupby('pencatatan_peristiwa_resiko.id_risiko')
+            ->orderby('resiko_teridentifikasi.full_kode','asc')
+            ->get();
+        }
         $kode_penyebab = DB::table('pencatatan_peristiwa_resiko')
                         ->select('penyebab.*')
                         ->leftjoin('penyebab','penyebab.id','=','pencatatan_peristiwa_resiko.penyebab_id')
@@ -119,7 +135,7 @@ class PencatatanperistiwaController extends Controller
                             ->leftjoin('kriteria_dampak','kriteria_dampak.id','=','pencatatan_peristiwa_resiko.kriteria_id')
                             ->leftjoin('penyebab','penyebab.id','=','pencatatan_peristiwa_resiko.penyebab_id')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
-                            ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['resiko_teridentifikasi.full_kode','=',$active_kode],['penyebab.kode','=',$active_penyebab],['pencatatan_peristiwa_resiko.pemicu','=',$active_pemicu]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['resiko_teridentifikasi.full_kode','=',$active_kode],['penyebab.kode','=',$active_penyebab],['pencatatan_peristiwa_resiko.pemicu','=',$active_pemicu]])
                             // ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
                             ->get();
                             // dd($data);
@@ -132,7 +148,7 @@ class PencatatanperistiwaController extends Controller
                             ->leftjoin('kriteria_dampak','kriteria_dampak.id','=','pencatatan_peristiwa_resiko.kriteria_id')
                             ->leftjoin('penyebab','penyebab.id','=','pencatatan_peristiwa_resiko.penyebab_id')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
-                            ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['resiko_teridentifikasi.full_kode','=',$active_kode],['penyebab.kode','=',$active_penyebab]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['resiko_teridentifikasi.full_kode','=',$active_kode],['penyebab.kode','=',$active_penyebab]])
                             // ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
                             ->get();
                             // dd($data);
@@ -147,7 +163,7 @@ class PencatatanperistiwaController extends Controller
                             ->leftjoin('kriteria_dampak','kriteria_dampak.id','=','pencatatan_peristiwa_resiko.kriteria_id')
                             ->leftjoin('penyebab','penyebab.id','=','pencatatan_peristiwa_resiko.penyebab_id')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
-                            ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['resiko_teridentifikasi.full_kode','=',$active_kode],['pencatatan_peristiwa_resiko.pemicu','=',$active_pemicu]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['resiko_teridentifikasi.full_kode','=',$active_kode],['pencatatan_peristiwa_resiko.pemicu','=',$active_pemicu]])
                             // ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
                             ->get();
                             // dd($data);
@@ -160,7 +176,7 @@ class PencatatanperistiwaController extends Controller
                             ->leftjoin('kriteria_dampak','kriteria_dampak.id','=','pencatatan_peristiwa_resiko.kriteria_id')
                             ->leftjoin('penyebab','penyebab.id','=','pencatatan_peristiwa_resiko.penyebab_id')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
-                            ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['resiko_teridentifikasi.full_kode','=',$active_kode]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['resiko_teridentifikasi.full_kode','=',$active_kode]])
                             // ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
                             ->get();
                             // dd($data);
@@ -177,7 +193,7 @@ class PencatatanperistiwaController extends Controller
                             ->leftjoin('kriteria_dampak','kriteria_dampak.id','=','pencatatan_peristiwa_resiko.kriteria_id')
                             ->leftjoin('penyebab','penyebab.id','=','pencatatan_peristiwa_resiko.penyebab_id')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
-                            ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['penyebab.kode','=',$active_penyebab],['pencatatan_peristiwa_resiko.pemicu','=',$active_pemicu]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['penyebab.kode','=',$active_penyebab],['pencatatan_peristiwa_resiko.pemicu','=',$active_pemicu]])
                             // ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
                             ->get();
                             // dd($data);
@@ -190,7 +206,7 @@ class PencatatanperistiwaController extends Controller
                             ->leftjoin('kriteria_dampak','kriteria_dampak.id','=','pencatatan_peristiwa_resiko.kriteria_id')
                             ->leftjoin('penyebab','penyebab.id','=','pencatatan_peristiwa_resiko.penyebab_id')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
-                            ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['penyebab.kode','=',$active_penyebab]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['penyebab.kode','=',$active_penyebab]])
                             // ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
                             ->get();
                             // dd($data);
@@ -205,7 +221,7 @@ class PencatatanperistiwaController extends Controller
                             ->leftjoin('kriteria_dampak','kriteria_dampak.id','=','pencatatan_peristiwa_resiko.kriteria_id')
                             ->leftjoin('penyebab','penyebab.id','=','pencatatan_peristiwa_resiko.penyebab_id')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
-                            ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['pencatatan_peristiwa_resiko.pemicu','=',$active_pemicu]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun],['pencatatan_peristiwa_resiko.pemicu','=',$active_pemicu]])
                             // ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
                             ->get();
                             // dd($data);
@@ -218,7 +234,7 @@ class PencatatanperistiwaController extends Controller
                             ->leftjoin('kriteria_dampak','kriteria_dampak.id','=','pencatatan_peristiwa_resiko.kriteria_id')
                             ->leftjoin('penyebab','penyebab.id','=','pencatatan_peristiwa_resiko.penyebab_id')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
-                            ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun]])
                             // ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
                             ->get();
                             // dd($data);
@@ -237,7 +253,7 @@ class PencatatanperistiwaController extends Controller
                             ->leftjoin('kriteria_dampak','kriteria_dampak.id','=','pencatatan_peristiwa_resiko.kriteria_id')
                             ->leftjoin('penyebab','penyebab.id','=','pencatatan_peristiwa_resiko.penyebab_id')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
-                            ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen],['resiko_teridentifikasi.full_kode','=',$active_kode],['penyebab.kode','=',$active_penyebab],['pencatatan_peristiwa_resiko.pemicu','=',$active_pemicu]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['resiko_teridentifikasi.full_kode','=',$active_kode],['penyebab.kode','=',$active_penyebab],['pencatatan_peristiwa_resiko.pemicu','=',$active_pemicu]])
                             // ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
                             ->get();
                             // dd($data);
@@ -250,7 +266,7 @@ class PencatatanperistiwaController extends Controller
                             ->leftjoin('kriteria_dampak','kriteria_dampak.id','=','pencatatan_peristiwa_resiko.kriteria_id')
                             ->leftjoin('penyebab','penyebab.id','=','pencatatan_peristiwa_resiko.penyebab_id')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
-                            ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen],['resiko_teridentifikasi.full_kode','=',$active_kode],['penyebab.kode','=',$active_penyebab]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['resiko_teridentifikasi.full_kode','=',$active_kode],['penyebab.kode','=',$active_penyebab]])
                             // ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
                             ->get();
                             // dd($data);
@@ -265,7 +281,7 @@ class PencatatanperistiwaController extends Controller
                             ->leftjoin('kriteria_dampak','kriteria_dampak.id','=','pencatatan_peristiwa_resiko.kriteria_id')
                             ->leftjoin('penyebab','penyebab.id','=','pencatatan_peristiwa_resiko.penyebab_id')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
-                            ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen],['resiko_teridentifikasi.full_kode','=',$active_kode],['pencatatan_peristiwa_resiko.pemicu','=',$active_pemicu]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['resiko_teridentifikasi.full_kode','=',$active_kode],['pencatatan_peristiwa_resiko.pemicu','=',$active_pemicu]])
                             // ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
                             ->get();
                             // dd($data);
@@ -278,7 +294,7 @@ class PencatatanperistiwaController extends Controller
                             ->leftjoin('kriteria_dampak','kriteria_dampak.id','=','pencatatan_peristiwa_resiko.kriteria_id')
                             ->leftjoin('penyebab','penyebab.id','=','pencatatan_peristiwa_resiko.penyebab_id')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
-                            ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen],['resiko_teridentifikasi.full_kode','=',$active_kode]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['resiko_teridentifikasi.full_kode','=',$active_kode]])
                             // ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
                             ->get();
                             // dd($data);
@@ -295,7 +311,7 @@ class PencatatanperistiwaController extends Controller
                             ->leftjoin('kriteria_dampak','kriteria_dampak.id','=','pencatatan_peristiwa_resiko.kriteria_id')
                             ->leftjoin('penyebab','penyebab.id','=','pencatatan_peristiwa_resiko.penyebab_id')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
-                            ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen],['penyebab.kode',$active_penyebab],['pencatatan_peristiwa_resiko.pemicu','=',$active_pemicu]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['penyebab.kode',$active_penyebab],['pencatatan_peristiwa_resiko.pemicu','=',$active_pemicu]])
                             // ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
                             ->get();
                             // dd($data);
@@ -308,7 +324,7 @@ class PencatatanperistiwaController extends Controller
                             ->leftjoin('kriteria_dampak','kriteria_dampak.id','=','pencatatan_peristiwa_resiko.kriteria_id')
                             ->leftjoin('penyebab','penyebab.id','=','pencatatan_peristiwa_resiko.penyebab_id')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
-                            ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen],['penyebab.kode',$active_penyebab]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['penyebab.kode',$active_penyebab]])
                             // ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
                             ->get();
                             // dd($data);
@@ -323,7 +339,7 @@ class PencatatanperistiwaController extends Controller
                             ->leftjoin('kriteria_dampak','kriteria_dampak.id','=','pencatatan_peristiwa_resiko.kriteria_id')
                             ->leftjoin('penyebab','penyebab.id','=','pencatatan_peristiwa_resiko.penyebab_id')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
-                            ->where([['pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen],['pencatatan_peristiwa_resiko.pemicu','=',$active_pemicu]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pencatatan_peristiwa_resiko.pemicu','=',$active_pemicu]])
                             // ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
                             ->get();
                             // dd($data);
@@ -336,7 +352,7 @@ class PencatatanperistiwaController extends Controller
                             ->leftjoin('kriteria_dampak','kriteria_dampak.id','=','pencatatan_peristiwa_resiko.kriteria_id')
                             ->leftjoin('penyebab','penyebab.id','=','pencatatan_peristiwa_resiko.penyebab_id')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
-                            ->where('pelaksanaan_manajemen_risiko.id_departemen','=',$active_departemen)
+                            ->where('pelaksanaan_manajemen_risiko.faktur','=',$active_departemen)
                             // ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
                             ->get();
                         }
@@ -716,5 +732,70 @@ class PencatatanperistiwaController extends Controller
     {
         $dept = DB::table('resiko_teridentifikasi')->where("id",$request->depID)->get();
         return response()->json($dept);
+    }
+    // ============================================= Filter ==============================================
+    public function hasilcaridepartmenfilter($id){
+        // ==================================
+        $iduser = Auth::user()->id_departemen;
+        $id_dep=[];
+        $id_atasan = [];
+        $i_limit=1;
+        array_push($id_atasan,$iduser);
+        //dd(count($id_atasan));
+
+        for ($i=0; $i <$i_limit ; $i++) { 
+            for ($j=0; $j < count($id_atasan) ; $j++) { 
+                $data = DB::table('departemen')->where('id_atasan',$id_atasan[$j])->get();
+                if(count($data)>0){
+                    foreach($data as $row){
+                        array_push($id_atasan,$row->id);
+                    }
+                    $i_limit++;
+                }else{
+                    $i_limit=$i;
+                }
+            }
+        }
+        // dd($id_atasan);
+        // return $id_atasan;
+        // ==================================
+        // $datad = DB::table('pelaksanaan_manajemen_risiko')
+        // ->select('pelaksanaan_manajemen_risiko.id', 'pelaksanaan_manajemen_risiko.id_departemen', 'pelaksanaan_manajemen_risiko.priode_penerapan','departemen.kode as kodedep','departemen.nama as namadep')
+        // ->leftjoin('departemen', 'pelaksanaan_manajemen_risiko.id_departemen', '=', 'departemen.id')
+        // ->where('pelaksanaan_manajemen_risiko.id',$id)
+        // ->get();
+        // $data =  DB::table('pelaksanaan_manajemen_risiko')
+        // ->select('pelaksanaan_manajemen_risiko.id','pelaksanaan_manajemen_risiko.faktur', 'pelaksanaan_manajemen_risiko.id_departemen', 'pelaksanaan_manajemen_risiko.priode_penerapan','pelaksanaan_manajemen_risiko.selera_risiko','departemen.kode as kodedep','departemen.nama as namadep','konteks.id as idk','konteks.kode as kodek')
+        // ->leftjoin('departemen', 'pelaksanaan_manajemen_risiko.id_departemen', '=', 'departemen.id')
+        // ->leftjoin('konteks','konteks.faktur_konteks','=','pelaksanaan_manajemen_risiko.faktur')
+        // ->where('pelaksanaan_manajemen_risiko.id',$id)
+        // ->get();
+            $data = $data = DB::table('pencatatan_peristiwa_resiko')
+            ->select('pencatatan_peristiwa_resiko.*','resiko_teridentifikasi.pernyataan_risiko','resiko_teridentifikasi.uraian_dampak','departemen.nama','kriteria_dampak.nilai','kriteria_dampak.nama','penyebab.penyebab')
+            ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pencatatan_peristiwa_resiko.id_manajemen')
+            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','pencatatan_peristiwa_resiko.resiko_id')
+            ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+            ->leftjoin('kriteria_dampak','kriteria_dampak.id','=','pencatatan_peristiwa_resiko.kriteria_id')
+            ->leftjoin('penyebab','penyebab.id','=','pencatatan_peristiwa_resiko.penyebab_id')
+            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+            // ->groupby('pelaksanaan_manajemen_risiko.id_departemen')
+            ->get();
+            // dd($data);
+
+        // $risiko = DB::table('konteks')
+        // ->where('faktur_konteks',$id)
+        // ->groupby('konteks.id')
+        // ->get();
+        $risiko = DB::table('pencatatan_peristiwa_resiko')
+        ->select('pencatatan_peristiwa_resiko.*','resiko_teridentifikasi.full_kode')
+        ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pencatatan_peristiwa_resiko.id_risiko')
+        ->where('resiko_teridentifikasi.faktur',$id)
+        ->groupby('resiko_teridentifikasi.full_kode')
+        ->get();
+        $print=[
+            'detail'=>$data,
+            'risiko'=>$risiko
+        ];
+        return response()->json($print);
     }
 }

@@ -243,12 +243,19 @@
                                         @php 
                                             $level = Auth::user()->level;
                                             $roles = DB::table('roles')->where('id',$level)->get();
+
+                                            $id_departemen = Auth::user()->id_departemen;
+                                            $departemen = DB::table('departemen')->where('id',$id_departemen)->get();
                                         @endphp
                                         <p class="mb-0">@foreach ($roles as $row)
                                             {{$row->role}}
                                         @endforeach</p>
+                                        <h6 class="mb-0">Unit Kerja</h6>
+                                        <p class="mb-1">@foreach ($departemen as $row)
+                                            {{$row->nama}}
+                                        @endforeach</p>
                                         <div class="d-flex align-items-center justify-content-center mt-3">
-                                            <a href="{{url('edit-profil')}}" class="btn border mr-2">Profil</a>
+                                            {{-- <a href="{{url('edit-profil')}}" class="btn border mr-2">Profil</a> --}}
                                             <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();" class="btn border">Keluar</a>
                                         </div>

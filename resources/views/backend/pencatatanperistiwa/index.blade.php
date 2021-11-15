@@ -14,10 +14,10 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <select class="form-control" name="departemen" id="">
+                            <select class="form-control" name="departemen" id="departemen">
                                 <option>Semua Departemen</option>
                                 @foreach($departemen as $rowdpr)
-                                <option value="{{$rowdpr->id}}" @if($active_departemen==$rowdpr->id) selected
+                                <option value="{{$rowdpr->faktur}}" @if($active_departemen==$rowdpr->faktur) selected
                                     @endif>{{$rowdpr->nama}}</option>
                                 @endforeach
                             </select>
@@ -25,7 +25,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <select class="form-control select" name="kode_risiko" id="">
+                            <select class="form-control" name="kode_risiko" id="kode_risiko">
                                 <option>Semua Kode Risiko</option>
                                 @foreach($kode_risiko as $rowkdr)
                                 <option value="{{$rowkdr->full_kode}}" @if($active_kode==$rowkdr->full_kode) selected
@@ -47,7 +47,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <select class="form-control select" name="pemicu_kejadian" id="">
+                            <select class="form-control" name="pemicu_kejadian" id="pemicu_kejadian">
                                 <option>Semua Pemicu Kejadian</option>
                                 @foreach($pemicu_kejadian as $rowpkj)
                                 <option value="{{$rowpkj->pemicu}}" @if($active_pemicu==$rowpkj->pemicu) selected
@@ -74,7 +74,7 @@
                         </div>
                     </div>
                     <!-- <div class="col-md-4 text-right">
-                        <a href="{{url('pelaksanaan/create')}}" class="btn btn-primary mb-3 btn-lg"><i
+                        {{-- <a href="{{url('pelaksanaan/create')}}" class="btn btn-primary mb-3 btn-lg"><i --}}
                                 class="las la-plus mr-3"></i>Tambah Pelaksanaan Baru</a>
                     </div> -->
                 </div>
@@ -134,7 +134,8 @@
 @endsection
 @push('script')
     <script src="{{asset('phppiechart/assets/js/highcharts.js')}}"></script>
-    <!-- <script src="{{asset('assets/customjs/backend/manajemen_risiko.js')}}"></script> -->
+    {{-- <!-- <script src="{{asset('assets/customjs/backend/manajemen_risiko.js')}}"></script> --> --}}
+    <script src="{{asset('assets/customjs/backend/pencatatanperistiwa_filter.js')}}"></script>
     <script>
         $(function() {
             $(".select").select2();
@@ -180,11 +181,6 @@
                 }
             })
         }
-    </script>
-    <script>
-        $(function() {
-            $(".select").select2();
-        });
     </script>
 @endpush
 

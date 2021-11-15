@@ -10,7 +10,7 @@ use Auth;
 class perubahanBesaranRisiko extends Controller
 {
     //=========================================================================================
-    public function index()
+    public function index(Request $request)
     {
         // ===================================
         $id = Auth::user()->id_departemen;
@@ -36,14 +36,81 @@ class perubahanBesaranRisiko extends Controller
         // dd($id_atasan);
         // return $id_atasan;
         // ===================================
-        $data = DB::table('perubahan_besaran_risiko')
-        ->select(DB::raw('perubahan_besaran_risiko.*,resiko_teridentifikasi.besaran_akhir,resiko_teridentifikasi.frekuensi_akhir,resiko_teridentifikasi.dampak_akhir,resiko_teridentifikasi.pr_akhir'))
+
+        $active_departemen = 'Semua Departemen';
+        $active_tahun = 'Semua Tahun';
+
+        if($request->has('departemen')){
+            if($request->departemen!='Semua Departemen'){
+                $active_departemen = $request->departemen;
+            }else{
+                $active_departemen = 'Semua Departemen';
+            }
+        }
+
+        if($request->has('tahun')){
+            if($request->tahun!='Semua Tahun'){
+                $active_tahun = $request->tahun;
+            }else{
+                $active_tahun = 'Semua Tahun';
+            }
+        }
+
+        $departemen =DB::table('perubahan_besaran_risiko')
+        ->select('pelaksanaan_manajemen_risiko.*','departemen.nama')
         ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','perubahan_besaran_risiko.kode_resiko_teridentifikasi')
         ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','perubahan_besaran_risiko.id_pelaksanaan_manajemen_risiko')
+        ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
         ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+        ->groupby('departemen.id')
         ->orderby('perubahan_besaran_risiko.id','desc')
         ->get();
-        return view('backend.perubahanbesaranrisiko.index',compact('data'));
+
+        $tahun = DB::table('pelaksanaan_manajemen_risiko')
+        ->groupby('priode_penerapan')
+        ->get();
+
+        if($active_departemen!='Semua Departemen'){
+            if($active_tahun!='Semua Tahun'){
+                $data = DB::table('perubahan_besaran_risiko')
+                ->select(DB::raw('perubahan_besaran_risiko.*,resiko_teridentifikasi.besaran_akhir,resiko_teridentifikasi.frekuensi_akhir,resiko_teridentifikasi.dampak_akhir,resiko_teridentifikasi.pr_akhir'))
+                ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','perubahan_besaran_risiko.kode_resiko_teridentifikasi')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','perubahan_besaran_risiko.id_pelaksanaan_manajemen_risiko')
+                ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun]])
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->orderby('perubahan_besaran_risiko.id','desc')
+                ->get();
+            }else{
+                $data = DB::table('perubahan_besaran_risiko')
+                ->select(DB::raw('perubahan_besaran_risiko.*,resiko_teridentifikasi.besaran_akhir,resiko_teridentifikasi.frekuensi_akhir,resiko_teridentifikasi.dampak_akhir,resiko_teridentifikasi.pr_akhir'))
+                ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','perubahan_besaran_risiko.kode_resiko_teridentifikasi')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','perubahan_besaran_risiko.id_pelaksanaan_manajemen_risiko')
+                ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen]])
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->orderby('perubahan_besaran_risiko.id','desc')
+                ->get();
+            }
+        }else{
+            if($active_tahun!='Semua Tahun'){
+                $data = DB::table('perubahan_besaran_risiko')
+                ->select(DB::raw('perubahan_besaran_risiko.*,resiko_teridentifikasi.besaran_akhir,resiko_teridentifikasi.frekuensi_akhir,resiko_teridentifikasi.dampak_akhir,resiko_teridentifikasi.pr_akhir'))
+                ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','perubahan_besaran_risiko.kode_resiko_teridentifikasi')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','perubahan_besaran_risiko.id_pelaksanaan_manajemen_risiko')
+                ->where([['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun]])
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->orderby('perubahan_besaran_risiko.id','desc')
+                ->get();
+            }else{
+                $data = DB::table('perubahan_besaran_risiko')
+                ->select(DB::raw('perubahan_besaran_risiko.*,resiko_teridentifikasi.besaran_akhir,resiko_teridentifikasi.frekuensi_akhir,resiko_teridentifikasi.dampak_akhir,resiko_teridentifikasi.pr_akhir'))
+                ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','perubahan_besaran_risiko.kode_resiko_teridentifikasi')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','perubahan_besaran_risiko.id_pelaksanaan_manajemen_risiko')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->orderby('perubahan_besaran_risiko.id','desc')
+                ->get();
+            }
+        }
+        return view('backend.perubahanbesaranrisiko.index',compact('data','departemen','active_departemen','tahun','active_tahun'));
     }
 
     //=========================================================================================

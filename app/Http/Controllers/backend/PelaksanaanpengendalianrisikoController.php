@@ -14,7 +14,7 @@ class PelaksanaanpengendalianrisikoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // ===================================
         $id = Auth::user()->id_departemen;
@@ -40,19 +40,106 @@ class PelaksanaanpengendalianrisikoController extends Controller
         // dd($id_atasan);
         // return $id_atasan;
         // ===================================
-        $data = DB::table('pelaksanaan_pengendalian_risiko')
+
+        $active_departemen = 'Semua Departemen';
+        $active_tahun = 'Semua Tahun';
+
+        if($request->has('departemen')){
+            if($request->departemen!='Semua Departemen'){
+                $active_departemen = $request->departemen;
+            }else{
+                $active_departemen = 'Semua Departemen';
+            }
+        }
+
+        if($request->has('tahun')){
+            if($request->tahun!='Semua Tahun'){
+                $active_tahun = $request->tahun;
+            }else{
+                $active_tahun = 'Semua Tahun';
+            }
+        }
+
+        $departemen =DB::table('pelaksanaan_pengendalian_risiko')
         ->select([
+            'pelaksanaan_manajemen_risiko.faktur',
             'pelaksanaan_pengendalian_risiko.*',
-            'pengendalian_risiko.kode_tindak_pengendalian','pengendalian_risiko.kegiatan_pengendalian','pengendalian_risiko.penanggung_jawab','pengendalian_risiko.status_pelaksanaan',
-            'resiko_teridentifikasi.full_kode',
+            'departemen.nama'
         ])
         ->leftjoin('pengendalian_risiko','pengendalian_risiko.id','=','pelaksanaan_pengendalian_risiko.id_pengendalian')
         ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
         ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+        ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
         ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+        ->groupby('departemen.id')
         ->orderby('id','desc')->get();
-        // dd($data);
-        return view('backend.pelaksanaan_pengendalian_risiko.index',compact('data'));
+        // dd($departemen);
+
+        $tahun = DB::table('pelaksanaan_manajemen_risiko')
+        ->groupby('priode_penerapan')
+        ->get();
+
+        if($active_departemen!='Semua Departemen'){
+            if($active_tahun!='Semua Tahun'){
+                $data = DB::table('pelaksanaan_pengendalian_risiko')
+                ->select([
+                    'pelaksanaan_pengendalian_risiko.*',
+                    'pengendalian_risiko.kode_tindak_pengendalian','pengendalian_risiko.kegiatan_pengendalian','pengendalian_risiko.penanggung_jawab','pengendalian_risiko.status_pelaksanaan',
+                    'resiko_teridentifikasi.full_kode',
+                ])
+                ->leftjoin('pengendalian_risiko','pengendalian_risiko.id','=','pelaksanaan_pengendalian_risiko.id_pengendalian')
+                ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun]])
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->orderby('id','desc')->get();
+                // dd($data);
+            }else{
+                $data = DB::table('pelaksanaan_pengendalian_risiko')
+                ->select([
+                    'pelaksanaan_pengendalian_risiko.*',
+                    'pengendalian_risiko.kode_tindak_pengendalian','pengendalian_risiko.kegiatan_pengendalian','pengendalian_risiko.penanggung_jawab','pengendalian_risiko.status_pelaksanaan',
+                    'resiko_teridentifikasi.full_kode',
+                ])
+                ->leftjoin('pengendalian_risiko','pengendalian_risiko.id','=','pelaksanaan_pengendalian_risiko.id_pengendalian')
+                ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen]])
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->orderby('id','desc')->get();
+                // dd($data);
+            }
+        }else{
+            if($active_tahun!='Semua Tahun'){
+                $data = DB::table('pelaksanaan_pengendalian_risiko')
+                ->select([
+                    'pelaksanaan_pengendalian_risiko.*',
+                    'pengendalian_risiko.kode_tindak_pengendalian','pengendalian_risiko.kegiatan_pengendalian','pengendalian_risiko.penanggung_jawab','pengendalian_risiko.status_pelaksanaan',
+                    'resiko_teridentifikasi.full_kode',
+                ])
+                ->leftjoin('pengendalian_risiko','pengendalian_risiko.id','=','pelaksanaan_pengendalian_risiko.id_pengendalian')
+                ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                ->where([['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun]])
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->orderby('id','desc')->get();
+                // dd($data);
+            }else{
+                $data = DB::table('pelaksanaan_pengendalian_risiko')
+                ->select([
+                    'pelaksanaan_pengendalian_risiko.*',
+                    'pengendalian_risiko.kode_tindak_pengendalian','pengendalian_risiko.kegiatan_pengendalian','pengendalian_risiko.penanggung_jawab','pengendalian_risiko.status_pelaksanaan',
+                    'resiko_teridentifikasi.full_kode',
+                ])
+                ->leftjoin('pengendalian_risiko','pengendalian_risiko.id','=','pelaksanaan_pengendalian_risiko.id_pengendalian')
+                ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->orderby('id','desc')->get();
+                // dd($data);
+            }
+        }
+        return view('backend.pelaksanaan_pengendalian_risiko.index',compact('data','departemen','active_departemen','tahun','active_tahun'));
     }
 
     /**

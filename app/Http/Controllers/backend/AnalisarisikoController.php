@@ -12,7 +12,7 @@ use Auth;
 class AnalisarisikoController extends Controller
 {
     //====================================================================================
-    public function index()
+    public function index(Request $request)
     {
         // ==================================
         $id = Auth::user()->id_departemen;
@@ -38,13 +38,75 @@ class AnalisarisikoController extends Controller
         // dd($id_atasan);
         // return $id_atasan;
         // ==================================
-        $data = DB::table('analisa_risiko')
+
+        $active_departemen = 'Semua Departemen';
+        $active_tahun = 'Semua Tahun';
+
+        if($request->has('departemen')){
+            if($request->departemen!='Semua Departemen'){
+                $active_departemen = $request->departemen;
+            }else{
+                $active_departemen = 'Semua Departemen';
+            }
+        }
+
+        if($request->has('tahun')){
+            if($request->tahun!='Semua Tahun'){
+                $active_tahun = $request->tahun;
+            }else{
+                $active_tahun = 'Semua Tahun';
+            }
+        }
+        $departemen = DB::table('analisa_risiko')
+        ->select('pelaksanaan_manajemen_risiko.*','departemen.nama')
         ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','analisa_risiko.id_pelaksanaan_manajemen_risiko')
+        ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
         ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+        ->groupby('departemen.id')
         ->orderby('analisa_risiko.id','desc')
         ->get();
-        // dd($data);
-        return view('backend.resiko.analisa.index',compact('data'));
+
+        $tahun = DB::table('pelaksanaan_manajemen_risiko')
+        ->groupby('priode_penerapan')
+        ->get();
+
+        if($active_departemen!='Semua Departemen'){
+            if($active_tahun!='Semua Tahun'){
+                $data = DB::table('analisa_risiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','analisa_risiko.id_pelaksanaan_manajemen_risiko')
+                ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun]])
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->orderby('analisa_risiko.id','desc')
+                ->get();
+                // dd($data);
+            }else{
+                $data = DB::table('analisa_risiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','analisa_risiko.id_pelaksanaan_manajemen_risiko')
+                ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen]])
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->orderby('analisa_risiko.id','desc')
+                ->get();
+                // dd($data);
+            }
+        }else{
+            if($active_tahun!='Semua Tahun'){
+                $data = DB::table('analisa_risiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','analisa_risiko.id_pelaksanaan_manajemen_risiko')
+                ->where('pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun)
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->orderby('analisa_risiko.id','desc')
+                ->get();
+                // dd($data);
+            }else{
+                $data = DB::table('analisa_risiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','analisa_risiko.id_pelaksanaan_manajemen_risiko')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->orderby('analisa_risiko.id','desc')
+                ->get();
+                // dd($data);
+            }
+        }
+        return view('backend.resiko.analisa.index',compact('data','departemen','active_departemen','tahun','active_tahun'));
     }
 
     //====================================================================================

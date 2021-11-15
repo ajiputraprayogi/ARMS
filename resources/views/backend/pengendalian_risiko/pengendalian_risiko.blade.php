@@ -16,10 +16,10 @@
                     <div class="col-md-4">
                         <label for="">Departemen</label>
                         <div class="form-group">
-                        <select class="form-control" name="departemen" id="">
+                        <select class="form-control" name="departemen" id="departemen">
                             <option>Semua Departemen</option>
                             @foreach($departemen as $rowdpr)
-                            <option value="{{$rowdpr->id}}" @if($active_departemen==$rowdpr->id) selected
+                            <option value="{{$rowdpr->faktur}}" @if($active_departemen==$rowdpr->faktur) selected
                                 @endif>{{$rowdpr->nama}}</option>
                             @endforeach
                         </select>
@@ -29,7 +29,7 @@
                     <div class="col-md-4">
                         <label for="">Kode Risiko</label>
                         <div class="form-group">
-                        <select class="form-control select" name="kode_risiko" required>
+                        <select class="form-control select" name="kode_risiko" id="kode_risiko">
                             <option value="Semua Kode Risiko">Semua Kode Risiko</option>
                             @foreach($kode_risiko as $rowkode)
                             <option value="{{$rowkode->full_kode}}" @if($active_kode==$rowkode->full_kode) selected
@@ -150,7 +150,8 @@
 @endsection
 @push('script')
     <script src="{{asset('phppiechart/assets/js/highcharts.js')}}"></script>
-    <!-- <script src="{{asset('assets/customjs/backend/manajemen_risiko.js')}}"></script> -->
+    {{-- <!-- <script src="{{asset('assets/customjs/backend/manajemen_risiko.js')}}"></script> --> --}}
+    <script src="{{asset('assets/customjs/backend/pengendalian_risiko_filter.js')}}"></script>
     <script>
         function hapusdatamanajemenrisiko(kode) {
             const swalWithBootstrapButtons = Swal.mixin({
@@ -204,10 +205,10 @@
         });
         });
     </script>
-    <script>
+    {{-- <script>
         $(function() {
             $(".select").select2();
         });
-    </script>
+    </script> --}}
 @endpush
 

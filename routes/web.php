@@ -149,5 +149,7 @@ Route::group(['middleware' => ['auth']],function(){
     Route::get('/cari-departmen-filter','backend\ResikoteridentifikasiController@caridepartmenfilter');
     Route::get('/hasil-cari-departmen-filter/{faktur}','backend\ResikoteridentifikasiController@hasilcaridepartmenfilter');
     Route::get('/hasil-cari-departmen-akar-filter/{faktur}','backend\AnalisaakarController@hasilcaridepartmenfilter');
+    Route::get('/hasil-cari-departmen-pengendalian-filter/{faktur}','backend\PengendalianrisikoController@hasilcaridepartmenfilter');
+    Route::get('/hasil-cari-departmen-peristiwa-filter/{faktur}','backend\PencatatanperistiwaController@hasilcaridepartmenfilter');
 });
 

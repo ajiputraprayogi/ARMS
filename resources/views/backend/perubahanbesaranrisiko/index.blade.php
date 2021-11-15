@@ -10,41 +10,38 @@ Pemantauan Risiko | ARMS
     <div class="card card-transparent card-block card-stretch card-height border-none">
         <div class="card-header p-0 mt-lg-2 mt-0">
             <h3 class="mb-3">Pemantauan Risiko</h3>
-            <div class="row">
-                <div class="col-md-3">
-                    <label for="">Departemen</label>
-                    <div class="form-group">
-                        <select class="form-control" name="client" id="">
-                            <option selected disabled value="">Pilih Departemen</option>
-                            <option value="">...</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <label for="">Konteks</label>
-                    <div class="form-group">
-                        <select class="form-control" name="client" id="">
-                            <option selected disabled value="">Pilih Konteks</option>
-                            <option value="">...</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="">Tahun</label>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <input type="date" class="form-control" id="dob" name="tanggal1" />
-                            </div>
+            <form method="get">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select class="form-control" name="departemen" id="">
+                                <option>Semua Departemen</option>
+                                @foreach($departemen as $rowdpr)
+                                <option value="{{$rowdpr->faktur}}" @if($active_departemen==$rowdpr->faktur) selected
+                                    @endif>{{$rowdpr->nama}}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="col-md-3">
-                            <div class="">
-                                <button type="submit" class="btn btn-primary">Reset Filter</button>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <select class="form-control" name="tahun" id="">
+                                <option>Semua Tahun</option>
+                                @foreach($tahun as $rowthn)
+                                <option value="{{$rowthn->priode_penerapan}}" @if($active_tahun==$rowthn->priode_penerapan)
+                                    selected @endif>{{$rowthn->priode_penerapan}}</option>
+                                @endforeach
+                            </select>
+                            <div class="input-group-prepend" style="border-radius:10p;">
+                                <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>
+                                <a href="{{url('/analisa-risiko')}}" class="btn btn-secondary"
+                                    style="border-top-right-radius: 10px;border-bottom-right-radius: 10px;"><i
+                                        class="fas fa-sync"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
         <hr>
         @if (session('status'))

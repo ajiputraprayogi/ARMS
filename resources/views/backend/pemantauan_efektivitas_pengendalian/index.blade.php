@@ -12,73 +12,37 @@
             <div class="card-header p-0 mt-lg-2 mt-0">
                 <h3 class="mb-3">Daftar Rencana Tindak Pengendalian</h3>
                 <form method="get">
-                <div class="row">
-                    <!-- <div class="col-md-4">
-                        <label for="">Departemen</label>
-                        <div class="form-group">
-                        <select class="form-control" name="departemen" id="">
-                            <option>Semua Departemen</option>
-                            <option value="" selected></option>
-                        </select>
-                      
-                        </div>
-                    </div> -->
-                    <!-- <div class="col-md-4">
-                        <label for="">Kode Risiko</label>
-                        <div class="form-group">
-                        <select class="form-control select" name="kode_risiko" required>
-                            <option value="Semua Kode Risiko">Semua Kode Risiko</option>
-                            <option value="" selected></option>
-                        </select>
-                      
-                        </div>
-                    </div> -->
-                    <!-- <div class="col-md-4">
-                        <label for="">Status</label>
-                        <div class="form-group">
-                        <select class="form-control" name="status" required>
-                            <option>Semua Status</option>
-                            <option value="" selected></option>
-                        </select>
-                        </div>
-                    </div> -->
-                    <!-- <div class="col-md-4">
-                        <label for="">Target Waktu Awal</label>
-                        <div class="input-group mb-3">
-                                <input class="form-control" id="tanggal"
-                                        name="target_waktu" placeholder="Pilih Target Waktu Awal" value="" />
-                        </div>
-                    </div> -->
-                    <div class="col-md-4">
-                        <!-- <label for="">Target Waktu Akhir</label> -->
-                        <div class="input-group mb-3">
-                                <!-- <input class="form-control" id="tanggal"
-                                        name="target_waktu_akhir" placeholder="Pilih Target Waktu Akhir" value="" /> -->
-                            <div class="input-group-prepend" style="border-radius:10p;">
-                                <!-- <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button> -->
-                                <!-- <a href="" class="btn btn-secondary"
-                                    style="border-top-right-radius: 10px;border-bottom-right-radius: 10px;"><i
-                                        class="fas fa-sync"></i></a> -->
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <select class="form-control" name="departemen" id="">
+                                    <option>Semua Departemen</option>
+                                    @foreach($departemen as $rowdpr)
+                                    <option value="{{$rowdpr->faktur}}" @if($active_departemen==$rowdpr->faktur) selected
+                                        @endif>{{$rowdpr->nama}}</option>
+                                    @endforeach
+                                </select>
                             </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group mb-3">
+                                <select class="form-control" name="tahun" id="">
+                                    <option>Semua Tahun</option>
+                                    @foreach($tahun as $rowthn)
+                                    <option value="{{$rowthn->priode_penerapan}}" @if($active_tahun==$rowthn->priode_penerapan)
+                                        selected @endif>{{$rowthn->priode_penerapan}}</option>
+                                    @endforeach
+                                </select>
+                                <div class="input-group-prepend" style="border-radius:10p;">
+                                    <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>
+                                    <a href="{{url('/analisa-risiko')}}" class="btn btn-secondary"
+                                        style="border-top-right-radius: 10px;border-bottom-right-radius: 10px;"><i
+                                            class="fas fa-sync"></i></a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                    <!-- <div class="col-md-9">
-                        <label for="">Tahun</label>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <input type="date" class="form-control" id="dob" name="tanggal1"/>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="">
-                                    <button type="submit" class="btn btn-primary">Reset Filter</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-                </div>
-            </form>
+                </form>
             </div>
             <!-- <hr> -->
             <div class="card-body p-0 mt-lg-2 mt-0">
