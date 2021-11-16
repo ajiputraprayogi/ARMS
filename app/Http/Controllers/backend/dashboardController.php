@@ -41,58 +41,170 @@ class dashboardController extends Controller
        $hasilcari = false;
         if ($request->has('departemen')) {
             if($request->departemen!='semua'){
-                $populasi_risiko = DB::table('resiko_teridentifikasi')->where('id_departmen',$request->departemen)->count();
-                $risiko_termitigasi = DB::table('resiko_teridentifikasi')
-                ->select(DB::raw('resiko_teridentifikasi.*,pengendalian_risiko.status_pelaksanaan'))
-                ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_risiko','=','resiko_teridentifikasi.id')
+                $populasi_risiko = DB::table('resiko_teridentifikasi')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)
+                ->count();
+                // $populasi_risiko = DB::table('resiko_teridentifikasi')
+                // ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                // ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                // ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)->count();
+
+                // =========================== Jika Dibutuhkan ==============================
+                // $risiko_termitigasi = DB::table('resiko_teridentifikasi')
+                // ->select(DB::raw('resiko_teridentifikasi.*,pengendalian_risiko.status_pelaksanaan'))
+                // ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                // ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_risiko','=','resiko_teridentifikasi.id')
+                // ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                // ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)
+                // ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
+                // ->count();
+                // ==========================================================================
+                $risiko_termitigasi = DB::table('pengendalian_risiko')
+                ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pengendalian_risiko.id_manajemen')
+                ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                 ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
-                ->where('id_departmen',$request->departemen)
+                ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)
+                ->orderby('pengendalian_risiko.id','desc')
                 ->count();
+                // $risiko_termitigasi = DB::table('resiko_teridentifikasi')
+                // ->select(DB::raw('resiko_teridentifikasi.*,pengendalian_risiko.status_pelaksanaan'))
+                // ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                // ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_risiko','=','resiko_teridentifikasi.id')
+                // ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                // ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
+                // ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)->count();
                 $penyebab_teridentifikasi = DB::table('analisa_masalah')
-                ->select(DB::raw('analisa_masalah.*,pengendalian_risiko.status_pelaksanaan'))
-                ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_akar_masalah','=','analisa_masalah.id')
-                ->where('pengendalian_risiko.id_departemen',$request->departemen)
+                ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','analisa_masalah.kode_risiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)
                 ->count();
+                // $penyebab_teridentifikasi = DB::table('analisa_masalah')
+                // ->select(DB::raw('analisa_masalah.*,pengendalian_risiko.status_pelaksanaan'))
+                // ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_akar_masalah','=','analisa_masalah.id')
+                // ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pengendalian_risiko.id_manajemen')
+                // ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                // ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)
+                // ->count();
                 $penyebab_termitigasi = DB::table('analisa_masalah')
                 ->select(DB::raw('analisa_masalah.*,pengendalian_risiko.status_pelaksanaan'))
+                ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','analisa_masalah.kode_risiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
                 ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_akar_masalah','=','analisa_masalah.id')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                 ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
-                ->where('pengendalian_risiko.id_departemen',$request->departemen)
+                ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)
                 ->count();
-                $pengendalian_risiko = DB::table('pengendalian_risiko')->where('id_departemen',$request->departemen)->count();
-                $pengendalian_risiko_termitigasi = DB::table('pengendalian_risiko')->where('id_departemen',$request->departemen)->where('status_pelaksanaan','=','Selesai dilaksanakan')->count();
-                $kejadian_peristiwa_risiko = DB::table('pencatatan_peristiwa_resiko')->where('departemen_id',$request->departemen)->count();
+                // $penyebab_termitigasi = DB::table('analisa_masalah')
+                // ->select(DB::raw('analisa_masalah.*,pengendalian_risiko.status_pelaksanaan'))
+                // ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_akar_masalah','=','analisa_masalah.id')
+                // ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
+                // ->where('pengendalian_risiko.id_departemen',$request->departemen)
+                // ->count();
+                $pengendalian_risiko = DB::table('pengendalian_risiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pengendalian_risiko.id_manajemen')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)
+                ->count();
+                // $pengendalian_risiko = DB::table('pengendalian_risiko')->where('id_departemen',$request->departemen)->count();
+                $pengendalian_risiko_termitigasi = DB::table('pengendalian_risiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pengendalian_risiko.id_manajemen')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->where('status_pelaksanaan','=','Selesai dilaksanakan')
+                ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)
+                ->count();
+                // $pengendalian_risiko_termitigasi = DB::table('pengendalian_risiko')->where('id_departemen',$request->departemen)->where('status_pelaksanaan','=','Selesai dilaksanakan')->count();
+                $kejadian_peristiwa_risiko = DB::table('pencatatan_peristiwa_resiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pencatatan_peristiwa_resiko.id_manajemen')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)
+                ->count();
+                // $kejadian_peristiwa_risiko = DB::table('pencatatan_peristiwa_resiko')->where('departemen_id',$request->departemen)->count();
                 $risiko_peristiwa_risiko = DB::table('pencatatan_peristiwa_resiko')
-                ->where('departemen_id',$request->departemen)
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pencatatan_peristiwa_resiko.id_manajemen')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)
                 ->groupBy('resiko_id')
                 ->get();
+                // $risiko_peristiwa_risiko = DB::table('pencatatan_peristiwa_resiko')
+                // ->where('departemen_id',$request->departemen)
+                // ->groupBy('resiko_id')
+                // ->get();
                 $penyebab_peristiwa_risiko = DB::table('pencatatan_peristiwa_resiko')
-                ->where('departemen_id',$request->departemen)
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pencatatan_peristiwa_resiko.id_manajemen')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)
                 ->groupBy('pemicu')
-                ->get(); 
+                ->get();
+                // $penyebab_peristiwa_risiko = DB::table('pencatatan_peristiwa_resiko')
+                // ->where('departemen_id',$request->departemen)
+                // ->groupBy('pemicu')
+                // ->get(); 
                 $hasilcari = true;
             }else{
-                $populasi_risiko = DB::table('resiko_teridentifikasi')->count();
-                $risiko_termitigasi = DB::table('resiko_teridentifikasi')
-                ->select(DB::raw('resiko_teridentifikasi.*,pengendalian_risiko.status_pelaksanaan'))
-                ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_risiko','=','resiko_teridentifikasi.id')
-                ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
+                $populasi_risiko = DB::table('resiko_teridentifikasi')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                 ->count();
-                $penyebab_teridentifikasi = DB::table('analisa_masalah')->count();
+                $risiko_termitigasi = DB::table('pengendalian_risiko')
+                ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pengendalian_risiko.id_manajemen')
+                ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
+                ->orderby('pengendalian_risiko.id','desc')
+                ->count();
+                // $risiko_termitigasi = DB::table('resiko_teridentifikasi')
+                // ->select(DB::raw('resiko_teridentifikasi.*,pengendalian_risiko.status_pelaksanaan'))
+                // ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                // ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_risiko','=','resiko_teridentifikasi.id')
+                // ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                // ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
+                // ->count();
+                $penyebab_teridentifikasi = DB::table('analisa_masalah')
+                ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','analisa_masalah.kode_risiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->count();
+                // dd($penyebab_teridentifikasi);
                 $penyebab_termitigasi = DB::table('analisa_masalah')
                 ->select(DB::raw('analisa_masalah.*,pengendalian_risiko.status_pelaksanaan'))
+                ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','analisa_masalah.kode_risiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
                 ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_akar_masalah','=','analisa_masalah.id')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                 ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
                 ->count();
-                $pengendalian_risiko = DB::table('pengendalian_risiko')->count();
-                $pengendalian_risiko_termitigasi = DB::table('pengendalian_risiko')->where('status_pelaksanaan','=','Selesai dilaksanakan')->count();
-                $kejadian_peristiwa_risiko = DB::table('pencatatan_peristiwa_resiko')->count();
+                $pengendalian_risiko = DB::table('pengendalian_risiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pengendalian_risiko.id_manajemen')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->count();
+                // dd($pengendalian_risiko);
+                $pengendalian_risiko_termitigasi = DB::table('pengendalian_risiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pengendalian_risiko.id_manajemen')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->where('status_pelaksanaan','=','Selesai dilaksanakan')
+                ->count();
+                $kejadian_peristiwa_risiko = DB::table('pencatatan_peristiwa_resiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pencatatan_peristiwa_resiko.id_manajemen')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->count();
                 $risiko_peristiwa_risiko = DB::table('pencatatan_peristiwa_resiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pencatatan_peristiwa_resiko.id_manajemen')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                 ->groupBy('resiko_id')
                 ->get();
                 $penyebab_peristiwa_risiko = DB::table('pencatatan_peristiwa_resiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pencatatan_peristiwa_resiko.id_manajemen')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                 ->groupBy('pemicu')
-                ->get(); 
+                ->get();
                 $hasilcari = true;
             }
         }else{
@@ -100,18 +212,28 @@ class dashboardController extends Controller
             ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
             ->count();
-            $risiko_termitigasi = DB::table('resiko_teridentifikasi')
-            ->select(DB::raw('resiko_teridentifikasi.*,pengendalian_risiko.status_pelaksanaan'))
-            ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
-            ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_risiko','=','resiko_teridentifikasi.id')
+            $risiko_termitigasi = DB::table('pengendalian_risiko')
+            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+            ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pengendalian_risiko.id_manajemen')
+            ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
             ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
+            ->orderby('pengendalian_risiko.id','desc')
             ->count();
+            // $risiko_termitigasi = DB::table('resiko_teridentifikasi')
+            // ->select(DB::raw('resiko_teridentifikasi.*,pengendalian_risiko.status_pelaksanaan'))
+            // ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+            // ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_risiko','=','resiko_teridentifikasi.id')
+            // ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+            // ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
+            // ->count();
             $penyebab_teridentifikasi = DB::table('analisa_masalah')
             ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','analisa_masalah.kode_risiko')
             ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
             ->count();
+            // dd($penyebab_teridentifikasi);
             $penyebab_termitigasi = DB::table('analisa_masalah')
             ->select(DB::raw('analisa_masalah.*,pengendalian_risiko.status_pelaksanaan'))
             ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','analisa_masalah.kode_risiko')
@@ -145,74 +267,178 @@ class dashboardController extends Controller
             ->groupBy('pemicu')
             ->get();
         }
-        $data_departemen = DB::table('departemen')->orderby('id','desc')->get();
+        $data_departemen = DB::table('departemen')
+        ->select('departemen.id as id','pelaksanaan_manajemen_risiko.*','departemen.nama')
+        ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
+        ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+        ->groupby('departemen.id')
+        ->orderby('pelaksanaan_manajemen_risiko.id','asc')
+        ->get();
         return view('backend.dashboard.index',compact('hasilcari','data_departemen','penyebab_peristiwa_risiko','risiko_peristiwa_risiko','kejadian_peristiwa_risiko','pengendalian_risiko','pengendalian_risiko_termitigasi','populasi_risiko','risiko_termitigasi','penyebab_teridentifikasi','penyebab_termitigasi'));
     }
 
     //=====================================================================
     public function risiko(Request $request)
     {
+        // ===================================
+        $id = Auth::user()->id_departemen;
+        $id_dep=[];
+        $id_atasan = [];
+        $i_limit=1;
+        array_push($id_atasan,$id);
+        //dd(count($id_atasan));
+
+        for ($i=0; $i <$i_limit ; $i++) { 
+            for ($j=0; $j < count($id_atasan) ; $j++) { 
+                $data = DB::table('departemen')->where('id_atasan',$id_atasan[$j])->get();
+                if(count($data)>0){
+                    foreach($data as $row){
+                        array_push($id_atasan,$row->id);
+                    }
+                    $i_limit++;
+                }else{
+                    $i_limit=$i;
+                }
+            }
+        }
+        // dd($id_atasan);
+        // return $id_atasan;
+        // ===================================
         if ($request->has('departemen')) {
             if($request->departemen!='semua'){
-                $populasi_risiko = DB::table('resiko_teridentifikasi')->where('resiko_teridentifikasi.id_departmen',$request->departemen)->count();
-                $usulan_risiko_baru = DB::table('resiko_teridentifikasi')->where('resiko_teridentifikasi.id_departmen',$request->departemen)->where('status_persetujuan','Diajukan')->count();
+                $populasi_risiko = DB::table('resiko_teridentifikasi')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)
+                ->count();
+                $usulan_risiko_baru = DB::table('resiko_teridentifikasi')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                ->where('status_persetujuan','Diajukan')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)
+                ->count();
                 $selera_risiko = DB::table('resiko_teridentifikasi')
                 ->select(DB::raw('resiko_teridentifikasi.*,pelaksanaan_manajemen_risiko.selera_risiko'))
                 ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
-                ->where('resiko_teridentifikasi.id_departmen',$request->departemen)
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)
                 ->get();
-                $risiko_termitigasi = DB::table('resiko_teridentifikasi')
-                ->select(DB::raw('resiko_teridentifikasi.*,pengendalian_risiko.status_pelaksanaan'))
-                ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_risiko','=','resiko_teridentifikasi.id')
+                $risiko_termitigasi = DB::table('pengendalian_risiko')
+                ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pengendalian_risiko.id_manajemen')
+                ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)
                 ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
-                ->where('resiko_teridentifikasi.id_departmen',$request->departemen)
+                ->orderby('pengendalian_risiko.id','desc')
                 ->count();
+                // $risiko_termitigasi = DB::table('resiko_teridentifikasi')
+                // ->select(DB::raw('resiko_teridentifikasi.*,pengendalian_risiko.status_pelaksanaan'))
+                // ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                // ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_risiko','=','resiko_teridentifikasi.id')
+                // ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                // ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
+                // ->count();
                 $resiko_deparetemen = DB::table('departemen')
                 ->select(DB::raw('departemen.*,count(resiko_teridentifikasi.id) as total'))
                 ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id_departmen','=','departemen.id')
-                ->where('departemen.id',$request->departemen)
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                // ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)
                 ->groupby('departemen.id')
                 ->get();
+                // dd($resiko_deparetemen);
             }else{
-                $populasi_risiko = DB::table('resiko_teridentifikasi')->count();
-                $usulan_risiko_baru = DB::table('resiko_teridentifikasi')->where('status_persetujuan','Diajukan')->count();
+                $populasi_risiko = DB::table('resiko_teridentifikasi')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->count();
+                $usulan_risiko_baru = DB::table('resiko_teridentifikasi')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                ->where('status_persetujuan','Diajukan')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                ->count();
                 $selera_risiko = DB::table('resiko_teridentifikasi')
                 ->select(DB::raw('resiko_teridentifikasi.*,pelaksanaan_manajemen_risiko.selera_risiko'))
                 ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                 ->get();
-                $risiko_termitigasi = DB::table('resiko_teridentifikasi')
-                ->select(DB::raw('resiko_teridentifikasi.*,pengendalian_risiko.status_pelaksanaan'))
-                ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_risiko','=','resiko_teridentifikasi.id')
+                $risiko_termitigasi = DB::table('pengendalian_risiko')
+                ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+                ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pengendalian_risiko.id_manajemen')
+                ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                 ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
+                ->orderby('pengendalian_risiko.id','desc')
                 ->count();
+                // $risiko_termitigasi = DB::table('resiko_teridentifikasi')
+                // ->select(DB::raw('resiko_teridentifikasi.*,pengendalian_risiko.status_pelaksanaan'))
+                // ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                // ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_risiko','=','resiko_teridentifikasi.id')
+                // ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                // ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
+                // ->count();
                 $resiko_deparetemen = DB::table('departemen')
                 ->select(DB::raw('departemen.*,count(resiko_teridentifikasi.id) as total'))
                 ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id_departmen','=','departemen.id')
+                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                 ->groupby('departemen.id')
                 ->get();
+                // dd($resiko_deparetemen);
             }
         }else{
-            $populasi_risiko = DB::table('resiko_teridentifikasi')->count();
-            $usulan_risiko_baru = DB::table('resiko_teridentifikasi')->where('status_persetujuan','Diajukan')->count();
+            $populasi_risiko = DB::table('resiko_teridentifikasi')
+            ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+            ->count();
+            $usulan_risiko_baru = DB::table('resiko_teridentifikasi')
+            ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+            ->where('status_persetujuan','Diajukan')
+            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+            ->count();
             $selera_risiko = DB::table('resiko_teridentifikasi')
             ->select(DB::raw('resiko_teridentifikasi.*,pelaksanaan_manajemen_risiko.selera_risiko'))
             ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
             ->get();
-            $risiko_termitigasi = DB::table('resiko_teridentifikasi')
-            ->select(DB::raw('resiko_teridentifikasi.*,pengendalian_risiko.status_pelaksanaan'))
-            ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_risiko','=','resiko_teridentifikasi.id')
+            $risiko_termitigasi = DB::table('pengendalian_risiko')
+            ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
+            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
+            ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pengendalian_risiko.id_manajemen')
+            ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
             ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
+            ->orderby('pengendalian_risiko.id','desc')
             ->count();
+            // $risiko_termitigasi = DB::table('resiko_teridentifikasi')
+            // ->select(DB::raw('resiko_teridentifikasi.*,pengendalian_risiko.status_pelaksanaan'))
+            // ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+            // ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_risiko','=','resiko_teridentifikasi.id')
+            // ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+            // ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
+            // ->count();
             $resiko_deparetemen = DB::table('departemen')
             ->select(DB::raw('departemen.*,count(resiko_teridentifikasi.id) as total'))
             ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id_departmen','=','departemen.id')
+            ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
             ->groupby('departemen.id')
             ->get();
+            // dd($resiko_deparetemen);
         }
 
         $peta_risiko = DB::table('kriteria_probabilitas')->orderby('nilai','desc')->get();
         $skor_dampak = DB::table('kriteria_dampak')->orderby('nilai','asc')->get();
-        $data_departemen = DB::table('departemen')->orderby('id','desc')->get();
+        $data_departemen = DB::table('departemen')
+        ->select('departemen.id as id','pelaksanaan_manajemen_risiko.*','departemen.nama')
+        ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id_departemen','=','departemen.id')
+        ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+        ->groupby('departemen.id')
+        ->orderby('pelaksanaan_manajemen_risiko.id','asc')
+        ->get();
         return view('backend.dashboard.risiko',compact('skor_dampak','peta_risiko','resiko_deparetemen','risiko_termitigasi','selera_risiko','data_departemen','populasi_risiko','usulan_risiko_baru'));
     }
 

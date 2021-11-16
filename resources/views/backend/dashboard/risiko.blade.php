@@ -93,7 +93,7 @@ if($row_selera_risiko->besaran_akhir>$row_selera_risiko->selera_risiko){
                 </div>
                 <div class="col-md-3">
                     <div class="card bg-success">
-                        <div class="card-body">
+                        <div class="card-body pb-0">
                             <h5 class="card-title">Total Risiko Termitigasi</h5>
                             <h3>{{$risiko_termitigasi}}</h3>
                         </div>

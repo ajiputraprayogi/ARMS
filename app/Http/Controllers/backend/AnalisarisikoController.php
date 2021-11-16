@@ -73,6 +73,7 @@ class AnalisarisikoController extends Controller
         if($active_departemen!='Semua Departemen'){
             if($active_tahun!='Semua Tahun'){
                 $data = DB::table('analisa_risiko')
+                ->select('analisa_risiko.*')
                 ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','analisa_risiko.id_pelaksanaan_manajemen_risiko')
                 ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun]])
                 ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
@@ -81,6 +82,7 @@ class AnalisarisikoController extends Controller
                 // dd($data);
             }else{
                 $data = DB::table('analisa_risiko')
+                ->select('analisa_risiko.*')
                 ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','analisa_risiko.id_pelaksanaan_manajemen_risiko')
                 ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen]])
                 ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
@@ -91,6 +93,7 @@ class AnalisarisikoController extends Controller
         }else{
             if($active_tahun!='Semua Tahun'){
                 $data = DB::table('analisa_risiko')
+                ->select('analisa_risiko.*')
                 ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','analisa_risiko.id_pelaksanaan_manajemen_risiko')
                 ->where('pelaksanaan_manajemen_risiko.priode_penerapan','=',$active_tahun)
                 ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
@@ -99,6 +102,7 @@ class AnalisarisikoController extends Controller
                 // dd($data);
             }else{
                 $data = DB::table('analisa_risiko')
+                ->select('analisa_risiko.*')
                 ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','analisa_risiko.id_pelaksanaan_manajemen_risiko')
                 ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                 ->orderby('analisa_risiko.id','desc')
