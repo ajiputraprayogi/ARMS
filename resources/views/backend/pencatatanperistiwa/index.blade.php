@@ -15,7 +15,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <select class="form-control" name="departemen" id="departemen">
-                                <option>Semua Unit Kerja</option>
+                                <option value="Semua Departemen">Semua Unit Kerja</option>
                                 @foreach($departemen as $rowdpr)
                                 <option value="{{$rowdpr->faktur}}" @if($active_departemen==$rowdpr->faktur) selected
                                     @endif>{{$rowdpr->nama}}</option>
@@ -37,7 +37,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <select class="form-control" name="kode_penyebab" id="">
-                                <option>Semua Kategori Penyebab</option>
+                                <option value="Semua Kode Penyebab">Semua Kategori Penyebab</option>
                                 @foreach($kode_penyebab as $rowkdp)
                                 <option value="{{$rowkdp->kode}}" @if($active_penyebab==$rowkdp->kode) selected
                                     @endif>{{$rowkdp->kode}} - {{$rowkdp->penyebab}}</option>

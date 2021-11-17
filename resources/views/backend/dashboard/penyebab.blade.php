@@ -74,53 +74,111 @@ ARMS | Dashboard
 
                                         if(request()->get('departemen')){
                                             if(request()->get('departemen')!='semua'){
+                                                // $total_penyebab_teridentifikasi = DB::table('analisa_masalah')
+                                                // ->select(DB::raw('count(analisa_masalah.id) as total,pengendalian_risiko.status_pelaksanaan'))
+                                                // ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_akar_masalah','=','analisa_masalah.id')
+                                                // ->where('pengendalian_risiko.id_departemen',request()->get('departemen'))
+                                                // ->where('kategori_penyebab',$row_penyebab->kode)
+                                                // ->groupby('kategori_penyebab')
+                                                // ->get();
                                                 $total_penyebab_teridentifikasi = DB::table('analisa_masalah')
-                                                ->select(DB::raw('count(analisa_masalah.id) as total,pengendalian_risiko.status_pelaksanaan'))
-                                                ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_akar_masalah','=','analisa_masalah.id')
-                                                ->where('pengendalian_risiko.id_departemen',request()->get('departemen'))
+                                                ->select(DB::raw('count(analisa_masalah.id) as total'))
+                                                ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','analisa_masalah.kode_risiko')
+                                                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                                                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                                                 ->where('kategori_penyebab',$row_penyebab->kode)
-                                                ->groupby('kategori_penyebab')
+                                                ->where('pelaksanaan_manajemen_risiko.id',request()->get('departemen'))
                                                 ->get();
 
+                                                // $total_penyebab_termitigasi = DB::table('analisa_masalah')
+                                                // ->select(DB::raw('count(analisa_masalah.id) as
+                                                // total,analisa_masalah.*,pengendalian_risiko.status_pelaksanaan'))
+                                                // ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_akar_masalah','=','analisa_masalah.id')
+                                                // ->where('analisa_masalah.kategori_penyebab',$row_penyebab->kode)
+                                                // ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
+                                                // ->where('pengendalian_risiko.id_departemen',request()->get('departemen'))
+                                                // ->groupby('analisa_masalah.kategori_penyebab')
+                                                // ->get();
                                                 $total_penyebab_termitigasi = DB::table('analisa_masalah')
                                                 ->select(DB::raw('count(analisa_masalah.id) as
                                                 total,analisa_masalah.*,pengendalian_risiko.status_pelaksanaan'))
+                                                ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','analisa_masalah.kode_risiko')
+                                                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
                                                 ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_akar_masalah','=','analisa_masalah.id')
-                                                ->where('analisa_masalah.kategori_penyebab',$row_penyebab->kode)
+                                                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                                                ->where('pelaksanaan_manajemen_risiko.id',request()->get('departemen'))
+                                                ->where('kategori_penyebab',$row_penyebab->kode)
                                                 ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
-                                                ->where('pengendalian_risiko.id_departemen',request()->get('departemen'))
-                                                ->groupby('analisa_masalah.kategori_penyebab')
+                                                // ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)
                                                 ->get();
                                             }else{
+                                                // $total_penyebab_teridentifikasi = DB::table('analisa_masalah')
+                                                // ->select(DB::raw('count(id) as total'))
+                                                // ->where('kategori_penyebab',$row_penyebab->kode)
+                                                // ->groupby('kategori_penyebab')
+                                                // ->get();
                                                 $total_penyebab_teridentifikasi = DB::table('analisa_masalah')
-                                                ->select(DB::raw('count(id) as total'))
+                                                ->select(DB::raw('count(analisa_masalah.id) as total'))
+                                                ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','analisa_masalah.kode_risiko')
+                                                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                                                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                                                 ->where('kategori_penyebab',$row_penyebab->kode)
-                                                ->groupby('kategori_penyebab')
+                                                // ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)
                                                 ->get();
 
+                                                // $total_penyebab_termitigasi = DB::table('analisa_masalah')
+                                                // ->select(DB::raw('count(analisa_masalah.id) as
+                                                // total,analisa_masalah.*,pengendalian_risiko.status_pelaksanaan'))
+                                                // ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_akar_masalah','=','analisa_masalah.id')
+                                                // ->where('analisa_masalah.kategori_penyebab',$row_penyebab->kode)
+                                                // ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
+                                                // ->groupby('analisa_masalah.kategori_penyebab')
+                                                // ->get();
                                                 $total_penyebab_termitigasi = DB::table('analisa_masalah')
                                                 ->select(DB::raw('count(analisa_masalah.id) as
                                                 total,analisa_masalah.*,pengendalian_risiko.status_pelaksanaan'))
+                                                ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','analisa_masalah.kode_risiko')
+                                                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
                                                 ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_akar_masalah','=','analisa_masalah.id')
-                                                ->where('analisa_masalah.kategori_penyebab',$row_penyebab->kode)
+                                                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                                                ->where('kategori_penyebab',$row_penyebab->kode)
                                                 ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
-                                                ->groupby('analisa_masalah.kategori_penyebab')
+                                                // ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)
                                                 ->get();
                                             }
                                         }else{
+                                            // $total_penyebab_teridentifikasi = DB::table('analisa_masalah')
+                                            // ->select(DB::raw('count(id) as total'))
+                                            // ->where('kategori_penyebab',$row_penyebab->kode)
+                                            // ->groupby('kategori_penyebab')
+                                            // ->get();
                                             $total_penyebab_teridentifikasi = DB::table('analisa_masalah')
-                                            ->select(DB::raw('count(id) as total'))
+                                            ->select(DB::raw('count(analisa_masalah.id) as total'))
+                                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','analisa_masalah.kode_risiko')
+                                            ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
+                                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                                             ->where('kategori_penyebab',$row_penyebab->kode)
-                                            ->groupby('kategori_penyebab')
+                                            // ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)
                                             ->get();
 
+                                            // $total_penyebab_termitigasi = DB::table('analisa_masalah')
+                                            // ->select(DB::raw('count(analisa_masalah.id) as
+                                            // total,analisa_masalah.*,pengendalian_risiko.status_pelaksanaan'))
+                                            // ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_akar_masalah','=','analisa_masalah.id')
+                                            // ->where('analisa_masalah.kategori_penyebab',$row_penyebab->kode)
+                                            // ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
+                                            // ->groupby('analisa_masalah.kategori_penyebab')
+                                            // ->get();
                                             $total_penyebab_termitigasi = DB::table('analisa_masalah')
                                             ->select(DB::raw('count(analisa_masalah.id) as
                                             total,analisa_masalah.*,pengendalian_risiko.status_pelaksanaan'))
+                                            ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','analisa_masalah.kode_risiko')
+                                            ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','resiko_teridentifikasi.faktur')
                                             ->leftjoin('pengendalian_risiko','pengendalian_risiko.id_akar_masalah','=','analisa_masalah.id')
-                                            ->where('analisa_masalah.kategori_penyebab',$row_penyebab->kode)
+                                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                                            ->where('kategori_penyebab',$row_penyebab->kode)
                                             ->where('pengendalian_risiko.status_pelaksanaan','=','Selesai dilaksanakan')
-                                            ->groupby('analisa_masalah.kategori_penyebab')
+                                            // ->where('pelaksanaan_manajemen_risiko.id',$request->departemen)
                                             ->get();
                                         }
 

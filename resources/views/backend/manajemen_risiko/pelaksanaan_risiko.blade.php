@@ -14,7 +14,7 @@ Daftar Pelaksanaan Manajemen Risiko | ARMS
                 <div class="col-md-4">
                     <div class="form-group">
                         <select class="form-control" name="departemen" id="">
-                            <option>Semua Unit Kerja</option>
+                            <option value="Semua Departemen">Semua Unit Kerja</option>
                             @foreach($departemen as $rowdpr)
                             <option value="{{$rowdpr->id}}" @if($active_departemen==$rowdpr->id) selected
                                 @endif>{{$rowdpr->nama}}</option>
