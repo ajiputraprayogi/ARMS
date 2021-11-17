@@ -9,6 +9,7 @@ use App\tembusan;
 use App\tujuanpelaporan;
 use App\departemen;
 use DataTables;
+use Auth;
 
 class PelaporanpengelolaanrisikoController extends Controller
 {
@@ -25,8 +26,18 @@ class PelaporanpengelolaanrisikoController extends Controller
     }
 
     public function listdata(){
-        // dd(Datatables::of(pelaporanpengelolaanrisiko::with('tembusan.departemen')->get())->make(true));
-        return Datatables::of(pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])->get())->make(true);
+        $id_departemen = Auth::user()->id_departemen;
+        // dd(Datatables::of(pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])->where('id_unit_kerja', $id_departemen)->orWhereHas('tembusan', function($q) use($id_departemen ){
+        //     $q->where('id_departemen', '=', $id_departemen);
+        // })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
+        //     $q->where('id_departemen', '=', $id_departemen);
+        // })->get())->make(true));
+
+        return Datatables::of(pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])->where('id_unit_kerja', $id_departemen)->orWhereHas('tembusan', function($q) use($id_departemen ){
+            $q->where('id_departemen', '=', $id_departemen);
+        })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
+            $q->where('id_departemen', '=', $id_departemen);
+        })->get())->make(true);
     }
 
     public function cariatasan($id)
