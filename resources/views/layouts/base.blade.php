@@ -6,7 +6,7 @@
         <title>@yield('title')</title>
         
         <!-- Favicon -->
-        <link rel="shortcut icon" href="{{asset('assets/images/favicon.ico')}}"/>
+        <link rel="shortcut icon" href="{{asset('assets/images/logo kementan.png')}}"/>
         <link rel="stylesheet" href="{{asset('assets/css/backend-plugin.min.css')}}">
         <link rel="stylesheet" href="{{asset('assets/css/backend.css?v=1.0.0')}}">
         <link rel="stylesheet" href="{{asset('assets/vendor/@fortawesome/fontawesome-free/css/all.min.css')}}">
