@@ -30,10 +30,10 @@ ARMS | Dashboard
             <form method="get">
                 <div class="row">
                     <div class="col-md-4">
-                        <label class="m-0">Departemen</label>
+                        <label class="m-0">Unit Pemilik Risiko</label>
                         <div class="input-group mb-3">
                             <select class="form-control" name="departemen" id="departemen">
-                                <option value="semua">Semua Departemen</option>
+                                <option value="semua">Semua Unit Kerja</option>
                                 @foreach($data_departemen as $row_departemen)
                                 <option value="{{$row_departemen->id}}" @if(request()->get('departemen')) @if(request()->get('departemen')==$row_departemen->id) selected @endif @endif>{{$row_departemen->nama}}</option>
                                 @endforeach

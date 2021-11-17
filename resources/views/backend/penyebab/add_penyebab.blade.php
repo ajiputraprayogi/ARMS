@@ -21,13 +21,13 @@
                 <form class="form-horizontal" action="{{url('penyebab')}}" method="post">
                     @csrf
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Kode Penyebab</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Kode Kategori Penyebab</label>
                         <div class="col-sm-9">
                             <input type="text" name="kode" class="form-control" id="" required>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Penyebab</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Kategori Penyebab</label>
                         <div class="col-sm-9">
                             <input type="text" name="penyebab" class="form-control" id="" required>
                         </div>
@@ -49,4 +49,3 @@
     <script src="{{asset('assets/customjs/backend/pemangku_kepentingan.js')}}"></script>
 @endpush
 
- 

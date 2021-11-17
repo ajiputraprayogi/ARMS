@@ -51,7 +51,7 @@ legend.scheduler-border {
                 <form class="form-horizontal" action="{{url('perubahan-besaran-risiko')}}" method="post">
                     @csrf
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="email">Departemen Pemilik Risiko<i
+                        <label class="control-label col-sm-3 align-self-center" for="email">Unit Pemilik Risiko<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <select class="js-example-basic-single text search-input" id="cari_departmen"
@@ -167,7 +167,7 @@ legend.scheduler-border {
                                 readonly>
                         </div>
                     </div>
-                    
+
                     <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="email">Rekomendasi</label>
                         <div class="col-sm-9">

@@ -47,7 +47,7 @@
                     @csrf
                     <div class="form-group">
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Departemen Pemilik
+                        <label class="control-label col-sm-3 align-self-center" for="">Unit Pemilik
                             Risiko<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <select name="departemen" class="form" id="cari_departemen_manajemen"
@@ -117,10 +117,10 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3" for="">Kode Penyebab<i class="bintang">*</i></label>
+                        <label class="control-label col-sm-3" for="">Kategori Penyebab<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                         <select class="form-control" name="kode_penyebab" id="" required>
-                            <option selected disabled value="">Pilih Skor Dampak</option>
+                            <option selected disabled value="">Pilih Kategori Penyebab</option>
                             @foreach($penyebab as $item)
                             <option value="{{$item->id}}">{{ $item->kode }} || {{$item->penyebab}}</option>
                             @endforeach

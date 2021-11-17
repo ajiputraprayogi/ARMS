@@ -14,7 +14,7 @@ Daftar Pelaksanaan Manajemen Risiko | ARMS
                 <div class="col-md-4">
                     <div class="form-group">
                         <select class="form-control" name="departemen" id="">
-                            <option>Semua Departemen</option>
+                            <option>Semua Unit Kerja</option>
                             @foreach($departemen as $rowdpr)
                             <option value="{{$rowdpr->id}}" @if($active_departemen==$rowdpr->id) selected
                                 @endif>{{$rowdpr->nama}}</option>
@@ -55,7 +55,7 @@ Daftar Pelaksanaan Manajemen Risiko | ARMS
                     <thead class="bg-white text-uppercase">
                         <tr class="ligth ligth-data">
                             <th>No</th>
-                            <th>Departemen</th>
+                            <th>Unit Kerja</th>
                             <th>Tahun</th>
                             <th>Jumlah Konteks</th>
                             <th>Jumlah Risiko</th>

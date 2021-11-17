@@ -1,7 +1,7 @@
 <div class="iq-sidebar  sidebar-default ">
           <div class="iq-sidebar-logo d-flex align-items-center justify-content-between">
               <a href="{{url('/')}}" class="header-logo">
-                  <img src="{{asset('assets/images/logo.png')}}" class="img-fluid rounded-normal light-logo" alt="logo"><h5 class="logo-title light-logo ml-3">ARMSyst</h5>
+                  <img src="{{asset('assets/images/logo.png')}}" class="img-fluid rounded-normal light-logo" alt="logo"><h5 class="logo-title light-logo ml-3">ARMS</h5>
               </a>
               <div class="iq-menu-bt-sidebar ml-0">
                   <i class="las la-bars wrapper-menu"></i>
@@ -29,7 +29,7 @@
                                       <i class="las la-minus"></i><span>Dashboard Penyebab</span>
                                   </a>
                                   <a href="{{url('/dashboard-tindak-lanjut')}}">
-                                      <i class="las la-minus"></i><span>Dashboard Tindak Lanjut</span>
+                                      <i class="las la-minus"></i><span>Dashboard Tindak Pengendalian</span>
                                   </a>
                                   <a href="{{url('/dashboard-pemantauan')}}">
                                       <i class="las la-minus"></i><span>Dashboard Pemantauan</span>
@@ -101,7 +101,7 @@
                                       <i class="las la-minus"></i><span>Pencatatan Peristiwa Risiko</span>
                                   </a>
                                   <a href="{{url('perubahan-besaran-risiko')}}">
-                                      <i class="las la-minus"></i><span>Perubahan Besaran Risiko</span>
+                                      <i class="las la-minus"></i><span>Pemantauan Besaran Risiko</span>
                                   </a>
                                   <a href="{{url('pemantauan-efektivitas')}}">
                                       <i class="las la-minus"></i><span>Pemantauan Efektivitas Pengendalian</span>
@@ -139,7 +139,7 @@
                           <ul id="masterdata" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                               <li class="">
                                   <a href="{{url('probabilitas')}}">
-                                      <i class="las la-minus"></i><span>Kriteria Probabilitas</span>
+                                      <i class="las la-minus"></i><span>Kriteria Frekuensi</span>
                                   </a>
                               </li>
                               <li class="">
@@ -149,12 +149,12 @@
                               </li>
                               <li class="">
                                   <a href="{{url('petabesaranresiko')}}">
-                                      <i class="las la-minus"></i><span>Peta Besaran Resiko</span>
+                                      <i class="las la-minus"></i><span>Peta Besaran Risiko</span>
                                   </a>
                               </li>
                               <li class="">
                                   <a href="{{url('kategoririsiko')}}">
-                                      <i class="las la-minus"></i><span>Kategori Resiko</span>
+                                      <i class="las la-minus"></i><span>Kategori Risiko</span>
                                   </a>
                               </li>
                               <li class="">
@@ -164,7 +164,7 @@
                               </li>
                               <li class="">
                                   <a href="{{url('penyebab')}}">
-                                      <i class="las la-minus"></i><span>Penyebab</span>
+                                      <i class="las la-minus"></i><span>Kategori Penyebab</span>
                                   </a>
                               </li>
                               <li class="">
@@ -184,7 +184,7 @@
                               </li>
                               <li class="">
                                   <a href="{{url('departemen')}}">
-                                      <i class="las la-minus"></i><span>Departemen</span>
+                                      <i class="las la-minus"></i><span>Unit Kerja</span>
                                   </a>
                               </li>
                               <li class="">

@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Penyebab | ARMS
+    Kategori Penyebab | ARMS
 @endsection
 @section('content')
    <div class="col-md-12">
@@ -22,13 +22,13 @@
                     @csrf
                     <input type="hidden" name="_method" value="PUT">
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Kode Penyebab</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Kode Kategori Penyebab</label>
                         <div class="col-sm-9">
                             <input type="text" name="kode" class="form-control" value="{{$data->kode}}" id="" required>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Penyebab</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Kategori Penyebab</label>
                         <div class="col-sm-9">
                             <input type="text" name="penyebab" class="form-control" value="{{$data->penyebab}}" id="" required>
                         </div>
@@ -50,4 +50,3 @@
     <script src="{{asset('assets/customjs/backend/pemangku_kepentingan.js')}}"></script>
 @endpush
 
- 

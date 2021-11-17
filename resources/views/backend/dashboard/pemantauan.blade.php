@@ -13,10 +13,10 @@ ARMS | Dashboard
             <form method="get">
                 <div class="row">
                     <div class="col-md-4">
-                        <label class="m-0">Departemen</label>
+                        <label class="m-0">Unit Kerja</label>
                         <div class="input-group mb-3">
                             <select class="form-control" name="departemen" id="departemen">
-                                <option value="semua">Semua Departemen</option>
+                                <option value="semua">Semua Unit Kerja</option>
                                 @foreach($data_departemen as $row_departemen)
                                 <option value="{{$row_departemen->id}}" @if(request()->get('departemen'))
                                     @if(request()->get('departemen')==$row_departemen->id) selected @endif
@@ -58,7 +58,7 @@ ARMS | Dashboard
                     </div>
                 </div>
                 <div class="col-md-10">
-                    <h4>Sebaran Penyebab Berdasarkan Kode Penyebab</h4>
+                    <h4>Sebaran Penyebab Berdasarkan Kategori Penyebab</h4>
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">

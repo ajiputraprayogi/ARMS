@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title')
-    Departemen | ARMS
+    Unit Kerja | ARMS
 @endsection
 @section('token')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -9,7 +9,7 @@
     <div class="col-lg-12">
         <div class="card card-transparent card-block card-stretch card-height border-none">
             <div class="card-header p-0 mt-lg-2 mt-0">
-                <h3 class="mb-3">Departemen</h3>
+                <h3 class="mb-3">Unit Kerja</h3>
             </div>
             <div class="card-body p-0 mt-lg-2 mt-0">
                 @if (session('status'))
@@ -22,7 +22,7 @@
                 @endif
                 <div class="form-group">
                     <div class="text-right">
-                        <a href="{{url('departemen/create')}}" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Tambah Departemen</a>
+                        <a href="{{url('departemen/create')}}" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Tambah Unit Kerja</a>
                     </div>
                 </div>
                 <div class="table-responsive rounded mb-3">
@@ -35,8 +35,8 @@
                                         <label for="checkbox1" class="mb-0"></label>
                                     </div>
                                 </th> -->
-                                <th>Kode Departemen </th>
-                                <th>Nama Departemen</th>
+                                <th>Kode Unit Kerja </th>
+                                <th>Nama Unit Kerja</th>
                                 <th>Mengelola Risiko</th>
                                 <th>Aksi</th>
                             </tr>
@@ -65,7 +65,7 @@
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">Departemen</h5>
+                                            <h5 class="modal-title">Unit Kerja</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                             </button>
@@ -74,13 +74,13 @@
                                             <form class="form-horizontal" action="{{url('departemen')}}" method="post">
                                                 @csrf
                                                 <div class="form-group row">
-                                                    <label class="control-label col-sm-3 align-self-center" for="">Kode Departemen</label>
+                                                    <label class="control-label col-sm-3 align-self-center" for="">Kode Unit Kerja</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" name="kode" class="form-control" value="{{$item->kode}}" id="" readonly required>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label class="control-label col-sm-3 align-self-center" for="">Nama Departemen</label>
+                                                    <label class="control-label col-sm-3 align-self-center" for="">Nama Unit Kerja</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" name="nama" class="form-control" value="{{$item->nama}}" id="" readonly required>
                                                     </div>

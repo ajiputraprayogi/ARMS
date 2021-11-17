@@ -40,10 +40,10 @@ if($row_selera_risiko->besaran_akhir>$row_selera_risiko->selera_risiko){
             <form method="get">
                 <div class="row">
                     <div class="col-md-4">
-                        <label class="m-0">Departemen</label>
+                        <label class="m-0">Unit Kerja</label>
                         <div class="input-group mb-3">
                             <select class="form-control" name="departemen" id="departemen">
-                                <option value="semua">Semua Departemen</option>
+                                <option value="semua">Semua Unit Kerja</option>
                                 @foreach($data_departemen as $row_departemen)
                                 <option value="{{$row_departemen->id}}" @if(request()->get('departemen'))
                                     @if(request()->get('departemen')==$row_departemen->id) selected @endif
@@ -104,12 +104,12 @@ if($row_selera_risiko->besaran_akhir>$row_selera_risiko->selera_risiko){
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Sebaran Risiko Per Departemen</h5>
+                            <h5 class="card-title">Sebaran Risiko Per Unit Kerja</h5>
                             <div class="table-responsive" style="height: 600px;overflow: auto;">
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Deparetemen</th>
+                                            <th scope="col">Unit Kerja</th>
                                             <th scope="col" class="text-center">Jumlah Risiko</th>
                                             <th scope="col" class="text-center">Melewati Batas Risiko</th>
                                         </tr>

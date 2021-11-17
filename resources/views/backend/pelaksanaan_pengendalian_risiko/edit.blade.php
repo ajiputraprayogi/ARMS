@@ -6,8 +6,8 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('css')
-    <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.css')}}"> 
-    <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.min.css')}}"> 
+    <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.min.css')}}">
     <style>
         fieldset.scheduler-border {
             border: 1px groove #ddd !important;
@@ -49,7 +49,7 @@
                     <input type="hidden" name="_method" value="put">
                     <div class="form-group">
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Departemen Pemilik Risiko<i class="bintang">*</i></label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Unit Pemilik Risiko<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <!-- Select2 -->
                             <select name="departemen" class="form" id="cari_departemen_manajemen" style="width: 100%;">
@@ -165,4 +165,3 @@
     <script src="{{asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
 @endpush
 
- 

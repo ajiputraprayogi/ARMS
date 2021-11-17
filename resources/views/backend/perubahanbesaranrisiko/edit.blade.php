@@ -55,7 +55,7 @@ legend.scheduler-border {
                 <input type="hidden" name="_method" value="put">
                     @csrf
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="email">Departemen Pemilik Risiko<i
+                        <label class="control-label col-sm-3 align-self-center" for="email">Unit Pemilik Risiko<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <select class="js-example-basic-single text search-input" id="cari_departmen"
