@@ -8,6 +8,7 @@
 @section('css')
     <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.css')}}">
     <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.min.css')}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
         fieldset.scheduler-border {
             border: 1px groove #ddd !important;
@@ -114,7 +115,7 @@
                             <input type="" class="form-control" name="indikator_keluaran" value="{{$rowdtl->indikator_keluaran}}" id="indikator_keluaran">
                         </div>
                     </div>
-                    <div class="form-group row">
+                    {{-- <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="">Target Waktu<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                         <input type="date" class="form-control" id="target_waktu" name="target_waktu" value="{{$rowdtl->target_waktu}}" />
@@ -124,6 +125,26 @@
                         <label class="control-label col-sm-3 align-self-center" for="">Realisasi Waktu<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                         <input type="date" class="form-control" id="dob" name="realisasi_waktu" value="{{$rowdtl->realisasi_waktu}}" />
+                        </div>
+                    </div> --}}
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3 align-self-center" for="">Target Waktu<i class="bintang">*</i></label>
+                        <div class="col-sm-9">
+                            @if($rowdtl->target_waktu=='0000-00-00' && $rowdtl->target_waktu_akhir=='0000-00-00')
+                                <input placeholder="Pilih Tanggal" class="form-control" id="tanggal" name="target_waktu" disabled/>
+                            @else
+                                <input placeholder="Pilih Tanggal" class="form-control" id="tanggal" name="target_waktu" value="{{date('d-m-Y', strtotime($rowdtl->target_waktu))}} to {{date('d-m-Y', strtotime($rowdtl->target_waktu_akhir))}}" disabled/>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3 align-self-center" for="">Realisasi Waktu<i class="bintang">*</i></label>
+                        <div class="col-sm-9">
+                            @if($rowdtl->realisasi_waktu=='0000-00-00' && $rowdtl->realisasi_waktu_akhir=='0000-00-00')
+                                <input placeholder="Pilih Tanggal" class="form-control" id="tanggal1" name="realisasi_waktu"/>
+                            @else
+                                <input placeholder="Pilih Tanggal" class="form-control" id="tanggal1" name="realisasi_waktu" value="{{date('d-m-Y', strtotime($rowdtl->realisasi_waktu))}} to {{date('d-m-Y', strtotime($rowdtl->realisasi_waktu_akhir))}}"/>
+                            @endif
                         </div>
                     </div>
                     <div class="form-group row">
@@ -163,5 +184,22 @@
     <script src="{{asset('assets/plugins/select2/js/select2.min.js')}}"></script>
     <script src="{{asset('assets/plugins/select2/js/select2.full.js')}}"></script>
     <script src="{{asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        $(function() {
+        flatpickr("#tanggal", {
+            enableTime: false,
+            dateFormat: "d-m-Y",
+            mode: "range"
+        });
+        });
+        $(function() {
+        flatpickr("#tanggal1", {
+            enableTime: false,
+            dateFormat: "d-m-Y",
+            mode: "range"
+        });
+        });
+    </script>
 @endpush
 

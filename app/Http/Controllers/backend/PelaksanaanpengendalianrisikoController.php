@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
+use Carbon\Carbon;
 
 class PelaksanaanpengendalianrisikoController extends Controller
 {
@@ -164,12 +165,23 @@ class PelaksanaanpengendalianrisikoController extends Controller
             'departemen'=>'required',
             'risiko'=>'required',
             'kode_tindak_pengendalian'=>'required',
-            'realisasi_waktu'=>'required',
+            // 'realisasi_waktu'=>'required',
             'hambatan'=>'required',
         ]);
+        if($request->has('realisasi_waktu')){
+            $realisasi_waktu = explode(" to ", $request->realisasi_waktu);
+            if(count($realisasi_waktu)<2){
+                $tglsatu = $realisasi_waktu[0];
+                $tgldua = $realisasi_waktu[0];
+            }else{
+                $tglsatu = $realisasi_waktu[0];
+                $tgldua = $realisasi_waktu[1];
+            }
+        }
         DB::table('pelaksanaan_pengendalian_risiko')->insert([
             'id_pengendalian'=>$request->id_pengendalian,
-            'realisasi_waktu'=>$request->realisasi_waktu,
+            'realisasi_waktu'=>$tglsatu ? Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d'): '',
+            'realisasi_waktu_akhir'=>$tgldua ? Carbon::createFromFormat('d-m-Y',$tgldua)->format('Y-m-d'): '',
             'hambatan'=>$request->hambatan,
         ]);
         $up = DB::table('pengendalian_risiko')->where('id','=',$request->id_pengendalian)->update([
@@ -200,7 +212,7 @@ class PelaksanaanpengendalianrisikoController extends Controller
         $data = DB::table('pelaksanaan_pengendalian_risiko')
         ->select([
             'pelaksanaan_pengendalian_risiko.*',
-            'pengendalian_risiko.id as idpr','pengendalian_risiko.kode_tindak_pengendalian','pengendalian_risiko.kegiatan_pengendalian','pengendalian_risiko.penanggung_jawab','pengendalian_risiko.status_pelaksanaan','pengendalian_risiko.kegiatan_pengendalian','pengendalian_risiko.penanggung_jawab','pengendalian_risiko.indikator_keluaran','pengendalian_risiko.target_waktu','pengendalian_risiko.status_pelaksanaan',
+            'pengendalian_risiko.id as idpr','pengendalian_risiko.kode_tindak_pengendalian','pengendalian_risiko.kegiatan_pengendalian','pengendalian_risiko.penanggung_jawab','pengendalian_risiko.status_pelaksanaan','pengendalian_risiko.kegiatan_pengendalian','pengendalian_risiko.penanggung_jawab','pengendalian_risiko.indikator_keluaran','pengendalian_risiko.target_waktu','pengendalian_risiko.target_waktu_akhir','pengendalian_risiko.status_pelaksanaan',
             'resiko_teridentifikasi.id as idr','resiko_teridentifikasi.full_kode','resiko_teridentifikasi.pernyataan_risiko',
             'pelaksanaan_manajemen_risiko.id as idpmr','pelaksanaan_manajemen_risiko.id_departemen','pelaksanaan_manajemen_risiko.priode_penerapan as priode_penerapanpmr',
             'departemen.nama',
@@ -228,12 +240,23 @@ class PelaksanaanpengendalianrisikoController extends Controller
             'departemen'=>'required',
             'risiko'=>'required',
             'kode_tindak_pengendalian'=>'required',
-            'realisasi_waktu'=>'required',
+            // 'realisasi_waktu'=>'required',
             'hambatan'=>'required',
         ]);
+        if($request->has('realisasi_waktu')){
+            $realisasi_waktu = explode(" to ", $request->realisasi_waktu);
+            if(count($realisasi_waktu)<2){
+                $tglsatu = $realisasi_waktu[0];
+                $tgldua = $realisasi_waktu[0];
+            }else{
+                $tglsatu = $realisasi_waktu[0];
+                $tgldua = $realisasi_waktu[1];
+            }
+        }
         DB::table('pelaksanaan_pengendalian_risiko')->where('id',$id)->update([
             'id_pengendalian'=>$request->id_pengendalian,
-            'realisasi_waktu'=>$request->realisasi_waktu,
+            'realisasi_waktu'=>$tglsatu ? Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d'): '',
+            'realisasi_waktu_akhir'=>$tgldua ? Carbon::createFromFormat('d-m-Y',$tgldua)->format('Y-m-d'): '',
             'hambatan'=>$request->hambatan,
         ]);
         $up = DB::table('pengendalian_risiko')->where('id','=',$request->id_pengendalian)->update([
@@ -293,7 +316,7 @@ class PelaksanaanpengendalianrisikoController extends Controller
         ->where('resiko_teridentifikasi.id',$id)
         ->get();
         $pengendalian = DB::table('pengendalian_risiko')
-        ->where('pengendalian_risiko.status_pelaksanaan','!=','Selesai Dilaksanakan')
+        // ->where('pengendalian_risiko.status_pelaksanaan','!=','Selesai Dilaksanakan')
         ->where('pengendalian_risiko.id_risiko',$id)
         ->get();
         $print=[
@@ -307,8 +330,16 @@ class PelaksanaanpengendalianrisikoController extends Controller
         $pengendalian = DB::table('pengendalian_risiko')
         ->where('id',$id)
         ->get();
+        foreach($pengendalian as $row){
+            $target_waktu=$row->target_waktu;
+            $target_waktu_format=Carbon::createFromFormat('Y-m-d',$target_waktu)->format('d-m-Y');
+            $target_waktu_akhir=$row->target_waktu_akhir;
+            $target_waktu_akhir_format=Carbon::createFromFormat('Y-m-d',$target_waktu_akhir)->format('d-m-Y');
+        }
         $print=[
             'pengendalian'=>$pengendalian,
+            'target_waktu'=>$target_waktu_format,
+            'target_waktu_akhir'=>$target_waktu_akhir_format,
         ];
         return response()->json($print);
     }

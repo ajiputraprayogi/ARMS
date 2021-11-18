@@ -129,8 +129,9 @@ $(function() {
                     $('#kegiatan_pengendalian').val(item.kegiatan_pengendalian);
                     $('#penanggung_jawab').val(item.penanggung_jawab);
                     $('#indikator_keluaran').val(item.indikator_keluaran);
-                    $('#target_waktu').val(item.target_waktu);
+                    // $('#target_waktu').val(item.target_waktu);
                 });
+                    $('#tanggal').val(data.target_waktu+' to '+data.target_waktu_akhir);
 			},
 		});
 	});
