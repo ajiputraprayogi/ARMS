@@ -92,8 +92,8 @@ class PelaporanpengelolaanrisikoController extends Controller
             'periode_pelaporan' => 'required',
             'departemen' => 'required',
             'status' => 'required',
-            'file_laporan' => 'required|max:5096',
-            'tembusan' => 'required',
+            'file_laporan' => 'required|max:10240',
+            'tembusan' => '',
             'tujuanpelaporan' => 'required',
         ]);
         // dd($request);
