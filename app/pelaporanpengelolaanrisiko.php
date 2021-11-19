@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class pelaporanpengelolaanrisiko extends Model
 {
     protected $table = 'pelaporan_pengelolaan_risiko';
+    protected $fillable = [
+        'status','id_unit_kerja','id_periode_pelaporan'
+    ];
     protected $guarded = [];
 
     /**

@@ -14,20 +14,20 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <select class="form-control" name="periodepelaporan" id="">
-                                    <option>Semua Periode</option>
-                                    @foreach ($periode as $p)
-                                    <option value={{ $p->id }} @if ($active_periode == $p->id) selected @endif>{{ $p->nama_periode }}</option>
+                                <select class="form-control" name="departemen" id="">
+                                    <option value="Semua Departemen">Semua Unit Kerja</option>
+                                    @foreach ($departemen as $d)
+                                    <option value={{ $d->id }} @if ($active_departemen == $d->id) selected @endif>{{ $d->nama }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <select class="form-control" name="departemen" id="">
-                                    <option>Semua Unit Kerja</option>
-                                    @foreach ($departemen as $d)
-                                    <option value={{ $d->id }} @if ($active_departemen == $d->id) selected @endif>{{ $d->nama }}</option>
+                                <select class="form-control" name="periodepelaporan" id="">
+                                    <option>Semua Periode</option>
+                                    @foreach ($periode as $p)
+                                    <option value={{ $p->id }} @if ($active_periode == $p->id) selected @endif>{{ $p->nama_periode }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -77,9 +77,9 @@
                             </tr>
                         </thead>
                         <tbody class="ligth-body">
-                        @php $i=($data->currentpage()-1)* $data->perpage(); @endphp
+                        {{-- @php $i=($data->currentpage()-1)* $data->perpage(); @endphp --}}
                         @foreach($data as $item)
-                        @php $i++ @endphp
+                        {{-- @php $i++ @endphp --}}
                         <tr>
                             <td>{{$item->periodepelaporan->nama_periode}}</td>
                             <td class="">{{$item->departemen->nama}}</td>
