@@ -126,6 +126,7 @@
                           </ul>
                       </li>
 
+                    @if ($data->level == 1)
                       <li class="" class="svg-icon">
                           <a href="#masterdata" class="collapsed" data-toggle="collapse" aria-expanded="false">
                               <!-- <svg class="svg-icon" id="p-dash2" width="20" height="20"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle>
@@ -199,6 +200,7 @@
                               </li>
                           </ul>
                       </li>
+                      @endif
                       <!-- <li class=" ">
                           <a href="#transaksi" class="collapsed" data-toggle="collapse" aria-expanded="false">
                                 <svg class="svg-icon" id="p-dash4" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
