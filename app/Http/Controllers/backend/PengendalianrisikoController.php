@@ -191,7 +191,7 @@ class PengendalianrisikoController extends Controller
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             // ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
                             ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
-                            ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status]])
                             ->orderby('pengendalian_risiko.id','desc')
                             // ->groupby('pengendalian_risiko.faktur')
                             ->get();
@@ -207,7 +207,7 @@ class PengendalianrisikoController extends Controller
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
                             // ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat, $tglduaformat))
-                            ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status],['resiko_teridentifikasi.full_kode','=',$active_kode]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status],['resiko_teridentifikasi.full_kode','=',$active_kode]])
                             ->orderby('pengendalian_risiko.id','desc')
                             // ->groupby('pengendalian_risiko.faktur')
                             ->get();
@@ -221,7 +221,7 @@ class PengendalianrisikoController extends Controller
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
                             // ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat, $tglduaformat))
-                            ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status]])
                             ->orderby('pengendalian_risiko.id','desc')
                             // ->groupby('pengendalian_risiko.faktur')
                             ->get();
@@ -238,7 +238,7 @@ class PengendalianrisikoController extends Controller
                             ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
-                            ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status],['resiko_teridentifikasi.full_kode','=',$active_kode]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status],['resiko_teridentifikasi.full_kode','=',$active_kode]])
                             ->orderby('pengendalian_risiko.id','desc')
                             // ->groupby('pengendalian_risiko.faktur')
                             ->get();
@@ -251,7 +251,7 @@ class PengendalianrisikoController extends Controller
                             ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
-                            ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status]])
                             ->orderby('pengendalian_risiko.id','desc')
                             // ->groupby('pengendalian_risiko.faktur')
                             ->get();
@@ -265,7 +265,7 @@ class PengendalianrisikoController extends Controller
                             ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pengendalian_risiko.id_manajemen')
                             ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
-                            ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status],['resiko_teridentifikasi.full_kode','=',$active_kode]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status],['resiko_teridentifikasi.full_kode','=',$active_kode]])
                             ->orderby('pengendalian_risiko.id','desc')
                             // ->groupby('pengendalian_risiko.faktur')
                             ->get();
@@ -277,7 +277,7 @@ class PengendalianrisikoController extends Controller
                             ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pengendalian_risiko.id_manajemen')
                             ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
-                            ->where([['departemen.id','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['pengendalian_risiko.status_pelaksanaan','=',$active_status]])
                             ->orderby('pengendalian_risiko.id','desc')
                             // ->groupby('pengendalian_risiko.faktur')
                             ->get();
@@ -296,7 +296,7 @@ class PengendalianrisikoController extends Controller
                             ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
-                            ->where([['pengendalian_risiko.id_departemen','=',$active_departemen],['resiko_teridentifikasi.full_kode','=',$active_kode]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['resiko_teridentifikasi.full_kode','=',$active_kode]])
                             ->orderby('pengendalian_risiko.id','desc')
                             // ->groupby('pengendalian_risiko.faktur')
                             ->get();
@@ -309,7 +309,7 @@ class PengendalianrisikoController extends Controller
                             ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
-                            ->where('pengendalian_risiko.id_departemen','=',$active_departemen)
+                            ->where('pelaksanaan_manajemen_risiko.faktur','=',$active_departemen)
                             ->orderby('pengendalian_risiko.id','desc')
                             // ->groupby('pengendalian_risiko.faktur')
                             ->get();
@@ -324,7 +324,7 @@ class PengendalianrisikoController extends Controller
                             ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
-                            ->where([['pengendalian_risiko.id_departemen','=',$active_departemen],['resiko_teridentifikasi.full_kode','=',$active_kode]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['resiko_teridentifikasi.full_kode','=',$active_kode]])
                             ->orderby('pengendalian_risiko.id','desc')
                             // ->groupby('pengendalian_risiko.faktur')
                             ->get();
@@ -337,7 +337,7 @@ class PengendalianrisikoController extends Controller
                             ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->whereBetween('pengendalian_risiko.target_waktu',array($tglsatuformat, $tglduaformat))
-                            ->where('pengendalian_risiko.id_departemen','=',$active_departemen)
+                            ->where('pelaksanaan_manajemen_risiko.faktur','=',$active_departemen)
                             ->orderby('pengendalian_risiko.id','desc')
                             // ->groupby('pengendalian_risiko.faktur')
                             ->get();
@@ -354,7 +354,7 @@ class PengendalianrisikoController extends Controller
                             ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
-                            ->where([['pengendalian_risiko.id_departemen','=',$active_departemen],['resiko_teridentifikasi.full_kode','=',$active_kode]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['resiko_teridentifikasi.full_kode','=',$active_kode]])
                             ->orderby('pengendalian_risiko.id','desc')
                             // ->groupby('pengendalian_risiko.faktur')
                             ->get();
@@ -367,7 +367,7 @@ class PengendalianrisikoController extends Controller
                             ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
-                            ->where('pengendalian_risiko.id_departemen','=',$active_departemen)
+                            ->where('pelaksanaan_manajemen_risiko.faktur','=',$active_departemen)
                             ->orderby('pengendalian_risiko.id','desc')
                             // ->groupby('pengendalian_risiko.faktur')
                             ->get();
@@ -381,7 +381,7 @@ class PengendalianrisikoController extends Controller
                             ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pengendalian_risiko.id_manajemen')
                             ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
-                            ->where([['pengendalian_risiko.id_departemen','=',$active_departemen],['resiko_teridentifikasi.full_kode','=',$active_kode]])
+                            ->where([['pelaksanaan_manajemen_risiko.faktur','=',$active_departemen],['resiko_teridentifikasi.full_kode','=',$active_kode]])
                             ->orderby('pengendalian_risiko.id','desc')
                             // ->groupby('pengendalian_risiko.faktur')
                             ->get();
@@ -393,10 +393,11 @@ class PengendalianrisikoController extends Controller
                             ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pengendalian_risiko.id_manajemen')
                             ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
                             ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
-                            ->where('pengendalian_risiko.id_departemen','=',$active_departemen)
+                            ->where('pelaksanaan_manajemen_risiko.faktur','=',$active_departemen)
                             ->orderby('pengendalian_risiko.id','desc')
                             // ->groupby('pengendalian_risiko.faktur')
                             ->get();
+                            // dd($data);
                         }
                     }
                 }
@@ -610,8 +611,8 @@ class PengendalianrisikoController extends Controller
                             ->select('pengendalian_risiko.*','resiko_teridentifikasi.full_kode')
                             ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
                             ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pengendalian_risiko.id_manajemen')
-                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
+                            ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                             ->orderby('pengendalian_risiko.id','desc')
                             ->get();
                             // dd($data);
@@ -703,8 +704,8 @@ class PengendalianrisikoController extends Controller
             'id_klasifikasi_sub_unsur_spip'=>$request->klasifikasi_sub_unsur_spip,
             'penanggung_jawab'=>$request->penanggung_jawab,
             'indikator_keluaran'=>$request->indikator_keluaran,
-            'target_waktu'=>Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d'),
-            'target_waktu_akhir'=>Carbon::createFromFormat('d-m-Y',$tgldua)->format('Y-m-d'),
+            'target_waktu'=>$tglsatu ? Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d'): '',
+            'target_waktu_akhir'=>$tgldua ? Carbon::createFromFormat('d-m-Y',$tgldua)->format('Y-m-d'): '',
             'status_pelaksanaan'=>'Belum Dilaksanakan',
             'frekuensi_saat_ini'=>$request->frekuensi_saat_ini,
             'dampak_saat_ini'=>$request->dampak_saat_ini,

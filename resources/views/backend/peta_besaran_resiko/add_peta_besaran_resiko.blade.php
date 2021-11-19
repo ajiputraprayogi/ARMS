@@ -12,10 +12,10 @@
                 <form class="form-horizontal" action="{{url('petabesaranresiko')}}" method="post">
                     @csrf
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="email">Kriteria Probabilitas</label>
+                        <label class="control-label col-sm-3 align-self-center" for="email">Kriteria Frekuensi</label>
                         <div class="col-sm-9">
                             <select class="form-control" name="prob" id="">
-                                <option selected disabled value="">Pilih Kriteria Probabilitas</option>
+                                <option selected disabled value="">Pilih Kriteria Frekuensi</option>
                                 @foreach($probabilitas as $data1)
                                     <option value="{{$data1->id}}" > {{$data1->nilai}} - {{$data1->nama}}</option>
 

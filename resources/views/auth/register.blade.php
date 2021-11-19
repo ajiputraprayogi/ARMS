@@ -9,7 +9,7 @@
       <title>Daftar</title>
       
       <!-- Favicon -->
-      <link rel="shortcut icon" href="../assets/images/favicon.ico" />
+      <link rel="shortcut icon" href="{{asset('assets/images/logo kementan.png')}}" />
       <link rel="stylesheet" href="../assets/css/backend-plugin.min.css">
       <link rel="stylesheet" href="../assets/css/backend.css?v=1.0.0">
       <link rel="stylesheet" href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">

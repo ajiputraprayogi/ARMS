@@ -1,12 +1,12 @@
 @extends('layouts.base')
 @section('title')
-    Departemen | ARMS
+    Unit Kerja | ARMS
 @endsection
 @section('content')
    <div class="col-md-12">
         <div class="card card-transparent card-block card-stretch card-height border-none">
             <div class="card-header p-0 mt-lg-2 mt-0">
-                <h3 class="mb-3">Departemen</h3>
+                <h3 class="mb-3">Unit Kerja</h3>
             </div>
             @if ($errors->any())
             <div class="alert alert-danger">
@@ -21,13 +21,13 @@
                 <form class="form-horizontal" action="{{url('departemen')}}" method="post">
                     @csrf
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Kode Departemen</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Kode Unit Kerja</label>
                         <div class="col-sm-9">
                             <input type="text" name="kode" class="form-control" id="" required>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="">Nama Departemen</label>
+                        <label class="control-label col-sm-3 align-self-center" for="">Nama Unit Kerja</label>
                         <div class="col-sm-9">
                             <input type="text" name="nama" class="form-control" id="" required>
                         </div>
@@ -65,4 +65,3 @@
     <script src="{{asset('assets/customjs/backend/pemangku_kepentingan.js')}}"></script>
 @endpush
 
- 

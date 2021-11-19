@@ -32,7 +32,7 @@ Pelaksanaan Manajemen Risiko | ARMS
                     @csrf
                     <div class="form-group">
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="">Departemen Pemilik
+                            <label class="control-label col-sm-3 align-self-center" for="">Unit Pemilik
                                 Risiko<i class="bintang">*</i> </label>
                             <div class="col-sm-9">
                                 <!-- Auto Kode Generate -->
@@ -47,8 +47,8 @@ Pelaksanaan Manajemen Risiko | ARMS
                                 array_push($id_atasan,$id);
                                 //dd(count($id_atasan));
 
-                                for ($i=0; $i <$i_limit ; $i++) { 
-                                    for ($j=0; $j < count($id_atasan) ; $j++) { 
+                                for ($i=0; $i <$i_limit ; $i++) {
+                                    for ($j=0; $j < count($id_atasan) ; $j++) {
                                         $data = DB::table('departemen')->where('id_atasan',$id_atasan[$j])->get();
                                         if(count($data)>0){
                                             foreach($data as $row){
@@ -67,7 +67,7 @@ Pelaksanaan Manajemen Risiko | ARMS
                                     ->get();
                                 @endphp
                                 <select name="departemen" class="form-control" id="cari_departemen" style="width: 100%;">
-                                    <option value="">Pilih Departemen</option>
+                                    <option value="">Pilih Unit Kerja</option>
                                     @foreach ($data as $rowdep)
                                         <option value="{{$rowdep->id}}">{{$rowdep->nama}}</option>
                                     @endforeach

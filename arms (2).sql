@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2021 at 12:13 PM
+-- Generation Time: Nov 19, 2021 at 06:27 AM
 -- Server version: 10.4.21-MariaDB
--- PHP Version: 7.4.25
+-- PHP Version: 7.3.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `arms_new`
+-- Database: `arms`
 --
 
 -- --------------------------------------------------------
@@ -351,7 +351,7 @@ INSERT INTO `departemen` (`id`, `kode`, `nama`, `id_atasan`, `created_at`, `upda
 (7, 'BMN', 'Biro KP dan BMN', '', NULL, '2021-11-05 21:02:02'),
 (8, 'EP.LAKIN', 'Sekretariat Inspektorat Jenderal', '', NULL, '2021-11-05 21:09:12'),
 (9, 'ITJEN', 'Inspektorat Jendral', '', NULL, '2021-11-05 22:10:57'),
-(15, '1', 'MENPAN', NULL, NULL, '2021-11-06 21:16:18'),
+(15, '1', 'MENPAN', '5', NULL, '2021-11-10 04:33:46'),
 (22, '2', 'ITJEN', '15', NULL, '2021-11-05 23:02:32'),
 (23, '3', 'SEKJEN', '15', NULL, '2021-11-05 23:28:19'),
 (24, '4', 'LAKIN', '22', NULL, '2021-11-05 23:29:04'),
@@ -478,15 +478,13 @@ INSERT INTO `konteks` (`id`, `faktur_konteks`, `kode`, `nama`, `id_konteks`, `id
 (13, 'FK2021-09-29-00001', 'KODE001', 'yogapamungkas', '2', NULL, 'sdfasfd', 'safdasdf', NULL, '2021-09-29 02:40:05'),
 (21, 'FK2021-10-01-00004', 'KODE001', 'satu', '1', NULL, '456', '4654', NULL, NULL),
 (22, 'FK2021-09-29-00001', 'KODE002', 'Teh Gelas1', '5', NULL, '6465', '144165', NULL, '2021-10-03 23:05:11'),
-(23, '5', '6', 'sadasd1', '1', NULL, 'asdasd1', 'asdasd', NULL, '2021-10-07 06:26:01'),
+(23, '5', '6', 'sadasd1', '1', '15', 'asdasd1', 'asdasd', NULL, '2021-10-07 06:26:01'),
 (24, 'FK2021-09-29-00003', '526', 'Pengadaan', '5', NULL, 'Kemungkinan kejadian keterlambatan distribusi dan pengadaan karena corona, dan kejadian lain terkait dengan kerugian negara karena adanya kesalahan dalam penanganan program pengadaan.', 'Keberhasilan program dalam batasan budget dan waktu.', NULL, NULL),
 (25, 'FK2021-10-06-00006', '526', 'Pengadaan Barang', '7', '5', 'Kemungkinan Perubahan jadwal dan persyaratan karena adanya peraturan baru dari pemerintah atau adanya kejadian luar biasa terkait dengan operasional proses yang mengakibatkan permasalahan pada proses pengadaan.', 'Ketepatan waktu pengerjaan.\r\nKesesuaian dengan budget.', NULL, NULL),
 (26, 'FK2021-10-07-00007', '123', 'Pengadaan Barang', '1', '6', 'Kemungkinan kejadian keterlambatan distribusi dan pengadaan karena corona, dan kejadian lain terkait dengan kerugian negara karena adanya kesalahan dalam penanganan program pengadaan.', 'Keberhasilan program dalam batasan budget dan waktu.', NULL, NULL),
 (27, 'FK2021-10-07-00007', 'test', 'test', '5', NULL, 'as', 'sf', NULL, NULL),
-(28, '8', 'test', 'test', '1', '6', 'test', 'test', NULL, NULL),
-(29, '8', 'test', 'test', '7', '6', 'test', 'test', NULL, NULL),
-(31, '9', 'G.1.1', 'Perjanjian Kinerja', '1', '5', '1. Pihak ketiga tidak bertanggungjawab\r\n2. Pergantian pejabat\r\n3. Perusahaan pailit\r\n4. Pemilik TGR meninggal\r\n5. Rekomendasi tidak rekomacu', 'Rasio Rekomendasi Audit Tujuan Tertentu di Lingkup Kementerian Pertanian yang Ditindaklanjuti sebesar 75%', NULL, NULL),
-(32, '9', 'G.1.2', 'Telaah materi aduan', '7', '5', 'Nil', 'Hasil telaah berkadar pengawasan', NULL, NULL),
+(31, '9', 'G.1.1', 'Perjanjian Kinerja', '1', '23', '1. Pihak ketiga tidak bertanggungjawab\r\n2. Pergantian pejabat\r\n3. Perusahaan pailit\r\n4. Pemilik TGR meninggal\r\n5. Rekomendasi tidak rekomacu', 'Rasio Rekomendasi Audit Tujuan Tertentu di Lingkup Kementerian Pertanian yang Ditindaklanjuti sebesar 75%', NULL, NULL),
+(32, '9', 'G.1.2', 'Telaah materi aduan', '7', '23', 'Nil', 'Hasil telaah berkadar pengawasan', NULL, NULL),
 (33, '10', 'asdf', 'sadf', '1', NULL, 'sadf', 'sadf', NULL, NULL),
 (34, '1', 'G.1.1', 'Perjanjian Kerja', '1', '8', '- Nilai Evaluasi AKIP kurang dari 82.\r\n- Data Capaian Realisasi Berubah-ubah.\r\n- Petunjuk Teknis / Pedoman Penyusunan Lakin tidak memadai.\r\n- Data dari Eksternal (Menpan RB/BPK/KPK) terlambat dipublikasi.\r\n- Pengukuran Indikator Kinerja Tidak Tepat', 'Nilai AKIp Inspektorat Jenderal 82', NULL, NULL),
 (35, '2', 'G.1.1', 'Perjanjian Kinerja', '1', '7', '- Pihak ketiga tidak bertanggungjawab\r\n- Pergantian pejabat\r\n- BMN Hilang\r\n- BMN Pindah Lokasi\r\n- BMN Dijual', 'Indeks kepuasan layanan keuangan dan BMN di Biro Keuangan dan Perlengkapan sebesar 3,23 (Skala Likert 1 - 4)', NULL, NULL),
@@ -611,10 +609,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (25, '2021_09_25_041245_create_departemens_table', 1),
 (26, '2021_09_28_061908_create_konteks_table', 2),
 (27, '2021_09_28_065159_create_pemangku_kepentingans_table', 3),
-(28, '2021_11_08_040410_create_periode_pelaporans_table', 4),
-(29, '2021_11_08_061734_create_pelaporan_pengelolaan_risiko_table', 5),
-(30, '2021_11_08_063452_create_tembusan_table', 6),
-(31, '2021_11_12_100537_create_tujuanpelaporan_table', 7);
+(28, '2017_08_03_055212_create_auto_numbers', 4),
+(30, '2021_11_19_024130_create_activity_log_table', 5);
 
 -- --------------------------------------------------------
 
@@ -638,13 +634,13 @@ CREATE TABLE `pelaksanaan_manajemen_risiko` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `faktur` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_departemen` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nama_pemilik_risiko` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama_pemilik_risiko` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `jabatan_pemilik_risiko` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nama_koordinator_pengelola_risiko` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `jabatan_koordinator_pengelola_risiko` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `priode_penerapan` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `priode_penerapan_awal` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `priode_penerapan_akhir` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `priode_penerapan_awal` date NOT NULL,
+  `priode_penerapan_akhir` date NOT NULL,
   `selera_risiko` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -658,7 +654,11 @@ INSERT INTO `pelaksanaan_manajemen_risiko` (`id`, `faktur`, `id_departemen`, `na
 (12, '1', '8', 'Inspektorat Jenderal', 'Inspektur Jenderal', 'Kelompok Perencanaan dan Evaluasi', 'Koordinator Kelompok Perencanaan dan Evaluasi', '2021', '1970-01-01', '1970-01-01', 15, NULL, '2021-10-24 08:49:24'),
 (13, '2', '7', 'Kepala Biro KP dan BMN', 'Kepala Biro KP dan BMN', 'Bagian Perencanaan dan Evaluasi', 'Koordinator Perencanaan dan Evaluasi', '2021', '2021-01-01', '2021-12-31', 10, NULL, '2021-10-24 05:57:52'),
 (14, '3', '5', 'Inspektorat Investigasi', 'Inspektur Investigasi', 'Bagian Perencanaan dan Evaluasi', 'Koordinator Perencanaan dan Evaluasi', '2021', '2021-01-01', '2021-12-31', 10, NULL, NULL),
-(15, '4', '22', 'ITJEN', 'Admin', 'sdfa', 'sdfa', '2022', '2021-11-07', '2021-11-13', 15, NULL, NULL);
+(15, '4', '22', '22', 'Admin', '25', 'sdfa', '2022', '2021-11-07', '2021-11-13', 15, NULL, NULL),
+(16, '5', '15', NULL, 'Admin', '23', 'sdfa', '2022', '0000-00-00', '0000-00-00', 25, NULL, NULL),
+(18, '7', '15', NULL, 'sadf', '25', 'sadf', '2022', '0000-00-00', '0000-00-00', 20, NULL, NULL),
+(20, '8', '15', '15', 'asd', '26', 'sdaf', '2022', '0000-00-00', '0000-00-00', 22, NULL, '2021-11-10 05:45:48'),
+(21, '9', '23', '23', 'sad', '30', 'sdfa1', '2022', '0000-00-00', '0000-00-00', 13, NULL, '2021-11-10 06:26:18');
 
 -- --------------------------------------------------------
 
@@ -670,6 +670,7 @@ CREATE TABLE `pelaksanaan_pengendalian_risiko` (
   `id` bigint(20) NOT NULL,
   `id_pengendalian` varchar(250) DEFAULT NULL,
   `realisasi_waktu` date DEFAULT NULL,
+  `realisasi_waktu_akhir` date DEFAULT NULL,
   `hambatan` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -677,26 +678,28 @@ CREATE TABLE `pelaksanaan_pengendalian_risiko` (
 -- Dumping data for table `pelaksanaan_pengendalian_risiko`
 --
 
-INSERT INTO `pelaksanaan_pengendalian_risiko` (`id`, `id_pengendalian`, `realisasi_waktu`, `hambatan`) VALUES
-(5, '17', '2021-09-29', 'Data transaksi belum update.'),
-(6, '18', '2021-10-26', 'kurangnya penguasaan kompetensi teknis substantif oleh petugas.'),
-(7, '19', '2021-10-28', 'Penanggungjawab kurang melakukan eksplorasi terhadap para pihak terkait.'),
-(8, '20', '2021-12-07', 'Penanggungjawab kurang melakukan eksplorasi terhadap para pihak terkait.'),
-(9, '21', '2021-11-01', 'Dokumen transaksi dimusnahkan/Hilang.'),
-(10, '22', '2021-10-26', 'Dokumen transaksi dimusnahkan/Hilang.'),
-(11, '23', '2021-10-13', 'Anggaran untuk gaji dikorupsi.'),
-(12, '29', '2021-10-04', 'Server error'),
-(13, '30', '2021-10-01', 'Dokumen belum update'),
-(14, '31', '2021-09-27', 'Dokumen kajian belum memadai.'),
-(15, '32', '2021-10-01', 'Server Error.'),
-(16, '33', '2021-09-14', 'Kegagalan dalam sertifikasi. Sebagian SDM gagal mendapatkan sertifikasi kompetensi.'),
-(17, '34', '2021-10-27', '1. Data/Laporan/Berita belum update\r\n2. Pengadu tidak melampirkan cukup bukti.'),
-(18, '35', '2021-10-28', '1. Data/ laporan/ berita belum update\r\n2. Pengadu tidak melampirkan cukup bukti'),
-(19, '36', '2021-10-27', 'kurangnya penguasaan kompetensi teknis substantif.'),
-(20, '37', '2021-10-27', 'Tim kurang melakukan eksplorasi terhadap para pihak terkait.'),
-(21, '38', '2021-11-05', 'pelaku kunci tidak ada.'),
-(22, '39', '2021-11-15', 'kegagalan sertifikasi kompetensi.'),
-(23, '41', '2021-11-05', '1. kesulitan menetapkan penyebab hakiki.\r\n2. kriteria audit multitafsir.');
+INSERT INTO `pelaksanaan_pengendalian_risiko` (`id`, `id_pengendalian`, `realisasi_waktu`, `realisasi_waktu_akhir`, `hambatan`) VALUES
+(5, '17', '2021-09-29', NULL, 'Data transaksi belum update.'),
+(6, '18', '2021-10-26', NULL, 'kurangnya penguasaan kompetensi teknis substantif oleh petugas.'),
+(7, '19', '2021-10-28', NULL, 'Penanggungjawab kurang melakukan eksplorasi terhadap para pihak terkait.'),
+(8, '20', '2021-12-07', NULL, 'Penanggungjawab kurang melakukan eksplorasi terhadap para pihak terkait.'),
+(9, '21', '2021-11-01', NULL, 'Dokumen transaksi dimusnahkan/Hilang.'),
+(10, '22', '2021-10-26', NULL, 'Dokumen transaksi dimusnahkan/Hilang.'),
+(11, '23', '2021-10-13', NULL, 'Anggaran untuk gaji dikorupsi.'),
+(12, '29', '2021-10-04', NULL, 'Server error'),
+(13, '30', '2021-10-01', NULL, 'Dokumen belum update'),
+(14, '31', '2021-09-27', NULL, 'Dokumen kajian belum memadai.'),
+(15, '32', '2021-10-01', NULL, 'Server Error.'),
+(16, '33', '2021-09-14', NULL, 'Kegagalan dalam sertifikasi. Sebagian SDM gagal mendapatkan sertifikasi kompetensi.'),
+(17, '34', '2021-10-27', NULL, '1. Data/Laporan/Berita belum update\r\n2. Pengadu tidak melampirkan cukup bukti.'),
+(18, '35', '2021-10-28', NULL, '1. Data/ laporan/ berita belum update\r\n2. Pengadu tidak melampirkan cukup bukti'),
+(19, '36', '2021-10-27', NULL, 'kurangnya penguasaan kompetensi teknis substantif.'),
+(20, '37', '2021-10-27', NULL, 'Tim kurang melakukan eksplorasi terhadap para pihak terkait.'),
+(21, '38', '2021-11-05', NULL, 'pelaku kunci tidak ada.'),
+(22, '39', '2021-11-15', NULL, 'kegagalan sertifikasi kompetensi.'),
+(23, '41', '2021-11-05', NULL, '1. kesulitan menetapkan penyebab hakiki.\r\n2. kriteria audit multitafsir.'),
+(24, '17', '2021-11-19', '2021-11-27', 'a'),
+(25, '17', '0000-00-00', '0000-00-00', 'a');
 
 -- --------------------------------------------------------
 
@@ -752,9 +755,6 @@ INSERT INTO `pemangku_kepentingan` (`id`, `faktur_pemangku`, `pemangku_kepenting
 (16, 'FK2021-10-06-00006', 'Inspektorat Jenderal', 'Sebagai pengawas dari departemen pemilik risiko.', NULL, NULL, NULL),
 (17, 'FK2021-10-06-00006', 'Departemen keuangan', 'Sebagai pengawas budget.', NULL, NULL, NULL),
 (18, 'FK2021-10-07-00007', 'Departemen keuangan', 'Sebagai pengawas budget.', NULL, NULL, NULL),
-(19, '8', 'test', 'test', NULL, NULL, NULL),
-(20, '8', 'sdf', 'asd', NULL, NULL, NULL),
-(21, '8', 'test', 'test', NULL, NULL, NULL),
 (23, '9', 'Pemangku Kepentingan', 'PJ Perjanjian Kinerja', NULL, NULL, NULL),
 (24, '9', 'Inspektur Jenderal', 'PJ Perjanjian Kinerja', NULL, NULL, NULL),
 (25, '9', 'Eselon I', 'Pengguna Data Kinerja', NULL, NULL, NULL),
@@ -840,7 +840,8 @@ INSERT INTO `pencatatan_peristiwa_resiko` (`id`, `id_manajemen`, `id_risiko`, `d
 (11, '14', '41', '5', NULL, 'G.1.1.INV.ATT.6.1', NULL, '1. Data/ laporan/ berita belum update\r\n2. Pengadu tidak melampirkan cukup bukti', '2021-10-27', 'Inspektorat Jenderal', '4', 'Belum ditetapkan kewajiban pengadu melampirkan bukti dukung.', '4', '2021-10-25 02:36:46', '0000-00-00 00:00:00'),
 (12, '13', '25', '7', NULL, 'G.1.1.BMN.5.1', NULL, 'Kurangnya penguasaan kompetensi teknis substantif oleh petugas.', '2021-10-07', 'Sekretariat Jenderal', '5', 'Petugas tidak cermat dalam melakukan verifikasi bukti transaksi dan kejadian penting.', '3', '2021-10-25 07:18:31', '0000-00-00 00:00:00'),
 (13, '13', '26', '7', NULL, 'G.1.1.BMN.6.2', NULL, 'Penanggungjawab kurang melakukan eksplorasi terhadap para pihak terkait.', '2021-10-04', 'Sekretariat Jenderal', '3', 'Pengendalian pelaksanaan kontrak tidak optimal.', '4', '2021-10-25 07:21:14', '0000-00-00 00:00:00'),
-(14, '13', '27', '7', NULL, 'G.1.1.BMN.6.3', NULL, 'Penanggungjawab kurang melakukan eksplorasi terhadap para pihak terkait.', '2021-10-13', 'Sekretariat Jenderal', '3', 'Tidak melakukan pemeriksaan fisik di lapangan.', '4', '2021-10-25 07:21:56', '0000-00-00 00:00:00');
+(14, '13', '27', '7', NULL, 'G.1.1.BMN.6.3', NULL, 'Penanggungjawab kurang melakukan eksplorasi terhadap para pihak terkait.', '2021-10-13', 'Sekretariat Jenderal', '3', 'Tidak melakukan pemeriksaan fisik di lapangan.', '4', '2021-10-25 07:21:56', '0000-00-00 00:00:00'),
+(15, '14', '41', '5', NULL, 'G.1.1.INV.ATT.5.2', NULL, 'dsa', '2021-11-08', 'sad', '6', 'asda', '5', '2021-11-17 14:06:56', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -878,18 +879,18 @@ CREATE TABLE `pengendalian_risiko` (
 --
 
 INSERT INTO `pengendalian_risiko` (`id`, `faktur`, `id_manajemen`, `id_departemen`, `id_risiko`, `id_akar_masalah`, `kode_tindak_pengendalian`, `respons_risiko`, `detail_respons_risiko`, `kegiatan_pengendalian`, `id_klasifikasi_sub_unsur_spip`, `penanggung_jawab`, `indikator_keluaran`, `target_waktu`, `target_waktu_akhir`, `status_pelaksanaan`, `frekuensi_saat_ini`, `dampak_saat_ini`, `pr_saat_ini`, `besaran_saat_ini`, `created_at`, `updated_at`) VALUES
-(17, '2', '13', '7', '24', '15', 'PG.G.1.1.BMN.6.1.MD.1', 'Mengurangi Frekuensi', 'Melakukan penelusuran bukti transaksi dan kejadian penting.', '1. Memanfaatkan teknologi informasi untuk memperoleh bukti (P18.c)\r\n2. Pencatatan Akurat dan Tepat waktu atas transaksi dan kejadian penting (P18.h)', '1', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-09-29', '2021-10-01', 'Selesai Dilaksanakan', '3 - Kadang Terjadi', '3 - Moderat', '#ffff00', '14', NULL, NULL),
+(17, '2', '13', '7', '24', '15', 'PG.G.1.1.BMN.6.1.MD.1', 'Mengurangi Frekuensi', 'Melakukan penelusuran bukti transaksi dan kejadian penting.', '1. Memanfaatkan teknologi informasi untuk memperoleh bukti (P18.c)\r\n2. Pencatatan Akurat dan Tepat waktu atas transaksi dan kejadian penting (P18.h)', '1', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-09-29', '2021-10-01', 'Terlambat', '3 - Kadang Terjadi', '3 - Moderat', '#ffff00', '14', NULL, NULL),
 (18, '2', '13', '7', '25', '16', 'PG.G.1.1.BMN.5.1.MY.1', 'Mengurangi Frekuensi, Mengurangi Dampak', 'Melakukan penelusuran bukti transaksi dan kejadian penting untuk mendapatkan data dan informasi penting', 'Reviu berjenjang secara efektif (P18.a)', '1', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-10-26', '2021-10-26', 'Selesai Dilaksanakan', '3 - Kadang Terjadi', '3 - Moderat', '#ffff00', '14', NULL, NULL),
-(19, '2', '13', '7', '26', '17', 'PG.G.1.1.BMN.6.2.MD.1', 'Mengurangi Frekuensi, Mengurangi Dampak', 'Melakukan reviu berjenjang atas transaksi dan kejadian penting', 'Reviu berjenjang secara efektif (P18.a)', '1', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-10-28', '2021-10-28', 'Dalam Proses Pelaksanaan', '2 - Jarang Terjadi', '4 - Signifikan', '#ffff00', '13', NULL, NULL),
+(19, '2', '13', '7', '26', '17', 'PG.G.1.1.BMN.6.2.MD.1', 'Mengurangi Frekuensi, Mengurangi Dampak', 'Melakukan reviu berjenjang atas transaksi dan kejadian penting', 'Reviu berjenjang secara efektif (P18.a)', '1', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-10-28', '2021-10-28', 'Terlambat', '2 - Jarang Terjadi', '4 - Signifikan', '#ffff00', '13', NULL, NULL),
 (20, '2', '13', '7', '27', '18', 'PG.G.1.1.BMN.6.3.MD.1', 'Mengurangi Frekuensi, Mengurangi Dampak', 'Melakukan penelurusan bukti atas transaksi dan kejadian penting.', 'Pengendalian fisik atas aset (P.18.d)', '1', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-11-05', '2021-11-05', 'Selesai Dilaksanakan', '3 - Kadang Terjadi', '4 - Signifikan', '#ffc000', '17', NULL, NULL),
 (21, '2', '13', '7', '28', '19', 'PG.G.1.1.BMN.5.2.MD.1', 'Mengurangi Frekuensi', 'Melakukan reviu kinerja atas pencatatan transaksi dan kejadian penting.', '1. Memanfaatkan teknologi informasi untuk memperoleh bukti (P18.c)\r\n2. Pencatatan Akurat dan Tepat waktu atas transaksi dan kejadian penting (P18.h)\r\n3. Akuntabilitas sumberdaya dan pencatatannya (P18.j)', '1', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-11-01', '2021-11-06', 'Selesai Dilaksanakan', '2 - Jarang Terjadi', '4 - Signifikan', '#ffff00', '13', NULL, NULL),
-(22, '2', '13', '7', '29', '20', 'PG.G.1.1.BMN.5.3.MY.1', 'Mengurangi Frekuensi, Mengurangi Dampak', 'Mendapatkan bukti yang relevan, kompeten, material dan cukup atas transaksi dan kejadian yang penting', 'Pembinaan Sumber daya manusia/Mendesain pelatihan yang sesuai dengan kebutuhan (P18,b)', '3', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-11-08', '2021-11-12', 'Dalam Proses Pelaksanaan', '2 - Jarang Terjadi', '4 - Signifikan', '#ffff00', '13', NULL, NULL),
-(23, '2', '13', '7', '30', '21', 'PG.G.1.1.BMN.5.4.MD.1', 'Mengurangi Frekuensi', 'Mendapatkan bukti yang relevan, kompeten, material dan cukup atas transaksi dan kejadian yang penting.', '1. Reviu Berjenjang berbantuan teknologi informasi (P18.a, b)\r\n2. Pencatatan Akurat dan Tepat waktu atas transaksi dan kejadian penting (P18.h)\r\n3. Akuntabilitas sumberdaya dan pencatatannya (P18.j)', '3', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-11-09', '2021-11-11', 'Dalam Proses Pelaksanaan', '3 - Kadang Terjadi', '4 - Signifikan', '#ffc000', '17', NULL, NULL),
+(22, '2', '13', '7', '29', '20', 'PG.G.1.1.BMN.5.3.MY.1', 'Mengurangi Frekuensi, Mengurangi Dampak', 'Mendapatkan bukti yang relevan, kompeten, material dan cukup atas transaksi dan kejadian yang penting', 'Pembinaan Sumber daya manusia/Mendesain pelatihan yang sesuai dengan kebutuhan (P18,b)', '3', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-11-08', '2021-11-12', 'Terlambat', '2 - Jarang Terjadi', '4 - Signifikan', '#ffff00', '13', NULL, NULL),
+(23, '2', '13', '7', '30', '21', 'PG.G.1.1.BMN.5.4.MD.1', 'Mengurangi Frekuensi', 'Mendapatkan bukti yang relevan, kompeten, material dan cukup atas transaksi dan kejadian yang penting.', '1. Reviu Berjenjang berbantuan teknologi informasi (P18.a, b)\r\n2. Pencatatan Akurat dan Tepat waktu atas transaksi dan kejadian penting (P18.h)\r\n3. Akuntabilitas sumberdaya dan pencatatannya (P18.j)', '3', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-11-09', '2021-11-11', 'Terlambat', '3 - Kadang Terjadi', '4 - Signifikan', '#ffc000', '17', NULL, NULL),
 (24, '2', '13', '7', '31', '22', 'PG.G.1.1.BMN.7.1.EX.1', 'Mengurangi Frekuensi', 'Mendapatkan bukti relevan, kompeten, material dan cukup atas transaksi dan kejadian yang penting berbasis teknologi informasi.', '1. Reviu Berjenjang (P18.a)\r\n2. Pencatatan Akurat dan Tepat waktu atas transaksi dan kejadian penting (P18.h)\r\n3. Akuntabilitas sumberdaya dan pencatatannya (P18.j)', '3', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-11-22', '2021-11-26', 'Belum Dilaksanakan', '2 - Jarang Terjadi', '3 - Moderat', '#00b050', '11', NULL, NULL),
 (25, '2', '13', '7', '32', '23', 'PG.G.1.1.BMN.7.2.EX.1', 'Mengurangi Frekuensi', 'Mendapatkan bukti relevan, kompeten, material dan cukup atas transaksi dan kejadian yang penting berbasis teknologi informasi.', '1. Reviu Berjenjang (P18.a)\r\n2. Pencatatan Akurat dan Tepat waktu atas transaksi dan kejadian penting (P18.h)', '3', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-11-29', '2021-12-03', 'Belum Dilaksanakan', '1 - Hampir Tidak Terjadi', '2 - Minor', '#32bdea', '3', NULL, NULL),
-(26, '2', '13', '7', '33', '24', 'PG.G.1.1.BMN.7.3.MD.1', 'Mengurangi Dampak', 'Melakukan verifikasi dan reviu berjenjang atas transaksi dan kejadian penting terkait.', '1. Reviu Berjenjang (P18.a)\r\n2. Pencatatan Akurat dan Tepat waktu atas transaksi dan kejadian penting (P18.h)\r\n3. Akuntabilitas sumberdaya dan pencatatannya (P18.j)', '3', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-11-16', '2021-11-18', 'Belum Dilaksanakan', '3 - Kadang Terjadi', '4 - Signifikan', '#ffc000', '17', NULL, NULL),
+(26, '2', '13', '7', '33', '24', 'PG.G.1.1.BMN.7.3.MD.1', 'Mengurangi Dampak', 'Melakukan verifikasi dan reviu berjenjang atas transaksi dan kejadian penting terkait.', '1. Reviu Berjenjang (P18.a)\r\n2. Pencatatan Akurat dan Tepat waktu atas transaksi dan kejadian penting (P18.h)\r\n3. Akuntabilitas sumberdaya dan pencatatannya (P18.j)', '3', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-11-16', '2021-11-18', 'Terlambat', '3 - Kadang Terjadi', '4 - Signifikan', '#ffc000', '17', NULL, NULL),
 (27, '2', '13', '7', '34', '25', 'PG.G.1.1.BMN.6.4.MD.1', 'Mengurangi Frekuensi, Mengurangi Dampak', 'Melakukan verifikasi dan reviu berjenjang atas transaksi dan kejadian penting terkait.', '1. Reviu Berjenjang (P18.a)\r\n2. Pencatatan Akurat dan Tepat waktu atas transaksi dan kejadian penting (P18.h)\r\n3. Akuntabilitas sumberdaya dan pencatatannya (P18.j)', '3', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-12-01', '2021-12-07', 'Belum Dilaksanakan', '3 - Kadang Terjadi', '2 - Minor', '#00b050', '10', NULL, NULL),
-(28, '2', '13', '7', '35', '26', 'PG.G.1.1.BMN.5.5.MD.1', 'Mengurangi Frekuensi, Mengurangi Dampak', 'Melakukan verifikasi dan reviu berjenjang atas transaksi dan kejadian penting terkait.', '1. Reviu Berjenjang (P18.a)\r\n2. Pencatatan Akurat dan Tepat waktu atas transaksi dan kejadian penting (P18.h)\r\n3. Akuntabilitas sumberdaya dan pencatatannya (P18.j)', '3', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-11-02', '2021-11-04', 'Belum Dilaksanakan', '4 - Sering Terjadi', '4 - Signifikan', '#ffc000', '19', NULL, NULL),
+(28, '2', '13', '7', '35', '26', 'PG.G.1.1.BMN.5.5.MD.1', 'Mengurangi Frekuensi, Mengurangi Dampak', 'Melakukan verifikasi dan reviu berjenjang atas transaksi dan kejadian penting terkait.', '1. Reviu Berjenjang (P18.a)\r\n2. Pencatatan Akurat dan Tepat waktu atas transaksi dan kejadian penting (P18.h)\r\n3. Akuntabilitas sumberdaya dan pencatatannya (P18.j)', '3', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-11-02', '2021-11-04', 'Terlambat', '4 - Sering Terjadi', '4 - Signifikan', '#ffc000', '19', NULL, NULL),
 (29, '1', '12', '8', '36', '27', 'PG.G.1.1.EP.LAKIN.4.1.EX.1', 'Mengurangi Dampak', 'Mempercepat realisasi kegiatan', 'Memanfaatkan teknologi informasi', '1', 'Koordinator Perencanaan dan Evaluasi', 'Aplikasi Komunikasi (Langganan Zoom)', '2021-10-01', '2021-12-31', 'Selesai Dilaksanakan', '1 - Hampir Tidak Terjadi', '3 - Moderat', '#32bdea', '5', NULL, NULL),
 (30, '1', '8', '12', '37', '28', 'PG.G.1.1.EP.LAKIN.6.1.MD.1', 'Mengurangi Frekuensi, Mengurangi Dampak', 'Agar capaian realisasi sesuai target', 'Melakukan pemantauan', '7', 'Koordinator Perencanaan dan Evaluasi', 'Dokumen Pemantauan', '2021-10-25', '2021-11-25', 'Dalam Proses Pelaksanaan', '4 - Sering Terjadi', '3 - Moderat', '#ffc000', '16', NULL, NULL),
 (31, '1', '12', '8', '38', '29', 'PG.G.1.1.EP.LAKIN.2.1.MD.1', 'Mengurangi Dampak', 'Nilai Evaluasi AKIP lebih tinggi/sesuai target', 'Melakukan Kajian Metodologi', '3', 'Koordinator Perencanaan dan Evaluasi', 'Dokumen Kajian', '2021-07-01', '2021-12-31', 'Dalam Proses Pelaksanaan', '1 - Hampir Tidak Terjadi', '3 - Moderat', '#32bdea', '5', NULL, NULL),
@@ -900,11 +901,21 @@ INSERT INTO `pengendalian_risiko` (`id`, `faktur`, `id_manajemen`, `id_departeme
 (36, '3', '14', '5', '43', '34', 'PG.G.1.1.INV.ATT.6.3.MD.1', 'Mengurangi Frekuensi, Mengurangi Dampak', 'Merumuskan modus operandi (why, when, what, where, who, how dan how much),', 'Gelar kasus (P18.b)', '1', 'Inspektur Investigasi', 'Dokumen', '2021-10-27', '2021-10-27', 'Selesai Dilaksanakan', '1 - Hampir Tidak Terjadi', '3 - Moderat', '#32bdea', '5', NULL, NULL),
 (37, '3', '14', '5', '44', '35', 'PG.G.1.1.INV.ATT.6.4.MD.1', 'Mengurangi Frekuensi', 'Menyusun program kerja yang terstruktur untuk menelusuri dan membuktikan modus operandi.', 'Gelar kasus (P18.b).', '1', 'Inspektur Investigasi', 'Dokumen', '2021-10-27', '2021-10-27', 'Selesai Dilaksanakan', '1 - Hampir Tidak Terjadi', '5 - Sangat Signifikan', '#ff0000', '20', NULL, NULL),
 (38, '3', '14', '5', '45', '36', 'PG.G.1.1.INV.ATT.6.5.MD.1', 'Mengurangi Frekuensi', 'Mendapatkan bukti audit yang rekomacu (relevan, kompeten, material dan cukup).', '1. Memanfaatkan teknologi informasi untuk memperoleh bukti (P18.c)\r\n2. Pencatatan Akurat dan Tepat waktu atas transaksi dan kejadian penting (P18.h)\r\n3. Akuntabilitas sumberdaya dan pencatatannya (P18.j)', '1', 'Inspektur Investigasi', 'Surat permintaan keterangan', '2021-11-01', '2021-11-09', 'Selesai Dilaksanakan', '2 - Jarang Terjadi', '5 - Sangat Signifikan', '#ff0000', '21', NULL, NULL),
-(39, '3', '14', '5', '46', '37', 'PG.G.1.1.INV.ATT.6.6.MY.1', 'Mengurangi Frekuensi', 'Mendapatkan bukti audit yang rekomacu (relevan, kompeten, material dan cukup) untuk mengungkap dan membuktikan modus operandi.', 'Pembinaan Sumber daya manusia/Mendesain pelatihan yang sesuai dengan kebutuhan (P18,b).', '3', 'Inspektur Investigasi', 'Sertifikasi kompetensi', '2021-11-15', '2021-11-19', 'Dalam Proses Pelaksanaan', '1 - Hampir Tidak Terjadi', '5 - Sangat Signifikan', '#ff0000', '20', NULL, NULL),
+(39, '3', '5', '14', '46', '37', 'PG.G.1.1.INV.ATT.6.6.MY.1', 'Mengurangi Frekuensi', 'Mendapatkan bukti audit yang rekomacu (relevan, kompeten, material dan cukup) untuk mengungkap dan membuktikan modus operandi.', 'Pembinaan Sumber daya manusia/Mendesain pelatihan yang sesuai dengan kebutuhan (P18,b).', '3', 'Inspektur Investigasi', 'Sertifikasi kompetensi', '2021-11-08', '2021-11-14', 'Selesai Dilaksanakan', '1 - Hampir Tidak Terjadi', '5 - Sangat Signifikan', '#ff0000', '20', NULL, NULL),
 (40, '3', '5', '14', '47', '38', 'PG.G.1.1.INV.ATT.6.7.MD.1', 'Mengurangi Frekuensi', 'Menyusun Kertas Kerja Audit lengkap, valid, akurat, tertelusur dan terdokumentasikan dengan baik/tertib.', '1. Reviu Berjenjang berbantuan teknologi informasi (P18.a, b).\r\n2. Pencatatan Akurat dan Tepat waktu atas transaksi dan kejadian penting (P18.h).\r\n3. Akuntabilitas sumberdaya dan pencatatannya (P18.j).', '3', 'Inspektur Investigasi', 'Aplikasi.', '2021-11-10', '2021-11-12', 'Terlambat', '3 - Kadang Terjadi', '4 - Signifikan', '#ffc000', '17', NULL, NULL),
 (41, '3', '14', '5', '48', '39', 'PG.G.1.1.INV.ATT.6.8.MD.1', 'Mengurangi Frekuensi, Mengurangi Dampak', 'Menyusun laporan hasil audit sesuai standar yang didukung dengan bukti-bukti yang rekomacu dan tepat waktu;', '1. Reviu Berjenjang (P18.a).\r\n2. Pencatatan Akurat dan Tepat waktu atas transaksi dan kejadian penting (P18.h).\r\n3. Akuntabilitas sumberdaya dan pencatatannya (P18.j).', '3', 'Inspektur Investigasi', 'Dokumen FHA', '2021-11-05', '2021-11-05', 'Selesai Dilaksanakan', '1 - Hampir Tidak Terjadi', '4 - Signifikan', '#00b050', '8', NULL, NULL),
-(42, '3', '14', '5', '49', '40', 'PG.G.1.1.INV.ATT.6.9.EX.1', 'Mengurangi Frekuensi', 'Memastikan bahwa laporan hasil audit telah diterima oleh auditi/mitra secara tepat waktu dan tepat sasaran.', '1. Reviu Berjenjang (P18.a).\r\n2. Pencatatan Akurat dan Tepat waktu atas transaksi dan kejadian penting (P18.h).', '3', 'Inspektur Investigasi', 'Form Penerimaan LHA', '2021-11-05', '2021-11-05', 'Belum Dilaksanakan', '1 - Hampir Tidak Terjadi', '4 - Signifikan', '#00b050', '8', NULL, NULL),
-(43, '3', '14', '5', '50', '41', 'PG.G.1.1.INV.ATT.7.3.MD.1', 'Mengurangi Frekuensi', 'Melakukan reviu berjenjang dalam penyusunan laporan hasil audit secara berjenjang mulai dari penyusunan KKA, penetapan kriteria, sebab, akibat dan rekomendasi.', '1. Reviu Berjenjang (P18.a)\r\n2. Pencatatan Akurat dan Tepat waktu atas transaksi dan kejadian penting (P18.h)\r\n3. Akuntabilitas sumberdaya dan pencatatannya (P18.j)', '3', 'Inspektur Investigasi', 'Berita Acara Tindak Lanjut', '2021-11-05', '2021-11-05', 'Belum Dilaksanakan', '2 - Jarang Terjadi', '5 - Sangat Signifikan', '#ff0000', '21', NULL, NULL);
+(42, '3', '5', '14', '49', '40', 'PG.G.1.1.INV.ATT.6.9.EX.1', 'Mengurangi Frekuensi', 'Memastikan bahwa laporan hasil audit telah diterima oleh auditi/mitra secara tepat waktu dan tepat sasaran.', '1. Reviu Berjenjang (P18.a).\r\n2. Pencatatan Akurat dan Tepat waktu atas transaksi dan kejadian penting (P18.h).', '3', 'Inspektur Investigasi', 'Form Penerimaan LHA', '2021-11-05', '2021-11-05', 'Terlambat', '1 - Hampir Tidak Terjadi', '4 - Signifikan', '#00b050', '8', NULL, NULL),
+(43, '3', '14', '5', '50', '41', 'PG.G.1.1.INV.ATT.7.3.MD.1', 'Mengurangi Frekuensi', 'Melakukan reviu berjenjang dalam penyusunan laporan hasil audit secara berjenjang mulai dari penyusunan KKA, penetapan kriteria, sebab, akibat dan rekomendasi.', '1. Reviu Berjenjang (P18.a)\r\n2. Pencatatan Akurat dan Tepat waktu atas transaksi dan kejadian penting (P18.h)\r\n3. Akuntabilitas sumberdaya dan pencatatannya (P18.j)', '3', 'Inspektur Investigasi', 'Berita Acara Tindak Lanjut', '2021-11-05', '2021-11-05', 'Terlambat', '2 - Jarang Terjadi', '5 - Sangat Signifikan', '#ff0000', '21', NULL, NULL),
+(44, '3', '14', '5', '42', '33', 'PG.G.1.1.INV.ATT.5.1.MY.1', 'Mengurangi Frekuensi', 'a', 'a', '5', 'a', 'a', '2021-11-08', '2021-11-12', 'Terlambat', '1 - Hampir Tidak Terjadi', '1 - Tidak Signifikan', '#32bdea', '1', NULL, NULL),
+(45, '3', '14', '5', '43', '34', 'PG.G.1.1.INV.ATT.6.3.MD.1', 'Mengurangi Dampak', 'b', 'b', '1', 'b', 'b', '2021-11-08', '2021-11-13', 'Terlambat', '1 - Hampir Tidak Terjadi', '3 - Moderat', '#32bdea', '5', NULL, NULL),
+(46, '3', '14', '5', '44', '35', 'PG.G.1.1.INV.ATT.6.4.MD.1', 'Mengurangi Frekuensi, Mengurangi Dampak', 'c', 'c', '1', 'c', 'c', '2021-11-08', '2021-11-13', 'Terlambat', '1 - Hampir Tidak Terjadi', '5 - Sangat Signifikan', '#ff0000', '20', NULL, NULL),
+(47, '3', '14', '5', '45', '42', 'PG.G.1.1.INV.ATT.6.5.MC.1', 'Mengurangi Frekuensi', 'd', 'd', '1', 'd', 'd', '2021-11-08', '2021-11-13', 'Terlambat', '1 - Hampir Tidak Terjadi', '4 - Signifikan', '#00b050', '8', NULL, NULL),
+(48, '3', '14', '5', '45', '36', 'PG.G.1.1.INV.ATT.6.5.MD.1', 'Mengurangi Dampak', 'e', 'e', '1', 'e', 'e', '2021-11-08', '2021-11-13', 'Terlambat', '1 - Hampir Tidak Terjadi', '4 - Signifikan', '#00b050', '8', NULL, NULL),
+(49, '3', '14', '5', '46', '37', 'PG.G.1.1.INV.ATT.6.6.MY.1', 'Mengurangi Frekuensi, Mengurangi Dampak', 'f', 'f', '1', 'f', 'f', '2021-11-08', '2021-11-13', 'Terlambat', '1 - Hampir Tidak Terjadi', '5 - Sangat Signifikan', '#ff0000', '20', NULL, NULL),
+(50, '3', '14', '5', '47', '38', 'PG.G.1.1.INV.ATT.6.7.MD.1', 'Mengurangi Frekuensi', 'g', 'g', '1', 'g', 'g', '2021-11-01', '2021-11-03', 'Terlambat', '3 - Kadang Terjadi', '4 - Signifikan', '#ffc000', '17', NULL, NULL),
+(51, '3', '14', '5', '43', '34', 'PG.G.1.1.INV.ATT.6.3.MD.1', 'Mengurangi Frekuensi, Mengurangi Dampak', 'h', 'h', '1', 'h', 'h', '2021-08-09', '2021-08-13', 'Terlambat', '1 - Hampir Tidak Terjadi', '3 - Moderat', '#32bdea', '5', NULL, NULL),
+(52, '3', '14', '5', '43', '34', 'PG.G.1.1.INV.ATT.6.3.MD.1', 'Mengurangi Dampak', 'i', 'i', '1', 'i', 'i', '2021-05-03', '2021-05-28', 'Terlambat', '1 - Hampir Tidak Terjadi', '3 - Moderat', '#32bdea', '5', NULL, NULL),
+(53, '3', '14', '5', '44', '35', 'PG.G.1.1.INV.ATT.6.4.MD.1', 'Mengurangi Dampak', 'j', 'j', '1', 'j', 'j', '2020-09-06', '2020-09-10', 'Terlambat', '1 - Hampir Tidak Terjadi', '5 - Sangat Signifikan', '#ff0000', '20', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1161,7 +1172,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `name`, `email`, `telp`, `level`, `id_departemen`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'superadmin', 'Superadmin', 'superadmin@gmail.com', '08123456789', '1', '5', NULL, '$2y$10$9BwnGxby2.yINEAZvYPBBev9KSxYzfE/m7yL4L2X4/jMr/8g6sIPO', NULL, '2021-09-27 20:58:30', '2021-11-07 19:34:49'),
+(1, 'superadmin', 'Superadmin', 'superadmin@gmail.com', '08123456789', '1', '7', NULL, '$2y$10$9BwnGxby2.yINEAZvYPBBev9KSxYzfE/m7yL4L2X4/jMr/8g6sIPO', NULL, '2021-09-27 20:58:30', '2021-11-18 05:34:37'),
 (2, 'admin', 'admin', 'admin@gmail.com', '08123456789', '2', '22', NULL, '$2y$10$/ygf3rh9NcPsGErk8j4gLeObeq0ajzWbEB8IvI8JaJMOSiWs/b7EW', NULL, NULL, '2021-11-06 21:06:55'),
 (3, 'user', 'user', 'user@gmail.com', '08123456789', '3', '24', NULL, '$2y$10$9yJQmu.kna.Ti64AJV5JmuyNjLzwQbbSDfKI/WYo5NdscfFBKm/Yu', NULL, NULL, '2021-11-06 20:53:55'),
 (4, 'ajiputraprayogi', 'ajiputraprayogi', 'ajiputraprayogi@gmail.com', '08123456789', 'user', '', NULL, '$2y$10$cdrcMj2qdLvMmQdJaTNWfuW1nogWqoDqmvrk3YtKYfoFLM.IK82wa', NULL, '2021-11-06 20:47:54', '2021-11-06 20:47:54');
@@ -1365,19 +1376,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `akar_masalah_why`
 --
 ALTER TABLE `akar_masalah_why`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=150;
 
 --
 -- AUTO_INCREMENT for table `akar_masalah_why_thumb`
 --
 ALTER TABLE `akar_masalah_why_thumb`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=327;
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=328;
 
 --
 -- AUTO_INCREMENT for table `analisa_masalah`
 --
 ALTER TABLE `analisa_masalah`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `analisa_risiko`
@@ -1449,19 +1460,19 @@ ALTER TABLE `metode_pencapaian_tujuan`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `pelaksanaan_manajemen_risiko`
 --
 ALTER TABLE `pelaksanaan_manajemen_risiko`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `pelaksanaan_pengendalian_risiko`
 --
 ALTER TABLE `pelaksanaan_pengendalian_risiko`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `pelaporan_pengelolaan_risiko`
@@ -1485,13 +1496,13 @@ ALTER TABLE `pemantauan_efektivitas_pengendalian`
 -- AUTO_INCREMENT for table `pencatatan_peristiwa_resiko`
 --
 ALTER TABLE `pencatatan_peristiwa_resiko`
-  MODIFY `id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `pengendalian_risiko`
 --
 ALTER TABLE `pengendalian_risiko`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `penyebab`

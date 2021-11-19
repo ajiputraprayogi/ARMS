@@ -14,16 +14,16 @@
                 <form method="get">
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="">Departemen</label>
+                        <label for="">Unit Kerja</label>
                         <div class="form-group">
                         <select class="form-control" name="departemen" id="departemen">
-                            <option>Semua Departemen</option>
+                            <option value="Semua Departemen">Semua Unit Kerja</option>
                             @foreach($departemen as $rowdpr)
                             <option value="{{$rowdpr->faktur}}" @if($active_departemen==$rowdpr->faktur) selected
                                 @endif>{{$rowdpr->nama}}</option>
                             @endforeach
                         </select>
-                      
+
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -36,7 +36,7 @@
                                 @endif>{{$rowkode->full_kode}}</option>
                             @endforeach
                         </select>
-                      
+
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -49,7 +49,7 @@
                                 @endif>{{$rowsts->status_pelaksanaan}}</option>
                             @endforeach
                         </select>
-                      
+
                         </div>
                     </div>
                     <div class="col-md-4">

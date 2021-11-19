@@ -41,7 +41,7 @@ Analisis Akar Masalah | ARMS
                     @csrf
                     <input type="hidden" name="_method" value="put">
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="email">Departemen Pemilik Risiko<i
+                        <label class="control-label col-sm-3 align-self-center" for="email">Unit Pemilik Risiko<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <select class="js-example-basic-single text search-input" id="cari_departmen"
@@ -82,7 +82,7 @@ Analisis Akar Masalah | ARMS
                             <select class="js-example-basic-single text search-input" id="cari_risiko"
                                 name="cari_risiko" style="width:100%;">
                                 @foreach($data_manajemen_risiko as $dmr)
-                               
+
 
                                 @foreach($dataresiko as $dtr)
                                 <option value="{{$dtr->full_kode}}" @if($dtr->full_kode==$rowdtl->kode_risiko) selected
@@ -138,7 +138,7 @@ Analisis Akar Masalah | ARMS
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-3 align-self-center" for="email">Kode Penyebab<i
+                        <label class="control-label col-sm-3 align-self-center" for="email">Kategori Penyebab<i
                                 class="bintang">*</i></label>
                         <div class="col-sm-9">
                             <select class="form-control" name="kategori" onchange="generatekode()" id="carikat">

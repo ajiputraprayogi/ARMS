@@ -64,7 +64,7 @@ legend.scheduler-border {
                     <input type="hidden" name="_method" value="put">
                     <div class="form-group">
                         <div class="form-group row">
-                            <label class="control-label col-sm-3 align-self-center" for="">Departemen Pemilik
+                            <label class="control-label col-sm-3 align-self-center" for="">Unit Pemilik
                                 Risiko<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <select name="departemen" class="form" id="cari_departemen_manajemen"

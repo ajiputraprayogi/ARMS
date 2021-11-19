@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Login</title>
-    <link rel="shortcut icon" href="../assets/images/favicon.ico" />
+    <link rel="shortcut icon" href="{{asset('assets/images/logo kementan.png')}}" />
     <link rel="stylesheet" href="../assets/css/backend-plugin.min.css">
     <link rel="stylesheet" href="../assets/css/backend.css?v=1.0.0">
     <link rel="stylesheet" href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
@@ -19,12 +19,20 @@
   -o-background-size: cover;
   background-size: cover;
 }
+.center{
+    text-align: center;
+    vertical-align: middle;
+    line-height: 650px;
+    background: transparent;
+    font-family: "Lucida Console", "Courier New", monospace;
+}
     </style>
 </head>
 
 <body>
     <div id="loading">
-        <div id="loading-center">
+        <div class="center">
+            <p>Loading...</p>
         </div>
     </div>
     <div class="wrapper">

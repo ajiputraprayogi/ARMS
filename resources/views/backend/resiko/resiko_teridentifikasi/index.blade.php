@@ -15,7 +15,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <select class="form-control" name="departemen" id="departemen">
-                                    <option>Semua Departemen</option>
+                                    <option value="Semua Departemen">Semua Unit Kerja</option>
                                     @foreach($departemen as $rowdpr)
                                     <option value="{{$rowdpr->faktur}}" @if($active_departemen==$rowdpr->faktur) selected
                                         @endif>{{$rowdpr->nama}}</option>
@@ -104,7 +104,7 @@
                                 <th>Kategori</th>
                                 <th>Besaran Risiko awal</th>
                                 <th>Besaran Risiko Terakhir</th>
-                                
+
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>

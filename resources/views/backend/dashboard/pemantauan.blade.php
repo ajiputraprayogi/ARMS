@@ -13,10 +13,10 @@ ARMS | Dashboard
             <form method="get">
                 <div class="row">
                     <div class="col-md-4">
-                        <label class="m-0">Departemen</label>
+                        <label class="m-0">Unit Kerja</label>
                         <div class="input-group mb-3">
                             <select class="form-control" name="departemen" id="departemen">
-                                <option value="semua">Semua Departemen</option>
+                                <option value="semua">Semua Unit Kerja</option>
                                 @foreach($data_departemen as $row_departemen)
                                 <option value="{{$row_departemen->id}}" @if(request()->get('departemen'))
                                     @if(request()->get('departemen')==$row_departemen->id) selected @endif
@@ -58,7 +58,7 @@ ARMS | Dashboard
                     </div>
                 </div>
                 <div class="col-md-10">
-                    <h4>Sebaran Penyebab Berdasarkan Kode Penyebab</h4>
+                    <h4>Sebaran Penyebab Berdasarkan Kategori Penyebab</h4>
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
@@ -99,20 +99,61 @@ ARMS | Dashboard
                                     <tbody>
                                         @foreach($kategori_resiko as $row_kategori_resiko)
                                         @php
+                                        // ===================================
+                                        $id = Auth::user()->id_departemen;
+                                        $id_dep=[];
+                                        $id_atasan = [];
+                                        $i_limit=1;
+                                        array_push($id_atasan,$id);
+                                        //dd(count($id_atasan));
+
+                                        for ($i=0; $i <$i_limit ; $i++) { 
+                                            for ($j=0; $j < count($id_atasan) ; $j++) { 
+                                                $data = DB::table('departemen')->where('id_atasan',$id_atasan[$j])->get();
+                                                if(count($data)>0){
+                                                    foreach($data as $row){
+                                                        array_push($id_atasan,$row->id);
+                                                    }
+                                                    $i_limit++;
+                                                }else{
+                                                    $i_limit=$i;
+                                                }
+                                            }
+                                        }
+                                        // dd($id_atasan);
+                                        // return $id_atasan;
+                                        // ===================================
                                         $final_jumlah=0;
                                         if(request()->get('departemen')){
                                             if(request()->get('departemen')!='semua'){
+                                                // $jumlah_kejadian = DB::table('pencatatan_peristiwa_resiko')
+                                                // ->select(DB::raw('pencatatan_peristiwa_resiko.*'))
+                                                // ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','pencatatan_peristiwa_resiko.resiko_id')
+                                                // ->where('resiko_teridentifikasi.id_kategori',$row_kategori_resiko->id)
+                                                // ->where('pencatatan_peristiwa_resiko.departemen_id',request()->get('departemen'))
+                                                // ->groupby('pencatatan_peristiwa_resiko.id')
+                                                // ->get();
                                                 $jumlah_kejadian = DB::table('pencatatan_peristiwa_resiko')
                                                 ->select(DB::raw('pencatatan_peristiwa_resiko.*'))
+                                                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pencatatan_peristiwa_resiko.id_manajemen')
                                                 ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','pencatatan_peristiwa_resiko.resiko_id')
+                                                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
+                                                ->where('pelaksanaan_manajemen_risiko.id',request()->get('departemen'))
                                                 ->where('resiko_teridentifikasi.id_kategori',$row_kategori_resiko->id)
-                                                ->where('pencatatan_peristiwa_resiko.departemen_id',request()->get('departemen'))
                                                 ->groupby('pencatatan_peristiwa_resiko.id')
                                                 ->get();
                                             }else{
+                                                // $jumlah_kejadian = DB::table('pencatatan_peristiwa_resiko')
+                                                // ->select(DB::raw('pencatatan_peristiwa_resiko.*'))
+                                                // ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','pencatatan_peristiwa_resiko.resiko_id')
+                                                // ->where('resiko_teridentifikasi.id_kategori',$row_kategori_resiko->id)
+                                                // ->groupby('pencatatan_peristiwa_resiko.id')
+                                                // ->get();
                                                 $jumlah_kejadian = DB::table('pencatatan_peristiwa_resiko')
                                                 ->select(DB::raw('pencatatan_peristiwa_resiko.*'))
+                                                ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pencatatan_peristiwa_resiko.id_manajemen')
                                                 ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','pencatatan_peristiwa_resiko.resiko_id')
+                                                ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                                                 ->where('resiko_teridentifikasi.id_kategori',$row_kategori_resiko->id)
                                                 ->groupby('pencatatan_peristiwa_resiko.id')
                                                 ->get();
@@ -120,7 +161,9 @@ ARMS | Dashboard
                                         }else{
                                         $jumlah_kejadian = DB::table('pencatatan_peristiwa_resiko')
                                         ->select(DB::raw('pencatatan_peristiwa_resiko.*'))
+                                        ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pencatatan_peristiwa_resiko.id_manajemen')
                                         ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.full_kode','=','pencatatan_peristiwa_resiko.resiko_id')
+                                        ->whereIn('pelaksanaan_manajemen_risiko.id_departemen',$id_atasan)
                                         ->where('resiko_teridentifikasi.id_kategori',$row_kategori_resiko->id)
                                         ->groupby('pencatatan_peristiwa_resiko.id')
                                         ->get();
