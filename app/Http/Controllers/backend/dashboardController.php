@@ -14,6 +14,8 @@ class dashboardController extends Controller
     //=====================================================================
     public function index(Request $request)
     {
+        $user = $request->getClientIp();
+        $waktu = Carbon::now();
         // ===================================
         $id = Auth::user()->id_departemen;
         $id_dep=[];
@@ -274,7 +276,7 @@ class dashboardController extends Controller
         ->groupby('departemen.id')
         ->orderby('pelaksanaan_manajemen_risiko.id','asc')
         ->get();
-        return view('backend.dashboard.index',compact('hasilcari','data_departemen','penyebab_peristiwa_risiko','risiko_peristiwa_risiko','kejadian_peristiwa_risiko','pengendalian_risiko','pengendalian_risiko_termitigasi','populasi_risiko','risiko_termitigasi','penyebab_teridentifikasi','penyebab_termitigasi'));
+        return view('backend.dashboard.index',compact('waktu','user','hasilcari','data_departemen','penyebab_peristiwa_risiko','risiko_peristiwa_risiko','kejadian_peristiwa_risiko','pengendalian_risiko','pengendalian_risiko_termitigasi','populasi_risiko','risiko_termitigasi','penyebab_teridentifikasi','penyebab_termitigasi'));
     }
 
     //=====================================================================
