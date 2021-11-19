@@ -10,6 +10,49 @@
         <div class="card card-transparent card-block card-stretch card-height border-none">
             <div class="card-header p-0 mt-lg-2 mt-0">
                 <h3 class="mb-3">Pelaporan Pengelolaan Risiko</h3>
+                <form method="get">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <select class="form-control" name="periodepelaporan" id="">
+                                    <option>Semua Periode</option>
+                                    @foreach ($periode as $p)
+                                    <option value={{ $p->id }} @if ($active_periode == $p->id) selected @endif>{{ $p->nama_periode }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <select class="form-control" name="departemen" id="">
+                                    <option>Semua Unit Kerja</option>
+                                    @foreach ($departemen as $d)
+                                    <option value={{ $d->id }} @if ($active_departemen == $d->id) selected @endif>{{ $d->nama }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group mb-3">
+                                <select class="form-control" name="status" id="">
+                                    <option>Semua Status</option>
+                                    <option value="diajukan" @if ($active_status == 'diajukan') selected @endif>Diajukan</option>
+                                    <option value="proses pemeriksaan" @if ($active_status == 'proses pemeriksaan') selected @endif>Proses Pemeriksaan</option>
+                                    <option value="laporan diterima" @if ($active_status == 'laporan diterima') selected @endif>Laporan Diterima</option>
+                                </select>
+                                <div class="input-group-prepend" style="border-radius:10p;">
+                                    <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>
+                                    <a href="{{url('/pelaporan-pengelolaan-risiko')}}" class="btn btn-secondary"
+                                        style="border-top-right-radius: 10px;border-bottom-right-radius: 10px;"><i
+                                            class="fas fa-sync"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 float-right text-right">
+                            <a href="{{url('pelaporan-pengelolaan-risiko/create')}}" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Tambah Pelaporan</a>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="card-body p-0 mt-lg-2 mt-0">
                 @if (session('status'))
@@ -20,13 +63,8 @@
                     </button>
                 </div>
                 @endif
-                <div class="form-group">
-                    <div class="text-right">
-                        <a href="{{url('pelaporan-pengelolaan-risiko/create')}}" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Tambah Pelaporan</a>
-                    </div>
-                </div>
                 <div class="table-responsive rounded mb-3">
-                    <table id="list-data" class="table mb-0 tbl-server-info">
+                    <table id="" class="table data-tables mb-0 tbl-server-info">
                         <thead class="bg-white text-uppercase">
                             <tr class="ligth ligth-data">
                                 <th>Periode Pelaporan</th>
@@ -39,6 +77,25 @@
                             </tr>
                         </thead>
                         <tbody class="ligth-body">
+                        @php $i=($data->currentpage()-1)* $data->perpage(); @endphp
+                        @foreach($data as $item)
+                        @php $i++ @endphp
+                        <tr>
+                            <td>{{$item->periodepelaporan->nama_periode}}</td>
+                            <td class="">{{$item->departemen->nama}}</td>
+                            <td class="text-capitalize">{{$item->status}}</td>
+                            <td class=""><a href="/pelaporan/{{$item->file}}">{{$item->file}}</a></td>
+                            <td class="">@foreach($item->tujuanpelaporan as $tujuan) {{ $tujuan->departemen->nama }}&nbsp; @endforeach</td>
+                            <td class="">@foreach($item->tembusan as $tujuan) {{ $tujuan->departemen->nama }}&nbsp; @endforeach</td>
+                            <td class="text-center">
+                            <div class="d-flex align-items-center list-action">
+                            <a class="badge badge-info mr-2" data-toggle="modal" data-target="#show{{$item->id}}" title="View" data-original-title="View"><i class="ri-eye-line mr-0"></i></a>
+                            <a class="badge bg-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" href="/pelaporan-pengelolaan-risiko/{{ $item->id }}/edit"><i class="ri-pencil-line mr-0"></i></a>
+                            <a class="badge bg-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="hapusdata({{$item->id}})"><i class="ri-delete-bin-line mr-0"></i></a>
+                            </div>
+                            </td>
+                        </tr>
+                        @endforeach
                         @foreach($data as $item)
                             <div class="modal fade" id="show{{$item->id}}" tabindex="-1" role="dialog"  aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
@@ -80,7 +137,7 @@
                                                 <label class="control-label col-sm-3 align-self-center" for="">Kepada</label>
                                                 <div class="col-sm-9">
                                                 @foreach($item->tujuanpelaporan as $tp)
-                                                    {{$tp->departemen->nama}}<br/>
+                                                    {{$tp->departemen->nama}}&nbsp;
                                                 @endforeach
                                                 </div>
                                             </div>
@@ -88,7 +145,7 @@
                                                 <label class="control-label col-sm-3 align-self-center" for="">Tembusan</label>
                                                 <div class="col-sm-9">
                                                 @foreach($item->tembusan as $t)
-                                                    {{$t->departemen->nama}}<br/>
+                                                    {{$t->departemen->nama}}&nbsp;
                                                 @endforeach
                                                 </div>
                                             </div>

@@ -25,9 +25,9 @@
                         <label class="control-label col-sm-3 align-self-center" for="">Status</label>
                         <div class="col-sm-9">
                             <select class="form-control" name="status" value="{{$data->status}}" id="">
-                                <option value="diajukan">Diajukan</option>
-                                <option value="proses pemeriksaan">Proses Pemeriksaan</option>
-                                <option value="laporan diterima">Laporan Diterima</option>
+                                <option value="diajukan" @if ($data->status == 'diajukan') selected @endif>Diajukan</option>
+                                <option value="proses pemeriksaan" @if ($data->status == 'proses pemeriksaan') selected @endif>Proses Pemeriksaan</option>
+                                <option value="laporan diterima" @if ($data->status == 'laporan diterima') selected @endif>Laporan Diterima</option>
                             </select>
                         </div>
                     </div>

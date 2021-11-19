@@ -9,6 +9,11 @@ use DataTables;
 
 class ProbabilitasController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('checkSuperAdmin');
+    }
+
     /**
      * Display a listing of the resource.
      *

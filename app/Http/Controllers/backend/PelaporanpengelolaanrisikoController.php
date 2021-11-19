@@ -18,14 +18,85 @@ class PelaporanpengelolaanrisikoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])->get();
+        $id_departemen = Auth::user()->id_departemen;
+
+        if($request->periodepelaporan){
+            if($request->periodepelaporan != 'Semua Departemen'){
+                $active_periode = $request->periodepelaporan;
+            } else{
+                $active_periode = 'Semua Periode';
+            }
+        } else {
+            $active_periode = 'Semua Periode';
+        }
+
+        if($request->departemen){
+            if($request->departemen!='Semua Departemen'){
+                $active_departemen = $request->departemen;
+            }else{
+                $active_departemen = 'Semua Departemen';
+            }
+        } else {
+            $active_departemen = 'Semua Unit Kerja';
+        }
+
+        if($request->status){
+            if($request->status!='Semua Status'){
+                $active_status = $request->status;
+            }else{
+                $active_status = 'Semua Status';
+            }
+        } else {
+            $active_status = 'Semua Status';
+        }
+        // dd($active_periode, $active_departemen, $active_status);
+
+        $periodepelaporan = periodepelaporan::all();
+        $departemen = departemen::all();
+
+        // $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])->where('id_unit_kerja', $id_departemen)->orWhereHas('tembusan', function($q) use($id_departemen ){
+        //     $q->where('id_departemen', '=', $id_departemen);
+        // })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
+        //     $q->where('id_departemen', '=', $id_departemen);
+        // })->paginate(50);
+
+        if ($active_periode != 'Semua Periode'){
+            if ($active_status != 'Semua Status'){
+                $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])->whereHas('tembusan', function($q) use($id_departemen ){
+                    $q->where('id_departemen', '=', $id_departemen);
+                })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
+                    $q->where('id_departemen', '=', $id_departemen);
+                })->where('id_periode_pelaporan', '=', $active_periode)->where('status', '=', $active_status)->paginate(50);
+                // dd($data);
+            } else {
+                $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])->where('id_unit_kerja', $id_departemen)->orWhereHas('tembusan', function($q) use($id_departemen ){
+                    $q->where('id_departemen', '=', $id_departemen);
+                })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
+                    $q->where('id_departemen', '=', $id_departemen);
+                })->paginate(50);
+            }
+        } else {
+            $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])->where('id_unit_kerja', $id_departemen)->orWhereHas('tembusan', function($q) use($id_departemen ){
+                $q->where('id_departemen', '=', $id_departemen);
+            })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
+                $q->where('id_departemen', '=', $id_departemen);
+            })->paginate(50);
+        }
+
         // dd($data);
-        return view('backend.pelaporanpengelolaanrisiko.index',['data'=>$data]);
+        return view('backend.pelaporanpengelolaanrisiko.index',[
+            'data'=>$data,
+            'periode'=>$periodepelaporan,
+            'departemen'=>$departemen,
+            'active_periode' => $active_periode,
+            'active_departemen' => $active_departemen,
+            'active_status' => $active_status,
+        ]);
     }
 
-    public function listdata(){
+    public function listdata(){ // tidak terpakai
         $id_departemen = Auth::user()->id_departemen;
         // dd(Datatables::of(pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])->where('id_unit_kerja', $id_departemen)->orWhereHas('tembusan', function($q) use($id_departemen ){
         //     $q->where('id_departemen', '=', $id_departemen);
