@@ -174,31 +174,31 @@ class PelaporanpengelolaanrisikoController extends Controller
                     ->where('status', $active_status);
                     // dd($data);
                 }else{
-                    $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])
-                    ->orWhereHas('tembusan', function($q) use($id_departemen ){
-                        $q->where('id_departemen', '=', $id_departemen);
-                    })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
-                        $q->where('id_departemen', '=', $id_departemen);
-                    })->paginate(50);
+                    // $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])
+                    // ->orWhereHas('tembusan', function($q) use($id_departemen ){
+                    //     $q->where('id_departemen', '=', $id_departemen);
+                    // })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
+                    //     $q->where('id_departemen', '=', $id_departemen);
+                    // })->paginate(50);
                     // dd($data);
-                    // $id_pengendalian = [];
-                    // $data = DB::table('pelaporan_pengelolaan_risiko')
-                    // ->select('pelaporan_pengelolaan_risiko.*','periode_pelaporans.nama_periode','departemen.nama','tembusan.id_departemen as tembusan','tujuanpelaporan.id_pelaporan as tujuan')
-                    // ->leftjoin('periode_pelaporans','periode_pelaporans.id','=','pelaporan_pengelolaan_risiko.id_periode_pelaporan')
-                    // ->leftjoin('tembusan','tembusan.id_pelaporan','=','pelaporan_pengelolaan_risiko.id')
-                    // ->leftjoin('tujuanpelaporan','tujuanpelaporan.id_pelaporan','=','pelaporan_pengelolaan_risiko.id')
-                    // ->leftjoin('departemen','departemen.id','=','pelaporan_pengelolaan_risiko.id_unit_kerja')
-                    // ->where('pelaporan_pengelolaan_risiko.id_unit_kerja',$id_departemen)
-                    // ->orwhere('tujuanpelaporan.id_departemen',$id_departemen)
-                    // ->orwhere('tembusan.id_departemen',$id_departemen)
-                    // ->groupby('pelaporan_pengelolaan_risiko.id')
-                    // ->paginate(50);
-                    // if(count($data)>0){
-                    //     foreach ($data as $row) {
-                    //         array_push($id_pengendalian,$row->tujuan);
-                    //     }
-                    // }
-                    // dd($data);
+                    $id_pengendalian = [];
+                    $data = DB::table('pelaporan_pengelolaan_risiko')
+                    ->select('pelaporan_pengelolaan_risiko.*','periode_pelaporans.nama_periode','departemen.nama','tembusan.id_departemen as tembusan','tujuanpelaporan.id_pelaporan as tujuan')
+                    ->leftjoin('tujuanpelaporan','tujuanpelaporan.id_pelaporan','=','pelaporan_pengelolaan_risiko.id')
+                    ->leftjoin('periode_pelaporans','periode_pelaporans.id','=','pelaporan_pengelolaan_risiko.id_periode_pelaporan')
+                    ->leftjoin('tembusan','tembusan.id_pelaporan','=','pelaporan_pengelolaan_risiko.id')
+                    ->leftjoin('departemen','departemen.id','=','pelaporan_pengelolaan_risiko.id_unit_kerja')
+                    ->orwhere('tujuanpelaporan.id_departemen',$id_departemen)
+                    ->orwhere('tembusan.id_departemen',$id_departemen)
+                    ->where('pelaporan_pengelolaan_risiko.id_unit_kerja',$id_departemen)
+                    ->groupby('pelaporan_pengelolaan_risiko.id')
+                    ->get();
+                    if(count($data)>0){
+                        foreach ($data as $row) {
+                            array_push($id_pengendalian,$row->tujuan);
+                        }
+                    }
+                    dd($data);
                     // dd($id_pengendalian);
                     // ->get();
                 }
