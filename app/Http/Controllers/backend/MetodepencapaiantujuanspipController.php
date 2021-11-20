@@ -20,6 +20,20 @@ class MetodepencapaiantujuanspipController extends Controller
         return view('backend.metode_pencapaian_tujuan_spip.index',['data'=>$data]);
     }
 
+    public function cari_metode(Request $request){
+        if($request->has('q')){
+            $cari=$request->q;
+            $data=metode::
+            select('id','metode')
+            ->where('metode','like','%'.$cari.'%')
+            ->get();
+            $print=[
+                'metode'=>$data,
+            ];
+            return response()->json($print);
+        }
+    }
+
     public function listdata(){
         return Datatables::of(metode::all())->make(true);
     }

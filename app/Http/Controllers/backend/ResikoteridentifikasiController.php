@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\resikoteridentifikasi;
 use App\kategoriresiko;
 use App\metode;
+use App\selectedmetodespip;
 use DataTables;
 use DB;
 use Auth;
@@ -30,8 +31,8 @@ class ResikoteridentifikasiController extends Controller
         array_push($id_atasan,$id);
         //dd(count($id_atasan));
 
-        for ($i=0; $i <$i_limit ; $i++) { 
-            for ($j=0; $j < count($id_atasan) ; $j++) { 
+        for ($i=0; $i <$i_limit ; $i++) {
+            for ($j=0; $j < count($id_atasan) ; $j++) {
                 $data = DB::table('departemen')->where('id_atasan',$id_atasan[$j])->get();
                 if(count($data)>0){
                     foreach($data as $row){
@@ -686,7 +687,7 @@ class ResikoteridentifikasiController extends Controller
         // $pengajuan = $request->tanggal_pengajuan->format('Y-m-d');
         // $persetujuan = $request->tanggal_persetujuan->format('Y-m-d');
         // dd($full_code);
-        resikoteridentifikasi::insert([
+        $insert_resiko = resikoteridentifikasi::create([
             'faktur'=>$request->faktur,
             'pr' => $warna,
             'pr_akhir' => $warna,
@@ -705,7 +706,7 @@ class ResikoteridentifikasiController extends Controller
             'id_kategori'=>$request->kategori,
             'kategori_risiko'=> $request->kategori,
             'uraian_dampak'=> $request->dampak,
-            'metode_spip'=> $request->metode,
+            'metode_spip'=> 1,
             'status_persetujuan'=> $request->pengajuan,
             'diajukan_oleh'=> $request->diajukan,
             'diajukan_tanggal'=> Carbon::createFromFormat('d-m-Y',$request->tanggal_pengajuan)->format('Y-m-d'),
@@ -716,6 +717,14 @@ class ResikoteridentifikasiController extends Controller
             'besaran_akhir'=> $bak,
             'status' => $status
         ]);
+
+        foreach ($request->metode as $metode){
+            selectedmetodespip::create([
+                'id_resiko_teridentifikasi'  => $insert_resiko->id,
+                'id_metode_spip' => $metode
+            ]);
+        }
+
         return redirect('resiko-teridentifikasi')->with('status','Berhasil menyimpan data');
     }
 
@@ -752,7 +761,12 @@ class ResikoteridentifikasiController extends Controller
         // $pengajuan = Carbon::createFromFormat('Y-m-d', $res->diajukan_tanggal)->format('d-m-Y');
         // $pengajuan = Carbon::parse(DB::table('resiko_teridentifikasi')->select('resiko_teridentifikasi.diajukan_tanggal')->where('id','=', $id)->get())->format('d-m-Y');
         // dd($res);
-        return view('backend.resiko.resiko_teridentifikasi.edit',['data'=>$kategori, 'data2'=>$spip, 'res'=>$res]);
+
+        $selectedspip = selectedmetodespip::where('id_resiko_teridentifikasi', '=', $id)->with('metode')->get();
+
+        // dd($selectedspip);
+
+        return view('backend.resiko.resiko_teridentifikasi.edit',['data'=>$kategori, 'data2'=>$spip, 'res'=>$res, 'selectedspip' => $selectedspip]);
     }
 
     /**
@@ -792,7 +806,7 @@ class ResikoteridentifikasiController extends Controller
             'id_kategori'=>$request->kategori,
             'kategori_risiko'=> $request->kodekat,
             'uraian_dampak'=> $request->dampak,
-            'metode_spip'=> $request->metode,
+            'metode_spip'=> 1,
             'status_persetujuan'=> $request->pengajuan,
             'diajukan_oleh'=> $request->diajukan,
             'diajukan_tanggal'=> Carbon::createFromFormat('d-m-Y',$request->tanggal_pengajuan)->format('Y-m-d'),
@@ -801,6 +815,16 @@ class ResikoteridentifikasiController extends Controller
             // 'keterangan'=> $request->keterangan,
             'status' => $request->status
         ]);
+
+        selectedmetodespip::where('id_resiko_teridentifikasi', '=', $id)->delete();
+
+        foreach ($request->metode as $metode){
+            selectedmetodespip::create([
+                'id_resiko_teridentifikasi'  => $id,
+                'id_metode_spip' => $metode
+            ]);
+        }
+
         return redirect('resiko-teridentifikasi')->with('status','Berhasil menyimpan data');
     }
 
@@ -812,6 +836,7 @@ class ResikoteridentifikasiController extends Controller
      */
     public function destroy($id)
     {
+        selectedmetodespip::where('id_resiko_teridentifikasi', '=', $id)->delete();
         resikoteridentifikasi::destroy($id);
     }
 
@@ -876,7 +901,7 @@ class ResikoteridentifikasiController extends Controller
 
             return response()->json($data);
     }
-    
+
     // ========================== Filter =============================
     public function caridepartmenfilter(Request $request){
         if($request->has('q')){

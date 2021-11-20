@@ -141,7 +141,8 @@ Edit Risiko Teridentifikasi | ARMS
                         <input type="email" class="form-control" id="email">
                     </div>
                 </div> -->
-                <div class="form-group row">
+
+                <!-- <div class="form-group row">
                     <label class="control-label col-sm-3 align-self-center" for="email">Metode Pencapaian SPIP<i
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
@@ -152,7 +153,22 @@ Edit Risiko Teridentifikasi | ARMS
                             @endforeach
                         </select>
                     </div>
+                </div> -->
+
+                <div class="form-group row">
+                    <label class="control-label col-sm-3 align-self-center" for="edit_metode">Metode Pencapaian SPIP<i class="bintang">*</i>
+                    </label>
+                    <div class="col-sm-9">
+                        <!-- Select2 -->
+                        <select name="metode[]" multiple="multiple" class="form-control select2" id="edit_metode" style="width: 100%;"
+                            data-placeholder="Search ...">
+                            @foreach($selectedspip as $spip)
+                            <option selected value="{{$spip->metode->id}}">{{$spip->metode->metode}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
+
                 <div class="form-group row">
                     <label class="control-label col-sm-3 align-self-center" for="email">Status Pemenuhan Selera Resiko<i
                             class="bintang">*</i></label>
@@ -333,6 +349,13 @@ Edit Risiko Teridentifikasi | ARMS
 @push('script')
 <script src="{{asset('phppiechart/assets/js/highcharts.js')}}"></script>
 <script src="{{asset('assets/customjs/backend/resiko_teridentifikasi.js')}}"></script>
+
+<script src="{{asset('assets/plugins/select2/js/select2.js')}}"></script>
+<script src="{{asset('assets/plugins/select2/js/select2.min.js')}}"></script>
+<script src="{{asset('assets/plugins/select2/js/select2.full.js')}}"></script>
+<script src="{{asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
+<script src="{{asset('assets/customjs/backend/loading.js')}}"></script>
+<script src="{{asset('assets/customjs/backend/add_resiko_teridentifikasi.js')}}"></script>
 <!-- <script>
 $(document).ready(function() {
     $('.js-example-basic-single').select2();

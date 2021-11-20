@@ -92,6 +92,7 @@ Route::group(['middleware' => ['auth']],function(){
 
     Route::resource('metodepencapaiantujuanspip', 'backend\MetodepencapaiantujuanspipController');
     Route::get('data-metodepencapaiantujuanspip', 'backend\MetodepencapaiantujuanspipController@listdata');
+    Route::get('cari_metode', 'backend\MetodepencapaiantujuanspipController@cari_metode');
 
     Route::resource('departemen', 'backend\DepartemenController');
     Route::get('data-departemen', 'backend\DepartemenController@listdata');

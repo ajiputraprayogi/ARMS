@@ -112,7 +112,17 @@ Identifikasi Risiko | ARMS
                     </div>
                 </div> -->
                 <div class="form-group row">
-                    <label class="control-label col-sm-3 align-self-center" for="email">Metode Pencapaian SPIP<i
+                    <label class="control-label col-sm-3 align-self-center" for="cari_metode">Metode Pencapaian SPIP<i class="bintang">*</i>
+                    </label>
+                    <div class="col-sm-9">
+                        <!-- Select2 -->
+                        <select name="metode[]" multiple="multiple" class="form-control select2" id="cari_metode" style="width: 100%;"
+                            data-placeholder="Search ...">
+                        </select>
+                    </div>
+                </div>
+                <!-- <div class="form-group row">
+                    <label class="control-label col-sm-3 align-self-center" for="cari_metode">Metode Pencapaian SPIP<i
                             class="bintang">*</i></label>
                     <div class="col-sm-9">
                         <select class="form-control" name="metode" id="">
@@ -122,7 +132,7 @@ Identifikasi Risiko | ARMS
                             @endforeach
                         </select>
                     </div>
-                </div>
+                </div> -->
                 <hr>
                 <div class="form-group" align="center">
                     <b>Pengajuan dan Persetujuan</b>
@@ -202,6 +212,13 @@ Identifikasi Risiko | ARMS
 @push('script')
 <script src="{{asset('phppiechart/assets/js/highcharts.js')}}"></script>
 <script src="{{asset('assets/customjs/backend/resiko_teridentifikasi.js')}}"></script>
+
+<script src="{{asset('assets/plugins/select2/js/select2.js')}}"></script>
+<script src="{{asset('assets/plugins/select2/js/select2.min.js')}}"></script>
+<script src="{{asset('assets/plugins/select2/js/select2.full.js')}}"></script>
+<script src="{{asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
+<script src="{{asset('assets/customjs/backend/loading.js')}}"></script>
+<script src="{{asset('assets/customjs/backend/add_resiko_teridentifikasi.js')}}"></script>
 <!-- <script>
 $(document).ready(function() {
     $('.js-example-basic-single').select2();
