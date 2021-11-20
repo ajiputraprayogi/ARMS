@@ -103,6 +103,7 @@ Route::group(['middleware' => ['auth']],function(){
 
     Route::resource('klasifikasisubunsurspip', 'backend\KlasifikasisubunsurspipController');
     Route::get('data-klasifikasisubunsurspip', 'backend\KlasifikasisubunsurspipController@listdata');
+    Route::get('/cari_klasifikasi', 'backend\KlasifikasisubunsurspipController@cari_klasifikasi');
 
     Route::resource('user', 'backend\UserController');
     Route::get('data-user', 'backend\UserController@listdata');

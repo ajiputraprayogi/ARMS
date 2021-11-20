@@ -20,6 +20,17 @@ class KlasifikasisubunsurspipController extends Controller
         return view('backend.klasifikasi_sub_unsur_spip.index',['data'=>$data]);
     }
 
+    public function cari_klasifikasi(Request $request){
+        if($request->has('q')){
+            $cari=$request->q;
+            $data=klasifikasi_sub_unsur_spip::where('klasifikasi_sub_unsur_spip','like','%'.$cari.'%')->get();
+            $print=[
+                'klasifikasi'=>$data,
+            ];
+            return response()->json($print);
+        }
+    }
+
     public function listdata(){
         return Datatables::of(klasifikasi_sub_unsur_spip::all())->make(true);
     }

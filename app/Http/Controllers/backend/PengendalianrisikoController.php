@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
 use App\pengendalian_risiko;
+use App\selectedklasifikasispip;
 use Carbon\Carbon;
 use Session;
 use Auth;
@@ -24,8 +25,8 @@ class PengendalianrisikoController extends Controller
         array_push($id_atasan,$id);
         //dd(count($id_atasan));
 
-        for ($i=0; $i <$i_limit ; $i++) { 
-            for ($j=0; $j < count($id_atasan) ; $j++) { 
+        for ($i=0; $i <$i_limit ; $i++) {
+            for ($j=0; $j < count($id_atasan) ; $j++) {
                 $data = DB::table('departemen')->where('id_atasan',$id_atasan[$j])->get();
                 if(count($data)>0){
                     foreach($data as $row){
@@ -163,7 +164,7 @@ class PengendalianrisikoController extends Controller
             ->orderby('pengendalian_risiko.id','desc')
             ->get();
         }
-        
+
         if($active_departemen!='Semua Departemen'){
             if($active_status!='Semua Status'){
                 if($active_target!=''){
@@ -371,7 +372,7 @@ class PengendalianrisikoController extends Controller
                             ->orderby('pengendalian_risiko.id','desc')
                             // ->groupby('pengendalian_risiko.faktur')
                             ->get();
-                            // dd($data); 
+                            // dd($data);
                         }
                     }else{
                         if($active_kode!='Semua Kode Risiko'){
@@ -488,7 +489,7 @@ class PengendalianrisikoController extends Controller
                             ->orderby('pengendalian_risiko.id','desc')
                             // ->groupby('pengendalian_risiko.faktur')
                             ->get();
-                            // dd($data);   
+                            // dd($data);
                         }
                     }else{
                         if($active_kode!='Semua Kode Risiko'){
@@ -542,7 +543,7 @@ class PengendalianrisikoController extends Controller
                             ->whereBetween('pengendalian_risiko.target_waktu_akhir', array($tglsatuformat_akhir, $tglduaformat_akhir))
                             // ->orderby('pengendalian_risiko.id','desc')
                             ->get();
-                            // dd($data);   
+                            // dd($data);
                         }
                     }else{
                         if($active_kode!='Semua Kode Risiko'){
@@ -626,7 +627,7 @@ class PengendalianrisikoController extends Controller
         return view('backend.pengendalian_risiko.pengendalian_risiko',compact('data','departemen','status','get_target_waktu','get_target_waktu_akhir','tahun','kode_risiko','active_kode','active_departemen','active_status','active_tahun'));
     }
 
-    
+
     //=======================================================================
     public function create()
     {
@@ -656,7 +657,7 @@ class PengendalianrisikoController extends Controller
         return view('backend.pengendalian_risiko.add_pengendalian_risiko', compact('risikoterakhir','dampakterakhir','frekuensiterakhir','klasifikasi','skorrisiko'));
     }
 
-    
+
     //=======================================================================
     public function store(Request $request)
     {
@@ -670,7 +671,7 @@ class PengendalianrisikoController extends Controller
             'id_akar_masalah'=>'required',
             'kode_tindak_pengendalian'=>'required',
             'kegiatan_pengendalian'=>'required',
-            'klasifikasi_sub_unsur_spip'=>'required',
+            'klasifikasi'=>'required',
             'penanggung_jawab'=>'required',
             'indikator_keluaran'=>'required',
             'target_waktu'=>'required',
@@ -691,7 +692,7 @@ class PengendalianrisikoController extends Controller
                 $tgldua = $target_waktu[1];
             }
         }
-        DB::table('pengendalian_risiko')->insert([
+        $add_pengendalian = pengendalian_risiko::create([
             'faktur'=>$request->faktur,
             'id_manajemen'=>$request->id_manajemen,
             'id_departemen'=>$request->id_departemen,
@@ -701,7 +702,7 @@ class PengendalianrisikoController extends Controller
             'respons_risiko'=>$respons_risiko,
             'detail_respons_risiko'=>$request->detail_respons_risiko,
             'kegiatan_pengendalian'=>$request->kegiatan_pengendalian,
-            'id_klasifikasi_sub_unsur_spip'=>$request->klasifikasi_sub_unsur_spip,
+            'id_klasifikasi_sub_unsur_spip'=> 1,
             'penanggung_jawab'=>$request->penanggung_jawab,
             'indikator_keluaran'=>$request->indikator_keluaran,
             'target_waktu'=>$tglsatu ? Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d'): '',
@@ -712,17 +713,25 @@ class PengendalianrisikoController extends Controller
             'pr_saat_ini'=>$request->pr_saat_ini,
             'besaran_saat_ini'=>$request->besaran_saat_ini,
         ]);
+
+        foreach ($request->klasifikasi as $klasifikasi){
+            selectedklasifikasispip::create([
+                'id_pengendalian_risiko'  => $add_pengendalian->id,
+                'id_klasifikasi_spip' => $klasifikasi
+            ]);
+        }
+
         return redirect('pengendalian')->with('status','Berhasil menambah data');
     }
 
-   
+
     //=======================================================================
     public function show($id)
     {
         //
     }
 
-    
+
     //=======================================================================
     public function edit($id)
     {
@@ -755,10 +764,13 @@ class PengendalianrisikoController extends Controller
         ->leftJoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
         ->leftJoin('klasifikasi_sub_unsur_spip','klasifikasi_sub_unsur_spip.id','=','pengendalian_risiko.id_klasifikasi_sub_unsur_spip')
         ->where('pengendalian_risiko.id','=',$id)->get();
-        return view('backend.pengendalian_risiko.edit_pengendalian_risiko', compact('risikoterakhir','dampakterakhir','frekuensiterakhir','klasifikasi','skorrisiko','data'));
+
+        $selectedspip = selectedklasifikasispip::where('id_pengendalian_risiko', '=', $id)->with('klasifikasi')->get();
+
+        return view('backend.pengendalian_risiko.edit_pengendalian_risiko', compact('risikoterakhir','dampakterakhir','frekuensiterakhir','klasifikasi','skorrisiko','data', 'selectedspip'));
     }
 
-    
+
     //=======================================================================
     public function update(Request $request, $id)
     {
@@ -770,7 +782,7 @@ class PengendalianrisikoController extends Controller
             // 'risiko'=>'required',
             'id_risiko'=>'required',
             'kegiatan_pengendalian'=>'required',
-            'klasifikasi_sub_unsur_spip'=>'required',
+            'klasifikasi'=>'required',
             'penanggung_jawab'=>'required',
             'indikator_keluaran'=>'required',
             'target_waktu'=>'required',
@@ -794,20 +806,30 @@ class PengendalianrisikoController extends Controller
             'respons_risiko'=>$respons_risiko,
             'detail_respons_risiko'=>$request->detail_respons_risiko,
             'kegiatan_pengendalian'=>$request->kegiatan_pengendalian,
-            'id_klasifikasi_sub_unsur_spip'=>$request->klasifikasi_sub_unsur_spip,
+            'id_klasifikasi_sub_unsur_spip'=> 1,
             'penanggung_jawab'=>$request->penanggung_jawab,
             'indikator_keluaran'=>$request->indikator_keluaran,
             'target_waktu'=>Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d'),
             'target_waktu_akhir'=>Carbon::createFromFormat('d-m-Y',$tgldua)->format('Y-m-d'),
             'status_pelaksanaan'=>$request->status_pelaksanaan,
         ]);
+
+        selectedklasifikasispip::where('id_pengendalian_risiko', '=', $id)->delete();
+        foreach ($request->klasifikasi as $klasifikasi){
+            selectedklasifikasispip::create([
+                'id_pengendalian_risiko'  => $id,
+                'id_klasifikasi_spip' => $klasifikasi
+            ]);
+        }
+
         return redirect('pengendalian')->with('status','Berhasil mengubah data');
     }
 
-    
+
     //=======================================================================
     public function destroy($id)
     {
+        selectedklasifikasispip::where('id_pengendalian_risiko', '=', $id)->delete();
         DB::table('pengendalian_risiko')->where('id',$id)->delete();
     }
 
@@ -899,8 +921,8 @@ class PengendalianrisikoController extends Controller
         array_push($id_atasan,$iduser);
         //dd(count($id_atasan));
 
-        for ($i=0; $i <$i_limit ; $i++) { 
-            for ($j=0; $j < count($id_atasan) ; $j++) { 
+        for ($i=0; $i <$i_limit ; $i++) {
+            for ($j=0; $j < count($id_atasan) ; $j++) {
                 $data = DB::table('departemen')->where('id_atasan',$id_atasan[$j])->get();
                 if(count($data)>0){
                     foreach($data as $row){

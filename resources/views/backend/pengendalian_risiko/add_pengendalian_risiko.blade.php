@@ -131,7 +131,8 @@ legend.scheduler-border {
                                     id="kegiatan_pengendalian" rows="5" required></textarea>
                             </div>
                         </div>
-                        <div class="form-group row">
+
+                        <!-- <div class="form-group row">
                             <label class="control-label col-sm-3" for="">Klasifikasi Sub Unsur SPIP<i class="bintang">*</i></label>
                             <div class="col-sm-9">
                                 <select class="form-control" name="klasifikasi_sub_unsur_spip" id="" required>
@@ -140,7 +141,17 @@ legend.scheduler-border {
                                     @endforeach
                                 </select>
                             </div>
+                        </div> -->
+                        <div class="form-group row">
+                            <label class="control-label col-sm-3" for="">Klasifikasi Sub Unsur SPIP<i class="bintang">*</i></label>
+                            <div class="col-sm-9">
+                                <!-- Select2 -->
+                                <select name="klasifikasi[]" multiple="multiple" class="form-control select2" id="cari_klasifikasi" style="width: 100%;"
+                                    data-placeholder="Search ...">
+                                </select>
+                            </div>
                         </div>
+
                         <div class="form-group row">
                             <label class="control-label col-sm-3 align-self-center" for="">Penanggung Jawab<i class="bintang">*</i></label>
                             <div class="col-sm-9">
@@ -212,6 +223,9 @@ legend.scheduler-border {
 <script src="{{asset('assets/customjs/backend/loading.js')}}"></script>
 <script src="{{asset('assets/customjs/backend/pengendalian_risiko_input.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script src="{{asset('assets/customjs/backend/add_pengendalian_risiko.js')}}"></script>
+
 <script>
     $(function() {
     flatpickr("#tanggal", {
