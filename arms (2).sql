@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2021 at 09:21 AM
+-- Generation Time: Nov 20, 2021 at 10:28 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -611,7 +611,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (27, '2021_09_28_065159_create_pemangku_kepentingans_table', 3),
 (28, '2017_08_03_055212_create_auto_numbers', 4),
 (30, '2021_11_19_024130_create_activity_log_table', 5),
-(31, '2021_11_20_060346_create_selected_metode_spip_table', 6);
+(31, '2021_11_20_060346_create_selected_metode_spip_table', 6),
+(32, '2021_11_20_082838_create_selected_klasifikasi_spip_table', 7);
 
 -- --------------------------------------------------------
 
@@ -881,7 +882,7 @@ CREATE TABLE `pengendalian_risiko` (
 
 INSERT INTO `pengendalian_risiko` (`id`, `faktur`, `id_manajemen`, `id_departemen`, `id_risiko`, `id_akar_masalah`, `kode_tindak_pengendalian`, `respons_risiko`, `detail_respons_risiko`, `kegiatan_pengendalian`, `id_klasifikasi_sub_unsur_spip`, `penanggung_jawab`, `indikator_keluaran`, `target_waktu`, `target_waktu_akhir`, `status_pelaksanaan`, `frekuensi_saat_ini`, `dampak_saat_ini`, `pr_saat_ini`, `besaran_saat_ini`, `created_at`, `updated_at`) VALUES
 (17, '2', '13', '7', '24', '15', 'PG.G.1.1.BMN.6.1.MD.1', 'Mengurangi Frekuensi', 'Melakukan penelusuran bukti transaksi dan kejadian penting.', '1. Memanfaatkan teknologi informasi untuk memperoleh bukti (P18.c)\r\n2. Pencatatan Akurat dan Tepat waktu atas transaksi dan kejadian penting (P18.h)', '1', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-09-29', '2021-10-01', 'Terlambat', '3 - Kadang Terjadi', '3 - Moderat', '#ffff00', '14', NULL, NULL),
-(18, '2', '13', '7', '25', '16', 'PG.G.1.1.BMN.5.1.MY.1', 'Mengurangi Frekuensi, Mengurangi Dampak', 'Melakukan penelusuran bukti transaksi dan kejadian penting untuk mendapatkan data dan informasi penting', 'Reviu berjenjang secara efektif (P18.a)', '1', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-10-26', '2021-10-26', 'Selesai Dilaksanakan', '3 - Kadang Terjadi', '3 - Moderat', '#ffff00', '14', NULL, NULL),
+(18, '2', '13', '7', '25', '16', 'PG.G.1.1.BMN.5.1.MY.1', 'Mengurangi Frekuensi, Mengurangi Dampak', 'Melakukan penelusuran bukti transaksi dan kejadian penting untuk mendapatkan data dan informasi penting', 'Reviu berjenjang secara efektif (P18.a)', '1', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-10-26', '2021-10-26', 'Belum Dilaksanakan', '3 - Kadang Terjadi', '3 - Moderat', '#ffff00', '14', NULL, NULL),
 (19, '2', '13', '7', '26', '17', 'PG.G.1.1.BMN.6.2.MD.1', 'Mengurangi Frekuensi, Mengurangi Dampak', 'Melakukan reviu berjenjang atas transaksi dan kejadian penting', 'Reviu berjenjang secara efektif (P18.a)', '1', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-10-28', '2021-10-28', 'Terlambat', '2 - Jarang Terjadi', '4 - Signifikan', '#ffff00', '13', NULL, NULL),
 (20, '2', '13', '7', '27', '18', 'PG.G.1.1.BMN.6.3.MD.1', 'Mengurangi Frekuensi, Mengurangi Dampak', 'Melakukan penelurusan bukti atas transaksi dan kejadian penting.', 'Pengendalian fisik atas aset (P.18.d)', '1', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-11-05', '2021-11-05', 'Selesai Dilaksanakan', '3 - Kadang Terjadi', '4 - Signifikan', '#ffc000', '17', NULL, NULL),
 (21, '2', '13', '7', '28', '19', 'PG.G.1.1.BMN.5.2.MD.1', 'Mengurangi Frekuensi', 'Melakukan reviu kinerja atas pencatatan transaksi dan kejadian penting.', '1. Memanfaatkan teknologi informasi untuk memperoleh bukti (P18.c)\r\n2. Pencatatan Akurat dan Tepat waktu atas transaksi dan kejadian penting (P18.h)\r\n3. Akuntabilitas sumberdaya dan pencatatannya (P18.j)', '1', 'Kepala Biro KP & BMN', 'Bukti Transaksi atas kejadian penting', '2021-11-01', '2021-11-06', 'Selesai Dilaksanakan', '2 - Jarang Terjadi', '4 - Signifikan', '#ffff00', '13', NULL, NULL),
@@ -916,7 +917,8 @@ INSERT INTO `pengendalian_risiko` (`id`, `faktur`, `id_manajemen`, `id_departeme
 (50, '3', '14', '5', '47', '38', 'PG.G.1.1.INV.ATT.6.7.MD.1', 'Mengurangi Frekuensi', 'g', 'g', '1', 'g', 'g', '2021-11-01', '2021-11-03', 'Terlambat', '3 - Kadang Terjadi', '4 - Signifikan', '#ffc000', '17', NULL, NULL),
 (51, '3', '14', '5', '43', '34', 'PG.G.1.1.INV.ATT.6.3.MD.1', 'Mengurangi Frekuensi, Mengurangi Dampak', 'h', 'h', '1', 'h', 'h', '2021-08-09', '2021-08-13', 'Terlambat', '1 - Hampir Tidak Terjadi', '3 - Moderat', '#32bdea', '5', NULL, NULL),
 (52, '3', '14', '5', '43', '34', 'PG.G.1.1.INV.ATT.6.3.MD.1', 'Mengurangi Dampak', 'i', 'i', '1', 'i', 'i', '2021-05-03', '2021-05-28', 'Terlambat', '1 - Hampir Tidak Terjadi', '3 - Moderat', '#32bdea', '5', NULL, NULL),
-(53, '3', '14', '5', '44', '35', 'PG.G.1.1.INV.ATT.6.4.MD.1', 'Mengurangi Dampak', 'j', 'j', '1', 'j', 'j', '2020-09-06', '2020-09-10', 'Terlambat', '1 - Hampir Tidak Terjadi', '5 - Sangat Signifikan', '#ff0000', '20', NULL, NULL);
+(53, '3', '14', '5', '44', '35', 'PG.G.1.1.INV.ATT.6.4.MD.1', 'Mengurangi Dampak', 'j', 'j', '1', 'j', 'j', '2020-09-06', '2020-09-10', 'Terlambat', '1 - Hampir Tidak Terjadi', '5 - Sangat Signifikan', '#ff0000', '20', NULL, NULL),
+(54, NULL, '7', '13', '26', '17', 'PG.G.1.1.BMN.6.2.MD.1', 'Mengurangi Frekuensi', 'TESTING', 'TESTING', '1', 'TESTING', 'TESTING', '2021-11-20', '2021-11-30', 'Belum Dilaksanakan', '', '', '', '', '2021-11-20 01:59:00', '2021-11-20 01:59:00');
 
 -- --------------------------------------------------------
 
@@ -1110,6 +1112,30 @@ INSERT INTO `roles` (`id`, `role`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `selected_klasifikasi_spip`
+--
+
+CREATE TABLE `selected_klasifikasi_spip` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_klasifikasi_spip` int(11) NOT NULL,
+  `id_pengendalian_risiko` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `selected_klasifikasi_spip`
+--
+
+INSERT INTO `selected_klasifikasi_spip` (`id`, `id_klasifikasi_spip`, `id_pengendalian_risiko`, `created_at`, `updated_at`) VALUES
+(3, 3, 54, '2021-11-20 02:08:06', '2021-11-20 02:08:06'),
+(4, 5, 54, '2021-11-20 02:08:06', '2021-11-20 02:08:06'),
+(9, 1, 18, '2021-11-20 02:25:00', '2021-11-20 02:25:00'),
+(10, 5, 18, '2021-11-20 02:25:00', '2021-11-20 02:25:00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `selected_metode_spip`
 --
 
@@ -1200,7 +1226,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `name`, `email`, `telp`, `level`, `id_departemen`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'superadmin', 'Superadmin', 'superadmin@gmail.com', '08123456789', '1', '7', NULL, '$2y$10$9BwnGxby2.yINEAZvYPBBev9KSxYzfE/m7yL4L2X4/jMr/8g6sIPO', NULL, '2021-09-27 20:58:30', '2021-11-18 05:34:37'),
-(2, 'admin', 'admin', 'admin@gmail.com', '08123456789', '2', '22', NULL, '$2y$10$/ygf3rh9NcPsGErk8j4gLeObeq0ajzWbEB8IvI8JaJMOSiWs/b7EW', NULL, NULL, '2021-11-20 00:15:44'),
+(2, 'admin', 'admin', 'admin@gmail.com', '08123456789', '2', '7', NULL, '$2y$10$/ygf3rh9NcPsGErk8j4gLeObeq0ajzWbEB8IvI8JaJMOSiWs/b7EW', NULL, NULL, '2021-11-20 01:59:37'),
 (3, 'user', 'user', 'user@gmail.com', '08123456789', '3', '24', NULL, '$2y$10$9yJQmu.kna.Ti64AJV5JmuyNjLzwQbbSDfKI/WYo5NdscfFBKm/Yu', NULL, NULL, '2021-11-06 20:53:55'),
 (4, 'ajiputraprayogi', 'ajiputraprayogi', 'ajiputraprayogi@gmail.com', '08123456789', 'user', '', NULL, '$2y$10$cdrcMj2qdLvMmQdJaTNWfuW1nogWqoDqmvrk3YtKYfoFLM.IK82wa', NULL, '2021-11-06 20:47:54', '2021-11-06 20:47:54');
 
@@ -1377,6 +1403,12 @@ ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `selected_klasifikasi_spip`
+--
+ALTER TABLE `selected_klasifikasi_spip`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `selected_metode_spip`
 --
 ALTER TABLE `selected_metode_spip`
@@ -1493,7 +1525,7 @@ ALTER TABLE `metode_pencapaian_tujuan`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `pelaksanaan_manajemen_risiko`
@@ -1535,7 +1567,7 @@ ALTER TABLE `pencatatan_peristiwa_resiko`
 -- AUTO_INCREMENT for table `pengendalian_risiko`
 --
 ALTER TABLE `pengendalian_risiko`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `penyebab`
@@ -1566,6 +1598,12 @@ ALTER TABLE `resiko_teridentifikasi`
 --
 ALTER TABLE `roles`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `selected_klasifikasi_spip`
+--
+ALTER TABLE `selected_klasifikasi_spip`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `selected_metode_spip`
