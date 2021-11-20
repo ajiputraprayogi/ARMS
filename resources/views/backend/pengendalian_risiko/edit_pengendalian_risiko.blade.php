@@ -74,9 +74,9 @@ legend.scheduler-border {
                                         ({{$dmr->priode_penerapan}})</option>
                                     @endforeach
                                 </select>
-                                <input type="hidden" value="{{$row->id_departemen}}" name="id_manajemen"
+                                <input type="hidden" value="{{$row->id_manajemen}}" name="id_manajemen"
                                     id="id_manajemen">
-                                <input type="hidden" value="{{$row->id_manajemen}}" name="id_departemen"
+                                <input type="hidden" value="{{$row->id_departemen}}" name="id_departemen"
                                     id="id_departemen">
                             </div>
                         </div>
