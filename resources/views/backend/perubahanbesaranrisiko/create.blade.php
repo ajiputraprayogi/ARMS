@@ -100,6 +100,9 @@ legend.scheduler-border {
                     <fieldset class="scheduler-border">
                         <legend class="scheduler-border">Resiko Yang Direspons</legend>
                         <div class="form-group row">
+                            <div class="col-md-12">
+                                <p class="mp-0"><small>*Panduan Frekuensi dan Dampak?<a class="btn-md" target="_blank" href="/panduan/Panduan_Menentukan_Besaran_Risiko.pdf"> <u>Klik Disini</u></a></small></p>
+                            </div>
                             <label class="control-label col-sm-3 align-self-center" for="email">Skor Frekuensi Saat
                                 Ini</label>
                             <div class="col-sm-9">

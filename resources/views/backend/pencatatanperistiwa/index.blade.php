@@ -112,7 +112,7 @@
                             <td>{{$item->pemicu}}</td>
                             <td>{{$item->uraian}}</td>
                             <td>{{$item->waktu}}</td>
-                            <td>{{ $item->nilai }} || {{ $item->nama }}</td>
+                            <td>{{ $item->nilai }} - {{ $item->nama }}</td>
                             <td>{{$item->penyebab}}</td>
                             <td>
                             <a class="btn btn-success btn-sm m-1"

@@ -136,9 +136,13 @@
                             <select class="form-control" name="skor" id="" required>
                                 <option selected disabled value="">Pilih Skor Dampak</option>
                                 @foreach($dampakterakhir as $item)
-                                <option value="{{$item->id}}" {{ $item->id == $item1->kriteria_id ? 'selected' : '' }}>{{ $item->nilai }} || {{$item->nama}}</option>
+                                <option value="{{$item->id}}" {{ $item->id == $item1->kriteria_id ? 'selected' : '' }}>{{ $item->nilai }} - {{$item->nama}}</option>
                                 @endforeach
                             </select>
+                            </div>
+                            <label class="control-label col-sm-3" for=""><i class="bintang"></i></label>
+                            <div class="col-md-9">
+                                <p class="mp-0"><small>*Panduan Frekuensi dan Dampak?<a class="btn-md" target="_blank" href="/panduan/Panduan_Menentukan_Besaran_Risiko.pdf"> <u>Klik Disini</u></a></small></p>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -153,7 +157,7 @@
                             <select class="form-control" name="kode_penyebab" id="" required>
                                 <option selected disabled value="">Pilih Kategori Penyebab</option>
                                 @foreach($penyebab as $item)
-                                <option value="{{$item->id}}" {{ $item->id == $item1->penyebab_id ? 'selected' : '' }}>{{ $item->kode }} || {{$item->penyebab}}</option>
+                                <option value="{{$item->id}}" {{ $item->id == $item1->penyebab_id ? 'selected' : '' }}>{{ $item->kode }} - {{$item->penyebab}}</option>
                                 @endforeach
                             </select>
                             </div>
