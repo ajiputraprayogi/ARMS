@@ -175,7 +175,6 @@ class PelaporanpengelolaanrisikoController extends Controller
                     // dd($data);
                 }else{
                     $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])
-                    // ->where('id_unit_kerja', $id_departemen)
                     ->orWhereHas('tembusan', function($q) use($id_departemen ){
                         $q->where('id_departemen', '=', $id_departemen);
                     })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
