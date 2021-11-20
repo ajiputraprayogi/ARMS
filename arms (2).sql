@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 19, 2021 at 06:27 AM
+-- Generation Time: Nov 20, 2021 at 09:21 AM
 -- Server version: 10.4.21-MariaDB
--- PHP Version: 7.3.31
+-- PHP Version: 7.4.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `arms`
+-- Database: `arms_new`
 --
 
 -- --------------------------------------------------------
@@ -610,7 +610,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (26, '2021_09_28_061908_create_konteks_table', 2),
 (27, '2021_09_28_065159_create_pemangku_kepentingans_table', 3),
 (28, '2017_08_03_055212_create_auto_numbers', 4),
-(30, '2021_11_19_024130_create_activity_log_table', 5);
+(30, '2021_11_19_024130_create_activity_log_table', 5),
+(31, '2021_11_20_060346_create_selected_metode_spip_table', 6);
 
 -- --------------------------------------------------------
 
@@ -1080,7 +1081,9 @@ INSERT INTO `resiko_teridentifikasi` (`id`, `faktur`, `kode_risiko`, `number`, `
 (49, '3', 'G.1.1.INV.ATT.6', '9', 'G.1.1.INV.ATT.6.9', '5', 'Inspektorat Investigasi', '2021', '44', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Laporan tidak diterima oleh yang berhak .', '7', '6', 'Penurunan Reputasi.', '4', 'disetujui', 'Inspektorat Investigasi', '2021-10-24', 'Inspektorat Jenderal', '2021-10-25', NULL, 'Memenuhi Selera Risiko', 'INV.ATT', '49', '#ffff00', '#00b050', '1 - Hampir Tidak Terjadi', '4 - Signifikan', '2 - Jarang Terjadi', '4 - Signifikan', '13', '8', '2021-10-24 21:10:12', '2021-10-24 18:22:13'),
 (50, '3', 'G.1.1.INV.ATT.7', '3', 'G.1.1.INV.ATT.7.3', '5', 'Inspektorat Investigasi', '2021', '44', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Rekomendasi tidak dapat ditindaklanjuti.', '7', '7', 'Realisasi Capaian Kinerja Sasaran Strategis.', '1', 'disetujui', 'Inspektorat Investigasi', '2021-10-24', 'Inspektorat Jenderal', '2021-10-25', NULL, 'Belum memenuhi selera risiko', 'INV.ATT', '50', '#ff0000', '#ff0000', '2 - Jarang Terjadi', '5 - Sangat Signifikan', '3 - Kadang Terjadi', '5 - Sangat Signifikan', '22', '21', '2021-10-24 21:10:51', '2021-10-24 21:10:51'),
 (51, '1', 'G.1.1.EP.LAKIN.6', '2', 'G.1.1.EP.LAKIN.6.2', '8', 'Sekretariat Inspektorat Jenderal', '2021', '34', '1', 'Sasaran Strategis/Program', 'G.1.1', 'Inet mati', '6', '6', 'Test', '6', 'diajukan', 'Internal', '2021-11-02', '', '0000-00-00', NULL, 'Memenuhi Selera Risiko', 'EP.LAKIN', NULL, '#00b050', '#00b050', '2 - Jarang Terjadi', '2 - Minor', '2 - Jarang Terjadi', '3 - Moderat', '11', '7', '2021-11-02 13:33:36', '2021-11-02 13:33:36'),
-(52, '4', 'test.2.4', '1', 'test.2.4.1', '22', 'ITJEN', '2022', '46', '7', 'Proses Bisnis', 'test', 'sadf', '4', '4', 'sdfa', '5', 'disetujui', 'sdf', '2021-11-07', 'sdfa', '2021-11-24', NULL, 'Belum memenuhi selera risiko', '2', NULL, '#BF00FF', '#BF00FF', NULL, NULL, NULL, NULL, '0', '0', '2021-11-07 04:03:55', '2021-11-07 04:03:55');
+(52, '4', 'test.2.3', '1', 'test.2.3.1', '22', 'ITJEN', '2022', '46', '7', 'Proses Bisnis', 'test', 'sadf', '4', '3', 'sdfa', '1', 'disetujui', 'sdf', '2021-11-07', 'sdfa', '2021-11-24', NULL, 'Belum memenuhi selera risiko', '2', NULL, '#BF00FF', '#BF00FF', NULL, NULL, NULL, NULL, '0', '0', '2021-11-07 04:03:55', '2021-11-20 01:16:39'),
+(53, '3', 'G.1.1.INV.ATT.1', '1', 'G.1.1.INV.ATT.1.1', '5', 'Inspektorat Investigasi', '2021', '44', '1', 'Sasaran Strategis/Program', 'G.1.1', 'TESTING', '1', '1', 'TESTING', '', 'diajukan', 'TESTING', '2021-11-20', '', '0000-00-00', NULL, 'Belum memenuhi selera risiko', 'INV.ATT', NULL, '#BF00FF', '#BF00FF', NULL, NULL, NULL, NULL, '0', '0', '2021-11-20 07:11:47', '2021-11-20 07:11:47'),
+(54, '3', 'G.1.1.INV.ATT.1', '2', 'G.1.1.INV.ATT.1.2', '5', 'Inspektorat Investigasi', '2021', '44', '1', 'Sasaran Strategis/Program', 'G.1.1', 'TESTING', '1', '1', 'TESTING', '1', 'diajukan', 'TESTING', '2021-11-20', '', '0000-00-00', NULL, 'Belum memenuhi selera risiko', 'INV.ATT', NULL, '#BF00FF', NULL, NULL, NULL, NULL, NULL, '0', '0', '2021-11-20 00:13:00', '2021-11-20 00:13:00');
 
 -- --------------------------------------------------------
 
@@ -1103,6 +1106,30 @@ INSERT INTO `roles` (`id`, `role`, `created_at`, `updated_at`) VALUES
 (1, 'Superadmin', NULL, NULL),
 (2, 'Admin', NULL, NULL),
 (3, 'User', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `selected_metode_spip`
+--
+
+CREATE TABLE `selected_metode_spip` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_metode_spip` int(11) NOT NULL,
+  `id_resiko_teridentifikasi` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `selected_metode_spip`
+--
+
+INSERT INTO `selected_metode_spip` (`id`, `id_metode_spip`, `id_resiko_teridentifikasi`, `created_at`, `updated_at`) VALUES
+(1, 1, 54, '2021-11-20 00:13:00', '2021-11-20 00:13:00'),
+(2, 6, 54, '2021-11-20 00:13:00', '2021-11-20 00:13:00'),
+(7, 4, 52, '2021-11-20 01:16:39', '2021-11-20 01:16:39'),
+(8, 6, 52, '2021-11-20 01:16:39', '2021-11-20 01:16:39');
 
 -- --------------------------------------------------------
 
@@ -1173,7 +1200,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `name`, `email`, `telp`, `level`, `id_departemen`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'superadmin', 'Superadmin', 'superadmin@gmail.com', '08123456789', '1', '7', NULL, '$2y$10$9BwnGxby2.yINEAZvYPBBev9KSxYzfE/m7yL4L2X4/jMr/8g6sIPO', NULL, '2021-09-27 20:58:30', '2021-11-18 05:34:37'),
-(2, 'admin', 'admin', 'admin@gmail.com', '08123456789', '2', '22', NULL, '$2y$10$/ygf3rh9NcPsGErk8j4gLeObeq0ajzWbEB8IvI8JaJMOSiWs/b7EW', NULL, NULL, '2021-11-06 21:06:55'),
+(2, 'admin', 'admin', 'admin@gmail.com', '08123456789', '2', '22', NULL, '$2y$10$/ygf3rh9NcPsGErk8j4gLeObeq0ajzWbEB8IvI8JaJMOSiWs/b7EW', NULL, NULL, '2021-11-20 00:15:44'),
 (3, 'user', 'user', 'user@gmail.com', '08123456789', '3', '24', NULL, '$2y$10$9yJQmu.kna.Ti64AJV5JmuyNjLzwQbbSDfKI/WYo5NdscfFBKm/Yu', NULL, NULL, '2021-11-06 20:53:55'),
 (4, 'ajiputraprayogi', 'ajiputraprayogi', 'ajiputraprayogi@gmail.com', '08123456789', 'user', '', NULL, '$2y$10$cdrcMj2qdLvMmQdJaTNWfuW1nogWqoDqmvrk3YtKYfoFLM.IK82wa', NULL, '2021-11-06 20:47:54', '2021-11-06 20:47:54');
 
@@ -1350,6 +1377,12 @@ ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `selected_metode_spip`
+--
+ALTER TABLE `selected_metode_spip`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tembusan`
 --
 ALTER TABLE `tembusan`
@@ -1460,7 +1493,7 @@ ALTER TABLE `metode_pencapaian_tujuan`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `pelaksanaan_manajemen_risiko`
@@ -1526,13 +1559,19 @@ ALTER TABLE `perubahan_besaran_risiko`
 -- AUTO_INCREMENT for table `resiko_teridentifikasi`
 --
 ALTER TABLE `resiko_teridentifikasi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `selected_metode_spip`
+--
+ALTER TABLE `selected_metode_spip`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tembusan`
