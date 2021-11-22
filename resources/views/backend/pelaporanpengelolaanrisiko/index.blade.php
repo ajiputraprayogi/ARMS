@@ -81,12 +81,51 @@
                         @foreach($data as $item)
                         {{-- @php $i++ @endphp --}}
                         <tr>
-                            <td>{{$item->periodepelaporan->nama_periode}}</td>
-                            <td class="">{{$item->departemen->nama}}</td>
+                            <td>{{$item->nama_periode}}</td>
+                            <td class="">{{$item->nama}}</td>
                             <td class="text-capitalize">{{$item->status}}</td>
                             <td class=""><a href="/pelaporan/{{$item->file}}">{{$item->file}}</a></td>
-                            <td class="">@foreach($item->tujuanpelaporan as $tujuan) {{ $tujuan->departemen->nama }}&nbsp; @endforeach</td>
-                            <td class="">@foreach($item->tembusan as $tujuan) {{ $tujuan->departemen->nama }}&nbsp; @endforeach</td>
+                            <td class="">
+                                @php
+                                $id_pengendalian = [];
+                                 if(count($data)>0){
+                                    foreach ($data as $row) {
+                                        array_push($id_pengendalian,$row->id);
+                                    }
+                                }
+                                // dd($id_pengendalian);
+                                    $kepada = DB::table('tujuanpelaporan')
+                                    ->select('tujuanpelaporan.*','departemen.nama')
+                                    ->leftjoin('departemen','departemen.id','=','tujuanpelaporan.id_departemen')
+                                    ->whereIn('tujuanpelaporan.id_pelaporan',$id_pengendalian)
+                                    ->get();
+                                    // dd($kepada);
+                                @endphp
+                                @foreach ($kepada as $rowkepada)
+                                    @if($rowkepada->id_pelaporan == $item->id) {{$rowkepada->nama}} @endif
+                                @endforeach
+                            </td>
+                            <td class="">
+                                @php
+                                $id_tembusan = [];
+                                 if(count($data)>0){
+                                    foreach ($data as $row) {
+                                        array_push($id_tembusan,$row->tembusan);
+                                    }
+                                }
+                                // dd($id_tembusan);
+                                    $tembusan = DB::table('tembusan')
+                                    ->select('tembusan.*','departemen.nama')
+                                    ->leftjoin('departemen','departemen.id','=','tembusan.id_departemen')
+                                    ->whereIn('tembusan.id_departemen',$id_tembusan)
+                                    ->groupby('tembusan.id_departemen')
+                                    ->get();
+                                    // dd($tembusan);
+                                @endphp
+                                @foreach ($tembusan as $rowtembusan)
+                                    @if($rowtembusan->id_departemen == $item->tembusan) {{$rowtembusan->nama}} @endif
+                                @endforeach
+                            </td>
                             <td class="text-center">
                             <div class="d-flex align-items-center list-action">
                             <a class="badge badge-info mr-2" data-toggle="modal" data-target="#show{{$item->id}}" title="View" data-original-title="View"><i class="ri-eye-line mr-0"></i></a>
@@ -112,13 +151,13 @@
                                             <div class="form-group row">
                                                 <label class="control-label col-sm-3 align-self-center" for="">Periode Pelaporan</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" name="periodepelaporan" class="form-control" value="{{$item->periodepelaporan->nama_periode}}" id="" readonly required>
+                                                    <input type="text" name="periodepelaporan" class="form-control" value="{{$item->nama_periode}}" id="" readonly required>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="control-label col-sm-3 align-self-center" for="">Unit Kerja</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" name="departemen" class="form-control" value="{{$item->departemen->nama}}" id="" readonly required>
+                                                    <input type="text" name="departemen" class="form-control" value="{{$item->nama}}" id="" readonly required>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -136,17 +175,17 @@
                                             <div class="form-group row">
                                                 <label class="control-label col-sm-3 align-self-center" for="">Kepada</label>
                                                 <div class="col-sm-9">
-                                                @foreach($item->tujuanpelaporan as $tp)
-                                                    {{$tp->departemen->nama}}&nbsp;
-                                                @endforeach
+                                                    @foreach ($kepada as $rowkepada)
+                                                        @if($rowkepada->id_pelaporan == $item->id) {{$rowkepada->nama}} @endif
+                                                    @endforeach
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="control-label col-sm-3 align-self-center" for="">Tembusan</label>
                                                 <div class="col-sm-9">
-                                                @foreach($item->tembusan as $t)
-                                                    {{$t->departemen->nama}}&nbsp;
-                                                @endforeach
+                                                    @foreach ($tembusan as $rowtembusan)
+                                                        @if($rowtembusan->id_departemen == $item->tembusan) {{$rowtembusan->nama}} @endif
+                                                    @endforeach
                                                 </div>
                                             </div>
 

@@ -21,30 +21,30 @@ class PelaporanpengelolaanrisikoController extends Controller
      */
     public function index(Request $request)
     {
-        $id_departemen = Auth::user()->id_departemen;
+        // $id_departemen = Auth::user()->id_departemen;
         // ===================================
-        // $id = Auth::user()->id_departemen;
-        // $id_dep=[];
-        // $id_departemen = [];
-        // $i_limit=1;
-        // array_push($id_departemen,$id);
-        // //dd(count($id_atasan));
+        $id = Auth::user()->id_departemen;
+        $id_dep=[];
+        $id_departemen = [];
+        $i_limit=1;
+        array_push($id_departemen,$id);
+        //dd(count($id_atasan));
 
-        // for ($i=0; $i <$i_limit ; $i++) { 
-        //     for ($j=0; $j < count($id_departemen) ; $j++) { 
-        //         $data = DB::table('departemen')->where('id_atasan',$id_departemen[$j])->get();
-        //         if(count($data)>0){
-        //             foreach($data as $row){
-        //                 array_push($id_departemen,$row->id);
-        //             }
-        //             $i_limit++;
-        //         }else{
-        //             $i_limit=$i;
-        //         }
-        //     }
-        // }
-        // // dd($id_departemen);
-        // // return $id_departemen;
+        for ($i=0; $i <$i_limit ; $i++) { 
+            for ($j=0; $j < count($id_departemen) ; $j++) { 
+                $data = DB::table('departemen')->where('id_atasan',$id_departemen[$j])->get();
+                if(count($data)>0){
+                    foreach($data as $row){
+                        array_push($id_departemen,$row->id);
+                    }
+                    $i_limit++;
+                }else{
+                    $i_limit=$i;
+                }
+            }
+        }
+        // dd($id_departemen);
+        // return $id_departemen;
         // ===================================
 
         $active_departemen = 'Semua Departemen';
@@ -77,7 +77,7 @@ class PelaporanpengelolaanrisikoController extends Controller
         $periodepelaporan = periodepelaporan::all();
         $departemen = DB::table('pelaporan_pengelolaan_risiko')
         ->leftjoin('departemen','departemen.id','=','pelaporan_pengelolaan_risiko.id_unit_kerja')
-        ->where('departemen.id',$id_departemen)
+        ->whereIn('departemen.id',$id_departemen)
         ->groupby('departemen.id')
         ->orderby('departemen.id','asc')
         ->get();
@@ -91,49 +91,89 @@ class PelaporanpengelolaanrisikoController extends Controller
         if($active_departemen !='Semua Departemen'){
             if($active_periode !='Semua Periode'){
                 if($active_status !='Semua Status'){
-                    $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])
-                    ->orWhereHas('tembusan', function($q) use($id_departemen ){
-                        $q->where('id_departemen', '=', $id_departemen);
-                    })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
-                        $q->where('id_departemen', '=', $id_departemen);
-                    })
-                    ->where('id_unit_kerja', $active_departemen)
-                    ->get()
-                    ->where('id_periode_pelaporan', $active_periode)
-                    ->where('status',$active_status);
+                    // $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])
+                    // ->orWhereHas('tembusan', function($q) use($id_departemen ){
+                    //     $q->where('id_departemen', '=', $id_departemen);
+                    // })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
+                    //     $q->where('id_departemen', '=', $id_departemen);
+                    // })
+                    // ->where('id_unit_kerja', $active_departemen)
+                    // ->get()
+                    // ->where('id_periode_pelaporan', $active_periode)
+                    // ->where('status',$active_status);
+                    $id_pengendalian = [];
+                    $data = DB::table('pelaporan_pengelolaan_risiko')
+                    ->select('pelaporan_pengelolaan_risiko.*','departemen.nama','periode_pelaporans.nama_periode','tembusan.id_departemen as tembusan')
+                    ->leftjoin('periode_pelaporans','periode_pelaporans.id','=','pelaporan_pengelolaan_risiko.id_periode_pelaporan')
+                    ->leftjoin('tembusan','tembusan.id_pelaporan','=','pelaporan_pengelolaan_risiko.id')
+                    ->leftjoin('departemen','departemen.id','=','pelaporan_pengelolaan_risiko.id_unit_kerja')
+                    ->whereIn('pelaporan_pengelolaan_risiko.id_unit_kerja',$id_departemen)
+                    ->groupby('pelaporan_pengelolaan_risiko.id')
+                    ->where([['pelaporan_pengelolaan_risiko.id_unit_kerja', $active_departemen],['pelaporan_pengelolaan_risiko.id_periode_pelaporan', $active_periode],['pelaporan_pengelolaan_risiko.status', $active_status]])
+                    ->get();
                     // dd($data);
                 }else{
-                    $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])
-                    ->orWhereHas('tembusan', function($q) use($id_departemen ){
-                        $q->where('id_departemen', '=', $id_departemen);
-                    })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
-                        $q->where('id_departemen', '=', $id_departemen);
-                    })
-                    ->where('id_unit_kerja', $active_departemen)
-                    ->get()
-                    ->where('id_periode_pelaporan', $active_periode);
+                    // $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])
+                    // ->orWhereHas('tembusan', function($q) use($id_departemen ){
+                    //     $q->where('id_departemen', '=', $id_departemen);
+                    // })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
+                    //     $q->where('id_departemen', '=', $id_departemen);
+                    // })
+                    // ->where('id_unit_kerja', $active_departemen)
+                    // ->get()
+                    // ->where('id_periode_pelaporan', $active_periode);
+                    $id_pengendalian = [];
+                    $data = DB::table('pelaporan_pengelolaan_risiko')
+                    ->select('pelaporan_pengelolaan_risiko.*','departemen.nama','periode_pelaporans.nama_periode','tembusan.id_departemen as tembusan')
+                    ->leftjoin('periode_pelaporans','periode_pelaporans.id','=','pelaporan_pengelolaan_risiko.id_periode_pelaporan')
+                    ->leftjoin('tembusan','tembusan.id_pelaporan','=','pelaporan_pengelolaan_risiko.id')
+                    ->leftjoin('departemen','departemen.id','=','pelaporan_pengelolaan_risiko.id_unit_kerja')
+                    ->whereIn('pelaporan_pengelolaan_risiko.id_unit_kerja',$id_departemen)
+                    ->groupby('pelaporan_pengelolaan_risiko.id')
+                    ->where([['pelaporan_pengelolaan_risiko.id_unit_kerja', $active_departemen],['pelaporan_pengelolaan_risiko.id_periode_pelaporan', $active_periode]])
+                    ->get();
                     // dd($data);
                 }
             }else{
                 if($active_status !='Semua Status'){
-                    $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])
-                    ->orWhereHas('tembusan', function($q) use($id_departemen ){
-                        $q->where('id_departemen', '=', $id_departemen);
-                    })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
-                        $q->where('id_departemen', '=', $id_departemen);
-                    })
-                    ->where('id_unit_kerja', $active_departemen)
-                    ->get()
-                    ->where('status',$active_status);
+                    // $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])
+                    // ->orWhereHas('tembusan', function($q) use($id_departemen ){
+                    //     $q->where('id_departemen', '=', $id_departemen);
+                    // })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
+                    //     $q->where('id_departemen', '=', $id_departemen);
+                    // })
+                    // ->where('id_unit_kerja', $active_departemen)
+                    // ->get()
+                    // ->where('status',$active_status);
+                    $id_pengendalian = [];
+                    $data = DB::table('pelaporan_pengelolaan_risiko')
+                    ->select('pelaporan_pengelolaan_risiko.*','departemen.nama','periode_pelaporans.nama_periode','tembusan.id_departemen as tembusan')
+                    ->leftjoin('periode_pelaporans','periode_pelaporans.id','=','pelaporan_pengelolaan_risiko.id_periode_pelaporan')
+                    ->leftjoin('tembusan','tembusan.id_pelaporan','=','pelaporan_pengelolaan_risiko.id')
+                    ->leftjoin('departemen','departemen.id','=','pelaporan_pengelolaan_risiko.id_unit_kerja')
+                    ->whereIn('pelaporan_pengelolaan_risiko.id_unit_kerja',$id_departemen)
+                    ->groupby('pelaporan_pengelolaan_risiko.id')
+                    ->where([['pelaporan_pengelolaan_risiko.id_unit_kerja', $active_departemen],['pelaporan_pengelolaan_risiko.status', $active_status]])
+                    ->get();
                     // dd($data);
                 }else{
-                    $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])
-                    ->orWhereHas('tembusan', function($q) use($id_departemen ){
-                        $q->where('id_departemen', '=', $id_departemen);
-                    })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
-                        $q->where('id_departemen', '=', $id_departemen);
-                    })
-                    ->where('id_unit_kerja', $active_departemen)
+                    // $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])
+                    // ->orWhereHas('tembusan', function($q) use($id_departemen ){
+                    //     $q->where('id_departemen', '=', $id_departemen);
+                    // })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
+                    //     $q->where('id_departemen', '=', $id_departemen);
+                    // })
+                    // ->where('id_unit_kerja', $active_departemen)
+                    // ->get();
+                    $id_pengendalian = [];
+                    $data = DB::table('pelaporan_pengelolaan_risiko')
+                    ->select('pelaporan_pengelolaan_risiko.*','departemen.nama','periode_pelaporans.nama_periode','tembusan.id_departemen as tembusan')
+                    ->leftjoin('periode_pelaporans','periode_pelaporans.id','=','pelaporan_pengelolaan_risiko.id_periode_pelaporan')
+                    ->leftjoin('tembusan','tembusan.id_pelaporan','=','pelaporan_pengelolaan_risiko.id')
+                    ->leftjoin('departemen','departemen.id','=','pelaporan_pengelolaan_risiko.id_unit_kerja')
+                    ->whereIn('pelaporan_pengelolaan_risiko.id_unit_kerja',$id_departemen)
+                    ->groupby('pelaporan_pengelolaan_risiko.id')
+                    ->where([['pelaporan_pengelolaan_risiko.id_unit_kerja', $active_departemen]])
                     ->get();
                     // dd($data);
                 }
@@ -141,58 +181,89 @@ class PelaporanpengelolaanrisikoController extends Controller
         }else{
             if($active_periode !='Semua Periode'){
                 if($active_status !='Semua Status'){
-                    $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])
-                    ->orWhereHas('tembusan', function($q) use($id_departemen ){
-                        $q->where('id_departemen', '=', $id_departemen);
-                    })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
-                        $q->where('id_departemen', '=', $id_departemen);
-                    })
-                    ->get()
-                    ->where('id_periode_pelaporan', $active_periode)
-                    ->where('status', $active_status);
+                    // $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])
+                    // ->orWhereHas('tembusan', function($q) use($id_departemen ){
+                    //     $q->where('id_departemen', '=', $id_departemen);
+                    // })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
+                    //     $q->where('id_departemen', '=', $id_departemen);
+                    // })
+                    // ->get()
+                    // ->where('id_periode_pelaporan', $active_periode)
+                    // ->where('status', $active_status);
+                    $id_pengendalian = [];
+                    $data = DB::table('pelaporan_pengelolaan_risiko')
+                    ->select('pelaporan_pengelolaan_risiko.*','departemen.nama','periode_pelaporans.nama_periode','tembusan.id_departemen as tembusan')
+                    ->leftjoin('periode_pelaporans','periode_pelaporans.id','=','pelaporan_pengelolaan_risiko.id_periode_pelaporan')
+                    ->leftjoin('tembusan','tembusan.id_pelaporan','=','pelaporan_pengelolaan_risiko.id')
+                    ->leftjoin('departemen','departemen.id','=','pelaporan_pengelolaan_risiko.id_unit_kerja')
+                    ->whereIn('pelaporan_pengelolaan_risiko.id_unit_kerja',$id_departemen)
+                    ->groupby('pelaporan_pengelolaan_risiko.id')
+                    ->where([['pelaporan_pengelolaan_risiko.status', $active_status],['pelaporan_pengelolaan_risiko.id_periode_pelaporan', $active_periode]])
+                    ->get();
                     // dd($data);
                 }else{
-                    $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])
-                    ->orWhereHas('tembusan', function($q) use($id_departemen ){
-                        $q->where('id_departemen', '=', $id_departemen);
-                    })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
-                        $q->where('id_departemen', '=', $id_departemen);
-                    })
-                    ->get()
-                    ->where('id_periode_pelaporan', $active_periode);
+                    // $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])
+                    // ->orWhereHas('tembusan', function($q) use($id_departemen ){
+                    //     $q->where('id_departemen', '=', $id_departemen);
+                    // })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
+                    //     $q->where('id_departemen', '=', $id_departemen);
+                    // })
+                    // ->get()
+                    // ->where('id_periode_pelaporan', $active_periode);
+                    $id_pengendalian = [];
+                    $data = DB::table('pelaporan_pengelolaan_risiko')
+                    ->select('pelaporan_pengelolaan_risiko.*','departemen.nama','periode_pelaporans.nama_periode','tembusan.id_departemen as tembusan')
+                    ->leftjoin('periode_pelaporans','periode_pelaporans.id','=','pelaporan_pengelolaan_risiko.id_periode_pelaporan')
+                    ->leftjoin('tembusan','tembusan.id_pelaporan','=','pelaporan_pengelolaan_risiko.id')
+                    ->leftjoin('departemen','departemen.id','=','pelaporan_pengelolaan_risiko.id_unit_kerja')
+                    ->whereIn('pelaporan_pengelolaan_risiko.id_unit_kerja',$id_departemen)
+                    ->groupby('pelaporan_pengelolaan_risiko.id')
+                    ->where('pelaporan_pengelolaan_risiko.id_periode_pelaporan', $active_periode)
+                    ->get();
                     // dd($data);
                 }
             }else{
                 if($active_status !='Semua Status'){
-                    $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])
-                    ->orWhereHas('tembusan', function($q) use($id_departemen ){
-                        $q->where('id_departemen', '=', $id_departemen);
-                    })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
-                        $q->where('id_departemen', '=', $id_departemen);
-                    })
-                    ->get()
-                    ->where('status', $active_status);
+                    // $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])
+                    // ->orWhereHas('tembusan', function($q) use($id_departemen ){
+                    //     $q->where('id_departemen', '=', $id_departemen);
+                    // })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
+                    //     $q->where('id_departemen', '=', $id_departemen);
+                    // })
+                    // ->get()
+                    // ->where('status', $active_status);
+                    $id_pengendalian = [];
+                    $data = DB::table('pelaporan_pengelolaan_risiko')
+                    ->select('pelaporan_pengelolaan_risiko.*','departemen.nama','periode_pelaporans.nama_periode','tembusan.id_departemen as tembusan')
+                    ->leftjoin('periode_pelaporans','periode_pelaporans.id','=','pelaporan_pengelolaan_risiko.id_periode_pelaporan')
+                    ->leftjoin('tembusan','tembusan.id_pelaporan','=','pelaporan_pengelolaan_risiko.id')
+                    ->leftjoin('departemen','departemen.id','=','pelaporan_pengelolaan_risiko.id_unit_kerja')
+                    ->whereIn('pelaporan_pengelolaan_risiko.id_unit_kerja',$id_departemen)
+                    ->groupby('pelaporan_pengelolaan_risiko.id')
+                    ->where('pelaporan_pengelolaan_risiko.status', $active_status)
+                    ->get();
                     // dd($data);
                 }else{
-                    $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])
-                    ->orWhereHas('tembusan', function($q) use($id_departemen ){
-                        $q->where('id_departemen', '=', $id_departemen);
-                    })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
-                        $q->where('id_departemen', '=', $id_departemen);
-                    })->paginate(50);
+                    // $data = pelaporanpengelolaanrisiko::with(['tembusan.departemen', 'periodepelaporan', 'departemen', 'tujuanpelaporan.departemen'])
+                    // ->orWhereHas('tembusan', function($q) use($id_departemen ){
+                    //     $q->where('id_departemen', '=', $id_departemen);
+                    // })->orWhereHas('tujuanpelaporan', function($q) use($id_departemen ){
+                    //     $q->where('id_departemen', '=', $id_departemen);
+                    // })->paginate(50);
                     // dd($data);
-                    // $id_pengendalian = [];
-                    // $data = DB::table('pelaporan_pengelolaan_risiko')
+                    $id_pengendalian = [];
+                    $data = DB::table('pelaporan_pengelolaan_risiko')
                     // ->select('pelaporan_pengelolaan_risiko.*','periode_pelaporans.nama_periode','departemen.nama','tembusan.id_departemen as tembusan','tujuanpelaporan.id_pelaporan as tujuan')
-                    // ->leftjoin('periode_pelaporans','periode_pelaporans.id','=','pelaporan_pengelolaan_risiko.id_periode_pelaporan')
-                    // ->leftjoin('tembusan','tembusan.id_pelaporan','=','pelaporan_pengelolaan_risiko.id')
+                    ->select('pelaporan_pengelolaan_risiko.*','departemen.nama','periode_pelaporans.nama_periode','tembusan.id_departemen as tembusan')
                     // ->leftjoin('tujuanpelaporan','tujuanpelaporan.id_pelaporan','=','pelaporan_pengelolaan_risiko.id')
-                    // ->leftjoin('departemen','departemen.id','=','pelaporan_pengelolaan_risiko.id_unit_kerja')
-                    // ->where('pelaporan_pengelolaan_risiko.id_unit_kerja',$id_departemen)
-                    // ->orwhere('tujuanpelaporan.id_departemen',$id_departemen)
-                    // ->orwhere('tembusan.id_departemen',$id_departemen)
-                    // ->groupby('pelaporan_pengelolaan_risiko.id')
-                    // ->paginate(50);
+                    ->leftjoin('periode_pelaporans','periode_pelaporans.id','=','pelaporan_pengelolaan_risiko.id_periode_pelaporan')
+                    ->leftjoin('tembusan','tembusan.id_pelaporan','=','pelaporan_pengelolaan_risiko.id')
+                    ->leftjoin('departemen','departemen.id','=','pelaporan_pengelolaan_risiko.id_unit_kerja')
+                    // ->orwhereIn('tujuanpelaporan.id_departemen',$id_departemen)
+                    // ->orwhereIn('tembusan.id_departemen',$id_departemen)
+                    ->whereIn('pelaporan_pengelolaan_risiko.id_unit_kerja',$id_departemen)
+                    ->groupby('pelaporan_pengelolaan_risiko.id')
+                    ->get();
                     // if(count($data)>0){
                     //     foreach ($data as $row) {
                     //         array_push($id_pengendalian,$row->tujuan);
@@ -230,7 +301,7 @@ class PelaporanpengelolaanrisikoController extends Controller
         // dd($data);
         return view('backend.pelaporanpengelolaanrisiko.index',[
             'data'=>$data,
-            // 'idp'=>$id_pengendalian,
+            'idp'=>$id_pengendalian,
             'periode'=>$periodepelaporan,
             'departemen'=>$departemen,
             'active_periode' => $active_periode,
