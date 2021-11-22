@@ -29,6 +29,12 @@ class KlasifikasisubunsurspipController extends Controller
             ];
             return response()->json($print);
         }
+
+        $data = klasifikasi_sub_unsur_spip::all();
+        $print=[
+            'klasifikasi'=>$data,
+        ];
+        return response()->json($print);
     }
 
     public function listdata(){

@@ -32,6 +32,12 @@ class MetodepencapaiantujuanspipController extends Controller
             ];
             return response()->json($print);
         }
+
+        $data = metode::all();
+        $print=[
+            'metode'=>$data,
+        ];
+        return response()->json($print);
     }
 
     public function listdata(){
