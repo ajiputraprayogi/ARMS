@@ -232,6 +232,12 @@ legend.scheduler-border {
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="control-label col-sm-3 align-self-center" for="">Target Durasi</label>
+                            <div class="col-sm-9">
+                                <input placeholder="" class="form-control" id=""  value="{{$row->target_durasi}}" name="target_durasi" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="control-label col-sm-3" for="">Status Pelaksanaan*</label>
                             <div class="col-sm-9">
                                 <select class="form-control" name="status_pelaksanaan" required>

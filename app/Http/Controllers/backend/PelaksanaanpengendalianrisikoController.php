@@ -182,6 +182,7 @@ class PelaksanaanpengendalianrisikoController extends Controller
             'id_pengendalian'=>$request->id_pengendalian,
             'realisasi_waktu'=>$tglsatu ? Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d'): '',
             'realisasi_waktu_akhir'=>$tgldua ? Carbon::createFromFormat('d-m-Y',$tgldua)->format('Y-m-d'): '',
+            'realisasi_durasi'=>$request->realisasi_durasi,
             'hambatan'=>$request->hambatan,
         ]);
         $up = DB::table('pengendalian_risiko')->where('id','=',$request->id_pengendalian)->update([
@@ -219,7 +220,7 @@ class PelaksanaanpengendalianrisikoController extends Controller
         ])
         ->leftjoin('pengendalian_risiko','pengendalian_risiko.id','=','pelaksanaan_pengendalian_risiko.id_pengendalian')
         ->leftjoin('resiko_teridentifikasi','resiko_teridentifikasi.id','=','pengendalian_risiko.id_risiko')
-        ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.faktur','=','pengendalian_risiko.faktur')
+        ->leftjoin('pelaksanaan_manajemen_risiko','pelaksanaan_manajemen_risiko.id','=','pengendalian_risiko.id_manajemen')
         ->leftjoin('departemen','departemen.id','=','pelaksanaan_manajemen_risiko.id_departemen')
         ->orderby('id','desc')
         ->where('pelaksanaan_pengendalian_risiko.id',$id)
@@ -257,6 +258,7 @@ class PelaksanaanpengendalianrisikoController extends Controller
             'id_pengendalian'=>$request->id_pengendalian,
             'realisasi_waktu'=>$tglsatu ? Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d'): '',
             'realisasi_waktu_akhir'=>$tgldua ? Carbon::createFromFormat('d-m-Y',$tgldua)->format('Y-m-d'): '',
+            'realisasi_durasi'=>$request->realisasi_durasi,
             'hambatan'=>$request->hambatan,
         ]);
         $up = DB::table('pengendalian_risiko')->where('id','=',$request->id_pengendalian)->update([

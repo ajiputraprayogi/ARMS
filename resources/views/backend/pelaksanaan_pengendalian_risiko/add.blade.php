@@ -122,6 +122,12 @@
                             <input placeholder="Pilih Tanggal" class="form-control" id="tanggal1" name="realisasi_waktu"/>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3 align-self-center" for="">Realisasi Durasi</label>
+                        <div class="col-sm-9">
+                            <input placeholder="" class="form-control" id="" name="realisasi_durasi"/>
+                        </div>
+                    </div>
                     {{-- <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="">Realisasi Waktu<i class="bintang">*</i></label>
                         <div class="col-sm-9">

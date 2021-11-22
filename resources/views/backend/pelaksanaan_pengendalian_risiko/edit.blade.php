@@ -148,6 +148,12 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label class="control-label col-sm-3 align-self-center" for="">Realisasi Durasi</label>
+                        <div class="col-sm-9">
+                            <input placeholder="" class="form-control" id="" value="{{$rowdtl->realisasi_durasi}}" name="realisasi_durasi"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label class="control-label col-sm-3" for="">Update Status Tindak Pengendalian Menjadi<i class="bintang">*</i></label>
                         <div class="col-sm-9">
                         <select class="form-control" name="status_pelaksanaan" id="" required>

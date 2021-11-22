@@ -707,6 +707,7 @@ class PengendalianrisikoController extends Controller
             'indikator_keluaran'=>$request->indikator_keluaran,
             'target_waktu'=>$tglsatu ? Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d'): '',
             'target_waktu_akhir'=>$tgldua ? Carbon::createFromFormat('d-m-Y',$tgldua)->format('Y-m-d'): '',
+            'target_durasi'=>$request->target_durasi,
             'status_pelaksanaan'=>'Belum Dilaksanakan',
             'frekuensi_saat_ini'=>$request->frekuensi_saat_ini,
             'dampak_saat_ini'=>$request->dampak_saat_ini,
@@ -811,6 +812,7 @@ class PengendalianrisikoController extends Controller
             'indikator_keluaran'=>$request->indikator_keluaran,
             'target_waktu'=>Carbon::createFromFormat('d-m-Y',$tglsatu)->format('Y-m-d'),
             'target_waktu_akhir'=>Carbon::createFromFormat('d-m-Y',$tgldua)->format('Y-m-d'),
+            'target_durasi'=>$request->target_durasi,
             'status_pelaksanaan'=>$request->status_pelaksanaan,
         ]);
 
