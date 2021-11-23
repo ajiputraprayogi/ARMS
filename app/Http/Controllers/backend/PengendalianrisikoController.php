@@ -721,6 +721,19 @@ class PengendalianrisikoController extends Controller
                 'id_klasifikasi_spip' => $klasifikasi
             ]);
         }
+        // use Carbon\Carbon;
+        $tgl = Carbon::now();
+        $now = $tgl->format('Y-m-d');
+        $id_pengendalian = [];
+        $pengendalian = DB::table('pengendalian_risiko')->where('status_pelaksanaan','Selesai Dilaksanakan')->get();
+        if(count($pengendalian)>0){
+            foreach ($pengendalian as $row) {
+                array_push($id_pengendalian,$row->id);
+            }
+        }
+        $update_status = DB::table('pengendalian_risiko')->whereNotIn('id',$id_pengendalian)->whereDate('target_waktu_akhir', '<', $now)->update([
+            'status_pelaksanaan'=>'Terlambat',
+        ]);
 
         return redirect('pengendalian')->with('status','Berhasil menambah data');
     }
@@ -823,6 +836,20 @@ class PengendalianrisikoController extends Controller
                 'id_klasifikasi_spip' => $klasifikasi
             ]);
         }
+
+        // use Carbon\Carbon;
+        $tgl = Carbon::now();
+        $now = $tgl->format('Y-m-d');
+        $id_pengendalian = [];
+        $pengendalian = DB::table('pengendalian_risiko')->where('status_pelaksanaan','Selesai Dilaksanakan')->get();
+        if(count($pengendalian)>0){
+            foreach ($pengendalian as $row) {
+                array_push($id_pengendalian,$row->id);
+            }
+        }
+        $update_status = DB::table('pengendalian_risiko')->whereNotIn('id',$id_pengendalian)->whereDate('target_waktu_akhir', '<', $now)->update([
+            'status_pelaksanaan'=>'Terlambat',
+        ]);
 
         return redirect('pengendalian')->with('status','Berhasil mengubah data');
     }
